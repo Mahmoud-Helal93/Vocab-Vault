@@ -1,0 +1,561 @@
+import { useState, useMemo, useCallback, useRef, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { useApp } from "@/context/AppContext";
+import { shuffleArray, isCloseEnough, getDifficultWords } from "@/lib/srs";
+import { Word } from "@/data/words";
+import { addMistake } from "@/lib/storage";
+import { TOTAL_DAYS } from "@/data/words";
+import {
+  ArrowLeft, CheckCircle2, XCircle, ChevronRight, Target, RotateCcw, ListChecks,
+  Keyboard, HelpCircle
+} from "lucide-react";
+
+type QuestionType = "multiple-choice" | "fill-blank" | "true-false";
+type SourceType = "all" | "day" | "group" | "difficult";
+
+interface PracticeConfig {
+  questionTypes: QuestionType[];
+  source: SourceType;
+  day?: number;
+  group?: number;
+}
+
+interface Question {
+  word: Word;
+  type: QuestionType;
+  choices?: string[];
+  correctIndex?: number;
+  tfWord?: Word;
+  isTrue?: boolean;
+}
+
+interface PracticeModeProps {
+  onBack: () => void;
+  initialSource?: string;
+}
+
+function buildQuestions(pool: Word[], allWords: Word[], config: PracticeConfig): Question[] {
+  const shuffled = shuffleArray(pool);
+  return shuffled.map((word) => {
+    const type = config.questionTypes[Math.floor(Math.random() * config.questionTypes.length)];
+
+    if (type === "multiple-choice") {
+      const distractors = shuffleArray(allWords.filter((w) => w.id !== word.id)).slice(0, 3);
+      const choices = shuffleArray([word, ...distractors]);
+      return {
+        word,
+        type,
+        choices: choices.map((c) => c.word),
+        correctIndex: choices.findIndex((c) => c.id === word.id),
+      };
+    }
+
+    if (type === "true-false") {
+      const isTrue = Math.random() > 0.5;
+      if (isTrue) {
+        return { word, type, isTrue: true, tfWord: word };
+      } else {
+        const wrong = shuffleArray(allWords.filter((w) => w.id !== word.id))[0];
+        return { word, type, isTrue: false, tfWord: wrong };
+      }
+    }
+
+    return { word, type };
+  });
+}
+
+export default function PracticeMode({ onBack, initialSource }: PracticeModeProps) {
+  const { words, markWordReviewed, settings } = useApp();
+  const [phase, setPhase] = useState<"config" | "session" | "results">(
+    initialSource === "difficult" ? "config" : "config"
+  );
+  const [config, setConfig] = useState<PracticeConfig>({
+    questionTypes: ["multiple-choice"],
+    source: (initialSource === "difficult" ? "difficult" : "all") as SourceType,
+    day: 1,
+    group: 1,
+  });
+  const [questions, setQuestions] = useState<Question[]>([]);
+  const [qIndex, setQIndex] = useState(0);
+  const [score, setScore] = useState(0);
+  const [answered, setAnswered] = useState<boolean[]>([]);
+  const [showFeedback, setShowFeedback] = useState<null | "correct" | "wrong">(null);
+  const [fillInput, setFillInput] = useState("");
+  const [selectedChoice, setSelectedChoice] = useState<number | null>(null);
+  const [selectedTF, setSelectedTF] = useState<boolean | null>(null);
+  const [timerLeft, setTimerLeft] = useState(settings.timerSeconds);
+  const fillRef = useRef<HTMLInputElement>(null);
+
+  const currentQ = questions[qIndex];
+  const totalQ = questions.length;
+
+  useEffect(() => {
+    if (!settings.timerEnabled || phase !== "session" || showFeedback) return;
+    if (timerLeft <= 0) {
+      handleSubmitAnswer(false);
+      return;
+    }
+    const id = setTimeout(() => setTimerLeft((t) => t - 1), 1000);
+    return () => clearTimeout(id);
+  }, [timerLeft, phase, showFeedback, settings.timerEnabled]);
+
+  const buildPool = useCallback((): Word[] => {
+    if (config.source === "difficult") return getDifficultWords(words);
+    if (config.source === "all") return words;
+    if (config.source === "day") return words.filter((w) => w.day === config.day);
+    if (config.source === "group")
+      return words.filter((w) => w.day === config.day && w.group === config.group);
+    return words;
+  }, [config, words]);
+
+  const startSession = () => {
+    const pool = buildPool();
+    if (pool.length === 0) return;
+    const qs = buildQuestions(pool, words, config);
+    setQuestions(qs);
+    setQIndex(0);
+    setScore(0);
+    setAnswered(new Array(qs.length).fill(false));
+    setShowFeedback(null);
+    setFillInput("");
+    setSelectedChoice(null);
+    setSelectedTF(null);
+    setTimerLeft(settings.timerSeconds);
+    setPhase("session");
+  };
+
+  const handleSubmitAnswer = useCallback(
+    (isCorrect: boolean) => {
+      setShowFeedback(isCorrect ? "correct" : "wrong");
+      if (isCorrect) {
+        setScore((s) => s + 1);
+        markWordReviewed(currentQ.word.id, 4);
+      } else {
+        markWordReviewed(currentQ.word.id, 1);
+        addMistake({
+          wordId: currentQ.word.id,
+          word: currentQ.word.word,
+          timestamp: Date.now(),
+          questionType: currentQ.type,
+        });
+      }
+      setAnswered((prev) => {
+        const arr = [...prev];
+        arr[qIndex] = true;
+        return arr;
+      });
+    },
+    [currentQ, qIndex, markWordReviewed]
+  );
+
+  const handleMCAnswer = (idx: number) => {
+    if (showFeedback) return;
+    setSelectedChoice(idx);
+    handleSubmitAnswer(idx === currentQ.correctIndex);
+  };
+
+  const handleTFAnswer = (answer: boolean) => {
+    if (showFeedback) return;
+    setSelectedTF(answer);
+    handleSubmitAnswer(answer === currentQ.isTrue);
+  };
+
+  const handleFillSubmit = () => {
+    if (showFeedback || !fillInput.trim()) return;
+    const correct = isCloseEnough(fillInput, currentQ.word.word);
+    handleSubmitAnswer(correct);
+  };
+
+  const handleNext = () => {
+    if (qIndex + 1 >= totalQ) {
+      setPhase("results");
+    } else {
+      setQIndex((i) => i + 1);
+      setShowFeedback(null);
+      setFillInput("");
+      setSelectedChoice(null);
+      setSelectedTF(null);
+      setTimerLeft(settings.timerSeconds);
+      setTimeout(() => fillRef.current?.focus(), 100);
+    }
+  };
+
+  const toggleQType = (t: QuestionType) => {
+    setConfig((c) => {
+      const has = c.questionTypes.includes(t);
+      if (has && c.questionTypes.length === 1) return c;
+      return {
+        ...c,
+        questionTypes: has ? c.questionTypes.filter((x) => x !== t) : [...c.questionTypes, t],
+      };
+    });
+  };
+
+  // ---- CONFIG SCREEN ----
+  if (phase === "config") {
+    const pool = buildPool();
+    const qTypes: { id: QuestionType; label: string; icon: React.ReactNode; desc: string }[] = [
+      { id: "multiple-choice", label: "Multiple Choice", icon: <ListChecks size={18} />, desc: "Pick the correct word" },
+      { id: "fill-blank", label: "Fill in the Blank", icon: <Keyboard size={18} />, desc: "Type the word" },
+      { id: "true-false", label: "True / False", icon: <HelpCircle size={18} />, desc: "Is the pair correct?" },
+    ];
+
+    return (
+      <div className="max-w-2xl mx-auto px-4 py-8">
+        <div className="flex items-center gap-3 mb-8">
+          <button onClick={onBack} className="p-2 rounded-xl hover:bg-muted transition-colors">
+            <ArrowLeft size={20} />
+          </button>
+          <div>
+            <h1 className="text-2xl font-bold text-foreground">Practice Mode</h1>
+            <p className="text-muted-foreground text-sm">Configure your session</p>
+          </div>
+        </div>
+
+        {/* Question Types */}
+        <div className="mb-6">
+          <p className="text-sm font-semibold uppercase tracking-widest text-muted-foreground mb-3">
+            Question Types
+          </p>
+          <div className="space-y-2">
+            {qTypes.map((qt) => {
+              const active = config.questionTypes.includes(qt.id);
+              return (
+                <button
+                  key={qt.id}
+                  onClick={() => toggleQType(qt.id)}
+                  className={`w-full flex items-center gap-3 p-4 rounded-xl border-2 transition-all text-left ${
+                    active
+                      ? "border-primary bg-primary/5 text-foreground"
+                      : "border-card-border bg-card text-muted-foreground hover:border-primary/30"
+                  }`}
+                >
+                  <div className={`p-2 rounded-lg ${active ? "bg-primary text-primary-foreground" : "bg-muted"}`}>
+                    {qt.icon}
+                  </div>
+                  <div>
+                    <div className={`font-semibold ${active ? "text-foreground" : ""}`}>{qt.label}</div>
+                    <div className="text-xs opacity-70">{qt.desc}</div>
+                  </div>
+                  <div className={`ml-auto w-5 h-5 rounded-full border-2 flex items-center justify-center ${active ? "border-primary bg-primary" : "border-muted-foreground/30"}`}>
+                    {active && <div className="w-2.5 h-2.5 rounded-full bg-white" />}
+                  </div>
+                </button>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* Source */}
+        <div className="mb-6">
+          <p className="text-sm font-semibold uppercase tracking-widest text-muted-foreground mb-3">
+            Word Source
+          </p>
+          <div className="grid grid-cols-2 gap-2">
+            {(["all", "day", "difficult"] as SourceType[]).map((s) => (
+              <button
+                key={s}
+                onClick={() => setConfig((c) => ({ ...c, source: s }))}
+                className={`py-3 px-4 rounded-xl border-2 font-medium transition-all capitalize ${
+                  config.source === s
+                    ? "border-primary bg-primary/5 text-foreground"
+                    : "border-card-border bg-card text-muted-foreground hover:border-primary/30"
+                }`}
+              >
+                {s === "all" ? "All Words" : s === "day" ? "By Day" : "Difficult Only"}
+              </button>
+            ))}
+          </div>
+
+          {config.source === "day" && (
+            <div className="mt-3">
+              <p className="text-xs text-muted-foreground mb-2">Select day (includes all 30 words)</p>
+              <div className="flex flex-wrap gap-2">
+                {Array.from({ length: TOTAL_DAYS }, (_, i) => i + 1).map((d) => (
+                  <button
+                    key={d}
+                    onClick={() => setConfig((c) => ({ ...c, day: d }))}
+                    className={`px-3 py-1.5 rounded-lg border font-medium text-sm transition-all ${
+                      config.day === d
+                        ? "border-primary bg-primary text-primary-foreground"
+                        : "border-card-border bg-card text-muted-foreground hover:border-primary/30"
+                    }`}
+                  >
+                    Day {d}
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
+
+        <div className="text-sm text-muted-foreground mb-4">
+          {pool.length} words in the selected pool
+        </div>
+
+        <button
+          onClick={startSession}
+          disabled={pool.length === 0}
+          className="w-full py-4 rounded-xl bg-primary text-primary-foreground font-semibold text-lg hover:opacity-90 transition-opacity disabled:opacity-40 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+        >
+          <Target size={20} />
+          Start Practice
+        </button>
+      </div>
+    );
+  }
+
+  // ---- RESULTS SCREEN ----
+  if (phase === "results") {
+    const pct = Math.round((score / totalQ) * 100);
+    const grade = pct >= 90 ? "Excellent!" : pct >= 70 ? "Good job!" : pct >= 50 ? "Keep practicing" : "Needs work";
+    return (
+      <div className="max-w-2xl mx-auto px-4 py-8">
+        <motion.div
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          className="bg-card border border-card-border rounded-2xl p-8 text-center shadow-lg"
+        >
+          <div className="text-5xl font-bold text-foreground mb-2">{pct}%</div>
+          <div className="text-2xl font-semibold text-primary mb-1">{grade}</div>
+          <div className="text-muted-foreground mb-6">{score} of {totalQ} correct</div>
+
+          <div className="h-3 bg-muted rounded-full overflow-hidden mb-8">
+            <motion.div
+              className="h-full bg-primary rounded-full"
+              initial={{ width: 0 }}
+              animate={{ width: `${pct}%` }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+            />
+          </div>
+
+          <div className="flex gap-3">
+            <button
+              onClick={() => {
+                startSession();
+              }}
+              className="flex-1 flex items-center justify-center gap-2 py-3 rounded-xl bg-primary text-primary-foreground font-medium hover:opacity-90 transition-opacity"
+            >
+              <RotateCcw size={16} />
+              Try Again
+            </button>
+            <button
+              onClick={onBack}
+              className="flex-1 py-3 rounded-xl border border-card-border text-foreground font-medium hover:bg-muted transition-colors"
+            >
+              Back to Home
+            </button>
+          </div>
+        </motion.div>
+      </div>
+    );
+  }
+
+  // ---- SESSION ----
+  if (!currentQ) return null;
+
+  const timerPct = settings.timerEnabled ? (timerLeft / settings.timerSeconds) * 100 : 100;
+
+  return (
+    <div className="max-w-2xl mx-auto px-4 py-8">
+      {/* Header */}
+      <div className="flex items-center justify-between mb-4">
+        <button onClick={() => setPhase("config")} className="p-2 rounded-xl hover:bg-muted transition-colors">
+          <ArrowLeft size={20} />
+        </button>
+        <div className="text-center">
+          <div className="text-sm text-muted-foreground">Question {qIndex + 1} of {totalQ}</div>
+          <div className="font-semibold text-foreground">{score} correct</div>
+        </div>
+        <div className="text-sm text-muted-foreground">
+          {Math.round((score / Math.max(qIndex, 1)) * 100)}%
+        </div>
+      </div>
+
+      {/* Progress */}
+      <div className="h-2 bg-muted rounded-full mb-2 overflow-hidden">
+        <motion.div
+          className="h-full bg-primary rounded-full"
+          animate={{ width: `${((qIndex + 1) / totalQ) * 100}%` }}
+          transition={{ duration: 0.3 }}
+        />
+      </div>
+
+      {settings.timerEnabled && (
+        <div className="h-1 bg-muted rounded-full mb-4 overflow-hidden">
+          <motion.div
+            className={`h-full rounded-full ${timerLeft <= 5 ? "bg-red-500" : "bg-amber-400"}`}
+            style={{ width: `${timerPct}%` }}
+            transition={{ duration: 0.5 }}
+          />
+        </div>
+      )}
+
+      {/* Question Card */}
+      <AnimatePresence mode="wait">
+        <motion.div
+          key={qIndex}
+          initial={{ opacity: 0, x: 30 }}
+          animate={{ opacity: 1, x: 0 }}
+          exit={{ opacity: 0, x: -30 }}
+          transition={{ duration: 0.2 }}
+        >
+          {/* Definition prompt */}
+          <div className="bg-card border border-card-border rounded-2xl p-6 mb-4 shadow-sm">
+            <div className="text-xs font-semibold uppercase tracking-widest text-muted-foreground mb-2">
+              {currentQ.type === "true-false"
+                ? "True or False?"
+                : currentQ.type === "fill-blank"
+                ? "Type the word"
+                : "Choose the correct word"}
+            </div>
+
+            {currentQ.type === "true-false" ? (
+              <>
+                <p className="text-lg font-semibold text-foreground mb-1">{currentQ.tfWord!.word}</p>
+                <p className="text-muted-foreground">{currentQ.word.definition}</p>
+              </>
+            ) : (
+              <p className="text-lg font-semibold text-foreground leading-relaxed">
+                {currentQ.word.definition}
+              </p>
+            )}
+          </div>
+
+          {/* Multiple Choice */}
+          {currentQ.type === "multiple-choice" && (
+            <div className="space-y-3">
+              {currentQ.choices!.map((choice, idx) => {
+                const isCorrect = idx === currentQ.correctIndex;
+                const isSelected = selectedChoice === idx;
+                let cls = "border-card-border bg-card text-foreground hover:border-primary/40";
+                if (showFeedback) {
+                  if (isCorrect) cls = "border-green-400 bg-green-50 dark:bg-green-900/20 text-green-700 dark:text-green-400";
+                  else if (isSelected) cls = "border-red-400 bg-red-50 dark:bg-red-900/20 text-red-700 dark:text-red-400";
+                  else cls = "border-card-border bg-card text-muted-foreground opacity-50";
+                }
+                return (
+                  <button
+                    key={idx}
+                    onClick={() => handleMCAnswer(idx)}
+                    disabled={!!showFeedback}
+                    className={`w-full flex items-center gap-3 p-4 rounded-xl border-2 transition-all text-left font-medium ${cls}`}
+                  >
+                    <span className="w-7 h-7 rounded-full border-2 border-current flex items-center justify-center text-sm font-bold shrink-0">
+                      {String.fromCharCode(65 + idx)}
+                    </span>
+                    {choice}
+                    {showFeedback && isCorrect && <CheckCircle2 size={18} className="ml-auto text-green-500" />}
+                    {showFeedback && isSelected && !isCorrect && <XCircle size={18} className="ml-auto text-red-500" />}
+                  </button>
+                );
+              })}
+            </div>
+          )}
+
+          {/* Fill in the Blank */}
+          {currentQ.type === "fill-blank" && (
+            <div>
+              <div className="flex gap-2">
+                <input
+                  ref={fillRef}
+                  value={fillInput}
+                  onChange={(e) => setFillInput(e.target.value)}
+                  onKeyDown={(e) => e.key === "Enter" && !showFeedback && handleFillSubmit()}
+                  disabled={!!showFeedback}
+                  placeholder="Type the word..."
+                  autoFocus
+                  className={`flex-1 px-4 py-3 rounded-xl border-2 bg-background text-foreground transition-colors outline-none ${
+                    showFeedback === "correct"
+                      ? "border-green-400"
+                      : showFeedback === "wrong"
+                      ? "border-red-400"
+                      : "border-card-border focus:border-primary"
+                  }`}
+                />
+                <button
+                  onClick={handleFillSubmit}
+                  disabled={!!showFeedback || !fillInput.trim()}
+                  className="px-5 py-3 rounded-xl bg-primary text-primary-foreground font-medium hover:opacity-90 transition-opacity disabled:opacity-40"
+                >
+                  Check
+                </button>
+              </div>
+              {showFeedback === "wrong" && (
+                <p className="mt-2 text-sm text-red-600 dark:text-red-400">
+                  Correct answer: <strong>{currentQ.word.word}</strong>
+                </p>
+              )}
+              {showFeedback === "correct" && (
+                <p className="mt-2 text-sm text-green-600 dark:text-green-400 font-medium">Correct!</p>
+              )}
+            </div>
+          )}
+
+          {/* True / False */}
+          {currentQ.type === "true-false" && (
+            <div className="flex gap-3">
+              {([true, false] as boolean[]).map((val) => {
+                const isSelected = selectedTF === val;
+                const isCorrectAnswer = val === currentQ.isTrue;
+                let cls = "border-card-border bg-card hover:border-primary/40 text-foreground";
+                if (showFeedback) {
+                  if (isCorrectAnswer) cls = "border-green-400 bg-green-50 dark:bg-green-900/20 text-green-700 dark:text-green-400";
+                  else if (isSelected) cls = "border-red-400 bg-red-50 dark:bg-red-900/20 text-red-700 dark:text-red-400";
+                  else cls = "border-card-border bg-card text-muted-foreground opacity-50";
+                }
+                return (
+                  <button
+                    key={String(val)}
+                    onClick={() => handleTFAnswer(val)}
+                    disabled={!!showFeedback}
+                    className={`flex-1 py-4 rounded-xl border-2 font-semibold text-lg transition-all ${cls}`}
+                  >
+                    {val ? "True" : "False"}
+                  </button>
+                );
+              })}
+            </div>
+          )}
+
+          {/* Feedback */}
+          <AnimatePresence>
+            {showFeedback && (
+              <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                className={`mt-4 p-4 rounded-xl flex items-start gap-3 ${
+                  showFeedback === "correct"
+                    ? "bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800"
+                    : "bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800"
+                }`}
+              >
+                {showFeedback === "correct" ? (
+                  <CheckCircle2 size={20} className="text-green-500 shrink-0 mt-0.5" />
+                ) : (
+                  <XCircle size={20} className="text-red-500 shrink-0 mt-0.5" />
+                )}
+                <div>
+                  <div className={`font-semibold ${showFeedback === "correct" ? "text-green-700 dark:text-green-400" : "text-red-700 dark:text-red-400"}`}>
+                    {showFeedback === "correct" ? "Correct!" : "Incorrect"}
+                  </div>
+                  {showFeedback === "wrong" && currentQ.type !== "fill-blank" && (
+                    <div className="text-sm text-muted-foreground mt-1">
+                      <span className="font-medium">{currentQ.word.word}</span> — {currentQ.word.definition}
+                    </div>
+                  )}
+                </div>
+                <button
+                  onClick={handleNext}
+                  className="ml-auto flex items-center gap-1 px-3 py-1.5 rounded-lg bg-primary text-primary-foreground text-sm font-medium hover:opacity-90"
+                >
+                  Next <ChevronRight size={14} />
+                </button>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </motion.div>
+      </AnimatePresence>
+    </div>
+  );
+}

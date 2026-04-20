@@ -1,0 +1,31 @@
+kind = "web"
+previewPath = "/"
+title = "GRE Vocabulary Flashcards"
+version = "1.0.0"
+id = "artifacts/gre-flashcards"
+router = "path"
+
+[[integratedSkills]]
+name = "react-vite"
+version = "1.0.0"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 24062
+
+[services.development]
+run = "pnpm --filter @workspace/gre-flashcards run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/gre-flashcards", "run", "build" ]
+publicDir = "artifacts/gre-flashcards/dist/public"
+serve = "static"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "24062"
+BASE_PATH = "/"

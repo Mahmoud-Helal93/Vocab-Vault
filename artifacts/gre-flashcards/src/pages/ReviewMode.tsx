@@ -1,0 +1,124 @@
+import { useState, useMemo } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { useApp } from "@/context/AppContext";
+import Flashcard from "@/components/Flashcard";
+import { getDueWords } from "@/lib/srs";
+import { ArrowLeft, CheckCircle2, Clock } from "lucide-react";
+
+interface ReviewModeProps {
+  onBack: () => void;
+}
+
+export default function ReviewMode({ onBack }: ReviewModeProps) {
+  const { words, markWordReviewed, settings } = useApp();
+  const dueWords = useMemo(() => getDueWords(words), [words]);
+  const [index, setIndex] = useState(0);
+  const [done, setDone] = useState(false);
+  const [reviewed, setReviewed] = useState(0);
+
+  const currentWord = dueWords[index];
+
+  const handleReview = (quality: number) => {
+    if (!currentWord) return;
+    markWordReviewed(currentWord.id, quality);
+    setReviewed((r) => r + 1);
+    if (index + 1 >= dueWords.length) {
+      setDone(true);
+    } else {
+      setIndex((i) => i + 1);
+    }
+  };
+
+  if (dueWords.length === 0) {
+    return (
+      <div className="max-w-2xl mx-auto px-4 py-8 flex flex-col items-center justify-center min-h-64">
+        <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} className="text-center">
+          <CheckCircle2 size={56} className="text-green-500 mx-auto mb-4" />
+          <h2 className="text-2xl font-bold text-foreground mb-2">All caught up!</h2>
+          <p className="text-muted-foreground mb-6">No words due for review. Come back later!</p>
+          <button onClick={onBack} className="px-6 py-3 rounded-xl bg-primary text-primary-foreground font-medium hover:opacity-90">
+            Back to Home
+          </button>
+        </motion.div>
+      </div>
+    );
+  }
+
+  if (done) {
+    return (
+      <div className="max-w-2xl mx-auto px-4 py-8 flex flex-col items-center justify-center min-h-64">
+        <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} className="text-center">
+          <CheckCircle2 size={56} className="text-green-500 mx-auto mb-4" />
+          <h2 className="text-2xl font-bold text-foreground mb-2">Review Complete!</h2>
+          <p className="text-muted-foreground mb-6">Reviewed {reviewed} words today.</p>
+          <button onClick={onBack} className="px-6 py-3 rounded-xl bg-primary text-primary-foreground font-medium hover:opacity-90">
+            Back to Home
+          </button>
+        </motion.div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="max-w-4xl mx-auto px-4 py-8">
+      <div className="flex items-center gap-3 mb-6">
+        <button onClick={onBack} className="p-2 rounded-xl hover:bg-muted transition-colors">
+          <ArrowLeft size={20} />
+        </button>
+        <div>
+          <h1 className="text-2xl font-bold text-foreground flex items-center gap-2">
+            <Clock size={22} className="text-amber-500" />
+            Daily Review
+          </h1>
+          <p className="text-muted-foreground text-sm">
+            {index + 1} / {dueWords.length} — review due words
+          </p>
+        </div>
+      </div>
+
+      <div className="h-1.5 bg-muted rounded-full mb-6 overflow-hidden">
+        <motion.div
+          className="h-full bg-amber-400 rounded-full"
+          animate={{ width: `${((index + 1) / dueWords.length) * 100}%` }}
+        />
+      </div>
+
+      <AnimatePresence mode="wait">
+        <motion.div
+          key={currentWord.id}
+          initial={{ opacity: 0, x: 30 }}
+          animate={{ opacity: 1, x: 0 }}
+          exit={{ opacity: 0, x: -30 }}
+          transition={{ duration: 0.2 }}
+        >
+          <Flashcard
+            word={currentWord}
+            showTimer={settings.timerEnabled}
+            timerSeconds={settings.timerSeconds}
+          />
+        </motion.div>
+      </AnimatePresence>
+
+      <div className="flex gap-3 max-w-2xl mx-auto mt-6">
+        <button
+          onClick={() => handleReview(1)}
+          className="flex-1 py-3 rounded-xl border-2 border-red-200 dark:border-red-800 text-red-600 dark:text-red-400 font-medium hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors"
+        >
+          Hard
+        </button>
+        <button
+          onClick={() => handleReview(3)}
+          className="flex-1 py-3 rounded-xl border-2 border-amber-200 dark:border-amber-800 text-amber-600 dark:text-amber-400 font-medium hover:bg-amber-50 dark:hover:bg-amber-900/20 transition-colors"
+        >
+          Good
+        </button>
+        <button
+          onClick={() => handleReview(5)}
+          className="flex-1 py-3 rounded-xl border-2 border-green-200 dark:border-green-800 text-green-600 dark:text-green-400 font-medium hover:bg-green-50 dark:hover:bg-green-900/20 transition-colors"
+        >
+          Easy
+        </button>
+      </div>
+    </div>
+  );
+}
