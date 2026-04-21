@@ -1,52 +1,64 @@
 import { useState } from "react";
+import { AnimatePresence } from "framer-motion";
 import { AppProvider, useApp } from "@/context/AppContext";
 import Dashboard from "@/pages/Dashboard";
 import StudyMode from "@/pages/StudyMode";
 import PracticeMode from "@/pages/PracticeMode";
 import ReviewMode from "@/pages/ReviewMode";
 import SettingsPage from "@/pages/Settings";
-import { LayoutDashboard, BookOpen, Target, Clock, Settings, Moon, Sun } from "lucide-react";
+import PlanMode from "@/pages/PlanMode";
+import Confusables from "@/pages/Confusables";
+import Analytics from "@/pages/Analytics";
+import Progress from "@/pages/Progress";
+import QuickTen from "@/components/QuickTen";
+import {
+  LayoutDashboard, BookOpen, Target, Clock, Settings, Moon, Sun,
+  CalendarDays, GitFork, BarChart3, TrendingUp, Zap,
+} from "lucide-react";
 
-type Page = "dashboard" | "study" | "practice" | "review" | "settings";
+type Page = "dashboard" | "study" | "practice" | "review" | "settings" | "plan" | "confusables" | "analytics" | "progress";
+
+const NAV_ITEMS: Array<{ id: Page; icon: React.ReactNode; label: string }> = [
+  { id: "dashboard",   icon: <LayoutDashboard size={18} />, label: "Home" },
+  { id: "study",       icon: <BookOpen size={18} />,        label: "Study" },
+  { id: "practice",    icon: <Target size={18} />,          label: "Practice" },
+  { id: "review",      icon: <Clock size={18} />,           label: "Review" },
+  { id: "plan",        icon: <CalendarDays size={18} />,    label: "Plan" },
+  { id: "confusables", icon: <GitFork size={18} />,         label: "Confusables" },
+  { id: "analytics",   icon: <BarChart3 size={18} />,       label: "Analytics" },
+  { id: "progress",    icon: <TrendingUp size={18} />,      label: "Progress" },
+  { id: "settings",    icon: <Settings size={18} />,        label: "Settings" },
+];
 
 function MainApp() {
-  const { settings, updateSettings } = useApp();
+  const { settings, updateSettings, crunch } = useApp();
   const [page, setPage] = useState<Page>("dashboard");
   const [pageParams, setPageParams] = useState<Record<string, unknown>>({});
+  const [quickTenOpen, setQuickTenOpen] = useState(false);
 
   const navigate = (p: string, params?: Record<string, unknown>) => {
     setPage(p as Page);
     setPageParams(params ?? {});
   };
 
-  const navItems = [
-    { id: "dashboard", icon: <LayoutDashboard size={20} />, label: "Home" },
-    { id: "study", icon: <BookOpen size={20} />, label: "Study" },
-    { id: "practice", icon: <Target size={20} />, label: "Practice" },
-    { id: "review", icon: <Clock size={20} />, label: "Review" },
-    { id: "settings", icon: <Settings size={20} />, label: "Settings" },
-  ];
-
   const renderPage = () => {
     switch (page) {
       case "dashboard":
         return <Dashboard onNavigate={navigate} />;
       case "study":
-        return (
-          <StudyMode
-            onBack={() => setPage("dashboard")}
-            initialDay={pageParams.day as number | undefined}
-          />
-        );
+        return <StudyMode onBack={() => setPage("dashboard")} initialDay={pageParams.day as number | undefined} />;
       case "practice":
-        return (
-          <PracticeMode
-            onBack={() => setPage("dashboard")}
-            initialSource={pageParams.source as string | undefined}
-          />
-        );
+        return <PracticeMode onBack={() => setPage("dashboard")} initialSource={pageParams.source as string | undefined} />;
       case "review":
         return <ReviewMode onBack={() => setPage("dashboard")} />;
+      case "plan":
+        return <PlanMode onBack={() => setPage("dashboard")} onStartSession={() => setPage("review")} />;
+      case "confusables":
+        return <Confusables onBack={() => setPage("dashboard")} />;
+      case "analytics":
+        return <Analytics onBack={() => setPage("dashboard")} onStudyWord={(id) => { setPageParams({ wordId: id }); setPage("study"); }} />;
+      case "progress":
+        return <Progress onBack={() => setPage("dashboard")} />;
       case "settings":
         return <SettingsPage onBack={() => setPage("dashboard")} />;
       default:
@@ -57,9 +69,16 @@ function MainApp() {
   return (
     <div className="min-h-screen bg-background text-foreground">
       {/* Top bar */}
-      <header className="sticky top-0 z-40 bg-background/80 backdrop-blur border-b border-border">
+      <header className="sticky top-0 z-40 bg-background/90 backdrop-blur border-b border-border">
         <div className="max-w-4xl mx-auto px-4 h-14 flex items-center justify-between">
-          <span className="font-bold text-lg text-foreground tracking-tight">GRE Vocab</span>
+          <div className="flex items-center gap-2">
+            <span className="font-bold text-lg text-foreground tracking-tight">GRE Vocab</span>
+            {crunch.active && (
+              <span className="text-[10px] font-bold bg-red-500 text-white px-2 py-0.5 rounded-full animate-pulse">
+                CRUNCH
+              </span>
+            )}
+          </div>
           <button
             onClick={() => updateSettings({ darkMode: !settings.darkMode })}
             className="p-2 rounded-xl hover:bg-muted transition-colors text-muted-foreground"
@@ -70,32 +89,47 @@ function MainApp() {
       </header>
 
       {/* Content */}
-      <main className="pb-24">{renderPage()}</main>
+      <main className="pb-28">{renderPage()}</main>
 
-      {/* Bottom nav */}
-      <nav className="fixed bottom-0 left-0 right-0 z-40 bg-background/90 backdrop-blur border-t border-border">
-        <div className="max-w-4xl mx-auto px-4">
-          <div className="flex items-stretch justify-around h-16">
-            {navItems.map((item) => (
+      {/* Quick 10 FAB */}
+      <button
+        onClick={() => setQuickTenOpen(true)}
+        className="fixed bottom-20 right-4 z-40 flex items-center gap-2 px-4 py-3 rounded-full bg-amber-500 hover:bg-amber-600 text-white font-bold shadow-lg transition-all hover:scale-105 active:scale-95"
+        title="Quick 10 micro-session"
+      >
+        <Zap size={18} />
+        <span className="text-sm">Quick 10</span>
+      </button>
+
+      {/* Bottom nav — horizontally scrollable */}
+      <nav className="fixed bottom-0 left-0 right-0 z-40 bg-background/95 backdrop-blur border-t border-border">
+        <div className="overflow-x-auto scrollbar-none">
+          <div className="flex items-stretch h-16 min-w-max px-2 mx-auto" style={{ maxWidth: "max-content" }}>
+            {NAV_ITEMS.map((item) => (
               <button
                 key={item.id}
-                onClick={() => {
-                  setPage(item.id as Page);
-                  setPageParams({});
-                }}
-                className={`flex flex-col items-center justify-center gap-1 flex-1 transition-colors ${
+                onClick={() => { setPage(item.id); setPageParams({}); }}
+                className={`flex flex-col items-center justify-center gap-0.5 px-3 h-full min-w-[56px] transition-colors relative ${
                   page === item.id
                     ? "text-primary"
                     : "text-muted-foreground hover:text-foreground"
                 }`}
               >
                 {item.icon}
-                <span className="text-[10px] font-medium">{item.label}</span>
+                <span className="text-[9px] font-medium whitespace-nowrap">{item.label}</span>
+                {page === item.id && (
+                  <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-4 h-0.5 rounded-full bg-primary" />
+                )}
               </button>
             ))}
           </div>
         </div>
       </nav>
+
+      {/* Quick Ten overlay */}
+      <AnimatePresence>
+        {quickTenOpen && <QuickTen onClose={() => setQuickTenOpen(false)} />}
+      </AnimatePresence>
     </div>
   );
 }

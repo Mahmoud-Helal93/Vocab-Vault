@@ -1,3 +1,5 @@
+import { WORD_ROOTS } from "@/data/wordRoots";
+
 export interface Word {
   id: string;
   word: string;
@@ -11,15 +13,18 @@ export interface Word {
   difficulty: number;
   lastReviewed: string | null;
   nextReview: string | null;
-  status: "new" | "learning" | "mastered";
+  status: "new" | "learning" | "review" | "mastered";
   interval: number;
   easeFactor: number;
   repetitions: number;
   correctCount: number;
   incorrectCount: number;
+  qualityHistory: number[];
+  root?: string;
+  wordFamily?: string[];
 }
 
-export const RAW_WORDS: Omit<Word, "id" | "difficulty" | "lastReviewed" | "nextReview" | "status" | "interval" | "easeFactor" | "repetitions" | "correctCount" | "incorrectCount">[] = [
+export const RAW_WORDS: Omit<Word, "id" | "difficulty" | "lastReviewed" | "nextReview" | "status" | "interval" | "easeFactor" | "repetitions" | "correctCount" | "incorrectCount" | "qualityHistory" | "root" | "wordFamily">[] = [
   // Day 1 Group 1
   {
     word: "abound",
@@ -2138,19 +2143,25 @@ export const RAW_WORDS: Omit<Word, "id" | "difficulty" | "lastReviewed" | "nextR
 ];
 
 export function buildWords(): Word[] {
-  return RAW_WORDS.map((w, i) => ({
-    ...w,
-    id: `word-${i}`,
-    difficulty: 0,
-    lastReviewed: null,
-    nextReview: null,
-    status: "new" as const,
-    interval: 0,
-    easeFactor: 2.5,
-    repetitions: 0,
-    correctCount: 0,
-    incorrectCount: 0,
-  }));
+  return RAW_WORDS.map((w, i) => {
+    const rootData = WORD_ROOTS[w.word] ?? {};
+    return {
+      ...w,
+      id: `word-${i}`,
+      difficulty: 0,
+      lastReviewed: null,
+      nextReview: null,
+      status: "new" as const,
+      interval: 0,
+      easeFactor: 2.5,
+      repetitions: 0,
+      correctCount: 0,
+      incorrectCount: 0,
+      qualityHistory: [],
+      root: rootData.root,
+      wordFamily: rootData.wordFamily,
+    };
+  });
 }
 
 export const TOTAL_DAYS = 5;

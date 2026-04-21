@@ -18,7 +18,7 @@ export default function ReviewMode({ onBack }: ReviewModeProps) {
 
   const currentWord = dueWords[index];
 
-  const handleReview = (quality: number) => {
+  const handleRate = (quality: number) => {
     if (!currentWord) return;
     markWordReviewed(currentWord.id, quality);
     setReviewed((r) => r + 1);
@@ -93,32 +93,13 @@ export default function ReviewMode({ onBack }: ReviewModeProps) {
         >
           <Flashcard
             word={currentWord}
+            onRate={handleRate}
             showTimer={settings.timerEnabled}
             timerSeconds={settings.timerSeconds}
+            onTimerEnd={() => handleRate(2)}
           />
         </motion.div>
       </AnimatePresence>
-
-      <div className="flex gap-3 max-w-2xl mx-auto mt-6">
-        <button
-          onClick={() => handleReview(1)}
-          className="flex-1 py-3 rounded-xl border-2 border-red-200 dark:border-red-800 text-red-600 dark:text-red-400 font-medium hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors"
-        >
-          Hard
-        </button>
-        <button
-          onClick={() => handleReview(3)}
-          className="flex-1 py-3 rounded-xl border-2 border-amber-200 dark:border-amber-800 text-amber-600 dark:text-amber-400 font-medium hover:bg-amber-50 dark:hover:bg-amber-900/20 transition-colors"
-        >
-          Good
-        </button>
-        <button
-          onClick={() => handleReview(5)}
-          className="flex-1 py-3 rounded-xl border-2 border-green-200 dark:border-green-800 text-green-600 dark:text-green-400 font-medium hover:bg-green-50 dark:hover:bg-green-900/20 transition-colors"
-        >
-          Easy
-        </button>
-      </div>
     </div>
   );
 }

@@ -1,0 +1,181 @@
+I have a React GRE flashcard app (code attached). I need you to rebuild it with 10 major upgrades. Do not simplify or remove any existing feature. Keep all 1,110 words, all existing views, dark mode, focus mode, keyboard shortcuts, and localStorage persistence. Build on top of what exists. Here is exactly what to add:
+
+1. Replace the SRS engine with a true SM-2 algorithm
+Remove the current doubling-interval system entirely. Implement the SM-2 algorithm exactly as follows:
+Each word in localStorage must store these fields:
+repetitions: number      // how many times reviewed successfully in a row
+easeFactor: number       // starts at 2.5, minimum 1.3
+interval: number         // days until next review, starts at 1
+nextReview: ISO date string
+lastReviewed: ISO date string
+status: "new" | "learning" | "review" | "mastered"
+qualityHistory: number[] // last 10 quality ratings (0–5)
+After each card rating (quality 0–5), update using these exact rules:
+
+If quality >= 3 (correct): newEF = EF + (0.1 - (5 - quality) * (0.08 + (5 - quality) * 0.02)), clamp EF to minimum 1.3. Then: if repetitions === 0, interval = 1; else if repetitions === 1, interval = 6; else interval = Math.round(interval * EF). Increment repetitions.
+If quality < 3 (incorrect): reset repetitions to 0, interval to 1, do NOT change EF.
+Status: if interval >= 21 → "mastered", if interval >= 6 → "review", if interval >= 1 → "learning", else → "new".
+nextReview = today + interval days.
+
+
+2. Replace Know/Difficult buttons with a 5-point rating system
+Remove the two buttons entirely. After flipping a card, show 5 rating buttons in a horizontal row:
+ButtonLabelQuality valueColor1Again0red2Hard2orange3Good3yellow4Easy4green5Perfect5teal
+Each button shows the label on top and the next review interval below it (e.g. "Again — review in 1 day", "Good — review in 6 days"). Calculate and display these preview intervals before the user clicks, so they understand the consequence of each rating. Keyboard shortcuts: keys 1–5 map to the 5 ratings. Only show these buttons after the card is flipped. Do not show them on the front face.
+
+3. Build an Adaptive Daily Session Planner
+Add a new top-level view called "Plan" in the navbar. This view does the following:
+Inputs (editable by user, persisted in localStorage):
+
+Exam date (date picker)
+Target words per day (default: auto-calculated)
+Session length in minutes (default: 30)
+Daily start time preference (morning / afternoon / evening)
+
+Auto-calculations shown on screen:
+
+Days remaining until exam
+Words remaining (total - mastered)
+New words to introduce today (= words remaining / days remaining, rounded up, capped at 50)
+Due reviews today (pull from SRS queue)
+Estimated session time (new words × 45 seconds + reviews × 20 seconds)
+"On track" / "Behind" / "Ahead" status with color indicator
+
+Catchup logic: If the user misses a day, do NOT dump all missed new words at once. Instead, spread the deficit across the next 3 days evenly. Show a "You missed X days — deficit redistributed over 3 days" banner when this happens. Detect a missed day by comparing today's date to the last study date stored in localStorage.
+Daily session launcher: A large "Start Today's Session" button that automatically queues: (1) all SRS due reviews first, then (2) today's quota of new words. This session plays through as a mixed flashcard + quiz sequence.
+
+4. Add a Contextual Sentence Cloze Test question type
+Add a 4th question type to Practice Mode called "Cloze". In the question type selector, add: ["cloze", "📝 Fill-in-Context (Cloze)"].
+How it works:
+
+Fetch one of the word's 3 example sentences from its cached data.
+Replace the target word (or its inflection) in that sentence with a blank rendered as ___________.
+Show the sentence as the question prompt.
+Below it, show 4 multiple-choice word options (the correct word + 3 distractors pulled from words in the same day/group).
+If the user selects correctly, show the full sentence with the word highlighted in the accent color.
+If wrong, show the correct answer and the full sentence.
+
+To handle inflections: when replacing the word in the sentence, search case-insensitively for the root word and any common suffixes (-ed, -ing, -ly, -tion, -ness, -ment). Replace whichever form is found.
+Include "Cloze" in the "Mix All Types" option.
+
+5. Add Confusable Word Clustering and Side-by-Side Comparison Cards
+Detection logic (run silently in the background after every practice session):
+
+After a session ends, scan all words where incorrectCount > 2.
+For each such word W, find other words where the user also has incorrectCount > 1 AND the Levenshtein distance between W and the other word is <= 3, OR they share the same root prefix (first 4 characters).
+Store these pairs in localStorage under key "gre_confusables" as an array of {word1, word2, detectedAt}.
+
+Comparison Card UI:
+
+Add a new view "Confusables" accessible from the navbar.
+Show each confusable pair as a split card: left half = word1 details, right half = word2 details. Both halves show: word, POS, definition, and the key difference highlighted in the accent color.
+Below the pair, show a quiz: "Which word means: [definition]?" with both words as buttons.
+Track accuracy on confusable pairs separately.
+
+
+6. Add Micro-Session Mode ("Quick 10")
+On the Dashboard, add a persistent floating button in the bottom-right corner labeled "⚡ Quick 10". It must always be visible regardless of which view is active.
+Behavior:
+
+Tapping it launches a stripped-down overlay (full-screen modal, no navbar) with exactly 10 cards.
+Card selection priority: (1) overdue SRS words first, (2) then difficult words, (3) then random new words.
+Question types rotate: card 1 = flashcard, card 2 = MC, card 3 = cloze, card 4 = flashcard, etc.
+No setup screens. It starts immediately.
+Shows a circular progress indicator (10 segments) at the top.
+On completion: shows a 5-second summary screen ("10 done · 8 correct · +3 words reviewed") then auto-dismisses.
+Persist a lastMicroSession timestamp so the button shows a green dot if more than 4 hours have passed since the last one.
+
+
+7. Add Etymology and Word Family Grouping
+Data structure: Add a root field to each word's cached data. Update the AI fetch prompt to also return:
+json{
+  "root": "Latin/Greek root and its meaning, e.g. 'bene- (Latin: good)'",
+  "wordFamily": ["2-3 other GRE words that share the same root"]
+}
+On the flashcard front face: Below the Arabic translation, show the root in small italic text in the muted color: e.g. from bene- (Latin: good).
+On the flashcard back face: Add a "Word Family" section below Synonyms showing 2–3 clickable word chips. Clicking a chip navigates to that word's flashcard within a temporary single-card view.
+Root Browser view: Add a collapsible section at the bottom of the Progress view called "Root Browser". Group all cached words by their root prefix. Show each root as an expandable row: clicking it expands to show all words in that family with their definitions inline.
+
+8. Add Pre-Exam Crunch Mode
+Activation: In the Plan view, when the exam date is 14 or fewer days away, show a yellow warning banner: "Crunch Mode available — 14 days or fewer remaining." With a button: "Activate Crunch Mode". Store activation in localStorage as crunchModeActive: boolean.
+When Crunch Mode is active:
+
+Stop introducing ANY new words (new word quota = 0).
+Compress all SRS intervals by 50% (multiply all nextReview dates by 0.5 relative to today).
+Reorder the review queue so words with accuracy < 80% appear first, then 80–95%, then 95%+.
+Force question type to "Fill in the Blank" only (hardest active recall format).
+Show a red "CRUNCH MODE" badge in the navbar.
+On the Dashboard, replace the normal quick-action cards with a single "Crunch Session" button that launches a 50-card session of the weakest words.
+Add a Crunch Mode accuracy tracker: shows overall accuracy this week vs. last week as a percentage delta.
+
+Deactivation: User can manually deactivate, or it auto-deactivates if exam date is updated to more than 14 days away.
+
+9. Add a Recall Strength Heatmap
+Add a new section on the Progress view called "Recall Heatmap". Render it as a grid where:
+
+Each cell = one word.
+Cells are grouped by Day (37 groups), each group is a row labeled "Day 1", "Day 2", etc.
+Cell color is determined by the word's recall strength score, calculated as:
+strength = (correctCount / (correctCount + incorrectCount)) * (1 - decayFactor)
+decayFactor = daysSinceLastReview / (interval * 2), clamped to [0, 1]
+
+strength >= 0.85 → deep green
+strength >= 0.65 → light green
+strength >= 0.40 → yellow
+strength >= 0.20 → orange
+strength < 0.20 or never reviewed → red
+Never seen → grey
+
+
+Cells are small squares (14×14px) with 2px gap. On hover, show a tooltip with: word, strength %, last reviewed date, next review date.
+Add a legend below the grid.
+Add a filter row above the grid: "All / Weak (red+orange) / Due Today / Mastered". Clicking a filter highlights only those cells (others go to 20% opacity).
+Clicking a cell opens that word's flashcard in a single-card overlay.
+
+
+10. Add Mistake Pattern Analytics
+Add a new "Analytics" view in the navbar. It must track and display the following, all computed from localStorage data:
+Per-session tracking (store in localStorage as an array of session objects):
+json{
+  "sessionId": "uuid",
+  "date": "ISO string",
+  "wordsReviewed": ["word1", "word2"],
+  "mistakes": [
+    {
+      "word": "string",
+      "questionType": "mc|fb|tf|cloze",
+      "userAnswer": "string",
+      "correctAnswer": "string",
+      "errorType": "wrong_definition|wrong_pos|confused_with|spelling|context"
+    }
+  ]
+}
+Error type classification (automatic):
+
+If the wrong answer was a word with Levenshtein distance <= 3 from correct → "confused_with"
+If question type was "fb" and distance > 3 → "spelling"
+If question type was "mc" and wrong answer has same POS → "wrong_definition"
+If question type was "mc" and wrong answer has different POS → "wrong_pos"
+If question type was "cloze" → "context"
+
+Analytics Dashboard panels (show all of these):
+
+Accuracy over time — line chart (use recharts) showing daily accuracy % for the past 30 days.
+Error type breakdown — horizontal bar chart showing count of each error type.
+Hardest words — ranked table: top 15 words by (incorrectCount / totalAttempts), showing word, attempts, accuracy %, and a "Study Now" button that opens it as a single flashcard.
+Best streak — longest consecutive days studied, and current streak, shown as large numbers.
+Question type performance — show accuracy % per question type (MC / FB / TF / Cloze) as 4 stat cards.
+Insight sentence — one auto-generated insight shown as a callout box. Generate it by finding the dominant error type and worst-performing day of week. Example: "You make 68% of your mistakes on MC questions involving nouns — focus on definitions, not just context." Compute this purely from the data, no AI call needed.
+
+
+General implementation rules:
+
+Use React hooks only (no Redux, no external state libraries).
+Use recharts for all charts (already available in the artifact environment).
+All new data goes into localStorage with clear key names prefixed gre_.
+Every new view must be reachable from the navbar.
+Mobile responsive: all grids must collapse to single column below 600px viewport width.
+The Quick 10 floating button must appear on all views.
+Do not break the existing AI fetch pipeline — the improved prompt with root and wordFamily fields should be appended to the existing schema, not replace it.
+All new localStorage keys must be listed in the STORAGE_KEYS constant at the top of the file.
+Return the complete file — no placeholders, no // ... rest of code, no truncation.

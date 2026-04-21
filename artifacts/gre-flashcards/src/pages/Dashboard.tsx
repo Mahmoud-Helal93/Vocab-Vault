@@ -20,13 +20,15 @@ export default function Dashboard({ onNavigate }: DashboardProps) {
       const day = i + 1;
       const dayWords = words.filter((w) => w.day === day);
       const mastered = dayWords.filter((w) => w.status === "mastered").length;
+      const review = dayWords.filter((w) => w.status === "review").length;
       const learning = dayWords.filter((w) => w.status === "learning").length;
       return {
         day,
         total: dayWords.length,
         mastered,
+        review,
         learning,
-        pct: Math.round(((mastered + learning) / dayWords.length) * 100),
+        pct: Math.round(((mastered + review + learning) / dayWords.length) * 100),
       };
     });
   }, [words]);
@@ -214,8 +216,9 @@ export default function Dashboard({ onNavigate }: DashboardProps) {
                   {d.pct === 100 && <CheckCircle2 size={14} className="text-green-500" />}
                 </div>
                 <div className="flex items-center gap-3 text-xs text-muted-foreground">
-                  <span>{d.mastered} mastered</span>
-                  <span>{d.learning} learning</span>
+                  <span className="text-green-600 dark:text-green-400">{d.mastered} ✓</span>
+                  <span className="text-amber-500">{d.review} rev</span>
+                  <span>{d.learning} lrn</span>
                   <span className="font-semibold text-foreground">{d.pct}%</span>
                 </div>
               </div>

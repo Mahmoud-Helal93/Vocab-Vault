@@ -247,12 +247,8 @@ export default function StudyMode({ onBack, initialDay }: StudyModeProps) {
           >
             <Flashcard
               word={currentWord}
-              onMarkKnown={() => {
-                markWordReviewed(currentWord.id, 4);
-                if (cardIndex < studyWords.length - 1) handleNext();
-              }}
-              onMarkDifficult={() => {
-                markWordReviewed(currentWord.id, 1);
+              onRate={(quality) => {
+                markWordReviewed(currentWord.id, quality);
                 if (cardIndex < studyWords.length - 1) handleNext();
               }}
               showTimer={settings.timerEnabled}
