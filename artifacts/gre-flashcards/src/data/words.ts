@@ -2140,6 +2140,1236 @@ export const RAW_WORDS: Omit<Word, "id" | "difficulty" | "lastReviewed" | "nextR
     day: 5,
     group: 3,
   },
+
+  // Day 6 Group 1
+  { word: "admonish", pos: "verb", arabic: "يوبخ / ينصح",
+    definition: "To warn or reprimand someone firmly.",
+    examples: [
+      "The teacher admonished the students for talking during the exam.",
+      "Her father admonished her to drive carefully on the icy roads.",
+      "He was admonished by the judge for his disrespectful behavior."
+    ],
+    synonyms: ["reprimand", "rebuke", "chide"], day: 6, group: 1 },
+  { word: "aesthetic", pos: "adjective", arabic: "جمالي / فني",
+    definition: "Concerned with beauty or the appreciation of beauty.",
+    examples: [
+      "The building's aesthetic appeal drew tourists from all over the world.",
+      "She made aesthetic choices that gave the room a calming feel.",
+      "His designs balance functional needs with aesthetic beauty."
+    ],
+    synonyms: ["artistic", "tasteful", "decorative"], day: 6, group: 1 },
+  { word: "affectation", pos: "noun", arabic: "تكلف / تصنّع",
+    definition: "Behavior, speech, or writing that is artificial and designed to impress.",
+    examples: [
+      "His British accent was a mere affectation, since he grew up in Ohio.",
+      "She spoke without any affectation, which made her seem refreshingly honest.",
+      "The poet criticized the affectation of his rivals' overwrought style."
+    ],
+    synonyms: ["pretension", "artificiality", "pose"], day: 6, group: 1 },
+  { word: "alleviate", pos: "verb", arabic: "يخفف",
+    definition: "To make a problem, suffering, or distress less severe.",
+    examples: [
+      "The new medication helped alleviate her chronic back pain.",
+      "Charity efforts can alleviate but rarely eliminate poverty.",
+      "A short walk often alleviates the stress of a long day."
+    ],
+    synonyms: ["ease", "mitigate", "lessen"], day: 6, group: 1 },
+  { word: "analogous", pos: "adjective", arabic: "مماثل / مناظر",
+    definition: "Comparable in certain respects, typically in a way that makes clearer the nature of the things compared.",
+    examples: [
+      "The structure of the heart is analogous to a mechanical pump.",
+      "Her situation is analogous to mine, though the outcomes differed.",
+      "Critics drew analogous comparisons between the two political crises."
+    ],
+    synonyms: ["similar", "comparable", "parallel"], day: 6, group: 1 },
+  { word: "bolster", pos: "verb", arabic: "يدعم / يعزز",
+    definition: "To support, strengthen, or reinforce something.",
+    examples: [
+      "The new evidence bolstered the prosecutor's case against the defendant.",
+      "She tried to bolster his confidence before the big interview.",
+      "Government spending was used to bolster the struggling economy."
+    ],
+    synonyms: ["strengthen", "reinforce", "buttress"], day: 6, group: 1 },
+  { word: "chauvinistic", pos: "adjective", arabic: "متعصب / متحيز",
+    definition: "Showing aggressive or biased support for one's own group, gender, or country.",
+    examples: [
+      "His chauvinistic remarks about women angered the entire audience.",
+      "The film criticized the chauvinistic attitudes of the era.",
+      "She refused to work with his chauvinistic management style."
+    ],
+    synonyms: ["bigoted", "prejudiced", "jingoistic"], day: 6, group: 1 },
+  { word: "connoisseur", pos: "noun", arabic: "خبير / ذواقة",
+    definition: "An expert judge in matters of taste, especially in fine arts or food and drink.",
+    examples: [
+      "As a wine connoisseur, he could identify the vintage from a single sip.",
+      "Art connoisseurs gathered to view the newly discovered painting.",
+      "She is a connoisseur of classical music with a vast record collection."
+    ],
+    synonyms: ["expert", "aficionado", "authority"], day: 6, group: 1 },
+  { word: "dissemble", pos: "verb", arabic: "يخفي حقيقة شعوره",
+    definition: "To conceal one's true motives, feelings, or beliefs.",
+    examples: [
+      "He tried to dissemble his disappointment when he didn't get the promotion.",
+      "Politicians often dissemble when asked uncomfortable questions.",
+      "She could not dissemble her shock at the unexpected news."
+    ],
+    synonyms: ["disguise", "feign", "mask"], day: 6, group: 1 },
+  { word: "dogged", pos: "adjective", arabic: "عنيد / مثابر",
+    definition: "Showing tenacity and grim persistence.",
+    examples: [
+      "Her dogged determination eventually led her to win the championship.",
+      "The detective's dogged pursuit of the truth solved the cold case.",
+      "Despite repeated failures, his dogged efforts finally paid off."
+    ],
+    synonyms: ["tenacious", "persistent", "resolute"], day: 6, group: 1 },
+
+  // Day 6 Group 2
+  { word: "dupe", pos: "verb", arabic: "يخدع / يحتال",
+    definition: "To deceive or trick someone.",
+    examples: [
+      "The investors were duped into buying worthless stock.",
+      "He was duped by an elaborate online scam.",
+      "She refused to be duped by his charming but empty promises."
+    ],
+    synonyms: ["deceive", "trick", "hoodwink"], day: 6, group: 2 },
+  { word: "empirical", pos: "adjective", arabic: "تجريبي / قائم على الملاحظة",
+    definition: "Based on observation or experience rather than theory or pure logic.",
+    examples: [
+      "Scientists rely on empirical evidence to support their conclusions.",
+      "The study provided empirical proof of the drug's effectiveness.",
+      "His claims lacked any empirical basis whatsoever."
+    ],
+    synonyms: ["observational", "experimental", "factual"], day: 6, group: 2 },
+  { word: "engender", pos: "verb", arabic: "يسبب / يولّد",
+    definition: "To cause or give rise to a feeling, situation, or condition.",
+    examples: [
+      "The new policy engendered widespread resentment among employees.",
+      "Trust between leaders can engender lasting peace.",
+      "His comments engendered a heated debate that lasted for hours."
+    ],
+    synonyms: ["cause", "generate", "produce"], day: 6, group: 2 },
+  { word: "entitled", pos: "adjective", arabic: "متعجرف بحقوقه",
+    definition: "Believing oneself to be inherently deserving of privileges or special treatment.",
+    examples: [
+      "His entitled attitude made him unpopular with his coworkers.",
+      "She grew up wealthy but never seemed entitled.",
+      "The entitled customer demanded a refund without a receipt."
+    ],
+    synonyms: ["privileged", "presumptuous", "arrogant"], day: 6, group: 2 },
+  { word: "pertinacious", pos: "adjective", arabic: "متمسك بعناد",
+    definition: "Holding firmly to an opinion or course of action; stubborn.",
+    examples: [
+      "Her pertinacious refusal to change her mind frustrated the committee.",
+      "He was pertinacious in his pursuit of the truth.",
+      "The pertinacious salesman would not take no for an answer."
+    ],
+    synonyms: ["stubborn", "tenacious", "obstinate"], day: 6, group: 2 },
+  { word: "presumptuous", pos: "adjective", arabic: "متجاوز للحدود",
+    definition: "Failing to observe the limits of what is permitted or appropriate; overly bold.",
+    examples: [
+      "It was presumptuous of him to invite himself to the party.",
+      "Don't be presumptuous and assume you know what I want.",
+      "Her presumptuous behavior offended the host."
+    ],
+    synonyms: ["arrogant", "bold", "overconfident"], day: 6, group: 2 },
+  { word: "probity", pos: "noun", arabic: "نزاهة / استقامة",
+    definition: "The quality of having strong moral principles; honesty and decency.",
+    examples: [
+      "The judge was known for her unwavering probity.",
+      "His financial probity made him a trusted treasurer.",
+      "Public officials are expected to act with probity at all times."
+    ],
+    synonyms: ["integrity", "honesty", "rectitude"], day: 6, group: 2 },
+  { word: "proliferate", pos: "verb", arabic: "يتكاثر / ينتشر بسرعة",
+    definition: "To increase rapidly in number or amount.",
+    examples: [
+      "Fake news stories proliferated on social media during the election.",
+      "Cells proliferate quickly when conditions are favorable.",
+      "Cafés and boutiques have proliferated in this once-quiet neighborhood."
+    ],
+    synonyms: ["multiply", "spread", "burgeon"], day: 6, group: 2 },
+  { word: "specious", pos: "adjective", arabic: "خادع ظاهرياً",
+    definition: "Superficially plausible but actually wrong or misleading.",
+    examples: [
+      "His specious arguments couldn't withstand serious scrutiny.",
+      "The salesperson made specious claims about the product's benefits.",
+      "Her reasoning sounded convincing but was ultimately specious."
+    ],
+    synonyms: ["misleading", "deceptive", "fallacious"], day: 6, group: 2 },
+  { word: "spurious", pos: "adjective", arabic: "زائف / مزور",
+    definition: "Not being what it purports to be; false or fake.",
+    examples: [
+      "The painting was revealed to be a spurious copy of the original.",
+      "His spurious credentials fooled the hiring committee for months.",
+      "She dismissed the spurious rumors about her resignation."
+    ],
+    synonyms: ["false", "counterfeit", "bogus"], day: 6, group: 2 },
+
+  // Day 6 Group 3
+  { word: "subjective", pos: "adjective", arabic: "ذاتي / شخصي",
+    definition: "Based on personal opinions, feelings, or interpretations rather than facts.",
+    examples: [
+      "Beauty is largely a subjective matter of personal taste.",
+      "His subjective view of the events differed from witnesses' accounts.",
+      "Grading essays inevitably involves a degree of subjective judgment."
+    ],
+    synonyms: ["personal", "individual", "biased"], day: 6, group: 3 },
+  { word: "subvert", pos: "verb", arabic: "يقوّض / يهدم",
+    definition: "To undermine the power and authority of an established system or institution.",
+    examples: [
+      "The rebels sought to subvert the government through propaganda.",
+      "The novel subverts traditional ideas of heroism.",
+      "Hackers attempted to subvert the security of the network."
+    ],
+    synonyms: ["undermine", "destabilize", "topple"], day: 6, group: 3 },
+  { word: "timorous", pos: "adjective", arabic: "خجول / جبان",
+    definition: "Showing or suffering from nervousness, fear, or a lack of confidence.",
+    examples: [
+      "Her timorous voice barely carried across the room.",
+      "He gave a timorous knock on the principal's door.",
+      "The timorous deer fled at the slightest sound."
+    ],
+    synonyms: ["fearful", "timid", "apprehensive"], day: 6, group: 3 },
+  { word: "tortuous", pos: "adjective", arabic: "متعرج / معقد",
+    definition: "Full of twists and turns; excessively lengthy and complex.",
+    examples: [
+      "The tortuous mountain road tested even experienced drivers.",
+      "His tortuous explanation only confused the audience further.",
+      "The legal process can be slow and tortuous."
+    ],
+    synonyms: ["winding", "convoluted", "circuitous"], day: 6, group: 3 },
+  { word: "tractable", pos: "adjective", arabic: "سهل القيادة / طيّع",
+    definition: "Easy to control or influence; easily managed.",
+    examples: [
+      "The new puppy proved more tractable than her older brother.",
+      "Most of the issues turned out to be tractable with patience.",
+      "She preferred working with tractable students who followed instructions."
+    ],
+    synonyms: ["manageable", "compliant", "docile"], day: 6, group: 3 },
+  { word: "transient", pos: "adjective", arabic: "عابر / مؤقت",
+    definition: "Lasting only for a short time; temporary.",
+    examples: [
+      "Fame can be a transient and unreliable reward.",
+      "The hotel mostly hosts transient guests passing through the city.",
+      "His happiness proved to be transient, fading within days."
+    ],
+    synonyms: ["temporary", "fleeting", "ephemeral"], day: 6, group: 3 },
+  { word: "ubiquitous", pos: "adjective", arabic: "موجود في كل مكان",
+    definition: "Present, appearing, or found everywhere.",
+    examples: [
+      "Smartphones have become ubiquitous in modern society.",
+      "Coffee shops are ubiquitous in this part of the city.",
+      "Her catchy song was ubiquitous on the radio that summer."
+    ],
+    synonyms: ["omnipresent", "pervasive", "universal"], day: 6, group: 3 },
+  { word: "underscore", pos: "verb", arabic: "يؤكد / يبرز",
+    definition: "To emphasize or give added weight to something.",
+    examples: [
+      "The accident underscored the need for stricter safety regulations.",
+      "Recent events underscore how fragile democracy can be.",
+      "She underscored her main point by repeating it twice."
+    ],
+    synonyms: ["emphasize", "highlight", "stress"], day: 6, group: 3 },
+  { word: "venal", pos: "adjective", arabic: "قابل للرشوة / فاسد",
+    definition: "Susceptible to bribery; motivated by corrupt financial gain.",
+    examples: [
+      "The venal official accepted bribes in exchange for favorable contracts.",
+      "Reporters exposed the venal practices of the local government.",
+      "He distrusted the venal politicians who ran the city."
+    ],
+    synonyms: ["corrupt", "bribable", "mercenary"], day: 6, group: 3 },
+  { word: "venerate", pos: "verb", arabic: "يبجّل / يحترم",
+    definition: "To regard with great respect; to revere.",
+    examples: [
+      "The villagers venerated the elderly priest as a living saint.",
+      "Many Americans venerate the founding fathers of the nation.",
+      "The poet was venerated long after her death."
+    ],
+    synonyms: ["revere", "honor", "worship"], day: 6, group: 3 },
+
+  // Day 7 Group 1
+  { word: "appease", pos: "verb", arabic: "يهدّئ / يسترضي",
+    definition: "To pacify or placate by acceding to demands.",
+    examples: [
+      "He tried to appease his angry customer by offering a refund.",
+      "The treaty was meant to appease the rebellious provinces.",
+      "She gave the crying child a toy to appease him."
+    ],
+    synonyms: ["pacify", "placate", "mollify"], day: 7, group: 1 },
+  { word: "arbitrary", pos: "adjective", arabic: "تعسفي / اعتباطي",
+    definition: "Based on random choice or personal whim, rather than reason or system.",
+    examples: [
+      "The decision seemed arbitrary and lacked any clear justification.",
+      "She drew an arbitrary line between acceptable and unacceptable behavior.",
+      "The judges were criticized for their arbitrary scoring."
+    ],
+    synonyms: ["random", "capricious", "whimsical"], day: 7, group: 1 },
+  { word: "archaic", pos: "adjective", arabic: "قديم / عتيق",
+    definition: "Very old or old-fashioned; no longer current.",
+    examples: [
+      "The archaic laws were finally repealed last year.",
+      "He used archaic words that nobody understood.",
+      "Their archaic farming methods were replaced by modern technology."
+    ],
+    synonyms: ["antiquated", "outdated", "obsolete"], day: 7, group: 1 },
+  { word: "clamorous", pos: "adjective", arabic: "صاخب / ضاج",
+    definition: "Making a loud and confused noise; vehemently demanding.",
+    examples: [
+      "The clamorous crowd demanded an encore from the band.",
+      "Reporters became clamorous as the senator left the building.",
+      "The market was a clamorous scene of buyers and sellers."
+    ],
+    synonyms: ["noisy", "vociferous", "uproarious"], day: 7, group: 1 },
+  { word: "dearth", pos: "noun", arabic: "ندرة / شح",
+    definition: "A scarcity or lack of something.",
+    examples: [
+      "There is a dearth of qualified teachers in rural areas.",
+      "The dearth of evidence forced the prosecutor to drop the case.",
+      "A dearth of rainfall led to severe drought conditions."
+    ],
+    synonyms: ["scarcity", "lack", "paucity"], day: 7, group: 1 },
+  { word: "explicable", pos: "adjective", arabic: "قابل للتفسير",
+    definition: "Able to be accounted for or understood.",
+    examples: [
+      "Her sudden departure was easily explicable given the circumstances.",
+      "Some natural phenomena are not yet explicable by science.",
+      "His odd behavior became explicable once we learned about his illness."
+    ],
+    synonyms: ["understandable", "accountable", "comprehensible"], day: 7, group: 1 },
+  { word: "hyperbole", pos: "noun", arabic: "مبالغة",
+    definition: "Exaggerated statements or claims not meant to be taken literally.",
+    examples: [
+      "Saying you're starving when you're just hungry is a common hyperbole.",
+      "His speech was full of hyperbole about the company's achievements.",
+      "Don't dismiss her concerns as mere hyperbole."
+    ],
+    synonyms: ["exaggeration", "overstatement", "embellishment"], day: 7, group: 1 },
+  { word: "immutable", pos: "adjective", arabic: "ثابت / لا يتغير",
+    definition: "Unchanging over time or unable to be changed.",
+    examples: [
+      "The laws of physics are considered immutable.",
+      "Her immutable belief in justice guided her career.",
+      "Death and taxes are often called the only immutable certainties."
+    ],
+    synonyms: ["unchangeable", "fixed", "permanent"], day: 7, group: 1 },
+  { word: "indefatigable", pos: "adjective", arabic: "لا يكلّ ولا يملّ",
+    definition: "Persisting tirelessly; incapable of being fatigued.",
+    examples: [
+      "Her indefatigable efforts finally brought the project to completion.",
+      "The indefatigable volunteer worked twelve-hour days for weeks.",
+      "He was an indefatigable champion of human rights."
+    ],
+    synonyms: ["tireless", "untiring", "unflagging"], day: 7, group: 1 },
+  { word: "indolent", pos: "adjective", arabic: "كسول / خامل",
+    definition: "Wanting to avoid activity or exertion; lazy.",
+    examples: [
+      "The indolent student rarely turned in his homework on time.",
+      "She spent an indolent afternoon lounging by the pool.",
+      "His indolent attitude cost him several promotions."
+    ],
+    synonyms: ["lazy", "slothful", "idle"], day: 7, group: 1 },
+
+  // Day 7 Group 2
+  { word: "insular", pos: "adjective", arabic: "منعزل / ضيق الأفق",
+    definition: "Ignorant of or uninterested in cultures, ideas, or peoples outside one's own experience.",
+    examples: [
+      "The small town had an insular culture that resisted outsiders.",
+      "His insular worldview was challenged by his travels abroad.",
+      "The company's insular leadership failed to anticipate market changes."
+    ],
+    synonyms: ["narrow-minded", "parochial", "isolated"], day: 7, group: 2 },
+  { word: "intransigent", pos: "adjective", arabic: "متشدد / لا يساوم",
+    definition: "Unwilling or refusing to change one's views or to agree.",
+    examples: [
+      "The intransigent union leader rejected every offer from management.",
+      "Both sides remained intransigent, and negotiations broke down.",
+      "His intransigent stance prevented any compromise."
+    ],
+    synonyms: ["uncompromising", "unyielding", "obstinate"], day: 7, group: 2 },
+  { word: "intrepid", pos: "adjective", arabic: "شجاع / مقدام",
+    definition: "Fearless; adventurous and resolute in the face of danger.",
+    examples: [
+      "The intrepid explorer crossed the frozen tundra alone.",
+      "Intrepid journalists risked their lives to report the story.",
+      "Her intrepid spirit inspired the entire team."
+    ],
+    synonyms: ["fearless", "brave", "valiant"], day: 7, group: 2 },
+  { word: "irreverent", pos: "adjective", arabic: "غير محترم / ساخر",
+    definition: "Showing a lack of respect for people or things that are generally taken seriously.",
+    examples: [
+      "His irreverent humor offended many in the audience.",
+      "The comedian's irreverent take on politics drew big crowds.",
+      "She had an irreverent attitude toward authority figures."
+    ],
+    synonyms: ["disrespectful", "mocking", "flippant"], day: 7, group: 2 },
+  { word: "loathe", pos: "verb", arabic: "يكره بشدة",
+    definition: "To feel intense dislike or disgust for.",
+    examples: [
+      "She loathed the smell of fish cooking in the morning.",
+      "He loathed having to attend formal events.",
+      "Critics loathed the film, but audiences loved it."
+    ],
+    synonyms: ["detest", "abhor", "despise"], day: 7, group: 2 },
+  { word: "malign", pos: "verb", arabic: "يفتري على / يشوّه سمعة",
+    definition: "To speak about someone in a spitefully critical manner.",
+    examples: [
+      "He felt his rivals had unfairly maligned him in the press.",
+      "She refused to malign her former employer despite their dispute.",
+      "Often-maligned politicians are sometimes vindicated by history."
+    ],
+    synonyms: ["slander", "defame", "vilify"], day: 7, group: 2 },
+  { word: "malleable", pos: "adjective", arabic: "قابل للتشكيل / لين",
+    definition: "Easily influenced or shaped; pliable.",
+    examples: [
+      "Gold is a soft, malleable metal that can be hammered into thin sheets.",
+      "Children's minds are particularly malleable at a young age.",
+      "Her malleable opinions shifted with each new piece of information."
+    ],
+    synonyms: ["pliable", "flexible", "adaptable"], day: 7, group: 2 },
+  { word: "neophyte", pos: "noun", arabic: "مبتدئ",
+    definition: "A person who is new to a subject, skill, or belief.",
+    examples: [
+      "As a neophyte to chess, he often lost to experienced players.",
+      "The seminar was designed for neophytes in the field.",
+      "Even neophytes can master the basics within a few weeks."
+    ],
+    synonyms: ["novice", "beginner", "tyro"], day: 7, group: 2 },
+  { word: "plastic", pos: "adjective", arabic: "مرن / قابل للتشكيل",
+    definition: "Easily shaped or molded; capable of being changed.",
+    examples: [
+      "The clay had a plastic quality that made it easy to sculpt.",
+      "Young brains are remarkably plastic and able to recover from injury.",
+      "His political views were plastic and shifted with public opinion."
+    ],
+    synonyms: ["malleable", "flexible", "moldable"], day: 7, group: 2 },
+  { word: "platitude", pos: "noun", arabic: "كلام مبتذل",
+    definition: "A trite, dull, or unoriginal remark, especially one that is uttered as if it were profound.",
+    examples: [
+      "The speech was filled with platitudes about hard work and success.",
+      "She offered the usual platitudes at the funeral.",
+      "His response was a platitude rather than a real answer."
+    ],
+    synonyms: ["cliche", "truism", "banality"], day: 7, group: 2 },
+
+  // Day 7 Group 3
+  { word: "prescient", pos: "adjective", arabic: "بصير / متنبئ",
+    definition: "Having or showing knowledge of events before they take place.",
+    examples: [
+      "Her prescient warnings about the financial crisis were ignored.",
+      "The novel proved prescient in its predictions about technology.",
+      "He had a prescient sense of which stocks would rise."
+    ],
+    synonyms: ["prophetic", "foresighted", "clairvoyant"], day: 7, group: 3 },
+  { word: "pristine", pos: "adjective", arabic: "نقي / لم يُمس",
+    definition: "In its original condition; unspoiled and pure.",
+    examples: [
+      "The remote beach was pristine, untouched by tourism.",
+      "She kept her vintage car in pristine condition.",
+      "The pristine snow sparkled in the morning sunlight."
+    ],
+    synonyms: ["pure", "unspoiled", "immaculate"], day: 7, group: 3 },
+  { word: "reproach", pos: "verb", arabic: "يلوم / يعاتب",
+    definition: "To express disapproval or disappointment with someone.",
+    examples: [
+      "She reproached him for forgetting their anniversary.",
+      "He felt reproached by the silent stares of his colleagues.",
+      "There is nothing in his record to reproach."
+    ],
+    synonyms: ["rebuke", "scold", "admonish"], day: 7, group: 3 },
+  { word: "robust", pos: "adjective", arabic: "قوي / متين",
+    definition: "Strong and healthy; able to withstand difficulties.",
+    examples: [
+      "The economy showed robust growth in the third quarter.",
+      "The athlete maintained a robust training schedule year-round.",
+      "Their software is known for its robust security features."
+    ],
+    synonyms: ["sturdy", "vigorous", "strong"], day: 7, group: 3 },
+  { word: "salubrious", pos: "adjective", arabic: "نافع للصحة",
+    definition: "Health-giving; healthy or wholesome.",
+    examples: [
+      "The mountain air was famously salubrious for those with lung problems.",
+      "She moved to a more salubrious neighborhood after her promotion.",
+      "Doctors recommended the salubrious effects of regular exercise."
+    ],
+    synonyms: ["healthful", "wholesome", "beneficial"], day: 7, group: 3 },
+  { word: "sanction", pos: "noun", arabic: "موافقة / عقوبة",
+    definition: "Official permission or approval; alternatively, a penalty for breaking a rule.",
+    examples: [
+      "The project went ahead with the full sanction of the board.",
+      "Economic sanctions were imposed on the rogue regime.",
+      "The committee gave its sanction to the new research program."
+    ],
+    synonyms: ["approval", "authorization", "penalty"], day: 7, group: 3 },
+  { word: "sedulous", pos: "adjective", arabic: "مجتهد / دؤوب",
+    definition: "Showing dedication and diligence in one's work.",
+    examples: [
+      "His sedulous research yielded a groundbreaking discovery.",
+      "She was sedulous in her preparation for the bar exam.",
+      "The sedulous editor caught every minor error in the manuscript."
+    ],
+    synonyms: ["diligent", "assiduous", "industrious"], day: 7, group: 3 },
+  { word: "soporific", pos: "adjective", arabic: "مسبب للنعاس",
+    definition: "Tending to induce drowsiness or sleep.",
+    examples: [
+      "The professor's soporific voice put half the class to sleep.",
+      "Warm milk has a soporific effect on many people.",
+      "I found the lecture soporific despite its important subject."
+    ],
+    synonyms: ["sleep-inducing", "sedative", "drowsy"], day: 7, group: 3 },
+  { word: "stern", pos: "adjective", arabic: "صارم / قاسٍ",
+    definition: "Serious and unrelenting, especially in the assertion of authority.",
+    examples: [
+      "The teacher gave a stern warning to the disruptive student.",
+      "His stern expression hid a kind heart.",
+      "She believed in stern but fair discipline."
+    ],
+    synonyms: ["strict", "severe", "harsh"], day: 7, group: 3 },
+  { word: "tendentious", pos: "adjective", arabic: "متحيّز / منحاز",
+    definition: "Expressing or intending to promote a particular cause or point of view, especially a controversial one.",
+    examples: [
+      "The tendentious article presented only one side of the story.",
+      "His tendentious arguments betrayed his political agenda.",
+      "Critics accused the documentary of being tendentious propaganda."
+    ],
+    synonyms: ["biased", "partisan", "slanted"], day: 7, group: 3 },
+
+  // Day 8 Group 1
+  { word: "accentuate", pos: "verb", arabic: "يبرز / يؤكد",
+    definition: "To make more noticeable or prominent.",
+    examples: [
+      "The dress accentuated her elegant figure.",
+      "Soft lighting accentuated the warm tones of the room.",
+      "He used italics to accentuate key words in his essay."
+    ],
+    synonyms: ["emphasize", "highlight", "underscore"], day: 8, group: 1 },
+  { word: "conjectural", pos: "adjective", arabic: "افتراضي / تخميني",
+    definition: "Based on or involving guesswork rather than firm evidence.",
+    examples: [
+      "His theory remains conjectural until more data is collected.",
+      "The historian admitted that parts of her account were conjectural.",
+      "Most early theories about the universe were largely conjectural."
+    ],
+    synonyms: ["speculative", "hypothetical", "suppositional"], day: 8, group: 1 },
+  { word: "convivial", pos: "adjective", arabic: "ودود / مرح",
+    definition: "Friendly, lively, and enjoyable, especially in social contexts.",
+    examples: [
+      "The convivial atmosphere at the reception put everyone at ease.",
+      "He was a convivial host who made every guest feel welcome.",
+      "The pub was known for its convivial gatherings on weekends."
+    ],
+    synonyms: ["sociable", "friendly", "jovial"], day: 8, group: 1 },
+  { word: "decadent", pos: "adjective", arabic: "منحط / مترف",
+    definition: "Characterized by moral decline or excessive self-indulgence.",
+    examples: [
+      "Critics described the empire's final years as decadent and corrupt.",
+      "She enjoyed the decadent dessert despite her diet.",
+      "The film depicted the decadent lifestyle of the rich and famous."
+    ],
+    synonyms: ["self-indulgent", "dissolute", "indulgent"], day: 8, group: 1 },
+  { word: "egregious", pos: "adjective", arabic: "فاضح / صارخ",
+    definition: "Outstandingly bad; shockingly noticeable.",
+    examples: [
+      "The report contained egregious errors that misled readers.",
+      "His egregious behavior at the meeting cost him his job.",
+      "Such an egregious violation of trust cannot be overlooked."
+    ],
+    synonyms: ["flagrant", "blatant", "glaring"], day: 8, group: 1 },
+  { word: "evanescent", pos: "adjective", arabic: "زائل / سريع التلاشي",
+    definition: "Soon passing out of sight, memory, or existence; quickly fading.",
+    examples: [
+      "The evanescent beauty of cherry blossoms makes them precious.",
+      "Fame can be evanescent, here today and gone tomorrow.",
+      "He captured the evanescent light of dawn in his painting."
+    ],
+    synonyms: ["fleeting", "transient", "ephemeral"], day: 8, group: 1 },
+  { word: "flamboyant", pos: "adjective", arabic: "متباهٍ / مبهرج",
+    definition: "Tending to attract attention because of confidence, style, or showiness.",
+    examples: [
+      "The flamboyant performer wore feathered costumes on stage.",
+      "Her flamboyant personality lit up every room she entered.",
+      "He drove a flamboyant red sports car around town."
+    ],
+    synonyms: ["showy", "ostentatious", "flashy"], day: 8, group: 1 },
+  { word: "forestall", pos: "verb", arabic: "يستبق / يمنع مسبقاً",
+    definition: "To prevent or obstruct by taking action ahead of time.",
+    examples: [
+      "She acted quickly to forestall any further criticism.",
+      "The company released a statement to forestall negative rumors.",
+      "Vaccinations forestall the spread of dangerous diseases."
+    ],
+    synonyms: ["preempt", "prevent", "avert"], day: 8, group: 1 },
+  { word: "gainsay", pos: "verb", arabic: "ينكر / يعارض",
+    definition: "To deny or contradict; to speak against.",
+    examples: [
+      "No one could gainsay the truth of her observation.",
+      "The evidence is so strong that few would dare gainsay it.",
+      "He could not gainsay her impressive accomplishments."
+    ],
+    synonyms: ["deny", "contradict", "dispute"], day: 8, group: 1 },
+  { word: "galvanize", pos: "verb", arabic: "يحفّز / يستنفر",
+    definition: "To shock or excite someone into taking action.",
+    examples: [
+      "The crisis galvanized the community into immediate action.",
+      "Her speech galvanized supporters across the country.",
+      "News of the disaster galvanized international relief efforts."
+    ],
+    synonyms: ["motivate", "energize", "mobilize"], day: 8, group: 1 },
+
+  // Day 8 Group 2
+  { word: "indiscriminate", pos: "adjective", arabic: "عشوائي / دون تمييز",
+    definition: "Done at random or without careful judgment.",
+    examples: [
+      "The indiscriminate bombing killed many civilians.",
+      "He showed indiscriminate generosity to anyone who asked.",
+      "Her indiscriminate reading covered everything from poetry to physics."
+    ],
+    synonyms: ["random", "unselective", "haphazard"], day: 8, group: 2 },
+  { word: "innocuous", pos: "adjective", arabic: "غير ضار / لطيف",
+    definition: "Not harmful or offensive.",
+    examples: [
+      "What seemed like an innocuous comment deeply offended her.",
+      "The snake's bite was painful but ultimately innocuous.",
+      "He told an innocuous joke to break the tension."
+    ],
+    synonyms: ["harmless", "benign", "inoffensive"], day: 8, group: 2 },
+  { word: "momentary", pos: "adjective", arabic: "لحظي / عابر",
+    definition: "Lasting for a very brief time.",
+    examples: [
+      "There was a momentary pause before she answered.",
+      "His momentary lapse in judgment had lasting consequences.",
+      "She felt a momentary flash of doubt before continuing."
+    ],
+    synonyms: ["brief", "fleeting", "transient"], day: 8, group: 2 },
+  { word: "mundane", pos: "adjective", arabic: "عادي / دنيوي",
+    definition: "Lacking interest or excitement; dull and ordinary.",
+    examples: [
+      "She wanted to escape the mundane routines of office life.",
+      "He found beauty in the most mundane objects.",
+      "Their conversation never rose above the mundane."
+    ],
+    synonyms: ["ordinary", "humdrum", "banal"], day: 8, group: 2 },
+  { word: "nettlesome", pos: "adjective", arabic: "مزعج / مغيظ",
+    definition: "Causing annoyance or difficulty.",
+    examples: [
+      "The nettlesome problem refused to go away despite many attempts.",
+      "He had a nettlesome habit of interrupting people.",
+      "Several nettlesome questions remained after the meeting."
+    ],
+    synonyms: ["annoying", "irritating", "vexing"], day: 8, group: 2 },
+  { word: "nullify", pos: "verb", arabic: "يبطل / يلغي",
+    definition: "To make legally null and void; to cancel out.",
+    examples: [
+      "The court nullified the contract due to fraud.",
+      "His apology did not nullify the harm he had caused.",
+      "A single mistake can nullify hours of careful work."
+    ],
+    synonyms: ["invalidate", "cancel", "annul"], day: 8, group: 2 },
+  { word: "obviate", pos: "verb", arabic: "يلغي الحاجة إلى",
+    definition: "To remove a need or difficulty; to make unnecessary.",
+    examples: [
+      "Online banking obviates the need to visit a branch.",
+      "Careful planning can obviate many potential problems.",
+      "The new policy will obviate the requirement for paper forms."
+    ],
+    synonyms: ["preclude", "prevent", "avert"], day: 8, group: 2 },
+  { word: "omnipresent", pos: "adjective", arabic: "موجود في كل مكان",
+    definition: "Present everywhere at the same time.",
+    examples: [
+      "Surveillance cameras have become omnipresent in modern cities.",
+      "The threat of cyberattacks is now omnipresent for businesses.",
+      "Her influence on the team was quiet but omnipresent."
+    ],
+    synonyms: ["ubiquitous", "pervasive", "everywhere"], day: 8, group: 2 },
+  { word: "oust", pos: "verb", arabic: "يطرد / يخلع",
+    definition: "To drive out or expel from a position or place.",
+    examples: [
+      "The board voted to oust the chief executive after the scandal.",
+      "Rebels tried to oust the dictator from power.",
+      "She was ousted from the committee for repeated absences."
+    ],
+    synonyms: ["expel", "remove", "depose"], day: 8, group: 2 },
+  { word: "palpable", pos: "adjective", arabic: "ملموس / واضح",
+    definition: "So intense as to be almost touched or felt; clearly perceptible.",
+    examples: [
+      "The tension in the room was palpable.",
+      "Her excitement about the trip was palpable.",
+      "There was a palpable sense of relief after the announcement."
+    ],
+    synonyms: ["tangible", "perceptible", "evident"], day: 8, group: 2 },
+
+  // Day 8 Group 3
+  { word: "perfidy", pos: "noun", arabic: "غدر / خيانة",
+    definition: "Deceitfulness; untrustworthiness; betrayal.",
+    examples: [
+      "His perfidy in revealing the secret destroyed their friendship.",
+      "The general was executed for his perfidy during the war.",
+      "Such perfidy from a trusted advisor was unforgivable."
+    ],
+    synonyms: ["treachery", "betrayal", "duplicity"], day: 8, group: 3 },
+  { word: "profuse", pos: "adjective", arabic: "وفير / غزير",
+    definition: "Existing in large quantity; plentiful.",
+    examples: [
+      "She offered profuse apologies for her mistake.",
+      "The garden produced profuse blooms throughout summer.",
+      "He gave profuse thanks to everyone who helped him."
+    ],
+    synonyms: ["abundant", "copious", "lavish"], day: 8, group: 3 },
+  { word: "pugnacious", pos: "adjective", arabic: "عدواني / محب للشجار",
+    definition: "Eager or quick to argue, quarrel, or fight.",
+    examples: [
+      "His pugnacious nature made him difficult to work with.",
+      "The pugnacious lawyer challenged every point in court.",
+      "She had a pugnacious response to any criticism."
+    ],
+    synonyms: ["belligerent", "combative", "aggressive"], day: 8, group: 3 },
+  { word: "sagacious", pos: "adjective", arabic: "حكيم / فطن",
+    definition: "Having or showing keen mental discernment and good judgment; wise.",
+    examples: [
+      "Her sagacious advice helped him avoid a costly mistake.",
+      "The sagacious old judge was respected by everyone.",
+      "He made a sagacious investment that paid off years later."
+    ],
+    synonyms: ["wise", "shrewd", "astute"], day: 8, group: 3 },
+  { word: "sanguine", pos: "adjective", arabic: "متفائل",
+    definition: "Optimistic or positive, especially in a difficult situation.",
+    examples: [
+      "She remained sanguine about the company's prospects despite the downturn.",
+      "He was sanguine in the face of overwhelming odds.",
+      "The doctor was sanguine about her chances of full recovery."
+    ],
+    synonyms: ["optimistic", "hopeful", "confident"], day: 8, group: 3 },
+  { word: "scant", pos: "adjective", arabic: "ضئيل / قليل",
+    definition: "Barely sufficient or adequate; very little.",
+    examples: [
+      "There is scant evidence to support his claim.",
+      "She paid scant attention to the warnings.",
+      "The harvest this year provided only a scant supply of grain."
+    ],
+    synonyms: ["meager", "sparse", "limited"], day: 8, group: 3 },
+  { word: "skullduggery", pos: "noun", arabic: "خداع / مكر",
+    definition: "Underhanded or unscrupulous behavior; trickery.",
+    examples: [
+      "The election was tainted by political skullduggery.",
+      "He was accused of skullduggery in his business dealings.",
+      "Detective novels often involve plenty of skullduggery."
+    ],
+    synonyms: ["trickery", "chicanery", "duplicity"], day: 8, group: 3 },
+  { word: "trivial", pos: "adjective", arabic: "تافه / غير مهم",
+    definition: "Of little value or importance.",
+    examples: [
+      "Don't waste time arguing over such trivial matters.",
+      "The differences between the two products are trivial.",
+      "She brushed off the criticism as trivial."
+    ],
+    synonyms: ["insignificant", "minor", "petty"], day: 8, group: 3 },
+  { word: "utilitarian", pos: "adjective", arabic: "نفعي / عملي",
+    definition: "Designed to be useful or practical rather than attractive.",
+    examples: [
+      "The kitchen had a utilitarian design with minimal decoration.",
+      "He chose utilitarian furniture over more decorative pieces.",
+      "Their utilitarian approach focused on function over form."
+    ],
+    synonyms: ["practical", "functional", "pragmatic"], day: 8, group: 3 },
+  { word: "vapid", pos: "adjective", arabic: "ممل / فارغ",
+    definition: "Offering nothing that is stimulating or challenging; dull.",
+    examples: [
+      "The conversation at dinner was vapid and forgettable.",
+      "Critics dismissed the film as a vapid romantic comedy.",
+      "Her vapid smile gave nothing away."
+    ],
+    synonyms: ["insipid", "dull", "lifeless"], day: 8, group: 3 },
+
+  // Day 9 Group 1
+  { word: "boorish", pos: "adjective", arabic: "وقح / فظ",
+    definition: "Rough and bad-mannered; coarse.",
+    examples: [
+      "His boorish behavior at the dinner table embarrassed his hosts.",
+      "She refused to put up with his boorish remarks any longer.",
+      "The boorish guests were eventually asked to leave."
+    ],
+    synonyms: ["rude", "uncouth", "ill-mannered"], day: 9, group: 1 },
+  { word: "brook", pos: "verb", arabic: "يتحمل / يطيق",
+    definition: "To tolerate or allow something, especially something disliked.",
+    examples: [
+      "She would brook no opposition to her plans.",
+      "He could not brook any criticism of his work.",
+      "The principal will not brook tardiness from teachers."
+    ],
+    synonyms: ["tolerate", "endure", "permit"], day: 9, group: 1 },
+  { word: "circumspect", pos: "adjective", arabic: "حذر / متأنٍ",
+    definition: "Wary and unwilling to take risks; cautious.",
+    examples: [
+      "She was circumspect about sharing personal details with strangers.",
+      "He took a circumspect approach to the dangerous investment.",
+      "Politicians must be circumspect when speaking to the press."
+    ],
+    synonyms: ["cautious", "wary", "prudent"], day: 9, group: 1 },
+  { word: "comity", pos: "noun", arabic: "مودة / احترام متبادل",
+    definition: "Courtesy and considerate behavior, especially among nations or groups.",
+    examples: [
+      "The meeting was conducted with great comity despite differing views.",
+      "International comity requires respect for each nation's laws.",
+      "The two parties pledged to restore comity in the senate."
+    ],
+    synonyms: ["civility", "courtesy", "harmony"], day: 9, group: 1 },
+  { word: "commensurate", pos: "adjective", arabic: "متناسب / متكافئ",
+    definition: "Corresponding in size, extent, amount, or degree; proportional.",
+    examples: [
+      "Her salary is commensurate with her experience and skills.",
+      "The punishment should be commensurate with the offense.",
+      "Funding was not commensurate with the project's true needs."
+    ],
+    synonyms: ["proportionate", "equivalent", "matching"], day: 9, group: 1 },
+  { word: "cordial", pos: "adjective", arabic: "ودي / لطيف",
+    definition: "Warm and friendly in manner.",
+    examples: [
+      "The two leaders had a cordial meeting despite past tensions.",
+      "She received a cordial welcome at the new office.",
+      "Their relationship has remained cordial since the divorce."
+    ],
+    synonyms: ["warm", "friendly", "amiable"], day: 9, group: 1 },
+  { word: "deleterious", pos: "adjective", arabic: "ضار / مؤذٍ",
+    definition: "Causing harm or damage.",
+    examples: [
+      "Smoking has deleterious effects on overall health.",
+      "Excessive screen time may be deleterious to children's sleep.",
+      "The new regulations were deleterious to small businesses."
+    ],
+    synonyms: ["harmful", "damaging", "detrimental"], day: 9, group: 1 },
+  { word: "dichotomy", pos: "noun", arabic: "ثنائية / تقابل",
+    definition: "A division or contrast between two things that are represented as entirely different.",
+    examples: [
+      "There is a dichotomy between his public and private personas.",
+      "The book explores the dichotomy between nature and nurture.",
+      "She rejected the false dichotomy of work versus family."
+    ],
+    synonyms: ["division", "contrast", "split"], day: 9, group: 1 },
+  { word: "edify", pos: "verb", arabic: "يثقّف / يهذّب",
+    definition: "To instruct or improve someone morally or intellectually.",
+    examples: [
+      "The lecture was meant to edify the young students.",
+      "Travel can edify those willing to learn from new cultures.",
+      "Her writings continue to edify readers around the world."
+    ],
+    synonyms: ["enlighten", "educate", "uplift"], day: 9, group: 1 },
+  { word: "elicit", pos: "verb", arabic: "يستخلص / يستثير",
+    definition: "To draw out a response, answer, or fact from someone.",
+    examples: [
+      "The detective tried to elicit a confession from the suspect.",
+      "Her speech elicited enthusiastic applause from the crowd.",
+      "Open-ended questions tend to elicit more thoughtful answers."
+    ],
+    synonyms: ["draw out", "evoke", "extract"], day: 9, group: 1 },
+
+  // Day 9 Group 2
+  { word: "erudite", pos: "adjective", arabic: "متعلم / مثقف",
+    definition: "Having or showing great knowledge or learning.",
+    examples: [
+      "The professor's erudite lectures attracted students from across campus.",
+      "His erudite essays were published in leading journals.",
+      "She was an erudite scholar of medieval literature."
+    ],
+    synonyms: ["learned", "scholarly", "knowledgeable"], day: 9, group: 2 },
+  { word: "fecund", pos: "adjective", arabic: "خصب / منتج",
+    definition: "Producing or capable of producing an abundance of offspring or new growth; highly fertile.",
+    examples: [
+      "The fecund soil yielded bumper crops year after year.",
+      "Her fecund imagination generated countless story ideas.",
+      "The artist's fecund period produced dozens of major works."
+    ],
+    synonyms: ["fertile", "prolific", "productive"], day: 9, group: 2 },
+  { word: "feeble", pos: "adjective", arabic: "ضعيف / واهٍ",
+    definition: "Lacking physical strength, especially as a result of age or illness; weak.",
+    examples: [
+      "His feeble grip suggested how ill he had become.",
+      "She offered a feeble excuse for being late.",
+      "The feeble light from the candle barely illuminated the room."
+    ],
+    synonyms: ["weak", "frail", "infirm"], day: 9, group: 2 },
+  { word: "felicitous", pos: "adjective", arabic: "موفق / مناسب",
+    definition: "Well chosen or suited to the circumstances; pleasing.",
+    examples: [
+      "Her felicitous choice of words eased the tense moment.",
+      "The novel ends with a felicitous turn of events.",
+      "It was a felicitous coincidence that they met that day."
+    ],
+    synonyms: ["apt", "fitting", "well-chosen"], day: 9, group: 2 },
+  { word: "forbear", pos: "verb", arabic: "يمتنع / يكفّ",
+    definition: "To refrain from doing something; to hold back.",
+    examples: [
+      "She had to forbear from interrupting during the long speech.",
+      "He forbore to mention her past mistakes out of kindness.",
+      "Please forbear with me while I explain the situation."
+    ],
+    synonyms: ["refrain", "abstain", "withhold"], day: 9, group: 2 },
+  { word: "haphazard", pos: "adjective", arabic: "عشوائي / غير منظم",
+    definition: "Lacking any obvious principle of organization; random.",
+    examples: [
+      "Her notes were arranged in a haphazard manner.",
+      "The investigation was haphazard and missed key evidence.",
+      "He stacked the books in a haphazard pile on his desk."
+    ],
+    synonyms: ["random", "disorganized", "chaotic"], day: 9, group: 2 },
+  { word: "hodgepodge", pos: "noun", arabic: "خليط فوضوي",
+    definition: "A confused mixture of different things.",
+    examples: [
+      "The drawer contained a hodgepodge of old keys and receipts.",
+      "His thesis was a hodgepodge of unrelated ideas.",
+      "The town's architecture is a hodgepodge of styles from different eras."
+    ],
+    synonyms: ["mixture", "jumble", "medley"], day: 9, group: 2 },
+  { word: "impede", pos: "verb", arabic: "يعيق / يعرقل",
+    definition: "To delay or prevent someone or something by obstructing them.",
+    examples: [
+      "Heavy snow impeded the rescue team's progress.",
+      "Bureaucratic delays impeded the project for months.",
+      "Don't let fear impede your personal growth."
+    ],
+    synonyms: ["hinder", "obstruct", "hamper"], day: 9, group: 2 },
+  { word: "impetuous", pos: "adjective", arabic: "متهور / مندفع",
+    definition: "Acting or done quickly and without thought or care.",
+    examples: [
+      "His impetuous decision to quit his job surprised everyone.",
+      "She made an impetuous purchase she later regretted.",
+      "The impetuous youth jumped into the river without checking the depth."
+    ],
+    synonyms: ["impulsive", "rash", "hasty"], day: 9, group: 2 },
+  { word: "irascible", pos: "adjective", arabic: "سريع الغضب",
+    definition: "Easily made angry; quick-tempered.",
+    examples: [
+      "The irascible old man yelled at children playing on his lawn.",
+      "Her irascible boss made even simple meetings stressful.",
+      "He becomes irascible when he hasn't had enough sleep."
+    ],
+    synonyms: ["irritable", "hot-tempered", "testy"], day: 9, group: 2 },
+
+  // Day 9 Group 3
+  { word: "mercenary", pos: "adjective", arabic: "مأجور / يحركه المال",
+    definition: "Primarily concerned with making money at the expense of ethics.",
+    examples: [
+      "His mercenary motives became clear once the deal was signed.",
+      "Critics accused the lawyer of having a mercenary attitude.",
+      "She refused to work for a company she saw as purely mercenary."
+    ],
+    synonyms: ["greedy", "venal", "money-oriented"], day: 9, group: 3 },
+  { word: "meticulous", pos: "adjective", arabic: "دقيق / متأني",
+    definition: "Showing great attention to detail; very careful and precise.",
+    examples: [
+      "She kept meticulous records of every transaction.",
+      "His meticulous research uncovered errors others had missed.",
+      "The chef is meticulous about the freshness of every ingredient."
+    ],
+    synonyms: ["thorough", "precise", "scrupulous"], day: 9, group: 3 },
+  { word: "mordant", pos: "adjective", arabic: "لاذع / ساخر",
+    definition: "Sharp or critical in style or manner; biting.",
+    examples: [
+      "His mordant wit made him a feared but admired critic.",
+      "The essay offered a mordant analysis of modern politics.",
+      "She had a mordant sense of humor that not everyone appreciated."
+    ],
+    synonyms: ["caustic", "biting", "sardonic"], day: 9, group: 3 },
+  { word: "outstrip", pos: "verb", arabic: "يفوق / يتجاوز",
+    definition: "To go faster or further than; to exceed.",
+    examples: [
+      "Demand for the new product quickly outstripped supply.",
+      "She outstripped all her classmates in academic achievement.",
+      "His ambition outstripped his actual abilities."
+    ],
+    synonyms: ["surpass", "exceed", "outdo"], day: 9, group: 3 },
+  { word: "precarious", pos: "adjective", arabic: "محفوف بالمخاطر",
+    definition: "Not securely held or in position; dangerously likely to fall or collapse.",
+    examples: [
+      "The book was perched in a precarious position on the edge of the shelf.",
+      "Their financial situation became precarious after he lost his job.",
+      "She made a precarious living as a freelance artist."
+    ],
+    synonyms: ["unstable", "risky", "uncertain"], day: 9, group: 3 },
+  { word: "quirky", pos: "adjective", arabic: "غريب الأطوار",
+    definition: "Having or characterized by peculiar or unexpected traits.",
+    examples: [
+      "Her quirky sense of humor made her popular at parties.",
+      "The shop was filled with quirky vintage furniture.",
+      "He has a quirky habit of organizing his books by color."
+    ],
+    synonyms: ["eccentric", "unconventional", "peculiar"], day: 9, group: 3 },
+  { word: "repudiate", pos: "verb", arabic: "ينكر / يتنصل",
+    definition: "To refuse to accept; to reject as untrue or unjust.",
+    examples: [
+      "He publicly repudiated the views attributed to him.",
+      "The candidate repudiated the endorsement of the controversial group.",
+      "She repudiated her earlier statement after reviewing the evidence."
+    ],
+    synonyms: ["reject", "disavow", "renounce"], day: 9, group: 3 },
+  { word: "tact", pos: "noun", arabic: "لباقة / كياسة",
+    definition: "Skill and sensitivity in dealing with others or with difficult issues.",
+    examples: [
+      "She handled the awkward situation with great tact.",
+      "It takes tact to deliver bad news to a grieving family.",
+      "His lack of tact often offended his coworkers."
+    ],
+    synonyms: ["diplomacy", "discretion", "sensitivity"], day: 9, group: 3 },
+  { word: "trifling", pos: "adjective", arabic: "تافه / غير مهم",
+    definition: "Unimportant or trivial.",
+    examples: [
+      "Don't bother me with such trifling matters.",
+      "She brushed off the criticism as trifling.",
+      "A trifling sum was all that was needed to settle the bill."
+    ],
+    synonyms: ["trivial", "insignificant", "petty"], day: 9, group: 3 },
+  { word: "turbulent", pos: "adjective", arabic: "مضطرب / عاصف",
+    definition: "Characterized by conflict, disorder, or confusion; not stable.",
+    examples: [
+      "The plane hit a patch of turbulent air over the mountains.",
+      "She lived through a turbulent period in her country's history.",
+      "Their turbulent relationship eventually came to an end."
+    ],
+    synonyms: ["tumultuous", "stormy", "chaotic"], day: 9, group: 3 },
+
+  // Day 10 Group 1
+  { word: "acumen", pos: "noun", arabic: "فطنة / حدة الذهن",
+    definition: "The ability to make good judgments and quick decisions.",
+    examples: [
+      "Her business acumen helped the company double its profits.",
+      "He showed remarkable acumen in negotiating the contract.",
+      "Political acumen is essential for any successful candidate."
+    ],
+    synonyms: ["insight", "shrewdness", "perspicacity"], day: 10, group: 1 },
+  { word: "antithesis", pos: "noun", arabic: "النقيض",
+    definition: "A person or thing that is the direct opposite of something else.",
+    examples: [
+      "His humility was the antithesis of his rival's arrogance.",
+      "Cruelty is the antithesis of compassion.",
+      "Her quiet style is the antithesis of his loud showmanship."
+    ],
+    synonyms: ["opposite", "contrary", "reverse"], day: 10, group: 1 },
+  { word: "ascribe", pos: "verb", arabic: "ينسب إلى",
+    definition: "To attribute something to a cause, source, or origin.",
+    examples: [
+      "Historians ascribe the empire's fall to economic decline.",
+      "She ascribed her success to hard work and good mentors.",
+      "Critics ascribe the painting to an unknown student of the master."
+    ],
+    synonyms: ["attribute", "credit", "assign"], day: 10, group: 1 },
+  { word: "befuddled", pos: "adjective", arabic: "مرتبك / مشوش",
+    definition: "Unable to think clearly; confused.",
+    examples: [
+      "He looked befuddled by the complex instructions.",
+      "She was befuddled by the rapid stream of new information.",
+      "The befuddled tourist asked for directions three times."
+    ],
+    synonyms: ["confused", "perplexed", "muddled"], day: 10, group: 1 },
+  { word: "eschew", pos: "verb", arabic: "يتجنب / يتحاشى",
+    definition: "To deliberately avoid using or doing something.",
+    examples: [
+      "He chose to eschew sugar for health reasons.",
+      "The author eschews the flowery language of his peers.",
+      "She eschews all forms of social media."
+    ],
+    synonyms: ["avoid", "shun", "abstain"], day: 10, group: 1 },
+  { word: "esoteric", pos: "adjective", arabic: "غامض / للخاصة فقط",
+    definition: "Intended for or understood by only a small number of people with specialized knowledge.",
+    examples: [
+      "His lecture covered esoteric topics in quantum physics.",
+      "The book is filled with esoteric references most readers won't recognize.",
+      "She studies the esoteric traditions of ancient mystics."
+    ],
+    synonyms: ["arcane", "obscure", "abstruse"], day: 10, group: 1 },
+  { word: "evasive", pos: "adjective", arabic: "مراوغ / متهرب",
+    definition: "Tending to avoid commitment or self-revelation, especially by responding only indirectly.",
+    examples: [
+      "His evasive answers only deepened the reporters' suspicions.",
+      "She gave an evasive response when asked about her plans.",
+      "The senator was evasive on key policy questions."
+    ],
+    synonyms: ["elusive", "indirect", "equivocal"], day: 10, group: 1 },
+  { word: "exculpate", pos: "verb", arabic: "يبرّئ",
+    definition: "To show or declare that someone is not guilty of wrongdoing.",
+    examples: [
+      "The new evidence exculpated the defendant.",
+      "He spent years trying to exculpate his late father.",
+      "The report exculpated the company of any environmental violations."
+    ],
+    synonyms: ["exonerate", "absolve", "acquit"], day: 10, group: 1 },
+  { word: "expedite", pos: "verb", arabic: "يسرّع / يعجّل",
+    definition: "To make an action or process happen sooner or be accomplished more quickly.",
+    examples: [
+      "She paid extra to expedite the shipping.",
+      "The new system will expedite the application process.",
+      "We need to expedite this decision before the deadline."
+    ],
+    synonyms: ["accelerate", "hasten", "speed up"], day: 10, group: 1 },
+  { word: "fastidious", pos: "adjective", arabic: "دقيق / صعب الإرضاء",
+    definition: "Very attentive to and concerned about accuracy and detail; hard to please.",
+    examples: [
+      "He is fastidious about keeping his workspace immaculate.",
+      "The fastidious editor caught every minor error.",
+      "She is a fastidious eater who sends back any imperfect dish."
+    ],
+    synonyms: ["meticulous", "particular", "finicky"], day: 10, group: 1 },
+
+  // Day 10 Group 2
+  { word: "feign", pos: "verb", arabic: "يتظاهر / يدّعي",
+    definition: "To pretend to be affected by a feeling, state, or injury.",
+    examples: [
+      "He feigned illness to avoid going to school.",
+      "She tried to feign interest in the boring lecture.",
+      "Don't feign surprise; you knew this would happen."
+    ],
+    synonyms: ["pretend", "fake", "simulate"], day: 10, group: 2 },
+  { word: "furtive", pos: "adjective", arabic: "خفي / متستر",
+    definition: "Attempting to avoid notice or attention, typically because of guilt or wishing to remain unknown.",
+    examples: [
+      "She cast a furtive glance at her phone during the meeting.",
+      "His furtive behavior aroused the security guard's suspicion.",
+      "They exchanged furtive whispers in the back of the room."
+    ],
+    synonyms: ["secretive", "stealthy", "surreptitious"], day: 10, group: 2 },
+  { word: "hamper", pos: "verb", arabic: "يعيق",
+    definition: "To hinder or impede the movement or progress of.",
+    examples: [
+      "Bad weather hampered the rescue operation.",
+      "Lack of funding will hamper the research project.",
+      "Heavy backpacks hampered the hikers on the steep climb."
+    ],
+    synonyms: ["hinder", "impede", "obstruct"], day: 10, group: 2 },
+  { word: "indispensable", pos: "adjective", arabic: "لا غنى عنه",
+    definition: "Absolutely necessary; essential.",
+    examples: [
+      "She has become an indispensable member of the team.",
+      "Water is indispensable to all forms of life.",
+      "His expertise proved indispensable during the crisis."
+    ],
+    synonyms: ["essential", "necessary", "vital"], day: 10, group: 2 },
+  { word: "lament", pos: "verb", arabic: "يرثي / ينتحب",
+    definition: "To express sorrow, regret, or unhappiness about something.",
+    examples: [
+      "She lamented the loss of her childhood home.",
+      "Critics lament the decline of independent bookstores.",
+      "He lamented that he had not spent more time with his family."
+    ],
+    synonyms: ["mourn", "grieve", "bemoan"], day: 10, group: 2 },
+  { word: "myopic", pos: "adjective", arabic: "قصير النظر",
+    definition: "Lacking foresight or imagination; short-sighted.",
+    examples: [
+      "His myopic focus on profits hurt long-term growth.",
+      "Critics called the policy myopic and ill-conceived.",
+      "Her myopic view of the situation ignored its broader impact."
+    ],
+    synonyms: ["short-sighted", "narrow-minded", "imprudent"], day: 10, group: 2 },
+  { word: "nonchalant", pos: "adjective", arabic: "غير مكترث",
+    definition: "Feeling or appearing casually calm and relaxed; not displaying anxiety or interest.",
+    examples: [
+      "He gave a nonchalant shrug when asked about the missing money.",
+      "She remained nonchalant despite the chaos around her.",
+      "His nonchalant attitude in a crisis impressed everyone."
+    ],
+    synonyms: ["unconcerned", "indifferent", "casual"], day: 10, group: 2 },
+  { word: "partial", pos: "adjective", arabic: "جزئي / متحيز",
+    definition: "Existing only in part; or, favoring one side in a dispute.",
+    examples: [
+      "She gave only a partial explanation of what had happened.",
+      "The judge was accused of being partial to the defense.",
+      "He has a partial view of the lake from his window."
+    ],
+    synonyms: ["incomplete", "biased", "limited"], day: 10, group: 2 },
+  { word: "pensive", pos: "adjective", arabic: "متأمل / متفكر",
+    definition: "Engaged in deep or serious thought.",
+    examples: [
+      "She sat by the window with a pensive expression.",
+      "He grew pensive whenever the topic of his childhood came up.",
+      "The poem captures a pensive autumn mood."
+    ],
+    synonyms: ["thoughtful", "reflective", "contemplative"], day: 10, group: 2 },
+  { word: "portend", pos: "verb", arabic: "ينذر بـ / يدل على",
+    definition: "To be a sign or warning that something, especially something momentous or calamitous, is likely to happen.",
+    examples: [
+      "Dark clouds portended a coming storm.",
+      "The economic data portends difficult times ahead.",
+      "Her unusual silence seemed to portend bad news."
+    ],
+    synonyms: ["foreshadow", "presage", "augur"], day: 10, group: 2 },
+
+  // Day 10 Group 3
+  { word: "provincial", pos: "adjective", arabic: "ريفي / ضيق الأفق",
+    definition: "Of or concerning a province; or, limited in outlook; unsophisticated.",
+    examples: [
+      "She found their provincial attitudes hard to tolerate.",
+      "The novel mocked the provincial concerns of small-town life.",
+      "He was embarrassed by his family's provincial tastes."
+    ],
+    synonyms: ["narrow-minded", "parochial", "unsophisticated"], day: 10, group: 3 },
+  { word: "rudimentary", pos: "adjective", arabic: "بدائي / أساسي",
+    definition: "Involving or limited to basic principles; elementary.",
+    examples: [
+      "He has only a rudimentary knowledge of Spanish.",
+      "The shelter offered only rudimentary protection from the cold.",
+      "Their tools were rudimentary but effective."
+    ],
+    synonyms: ["basic", "elementary", "primitive"], day: 10, group: 3 },
+  { word: "salutary", pos: "adjective", arabic: "نافع / مفيد",
+    definition: "Producing good effects; beneficial.",
+    examples: [
+      "The experience was a salutary lesson in humility.",
+      "The reforms had a salutary effect on the economy.",
+      "Failure can be salutary if you learn from it."
+    ],
+    synonyms: ["beneficial", "wholesome", "advantageous"], day: 10, group: 3 },
+  { word: "sever", pos: "verb", arabic: "يقطع / يفصل",
+    definition: "To divide by cutting; to put an end to a connection or relationship.",
+    examples: [
+      "The accident severed the artery in his leg.",
+      "She severed all ties with her former business partner.",
+      "Diplomatic relations between the two countries were severed."
+    ],
+    synonyms: ["cut", "separate", "disconnect"], day: 10, group: 3 },
+  { word: "slight", pos: "verb", arabic: "يهين / يستخف",
+    definition: "To insult someone by treating them as unimportant.",
+    examples: [
+      "She felt slighted by not being invited to the meeting.",
+      "He was slighted when his contributions went unmentioned.",
+      "Don't slight the work of your colleagues, however small."
+    ],
+    synonyms: ["snub", "insult", "disrespect"], day: 10, group: 3 },
+  { word: "somnolent", pos: "adjective", arabic: "ناعس / مسبب للنعاس",
+    definition: "Sleepy or drowsy; causing drowsiness.",
+    examples: [
+      "The warm afternoon made everyone somnolent.",
+      "His somnolent voice nearly put the audience to sleep.",
+      "She felt somnolent after the heavy meal."
+    ],
+    synonyms: ["drowsy", "sleepy", "soporific"], day: 10, group: 3 },
+  { word: "stoic", pos: "adjective", arabic: "رواقي / صابر",
+    definition: "Enduring pain and hardship without showing one's feelings or complaining.",
+    examples: [
+      "She remained stoic throughout the painful procedure.",
+      "His stoic acceptance of failure impressed his teammates.",
+      "The soldiers showed stoic resolve under fire."
+    ],
+    synonyms: ["impassive", "unemotional", "uncomplaining"], day: 10, group: 3 },
+  { word: "supersede", pos: "verb", arabic: "يحل محل / يستبدل",
+    definition: "To take the place of, especially something previously authoritative or current.",
+    examples: [
+      "The new law will supersede all previous regulations.",
+      "Modern smartphones have superseded older mobile devices.",
+      "Her work has superseded earlier research on the topic."
+    ],
+    synonyms: ["replace", "supplant", "succeed"], day: 10, group: 3 },
+  { word: "tout", pos: "verb", arabic: "يروّج / يمدح",
+    definition: "To attempt to sell, especially by a direct or persistent approach; to praise highly.",
+    examples: [
+      "Critics touted the film as the best of the year.",
+      "He was touted as the next big thing in tennis.",
+      "The candidate touted her experience as a key strength."
+    ],
+    synonyms: ["promote", "advertise", "praise"], day: 10, group: 3 },
+  { word: "wane", pos: "verb", arabic: "يتضاءل / يتلاشى",
+    definition: "To decrease in vigor, power, or extent; to become smaller or weaker.",
+    examples: [
+      "Her interest in the project began to wane after a few months.",
+      "The country's influence has waned since the war.",
+      "As the moon waned, the nights grew darker."
+    ],
+    synonyms: ["diminish", "decline", "decrease"], day: 10, group: 3 },
 ];
 
 export function buildWords(): Word[] {
@@ -2164,7 +3394,7 @@ export function buildWords(): Word[] {
   });
 }
 
-export const TOTAL_DAYS = 5;
+export const TOTAL_DAYS = 10;
 export const WORDS_PER_DAY = 30;
 export const GROUPS_PER_DAY = 3;
 export const WORDS_PER_GROUP = 10;
