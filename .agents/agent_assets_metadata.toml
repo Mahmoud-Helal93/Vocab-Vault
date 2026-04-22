@@ -1,26 +1,3 @@
 uploads = []
 generated = []
-
-[[outputs]]
-id = "l4TbsOcVVt6hMWRoL5NIl"
-uri = "file://attached_assets/screenshots/899ee1d7-9042-4b36-83e2-eb3bbf815dc2-00-33naoo02a8lmr_riker_replit_dev_mockup_preview_gre-variants_Coach.png"
-type = "image"
-title = "Variant 1 — Coach"
-
-[[outputs]]
-id = "rMHBfYAMsdDOlTanRti0K"
-uri = "file://attached_assets/screenshots/899ee1d7-9042-4b36-83e2-eb3bbf815dc2-00-33naoo02a8lmr_riker_replit_dev_mockup_preview_gre-variants_Feed.png"
-type = "image"
-title = "Variant 2 — Feed"
-
-[[outputs]]
-id = "gCzEBOz74i66_b03KA1Li"
-uri = "file://attached_assets/screenshots/899ee1d7-9042-4b36-83e2-eb3bbf815dc2-00-33naoo02a8lmr_riker_replit_dev_mockup_preview_gre-variants_Quest.png"
-type = "image"
-title = "Variant 3 — Quest"
-
-[[outputs]]
-id = "D72hyUutr0L9JE68KHMR9"
-uri = "file://attached_assets/screenshots/899ee1d7-9042-4b36-83e2-eb3bbf815dc2-00-33naoo02a8lmr_riker_replit_dev_mockup_preview_gre-variants_Library.png"
-type = "image"
-title = "Variant 4 — Library"
+outputs = []
