@@ -74,7 +74,7 @@ export default function Dashboard({ onNavigate }: DashboardProps) {
         animate={{ opacity: 1, y: 0 }}
         className="mb-8"
       >
-        <h1 className="text-3xl font-bold text-foreground mb-1">GRE Vocabulary</h1>
+        <h1 className="text-3xl font-bold text-foreground mb-1">GRE Vocab Ninja</h1>
         <p className="text-muted-foreground">Master {progress.total} words through spaced repetition</p>
       </motion.div>
 
