@@ -213,7 +213,6 @@ export default function StudyMode({ onBack, initialDay, initialWordId }: StudyMo
           {Math.round(((cardIndex + 1) / studyWords.length) * 100)}%
         </span>
       </div>
-
       {/* Header */}
       <div className="flex items-center justify-between mb-3 shrink-0">
         <button
@@ -223,12 +222,11 @@ export default function StudyMode({ onBack, initialDay, initialWordId }: StudyMo
           <ArrowLeft size={20} />
         </button>
         <div className="text-center">
-          <div className="font-semibold text-foreground">
+          <div className="text-foreground text-[25px] font-bold bg-[#f3fef9]">
             Day {selectedDay} · {selectedGroup ? `Group ${selectedGroup}` : "All Words"}
           </div>
         </div>
       </div>
-
       {/* Flashcard */}
       <div className={`flex-1 min-h-0 ${focusMode ? "flex items-center justify-center px-8 py-4" : "flex"}`}>
         <AnimatePresence mode="wait">
@@ -265,7 +263,6 @@ export default function StudyMode({ onBack, initialDay, initialWordId }: StudyMo
           </motion.div>
         </AnimatePresence>
       </div>
-
       {/* Nav buttons - symmetric side arrows within study area */}
       <button
         onClick={handlePrev}
@@ -275,7 +272,6 @@ export default function StudyMode({ onBack, initialDay, initialWordId }: StudyMo
       >
         <ChevronLeft size={20} />
       </button>
-
       <button
         onClick={handleNext}
         disabled={cardIndex === studyWords.length - 1}
