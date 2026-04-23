@@ -26,8 +26,8 @@ type Page = "dashboard" | "study" | "practice" | "review" | "settings" | "plan" 
 const NAV_ITEMS: Array<{ id: Page; icon: React.ReactNode; label: string }> = [
   { id: "dashboard",   icon: <LayoutDashboard size={18} />, label: "Home" },
   { id: "study",       icon: <BookOpen size={18} />,        label: "Learn" },
-  { id: "practice",    icon: <Target size={18} />,          label: "Practice" },
   { id: "review",      icon: <Clock size={18} />,           label: "Review" },
+  { id: "practice",    icon: <Target size={18} />,          label: "Test" },
   { id: "achievements",icon: <Trophy size={18} />,          label: "Achievements" },
   { id: "settings",    icon: <Settings size={18} />,        label: "Settings" },
 ];
@@ -141,7 +141,7 @@ function MainApp() {
               title={sidebarCollapsed && !inDrawer ? item.label : undefined}
               className={`w-full flex items-center gap-3 ${sidebarCollapsed && !inDrawer ? "justify-center px-0" : "px-3"} py-2.5 rounded-xl text-sm font-medium transition-colors ${
                 active
-                  ? "bg-primary/10 text-primary"
+                  ? "bg-violet-100 text-violet-700 dark:bg-violet-500/20 dark:text-violet-300"
                   : "text-muted-foreground hover:bg-muted hover:text-foreground"
               }`}
             >
@@ -155,19 +155,25 @@ function MainApp() {
       </nav>
 
       {/* Footer: theme toggle */}
-      <div className="border-t border-border p-2">
-        <button
-          onClick={() => updateSettings({ darkMode: !settings.darkMode })}
-          title={sidebarCollapsed && !inDrawer ? (settings.darkMode ? "Light mode" : "Dark mode") : undefined}
-          className={`w-full flex items-center gap-3 ${sidebarCollapsed && !inDrawer ? "justify-center px-0" : "px-3"} py-2.5 rounded-xl text-sm font-medium text-muted-foreground hover:bg-muted hover:text-foreground transition-colors`}
-        >
-          <span className="shrink-0">
-            {settings.darkMode ? <Sun size={18} /> : <Moon size={18} />}
-          </span>
-          {(!sidebarCollapsed || inDrawer) && (
-            <span>{settings.darkMode ? "Light mode" : "Dark mode"}</span>
-          )}
-        </button>
+      <div className="border-t border-border p-2 space-y-1">
+        {[
+          { id: "light", label: "Light mode", icon: <Sun size={18} />, active: !settings.darkMode },
+          { id: "dark",  label: "Dark mode",  icon: <Moon size={18} />, active: settings.darkMode },
+        ].map((mode) => (
+          <button
+            key={mode.id}
+            onClick={() => updateSettings({ darkMode: mode.id === "dark" })}
+            title={sidebarCollapsed && !inDrawer ? mode.label : undefined}
+            className={`w-full flex items-center gap-3 ${sidebarCollapsed && !inDrawer ? "justify-center px-0" : "px-3"} py-2.5 rounded-xl text-sm font-medium transition-colors ${
+              mode.active
+                ? "bg-violet-100 text-violet-700 dark:bg-violet-500/20 dark:text-violet-300"
+                : "text-muted-foreground hover:bg-muted hover:text-foreground"
+            }`}
+          >
+            <span className="shrink-0">{mode.icon}</span>
+            {(!sidebarCollapsed || inDrawer) && <span>{mode.label}</span>}
+          </button>
+        ))}
       </div>
     </div>
   );
