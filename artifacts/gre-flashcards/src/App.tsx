@@ -14,6 +14,7 @@ import Achievements from "@/pages/Achievements";
 import QuickTen from "@/components/QuickTen";
 import SidebarSearch from "@/components/SidebarSearch";
 import BadgeToast from "@/components/BadgeToast";
+import vocabNinjaLogo from "@assets/image_1776985997685.png";
 import {
   LayoutDashboard, BookOpen, Target, Clock, Settings, Moon, Sun,
   CalendarDays, GitFork, BarChart3, TrendingUp, Zap, ChevronLeft, ChevronRight, Menu,
@@ -76,19 +77,23 @@ function MainApp() {
   const Sidebar = ({ inDrawer = false }: { inDrawer?: boolean }) => (
     <div className="h-full flex flex-col bg-card border-r border-border">
       {/* Logo + collapse */}
-      <div className={`flex items-center ${sidebarCollapsed && !inDrawer ? "justify-center" : "justify-between"} px-3 h-14 border-b border-border shrink-0`}>
+      <div className={`flex items-center ${sidebarCollapsed && !inDrawer ? "justify-center" : "justify-between"} px-3 h-16 border-b border-border shrink-0`}>
         <div className="flex items-center gap-2 overflow-hidden">
-          <svg width="28" height="28" viewBox="0 0 180 180" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" className="shrink-0">
-            <rect width="180" height="180" rx="36" className="fill-foreground" />
-            <path d="M22 110 Q90 78 158 110 Q140 122 90 122 Q40 122 22 110 Z" fill="#FF3C00"/>
-            <ellipse cx="64" cy="108" rx="14" ry="9" className="fill-background"/>
-            <ellipse cx="116" cy="108" rx="14" ry="9" className="fill-background"/>
-            <circle cx="64" cy="108" r="5" className="fill-foreground"/>
-            <circle cx="116" cy="108" r="5" className="fill-foreground"/>
-            <path d="M30 70 L150 58 L148 78 Q90 70 32 82 Z" className="fill-foreground" stroke="#FF3C00" strokeWidth="2"/>
-          </svg>
-          {(!sidebarCollapsed || inDrawer) && (
-            <span className="font-bold text-sm text-foreground tracking-tight whitespace-nowrap">GRE Vocab Ninja</span>
+          {sidebarCollapsed && !inDrawer ? (
+            <div className="w-9 h-9 overflow-hidden flex items-center justify-start shrink-0">
+              <img
+                src={vocabNinjaLogo}
+                alt="Vocab Ninja"
+                className="h-9 w-auto object-contain object-left max-w-none"
+                style={{ width: "auto" }}
+              />
+            </div>
+          ) : (
+            <img
+              src={vocabNinjaLogo}
+              alt="Vocab Ninja — Master Words. Master Every Mission."
+              className="h-11 w-auto object-contain shrink-0"
+            />
           )}
         </div>
         {!inDrawer && (
@@ -218,7 +223,7 @@ function MainApp() {
               <Menu size={20} />
             </button>
             <div className="flex items-center gap-2">
-              <span className="font-bold text-sm">GRE Vocab Ninja</span>
+              <img src={vocabNinjaLogo} alt="Vocab Ninja" className="h-8 w-auto object-contain" />
               {crunch.active && (
                 <span className="text-[10px] font-bold bg-red-500 text-white px-2 py-0.5 rounded-full animate-pulse">
                   CRUNCH
