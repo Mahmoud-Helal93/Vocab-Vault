@@ -117,7 +117,7 @@ export default function RichFlashcard({
             </button>
             <div className="flex-1" />
             <div className="flex flex-col items-end gap-2">
-              <p className="text-xl font-medium text-foreground" dir="rtl">{word.arabic}</p>
+              <p className="text-xl text-foreground font-bold" dir="rtl">{word.arabic}</p>
               {tone && (
                 <span className={`inline-flex items-center gap-1.5 text-xs font-semibold px-2.5 py-1 rounded-full ${tone.bg}`}>
                   <span className={`w-1.5 h-1.5 rounded-full ${tone.dot}`} />
@@ -259,7 +259,6 @@ export default function RichFlashcard({
           )}
         </div>
       </div>
-
       {/* Reveal / rate */}
       <div className="mt-2">
         {!revealed ? null : (
