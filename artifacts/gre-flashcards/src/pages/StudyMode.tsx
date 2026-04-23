@@ -227,20 +227,6 @@ export default function StudyMode({ onBack, initialDay, initialWordId }: StudyMo
             Day {selectedDay} · {selectedGroup ? `Group ${selectedGroup}` : "All Words"}
           </div>
         </div>
-        <div className="flex gap-2">
-          <button
-            onClick={() => {
-              setIsShuffled((s) => !s);
-              setCardIndex(0);
-            }}
-            className={`p-2 rounded-xl transition-colors ${
-              isShuffled ? "bg-primary text-primary-foreground" : "hover:bg-muted text-muted-foreground"
-            }`}
-            title="Shuffle"
-          >
-            <Shuffle size={18} />
-          </button>
-        </div>
       </div>
 
       {/* Flashcard */}
