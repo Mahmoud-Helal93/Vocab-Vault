@@ -137,7 +137,7 @@ export default function RichFlashcard({
           </div>
 
           {/* Syn / Ant pills */}
-          <div className="flex flex-wrap gap-2 mt-4 mb-5">
+          <div className="flex flex-wrap gap-2 mt-6 mb-7">
             {word.synonyms.slice(0, 3).map((s, i) => (
               <span key={`s-${i}`} className={`inline-flex items-center gap-1.5 text-xs font-medium px-3 py-1.5 rounded-full border ${synonymTone}`}>
                 <Equal size={12} />
@@ -162,7 +162,7 @@ export default function RichFlashcard({
                   <span className="shrink-0 w-5 h-5 rounded-full bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400 text-[11px] font-bold flex items-center justify-center">
                     {i + 1}
                   </span>
-                  <p className="text-foreground/85 leading-relaxed">
+                  <p className="text-foreground/85 leading-loose">
                     {parts.map((p, j) =>
                       re.test(p) ? (
                         <em key={j} className="text-emerald-600 dark:text-emerald-400 not-italic font-semibold">{p}</em>
