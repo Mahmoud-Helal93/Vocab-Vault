@@ -271,26 +271,24 @@ export default function StudyMode({ onBack, initialDay, initialWordId }: StudyMo
         </AnimatePresence>
       </div>
 
-      {/* Nav buttons */}
-      <div className="flex items-center justify-between mt-6 max-w-2xl mx-auto w-full">
-        <button
-          onClick={handlePrev}
-          disabled={cardIndex === 0}
-          className="flex items-center gap-2 px-5 py-3 rounded-xl border border-card-border hover:bg-muted transition-colors disabled:opacity-30 disabled:cursor-not-allowed font-medium"
-        >
-          <ChevronLeft size={18} />
-          Previous
-        </button>
+      {/* Nav buttons - fixed side arrows */}
+      <button
+        onClick={handlePrev}
+        disabled={cardIndex === 0}
+        aria-label="Previous"
+        className="fixed left-4 top-1/2 -translate-y-1/2 z-30 w-12 h-12 flex items-center justify-center rounded-full bg-card border border-card-border shadow-md hover:bg-muted transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
+      >
+        <ChevronLeft size={20} />
+      </button>
 
-        <button
-          onClick={handleNext}
-          disabled={cardIndex === studyWords.length - 1}
-          className="flex items-center gap-2 px-5 py-3 rounded-xl bg-primary text-primary-foreground hover:opacity-90 transition-opacity disabled:opacity-30 disabled:cursor-not-allowed font-medium"
-        >
-          Next
-          <ChevronRight size={18} />
-        </button>
-      </div>
+      <button
+        onClick={handleNext}
+        disabled={cardIndex === studyWords.length - 1}
+        aria-label="Next"
+        className="fixed right-4 top-1/2 -translate-y-1/2 z-30 w-12 h-12 flex items-center justify-center rounded-full bg-card border border-card-border shadow-md hover:bg-muted transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
+      >
+        <ChevronRight size={20} />
+      </button>
     </div>
   );
 }
