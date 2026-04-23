@@ -80,14 +80,17 @@ function MainApp() {
       <div className={`flex items-center ${sidebarCollapsed && !inDrawer ? "justify-center" : "justify-between"} px-3 h-16 border-b border-border shrink-0`}>
         <div className="flex items-center gap-2 overflow-hidden">
           {sidebarCollapsed && !inDrawer ? (
-            <div className="w-9 h-9 overflow-hidden flex items-center justify-start shrink-0">
-              <img
-                src={vocabNinjaLogo}
-                alt="Vocab Ninja"
-                className="h-9 w-auto object-contain object-left max-w-none"
-                style={{ width: "auto" }}
-              />
-            </div>
+            <div
+              className="w-9 h-9 shrink-0 rounded-lg bg-no-repeat"
+              role="img"
+              aria-label="Vocab Ninja"
+              title="Vocab Ninja"
+              style={{
+                backgroundImage: `url(${vocabNinjaLogo})`,
+                backgroundSize: "auto 130%",
+                backgroundPosition: "left center",
+              }}
+            />
           ) : (
             <img
               src={vocabNinjaLogo}
