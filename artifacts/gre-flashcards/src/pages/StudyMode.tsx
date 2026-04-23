@@ -5,8 +5,8 @@ import Flashcard from "@/components/Flashcard";
 import RichFlashcard from "@/components/RichFlashcard";
 import { getEnrichment } from "@/data/enrichment";
 import { shuffleArray } from "@/lib/srs";
-import { TOTAL_DAYS, GROUPS_PER_DAY } from "@/data/words";
-import { ChevronLeft, ChevronRight, Shuffle, ArrowLeft, Grid3X3, Flame } from "lucide-react";
+import { TOTAL_DAYS, GROUPS_PER_DAY, type Word } from "@/data/words";
+import { ChevronLeft, ChevronRight, Shuffle, ArrowLeft, Grid3X3, Flame, Check } from "lucide-react";
 
 type View = "day-select" | "group-select" | "study";
 
@@ -78,7 +78,7 @@ export default function StudyMode({ onBack, initialDay, initialWordId }: StudyMo
           </div>
         </div>
 
-        <div className="space-y-8">
+        <div className="space-y-12">
           {Array.from({ length: 6 }, (_, w) => {
             const weekNum = w + 1;
             const startDay = w * 7 + 1;
@@ -97,52 +97,21 @@ export default function StudyMode({ onBack, initialDay, initialWordId }: StudyMo
               ? Math.round((weekWordCounts.mastered / weekWordCounts.total) * 100)
               : 0;
             return (
-              <div key={weekNum}>
-                <div className="flex items-baseline justify-between mb-3 px-1">
-                  <h2 className="text-sm font-semibold uppercase tracking-wider text-muted-foreground">
-                    Week {weekNum}
-                  </h2>
-                  <span className="text-xs text-muted-foreground tabular-nums">
-                    Day {startDay}{daysInWeek.length > 1 ? `–${endDay}` : ""} · {weekPct}%
-                  </span>
-                </div>
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                  {daysInWeek.map((day, idx) => {
-                    const dw = dayWords[day - 1];
-                    const mastered = dw.filter((x) => x.status === "mastered").length;
-                    const pct = Math.round((mastered / dw.length) * 100);
-                    return (
-                      <motion.button
-                        key={day}
-                        initial={{ opacity: 0, y: 10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: idx * 0.04 }}
-                        onClick={() => {
-                          setSelectedDay(day);
-                          setSelectedGroup(null);
-                          setCardIndex(0);
-                          setView("group-select");
-                        }}
-                        className="text-left p-5 bg-card border border-card-border rounded-2xl shadow-sm hover:border-primary/40 hover:shadow-md transition-all"
-                      >
-                        <div className="flex items-center justify-between mb-3">
-                          <span className="font-semibold text-foreground text-lg">Day {day}</span>
-                          <span className="text-sm text-muted-foreground">{pct}%</span>
-                        </div>
-                        <div className="h-1.5 bg-muted rounded-full mb-3 overflow-hidden">
-                          <div
-                            className="h-full bg-primary rounded-full"
-                            style={{ width: `${pct}%` }}
-                          />
-                        </div>
-                        <div className="text-xs text-muted-foreground">
-                          {dw.length} words · {mastered} mastered
-                        </div>
-                      </motion.button>
-                    );
-                  })}
-                </div>
-              </div>
+              <SnakeWeek
+                key={weekNum}
+                weekNum={weekNum}
+                startDay={startDay}
+                endDay={endDay}
+                daysInWeek={daysInWeek}
+                weekPct={weekPct}
+                dayWords={dayWords}
+                onPick={(day) => {
+                  setSelectedDay(day);
+                  setSelectedGroup(null);
+                  setCardIndex(0);
+                  setView("group-select");
+                }}
+              />
             );
           })}
         </div>
@@ -320,6 +289,142 @@ export default function StudyMode({ onBack, initialDay, initialWordId }: StudyMo
       >
         <ChevronRight size={20} />
       </button>
+    </div>
+  );
+}
+
+interface SnakeWeekProps {
+  weekNum: number;
+  startDay: number;
+  endDay: number;
+  daysInWeek: number[];
+  weekPct: number;
+  dayWords: Word[][];
+  onPick: (day: number) => void;
+}
+
+function SnakeWeek({ weekNum, startDay, endDay, daysInWeek, weekPct, dayWords, onPick }: SnakeWeekProps) {
+  // Build snake positions: 4 columns, alternating direction per row.
+  const COLS = 4;
+  const COL_W = 220;
+  const ROW_H = 150;
+  const PAD_X = 40;
+  const PAD_Y = 30;
+
+  type Node = { day: number; row: number; col: number; x: number; y: number };
+  const nodes: Node[] = daysInWeek.map((day, i) => {
+    const row = Math.floor(i / COLS);
+    const colInRow = i % COLS;
+    const col = row % 2 === 0 ? colInRow : COLS - 1 - colInRow;
+    return {
+      day,
+      row,
+      col,
+      x: PAD_X + col * COL_W + COL_W / 2,
+      y: PAD_Y + row * ROW_H + ROW_H / 2,
+    };
+  });
+
+  const totalRows = Math.ceil(daysInWeek.length / COLS);
+  const width = PAD_X * 2 + COLS * COL_W;
+  const height = PAD_Y * 2 + totalRows * ROW_H;
+
+  // Build SVG path through node centers, with rounded turns at row ends.
+  const pathD = nodes
+    .map((n, i) => {
+      if (i === 0) return `M ${n.x} ${n.y}`;
+      const prev = nodes[i - 1];
+      if (n.row === prev.row) {
+        return `L ${n.x} ${n.y}`;
+      }
+      // Curve down to next row, going around the same column edge.
+      const midY = (prev.y + n.y) / 2;
+      return `C ${prev.x + (n.x - prev.x) * 0.15} ${midY}, ${n.x - (n.x - prev.x) * 0.15} ${midY}, ${n.x} ${n.y}`;
+    })
+    .join(" ");
+
+  return (
+    <div>
+      <div className="flex items-baseline justify-between mb-3 px-1">
+        <h2 className="text-sm font-semibold uppercase tracking-wider text-muted-foreground">
+          Week {weekNum}
+        </h2>
+        <span className="text-xs text-muted-foreground tabular-nums">
+          Day {startDay}{daysInWeek.length > 1 ? `–${endDay}` : ""} · {weekPct}%
+        </span>
+      </div>
+      <div className="relative w-full overflow-x-auto">
+        <div className="relative mx-auto" style={{ width, height }}>
+          <svg
+            className="absolute inset-0"
+            width={width}
+            height={height}
+            viewBox={`0 0 ${width} ${height}`}
+            fill="none"
+          >
+            <path
+              d={pathD}
+              stroke="currentColor"
+              className="text-sky-200 dark:text-sky-900"
+              strokeWidth={3}
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              fill="none"
+            />
+          </svg>
+          {nodes.map((n, idx) => {
+            const dw = dayWords[n.day - 1];
+            const mastered = dw.filter((x) => x.status === "mastered").length;
+            const pct = Math.round((mastered / dw.length) * 100);
+            const done = pct === 100;
+            const placeLeft = n.col === 0;
+            return (
+              <motion.div
+                key={n.day}
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ delay: idx * 0.05 }}
+                className="absolute"
+                style={{
+                  left: n.x - 32,
+                  top: n.y - 32,
+                  width: 64,
+                  height: 64,
+                }}
+              >
+                <button
+                  onClick={() => onPick(n.day)}
+                  aria-label={`Day ${n.day}`}
+                  className="group relative w-16 h-16 rounded-full bg-gradient-to-br from-sky-50 to-sky-100 dark:from-sky-900/30 dark:to-sky-800/30 border-2 border-sky-200 dark:border-sky-700 text-sky-700 dark:text-sky-300 font-bold text-xl shadow-sm hover:shadow-lg hover:scale-105 hover:border-sky-400 transition-all flex items-center justify-center"
+                >
+                  {n.day}
+                  <span
+                    className={`absolute -bottom-1 -right-1 w-5 h-5 rounded-full flex items-center justify-center border-2 border-background ${
+                      done
+                        ? "bg-emerald-500 text-white"
+                        : pct > 0
+                        ? "bg-sky-400 text-white"
+                        : "bg-muted text-muted-foreground"
+                    }`}
+                  >
+                    {done ? <Check size={10} strokeWidth={3} /> : null}
+                  </span>
+                </button>
+                <div
+                  className={`absolute top-1/2 -translate-y-1/2 ${
+                    placeLeft ? "right-full mr-3 text-right" : "left-full ml-3 text-left"
+                  } whitespace-nowrap`}
+                >
+                  <div className="text-sm font-semibold text-foreground">Day {n.day}</div>
+                  <div className="text-xs text-muted-foreground">
+                    {mastered} / {dw.length} mastered
+                  </div>
+                </div>
+              </motion.div>
+            );
+          })}
+        </div>
+      </div>
     </div>
   );
 }
