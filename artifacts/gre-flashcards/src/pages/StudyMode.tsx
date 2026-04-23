@@ -268,7 +268,7 @@ export default function StudyMode({ onBack, initialDay, initialWordId }: StudyMo
         onClick={handlePrev}
         disabled={cardIndex === 0}
         aria-label="Previous"
-        className="absolute left-4 top-1/2 -translate-y-1/2 z-30 w-12 h-12 flex items-center justify-center rounded-full bg-card border border-card-border shadow-md hover:bg-muted transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
+        className="absolute left-4 top-1/2 -translate-y-1/2 z-30 w-12 h-12 flex items-center justify-center rounded-full bg-card border border-card-border shadow-md opacity-60 hover:opacity-100 hover:scale-110 hover:shadow-xl transition-all duration-200 disabled:opacity-20 disabled:cursor-not-allowed disabled:hover:scale-100 disabled:hover:shadow-md"
       >
         <ChevronLeft size={20} />
       </button>
@@ -276,7 +276,7 @@ export default function StudyMode({ onBack, initialDay, initialWordId }: StudyMo
         onClick={handleNext}
         disabled={cardIndex === studyWords.length - 1}
         aria-label="Next"
-        className="absolute right-4 top-1/2 -translate-y-1/2 z-30 w-12 h-12 flex items-center justify-center rounded-full bg-card border border-card-border shadow-md hover:bg-muted transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
+        className="absolute right-4 top-1/2 -translate-y-1/2 z-30 w-12 h-12 flex items-center justify-center rounded-full bg-card border border-card-border shadow-md opacity-60 hover:opacity-100 hover:scale-110 hover:shadow-xl transition-all duration-200 disabled:opacity-20 disabled:cursor-not-allowed disabled:hover:scale-100 disabled:hover:shadow-md"
       >
         <ChevronRight size={20} />
       </button>
