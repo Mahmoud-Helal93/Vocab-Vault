@@ -144,8 +144,8 @@ export default function RichFlashcard({
                 {s}
               </span>
             ))}
-            {(enr.antonyms ?? []).slice(0, 2).map((a, i) => (
-              <span key={`a-${i}`} className={`inline-flex items-center gap-1.5 text-xs font-medium px-3 py-1.5 rounded-full border ${antonymTone}`}>
+            {(enr.antonyms ?? []).slice(0, 1).map((a, i) => (
+              <span key={`a-${i}`} className={`inline-flex items-center gap-1.5 text-xs font-medium px-3 py-1.5 rounded-full border ml-3 ${antonymTone}`}>
                 <ArrowRightLeft size={12} />
                 {a}
               </span>
