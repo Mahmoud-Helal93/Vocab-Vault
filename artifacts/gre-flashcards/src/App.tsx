@@ -25,7 +25,7 @@ type Page = "dashboard" | "study" | "practice" | "review" | "settings" | "plan" 
 
 const NAV_ITEMS: Array<{ id: Page; icon: React.ReactNode; label: string }> = [
   { id: "dashboard",   icon: <LayoutDashboard size={18} />, label: "Home" },
-  { id: "study",       icon: <BookOpen size={18} />,        label: "Study" },
+  { id: "study",       icon: <BookOpen size={18} />,        label: "Learn" },
   { id: "practice",    icon: <Target size={18} />,          label: "Practice" },
   { id: "review",      icon: <Clock size={18} />,           label: "Review" },
   { id: "plan",        icon: <CalendarDays size={18} />,    label: "Plan" },
