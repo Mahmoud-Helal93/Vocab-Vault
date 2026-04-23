@@ -10,14 +10,18 @@ import PlanMode from "@/pages/PlanMode";
 import Confusables from "@/pages/Confusables";
 import Analytics from "@/pages/Analytics";
 import Progress from "@/pages/Progress";
+import Achievements from "@/pages/Achievements";
 import QuickTen from "@/components/QuickTen";
 import SidebarSearch from "@/components/SidebarSearch";
+import BadgeToast from "@/components/BadgeToast";
+import { levelFromXp } from "@/lib/gamification";
 import {
   LayoutDashboard, BookOpen, Target, Clock, Settings, Moon, Sun,
   CalendarDays, GitFork, BarChart3, TrendingUp, Zap, ChevronLeft, ChevronRight, Menu,
+  Trophy, Flame, Sparkles,
 } from "lucide-react";
 
-type Page = "dashboard" | "study" | "practice" | "review" | "settings" | "plan" | "confusables" | "analytics" | "progress";
+type Page = "dashboard" | "study" | "practice" | "review" | "settings" | "plan" | "confusables" | "analytics" | "progress" | "achievements";
 
 const NAV_ITEMS: Array<{ id: Page; icon: React.ReactNode; label: string }> = [
   { id: "dashboard",   icon: <LayoutDashboard size={18} />, label: "Home" },
@@ -28,11 +32,13 @@ const NAV_ITEMS: Array<{ id: Page; icon: React.ReactNode; label: string }> = [
   { id: "confusables", icon: <GitFork size={18} />,         label: "Confusables" },
   { id: "analytics",   icon: <BarChart3 size={18} />,       label: "Analytics" },
   { id: "progress",    icon: <TrendingUp size={18} />,      label: "Progress" },
+  { id: "achievements",icon: <Trophy size={18} />,          label: "Achievements" },
   { id: "settings",    icon: <Settings size={18} />,        label: "Settings" },
 ];
 
 function MainApp() {
-  const { settings, updateSettings, crunch } = useApp();
+  const { settings, updateSettings, crunch, gamification, streak } = useApp();
+  const lvl = levelFromXp(gamification.totalXp);
   const [page, setPage] = useState<Page>("dashboard");
   const [pageParams, setPageParams] = useState<Record<string, unknown>>({});
   const [quickTenOpen, setQuickTenOpen] = useState(false);
@@ -62,6 +68,8 @@ function MainApp() {
         return <Analytics onBack={() => setPage("dashboard")} onStudyWord={(id) => { setPageParams({ wordId: id }); setPage("study"); }} />;
       case "progress":
         return <Progress onBack={() => setPage("dashboard")} />;
+      case "achievements":
+        return <Achievements onBack={() => setPage("dashboard")} />;
       case "settings":
         return <SettingsPage onBack={() => setPage("dashboard")} />;
       default:
@@ -108,6 +116,44 @@ function MainApp() {
             setMobileNavOpen(false);
           }}
         />
+      )}
+
+      {/* Gamification chip */}
+      {(!sidebarCollapsed || inDrawer) ? (
+        <button
+          onClick={() => { setPage("achievements"); setPageParams({}); setMobileNavOpen(false); }}
+          className="mx-3 mt-3 p-3 rounded-xl bg-gradient-to-br from-violet-500/10 via-fuchsia-500/10 to-amber-500/10 border border-border hover:border-amber-400/60 transition-colors text-left"
+        >
+          <div className="flex items-center justify-between mb-2">
+            <div className="flex items-center gap-1.5 text-xs font-bold text-foreground">
+              <Sparkles size={12} className="text-violet-500" />
+              Lvl {lvl.level}
+            </div>
+            <div className="flex items-center gap-1 text-xs font-bold text-orange-500">
+              <Flame size={12} />
+              {streak.currentStreak}
+            </div>
+          </div>
+          <div className="h-1.5 rounded-full bg-muted overflow-hidden">
+            <div
+              className="h-full bg-gradient-to-r from-violet-500 via-fuchsia-500 to-amber-500"
+              style={{ width: `${Math.min(100, lvl.progress * 100)}%` }}
+            />
+          </div>
+          <div className="flex justify-between text-[10px] text-muted-foreground mt-1.5">
+            <span>{gamification.totalXp.toLocaleString()} XP</span>
+            <span>+{gamification.todayXp} today</span>
+          </div>
+        </button>
+      ) : !inDrawer && (
+        <button
+          onClick={() => { setPage("achievements"); setPageParams({}); }}
+          title={`Lvl ${lvl.level} · ${streak.currentStreak}d streak`}
+          className="mx-2 mt-3 p-2 rounded-xl bg-muted/50 hover:bg-muted text-foreground flex flex-col items-center gap-1"
+        >
+          <Flame size={16} className="text-orange-500" />
+          <span className="text-[10px] font-bold">{streak.currentStreak}</span>
+        </button>
       )}
 
       {/* Crunch badge */}
@@ -249,6 +295,9 @@ function MainApp() {
       <AnimatePresence>
         {quickTenOpen && <QuickTen onClose={() => setQuickTenOpen(false)} />}
       </AnimatePresence>
+
+      {/* Badge unlock toasts */}
+      <BadgeToast />
     </div>
   );
 }

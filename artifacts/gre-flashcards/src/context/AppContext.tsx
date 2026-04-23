@@ -8,6 +8,10 @@ import {
   loadStreak, updateStreak, loadPlan, savePlan, loadCrunch, saveCrunch,
 } from "@/lib/storage";
 import { calculateNextReview } from "@/lib/srs";
+import {
+  GamificationState, loadGamification, saveGamification,
+  XP_REWARDS, evaluateBadges, BadgeDef,
+} from "@/lib/gamification";
 
 interface AppContextType {
   words: Word[];
@@ -15,6 +19,9 @@ interface AppContextType {
   streak: StreakData;
   plan: PlanSettings;
   crunch: CrunchState;
+  gamification: GamificationState;
+  newlyUnlockedBadges: BadgeDef[];
+  dismissBadgeToasts: () => void;
   updateWord: (id: string, updates: Partial<Word>) => void;
   markWordReviewed: (id: string, quality: number) => void;
   updateSettings: (updates: Partial<Settings>) => void;
@@ -32,6 +39,10 @@ export function AppProvider({ children }: { children: ReactNode }) {
   const [streak, setStreak] = useState<StreakData>(loadStreak());
   const [plan, setPlan] = useState<PlanSettings>(loadPlan());
   const [crunch, setCrunch] = useState<CrunchState>(loadCrunch());
+  const [gamification, setGamification] = useState<GamificationState>(loadGamification());
+  const [newlyUnlockedBadges, setNewlyUnlockedBadges] = useState<BadgeDef[]>([]);
+
+  const dismissBadgeToasts = useCallback(() => setNewlyUnlockedBadges([]), []);
 
   useEffect(() => {
     setWords(loadWords());
@@ -55,20 +66,56 @@ export function AppProvider({ children }: { children: ReactNode }) {
 
   const markWordReviewed = useCallback(
     (id: string, quality: number) => {
+      let updatedWords: Word[] = [];
+      let prevStatus: Word["status"] | null = null;
+      let newStatus: Word["status"] | null = null;
+
       setWords((prev) => {
         const word = prev.find((w) => w.id === id);
-        if (!word) return prev;
+        if (!word) { updatedWords = prev; return prev; }
+        prevStatus = word.status;
         const updates = calculateNextReview(word, quality);
+        newStatus = (updates.status as Word["status"]) ?? word.status;
         const updated = prev.map((w) => (w.id === id ? { ...w, ...updates } : w));
         saveWords(updated);
+        updatedWords = updated;
         return updated;
       });
+
+      let updatedStreak: StreakData = streak;
       setStreak((s) => {
         const newStreak = updateStreak(s);
+        updatedStreak = newStreak;
         return newStreak;
       });
+
+      // Award XP
+      let xp = XP_REWARDS.REVIEW;
+      if (quality >= 3) xp += XP_REWARDS.CORRECT;
+      if (quality === 5) xp += XP_REWARDS.PERFECT;
+      if (prevStatus === "new" && newStatus !== "new") xp += XP_REWARDS.NEW_LEARNED;
+      if (prevStatus !== "mastered" && newStatus === "mastered") xp += XP_REWARDS.MASTERED;
+
+      setGamification((g) => {
+        const today = new Date().toDateString();
+        const isToday = g.todayDate === today;
+        const next: GamificationState = {
+          ...g,
+          totalXp: g.totalXp + xp,
+          todayXp: (isToday ? g.todayXp : 0) + xp,
+          todayDate: today,
+        };
+        const { unlocked, state } = evaluateBadges({
+          words: updatedWords,
+          streak: updatedStreak,
+          gamification: next,
+        });
+        if (unlocked.length) setNewlyUnlockedBadges((prev) => [...prev, ...unlocked]);
+        saveGamification(state);
+        return state;
+      });
     },
-    []
+    [streak]
   );
 
   const updateSettings = useCallback((updates: Partial<Settings>) => {
@@ -119,6 +166,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
     <AppContext.Provider
       value={{
         words, settings, streak, plan, crunch,
+        gamification, newlyUnlockedBadges, dismissBadgeToasts,
         updateWord, markWordReviewed, updateSettings,
         updatePlan, updateCrunch, resetAllProgress, setWords,
       }}
