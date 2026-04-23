@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useApp } from "@/context/AppContext";
 import Flashcard from "@/components/Flashcard";
 import RichFlashcard from "@/components/RichFlashcard";
+import PremiumFlashcard from "@/components/PremiumFlashcard";
 import { getEnrichment } from "@/data/enrichment";
 import { shuffleArray } from "@/lib/srs";
 import { TOTAL_DAYS, GROUPS_PER_DAY } from "@/data/words";
@@ -245,7 +246,17 @@ export default function StudyMode({ onBack, initialDay, initialWordId }: StudyMo
             transition={{ duration: 0.25 }}
             className="w-full"
           >
-            {getEnrichment(currentWord.word) ? (
+            {currentWord.day === 1 && currentWord.group === 1 && getEnrichment(currentWord.word) ? (
+              <PremiumFlashcard
+                word={currentWord}
+                index={cardIndex}
+                total={studyWords.length}
+                onRate={(quality) => {
+                  markWordReviewed(currentWord.id, quality);
+                  if (cardIndex < studyWords.length - 1) handleNext();
+                }}
+              />
+            ) : getEnrichment(currentWord.word) ? (
               <RichFlashcard
                 word={currentWord}
                 index={cardIndex}

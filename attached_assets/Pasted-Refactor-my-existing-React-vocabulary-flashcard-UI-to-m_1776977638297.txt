@@ -1,0 +1,236 @@
+Refactor my existing React vocabulary flashcard UI to match a premium, soft, modern study-app style.
+
+IMPORTANT:
+- This is a UI/style refactor, not a feature rewrite.
+- Keep all current functionality, data flow, navigation, and pronunciation behavior working.
+- Do not remove any existing sections unless explicitly requested below.
+- Preserve my current content structure, but restyle and rearrange it to match the target aesthetic.
+
+GOAL
+Make the interface look like a polished, elegant GRE vocabulary study app with:
+- soft neutral background
+- centered layout
+- premium rounded card design
+- subtle shadows
+- more whitespace
+- cleaner typography
+- soft green/red/yellow pill badges
+- centered side navigation arrows
+- refined spacing and hierarchy
+- 16:9 desktop feel
+
+TECH STACK
+- Use my current React setup
+- Keep Tailwind if the project already uses Tailwind
+- Prefer reusable components for repeated UI pieces
+- Do not break existing logic
+
+PAGE LAYOUT
+- Center the whole experience on a very light warm-gray / off-white background
+- Keep a slim top header:
+  - left: back arrow
+  - center: “Day 1 · Group 1”
+  - right: existing utility actions
+- Under the header, center:
+  - progress text: “1 / 10”
+  - a thin rounded progress bar
+- Below that, center the main flashcard experience
+- Keep the main content visually balanced and not stretched too wide
+- Maintain a desktop-first layout that feels close to a 16:9 composition
+
+MAIN FLASHCARD
+- One large main card with:
+  - large rounded corners
+  - soft subtle shadow
+  - white or near-white background
+  - generous padding
+- Inside the card:
+  - 2-column layout on desktop
+  - left = text content
+  - right = image + metadata
+- Increase the gap between columns
+- No internal scrollbars
+- Use whitespace instead of divider clutter
+
+TYPOGRAPHY
+Change the font styling to feel like the screenshot reference:
+- Use a clean modern sans-serif font similar to:
+  Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif
+- Main word:
+  - very large
+  - bold
+  - dark navy/charcoal
+  - strong visual presence
+- Part of speech:
+  - smaller
+  - green accent
+  - refined and light
+- Arabic translation:
+  - right aligned
+  - correct RTL rendering
+  - dark text
+  - elegant size
+- Plain definition:
+  - bold
+  - NOT italic
+  - dark
+  - highly readable
+- Formal definition:
+  - smaller
+  - muted gray
+  - lighter emphasis
+
+COLOR SYSTEM
+Use soft premium colors:
+- page background: warm light gray / off-white
+- card background: white
+- text: dark charcoal / navy
+- muted text: medium gray
+- blue: highlighted target word in examples
+- green: synonyms, positive accents, active word-family pill
+- red: antonym / negative accent
+- yellow: neutral tone badge
+- borders: very light subtle gray-green
+- shadows: faint and diffuse
+
+STATUS BADGE
+Style the status badge (“New”) as:
+- small rounded pill
+- pale green background
+- small green dot
+- medium font weight
+- subtle, elegant look
+
+WORD HEADER SECTION
+In the left top section:
+- Put the word and speaker button together
+- Keep the pronunciation button circular and subtle
+- Place Arabic translation on the right side
+- Below that:
+  - part of speech on the left
+  - tone badge on the right
+- Remove any dashed line or heavy separator under the word
+- Use spacing instead of harsh dividers
+
+DEFINITION AREA
+- Keep the plain definition first
+- Make it bold and non-italic
+- Keep strong readability
+- Put the formal definition directly below in a muted smaller style
+
+SYNONYMS + ANTONYM
+Move synonyms and antonym directly below the definition.
+
+IMPORTANT:
+- Remove the labels “Synonyms” and “Antonym”
+- Keep only the words themselves
+- Each synonym should be inside a separate soft green oval pill
+- The antonym should be inside a separate soft red oval pill
+- Include symbols inside the pills:
+  - synonyms use: ≡
+  - antonym use: ≠
+- Use the pill style inspired by the screenshot:
+  - pale tinted background
+  - soft subtle border
+  - full rounded shape
+  - medium or semibold text
+  - generous horizontal padding
+  - clean spacing between pills
+- Pills should wrap nicely if needed
+
+EXAMPLES
+- Remove the “Examples” heading completely
+- Give the examples more room than before
+- The examples section should visually prioritize readability
+- Each example row should contain:
+  - a small circular number badge
+  - the sentence text
+- Highlight the target word inside each sentence in blue and semibold/bold
+- Keep spacing airy and clean
+- Do not make the examples area feel cramped
+- Adjust the examples/synonyms area so examples get more width and prominence
+
+MNEMONIC
+- Keep the mnemonic at the bottom of the left column
+- Put it inside a soft green-tinted rounded box
+- Add a subtle icon area on the left
+- Keep the label “Mnemonic” small and refined
+- Make the text calm, readable, and lightly emphasized
+
+RIGHT COLUMN IMAGE
+- Keep one main illustration/image at the top
+- Rounded corners
+- Larger visual area with comfortable spacing
+- Make the image feel premium and integrated, not squeezed
+
+WORD FAMILY
+- Keep the “Word Family” label
+- Make it smaller and more elegant
+- Show related forms as soft green pills
+- The current/active word can use a slightly stronger green fill
+- Maintain consistent pill styling and spacing
+
+ETYMOLOGY
+- Keep the “Etymology” label
+- Show roots in mini cards:
+  - rounded corners
+  - white or near-white background
+  - subtle border
+  - centered text
+- Root text bold
+- Language muted
+- Meaning smaller
+- Use soft plus signs between roots
+- Show the combined meaning below in a pale green rounded bar
+
+NAVIGATION BUTTONS
+- Move the left and right arrows to the vertical middle of the flashcard area
+- Style them as circular floating buttons
+- Add subtle shadow
+- Add soft hover feedback
+- They should feel light and premium, not bulky
+
+SPACING + VISUAL CLEANUP
+- Increase whitespace across all sections
+- Reduce visual clutter
+- Remove dashed dividers and unnecessary separator lines
+- Use spacing and grouping instead of hard borders where possible
+- Keep the hierarchy clean and premium
+
+RESPONSIVENESS
+- Desktop-first
+- On smaller screens, stack sections gracefully
+- Preserve hierarchy and spacing
+- Avoid overflow and internal scrolling
+
+ANIMATION
+- Keep transitions subtle:
+  - hover transitions on pills/buttons
+  - soft fade/slide between cards
+- No flashy motion
+
+COMPONENT REFACTOR SUGGESTION
+If helpful, break styling into reusable UI pieces such as:
+- StatusBadge
+- ToneBadge
+- Pill
+- ExampleRow
+- FloatingNavButton
+- SectionTitle
+- EtymologyCard
+- WordFamilyPill
+
+SPECIFIC CHANGES I WANT APPLIED NOW
+1. Change the font styling to match the cleaner modern screenshot feel
+2. Move synonyms and antonym below the definition
+3. Remove the labels “Synonyms” and “Antonym”
+4. Display synonyms as green oval pills
+5. Display antonym as a red oval pill
+6. Make the plain definition bold, not italic
+7. Remove the dashed line below the word
+8. Give the examples more space and visual priority
+9. Keep the navigation arrows vertically centered beside the card
+10. Preserve all existing functionality
+
+FINAL OUTPUT
+Return updated React code for this refactor, ready to paste into my Replit project.
