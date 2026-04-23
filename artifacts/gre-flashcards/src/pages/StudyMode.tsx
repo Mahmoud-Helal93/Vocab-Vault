@@ -237,15 +237,6 @@ export default function StudyMode({ onBack, initialDay, initialWordId }: StudyMo
         </div>
       </div>
 
-      {/* Progress bar */}
-      <div className="h-1 bg-muted rounded-full mb-6 overflow-hidden">
-        <motion.div
-          className="h-full bg-primary rounded-full"
-          animate={{ width: `${((cardIndex + 1) / studyWords.length) * 100}%` }}
-          transition={{ duration: 0.3 }}
-        />
-      </div>
-
       {/* Flashcard */}
       <div className={`flex-1 ${focusMode ? "flex items-center justify-center px-8 py-4" : ""}`}>
         <AnimatePresence mode="wait">
