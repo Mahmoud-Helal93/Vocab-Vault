@@ -1,10 +1,10 @@
-import { useMemo, useState } from "react";
+import { useMemo } from "react";
 import { motion } from "framer-motion";
 import { useApp } from "@/context/AppContext";
 import { getProgress, getDueWords, getDifficultWords } from "@/lib/srs";
 import { TOTAL_DAYS } from "@/data/words";
 import {
-  Search, Bell, Brain, Star, Target, Flame, ArrowUp, ArrowDown,
+  Bell, Brain, Star, Target, Flame, ArrowUp, ArrowDown,
   BookOpen, Clock, ChevronRight, MoreHorizontal, CalendarDays, TrendingUp,
 } from "lucide-react";
 
@@ -21,7 +21,6 @@ export default function Dashboard({ onNavigate }: DashboardProps) {
   const progress = useMemo(() => getProgress(words), [words]);
   const dueWords = useMemo(() => getDueWords(words), [words]);
   const difficultWords = useMemo(() => getDifficultWords(words), [words]);
-  const [search, setSearch] = useState("");
 
   const dayProgress = useMemo(() => {
     return Array.from({ length: TOTAL_DAYS }, (_, i) => {
@@ -36,13 +35,6 @@ export default function Dashboard({ onNavigate }: DashboardProps) {
       };
     });
   }, [words]);
-
-  // Filtered word search
-  const searchResults = useMemo(() => {
-    if (!search.trim()) return [];
-    const q = search.toLowerCase();
-    return words.filter((w) => w.word.toLowerCase().includes(q)).slice(0, 6);
-  }, [search, words]);
 
   // Stat cards (SchoolHub-style colorful cards)
   const stats = [
@@ -137,34 +129,11 @@ export default function Dashboard({ onNavigate }: DashboardProps) {
 
   return (
     <div className="max-w-6xl mx-auto px-4 py-6">
-      {/* Top bar with search + profile */}
+      {/* Top bar with profile */}
       <motion.div
         initial={{ opacity: 0, y: -6 }} animate={{ opacity: 1, y: 0 }}
         className="flex items-center gap-3 mb-6"
       >
-        <div className="relative flex-1 max-w-md">
-          <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" />
-          <input
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            placeholder="Search vocabulary…"
-            className="w-full h-10 pl-9 pr-3 rounded-full bg-card border border-card-border text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-violet-300"
-          />
-          {searchResults.length > 0 && (
-            <div className="absolute z-30 left-0 right-0 mt-1 bg-card border border-card-border rounded-xl shadow-lg overflow-hidden">
-              {searchResults.map((w) => (
-                <button
-                  key={w.id}
-                  onClick={() => { setSearch(""); onNavigate("study", { day: w.day }); }}
-                  className="w-full flex items-center justify-between px-3 py-2 hover:bg-muted text-left"
-                >
-                  <span className="font-medium text-foreground text-sm">{w.word}</span>
-                  <span className="text-xs text-muted-foreground">Day {w.day} • G{w.group}</span>
-                </button>
-              ))}
-            </div>
-          )}
-        </div>
         <div className="ml-auto flex items-center gap-3">
           <button className="w-10 h-10 rounded-full bg-card border border-card-border flex items-center justify-center text-muted-foreground hover:text-foreground transition-colors">
             <Bell size={16} />
