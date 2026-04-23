@@ -240,15 +240,6 @@ export default function StudyMode({ onBack, initialDay, initialWordId }: StudyMo
           >
             <Shuffle size={18} />
           </button>
-          <button
-            onClick={() => setFocusMode((f) => !f)}
-            className={`p-2 rounded-xl text-xs font-medium transition-colors ${
-              focusMode ? "bg-primary text-primary-foreground" : "hover:bg-muted text-muted-foreground"
-            }`}
-            title="Focus Mode"
-          >
-            Focus
-          </button>
         </div>
       </div>
 
