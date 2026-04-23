@@ -14,7 +14,7 @@ import Achievements from "@/pages/Achievements";
 import QuickTen from "@/components/QuickTen";
 import SidebarSearch from "@/components/SidebarSearch";
 import BadgeToast from "@/components/BadgeToast";
-import vocabNinjaLogo from "@assets/image_1776985997685.png";
+import vocabNinjaLogo from "@assets/Gemini_Generated_Image_tgtyf7tgtyf7tgty_1776986903352.png";
 import {
   LayoutDashboard, BookOpen, Target, Clock, Settings, Moon, Sun,
   CalendarDays, GitFork, BarChart3, TrendingUp, Zap, ChevronLeft, ChevronRight, Menu,
