@@ -208,9 +208,6 @@ export default function StudyMode({ onBack, initialDay, initialWordId }: StudyMo
           <div className="font-semibold text-foreground">
             Day {selectedDay} · {selectedGroup ? `Group ${selectedGroup}` : "All Words"}
           </div>
-          <div className="text-sm text-muted-foreground">
-            {cardIndex + 1} / {studyWords.length}
-          </div>
         </div>
         <div className="flex gap-2">
           <button
