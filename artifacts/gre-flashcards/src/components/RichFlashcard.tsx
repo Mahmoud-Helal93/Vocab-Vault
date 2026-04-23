@@ -93,10 +93,10 @@ export default function RichFlashcard({
   const antonymTone = "bg-rose-50 dark:bg-rose-900/20 text-rose-700 dark:text-rose-400 border-rose-200 dark:border-rose-800";
 
   return (
-    <div className="w-full max-w-6xl mx-auto flex flex-col gap-4">
+    <div className="w-full max-w-6xl mx-auto h-full flex flex-col gap-3">
       {/* Top progress */}
       {typeof index === "number" && typeof total === "number" && (
-        <div className="text-center">
+        <div className="text-center shrink-0">
           <p className="text-sm text-muted-foreground font-medium mb-2">
             {index + 1} / {total}
           </p>
@@ -111,9 +111,9 @@ export default function RichFlashcard({
         </div>
       )}
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 flex-1 min-h-0">
         {/* LEFT CARD */}
-        <div className="bg-card border border-card-border rounded-3xl shadow-lg p-7 flex flex-col">
+        <div className="bg-card border border-card-border rounded-3xl shadow-lg p-6 flex flex-col overflow-y-auto min-h-0">
           <div className="flex items-start justify-between gap-3 mb-3">
             <span className={`inline-flex items-center gap-1.5 text-xs font-semibold px-2.5 py-1 rounded-full ${status.bg}`}>
               <span className={`w-1.5 h-1.5 rounded-full ${status.dot}`} />
@@ -210,7 +210,7 @@ export default function RichFlashcard({
         </div>
 
         {/* RIGHT CARD */}
-        <div className="bg-card border border-card-border rounded-3xl shadow-lg p-7 flex flex-col gap-5">
+        <div className="bg-card border border-card-border rounded-3xl shadow-lg p-6 flex flex-col gap-4 overflow-y-auto min-h-0">
           {/* Hero illustration */}
           {enr.imageUrl ? (
             <div className="rounded-2xl overflow-hidden bg-gradient-to-br from-sky-100 to-indigo-100 dark:from-sky-900/30 dark:to-indigo-900/30 aspect-[4/3]">

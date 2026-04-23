@@ -191,13 +191,13 @@ export default function StudyMode({ onBack, initialDay, initialWordId }: StudyMo
 
   return (
     <div
-      className={`flex flex-col ${focusMode ? "fixed inset-0 bg-background z-50 overflow-auto" : "max-w-4xl mx-auto px-4 py-8"}`}
+      className={`flex flex-col ${focusMode ? "fixed inset-0 bg-background z-50 overflow-auto" : "h-[calc(100vh-3.5rem)] lg:h-screen px-16 py-4 overflow-hidden"}`}
       tabIndex={0}
       onKeyDown={handleArrowKeys}
       style={{ outline: "none" }}
     >
       {/* Header */}
-      <div className="flex items-center justify-between mb-6">
+      <div className="flex items-center justify-between mb-3 shrink-0">
         <button
           onClick={() => setView("group-select")}
           className="p-2 rounded-xl hover:bg-muted transition-colors"
@@ -235,7 +235,7 @@ export default function StudyMode({ onBack, initialDay, initialWordId }: StudyMo
       </div>
 
       {/* Flashcard */}
-      <div className={`flex-1 ${focusMode ? "flex items-center justify-center px-8 py-4" : ""}`}>
+      <div className={`flex-1 min-h-0 ${focusMode ? "flex items-center justify-center px-8 py-4" : "flex"}`}>
         <AnimatePresence mode="wait">
           <motion.div
             key={currentWord.id}
@@ -243,7 +243,7 @@ export default function StudyMode({ onBack, initialDay, initialWordId }: StudyMo
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: -30 }}
             transition={{ duration: 0.25 }}
-            className="w-full"
+            className="w-full h-full"
           >
             {getEnrichment(currentWord.word) ? (
               <RichFlashcard
