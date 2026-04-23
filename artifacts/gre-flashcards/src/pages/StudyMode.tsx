@@ -6,7 +6,7 @@ import RichFlashcard from "@/components/RichFlashcard";
 import { getEnrichment } from "@/data/enrichment";
 import { shuffleArray } from "@/lib/srs";
 import { TOTAL_DAYS, GROUPS_PER_DAY } from "@/data/words";
-import { ChevronLeft, ChevronRight, Shuffle, ArrowLeft, Grid3X3 } from "lucide-react";
+import { ChevronLeft, ChevronRight, Shuffle, ArrowLeft, Grid3X3, Flame } from "lucide-react";
 
 type View = "day-select" | "group-select" | "study";
 
@@ -17,7 +17,7 @@ interface StudyModeProps {
 }
 
 export default function StudyMode({ onBack, initialDay, initialWordId }: StudyModeProps) {
-  const { words, markWordReviewed, settings } = useApp();
+  const { words, markWordReviewed, settings, streak } = useApp();
   const initialWord = initialWordId ? words.find((w) => w.id === initialWordId) : undefined;
   const [view, setView] = useState<View>(initialWord || initialDay ? (initialWord ? "study" : "group-select") : "day-select");
   const [selectedDay, setSelectedDay] = useState<number>(initialWord?.day ?? initialDay ?? 1);
@@ -212,6 +212,15 @@ export default function StudyMode({ onBack, initialDay, initialWordId }: StudyMo
         <span className="text-xs font-semibold text-emerald-600 tabular-nums w-9 text-right">
           {Math.round(((cardIndex + 1) / studyWords.length) * 100)}%
         </span>
+        <div
+          className="flex items-center gap-1 px-2 py-1 rounded-full bg-orange-50 dark:bg-orange-900/20 border border-orange-200 dark:border-orange-800"
+          title={`${streak.currentStreak}-day streak`}
+        >
+          <Flame size={12} className="text-orange-500" />
+          <span className="text-xs font-semibold text-orange-600 dark:text-orange-400 tabular-nums">
+            {streak.currentStreak}
+          </span>
+        </div>
       </div>
       {/* Header */}
       <div className="flex items-center justify-between mb-3 shrink-0">
