@@ -28,7 +28,6 @@ const NAV_ITEMS: Array<{ id: Page; icon: React.ReactNode; label: string }> = [
   { id: "study",       icon: <BookOpen size={18} />,        label: "Learn" },
   { id: "practice",    icon: <Target size={18} />,          label: "Practice" },
   { id: "review",      icon: <Clock size={18} />,           label: "Review" },
-  { id: "progress",    icon: <TrendingUp size={18} />,      label: "Progress" },
   { id: "achievements",icon: <Trophy size={18} />,          label: "Achievements" },
   { id: "settings",    icon: <Settings size={18} />,        label: "Settings" },
 ];
