@@ -93,24 +93,7 @@ export default function RichFlashcard({
   const antonymTone = "bg-rose-50 dark:bg-rose-900/20 text-rose-700 dark:text-rose-400 border-rose-200 dark:border-rose-800";
 
   return (
-    <div className="w-full max-w-6xl mx-auto h-full flex flex-col gap-3">
-      {/* Top progress */}
-      {typeof index === "number" && typeof total === "number" && (
-        <div className="text-center shrink-0">
-          <p className="text-sm text-muted-foreground font-medium mb-2">
-            {index + 1} / {total}
-          </p>
-          <div className="mx-auto max-w-md h-1.5 rounded-full bg-muted overflow-hidden">
-            <motion.div
-              className="h-full bg-emerald-500"
-              initial={{ width: 0 }}
-              animate={{ width: `${((index + 1) / total) * 100}%` }}
-              transition={{ duration: 0.4 }}
-            />
-          </div>
-        </div>
-      )}
-
+    <div className="w-full max-w-6xl mx-auto h-full flex flex-col">
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 flex-1 min-h-0">
         {/* LEFT CARD */}
         <div className="bg-card border border-card-border rounded-3xl shadow-lg p-6 flex flex-col overflow-y-auto min-h-0">

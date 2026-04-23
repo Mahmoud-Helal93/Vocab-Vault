@@ -191,11 +191,29 @@ export default function StudyMode({ onBack, initialDay, initialWordId }: StudyMo
 
   return (
     <div
-      className={`flex flex-col ${focusMode ? "fixed inset-0 bg-background z-50 overflow-auto" : "h-[calc(100vh-3.5rem)] lg:h-screen px-16 py-4 overflow-hidden"}`}
+      className={`relative flex flex-col ${focusMode ? "fixed inset-0 bg-background z-50 overflow-auto" : "h-[calc(100vh-3.5rem)] lg:h-screen px-16 pt-6 pb-4 overflow-hidden"}`}
       tabIndex={0}
       onKeyDown={handleArrowKeys}
       style={{ outline: "none" }}
     >
+      {/* Top progress bar (modern) */}
+      <div className="shrink-0 mb-4 flex items-center gap-3">
+        <span className="text-xs font-semibold text-muted-foreground tabular-nums tracking-wider">
+          {String(cardIndex + 1).padStart(2, "0")}
+          <span className="text-muted-foreground/50"> / {String(studyWords.length).padStart(2, "0")}</span>
+        </span>
+        <div className="relative flex-1 h-1.5 rounded-full bg-muted/70 overflow-hidden">
+          <motion.div
+            className="absolute inset-y-0 left-0 rounded-full bg-gradient-to-r from-emerald-400 via-emerald-500 to-teal-500 shadow-[0_0_10px_rgba(16,185,129,0.5)]"
+            animate={{ width: `${((cardIndex + 1) / studyWords.length) * 100}%` }}
+            transition={{ duration: 0.4, ease: "easeOut" }}
+          />
+        </div>
+        <span className="text-xs font-semibold text-emerald-600 tabular-nums w-9 text-right">
+          {Math.round(((cardIndex + 1) / studyWords.length) * 100)}%
+        </span>
+      </div>
+
       {/* Header */}
       <div className="flex items-center justify-between mb-3 shrink-0">
         <button
@@ -271,12 +289,12 @@ export default function StudyMode({ onBack, initialDay, initialWordId }: StudyMo
         </AnimatePresence>
       </div>
 
-      {/* Nav buttons - fixed side arrows */}
+      {/* Nav buttons - symmetric side arrows within study area */}
       <button
         onClick={handlePrev}
         disabled={cardIndex === 0}
         aria-label="Previous"
-        className="fixed left-4 top-1/2 -translate-y-1/2 z-30 w-12 h-12 flex items-center justify-center rounded-full bg-card border border-card-border shadow-md hover:bg-muted transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
+        className="absolute left-4 top-1/2 -translate-y-1/2 z-30 w-12 h-12 flex items-center justify-center rounded-full bg-card border border-card-border shadow-md hover:bg-muted transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
       >
         <ChevronLeft size={20} />
       </button>
@@ -285,7 +303,7 @@ export default function StudyMode({ onBack, initialDay, initialWordId }: StudyMo
         onClick={handleNext}
         disabled={cardIndex === studyWords.length - 1}
         aria-label="Next"
-        className="fixed right-4 top-1/2 -translate-y-1/2 z-30 w-12 h-12 flex items-center justify-center rounded-full bg-card border border-card-border shadow-md hover:bg-muted transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
+        className="absolute right-4 top-1/2 -translate-y-1/2 z-30 w-12 h-12 flex items-center justify-center rounded-full bg-card border border-card-border shadow-md hover:bg-muted transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
       >
         <ChevronRight size={20} />
       </button>
