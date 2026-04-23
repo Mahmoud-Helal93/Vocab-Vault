@@ -2,6 +2,8 @@ import { useState, useCallback, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useApp } from "@/context/AppContext";
 import Flashcard from "@/components/Flashcard";
+import RichFlashcard from "@/components/RichFlashcard";
+import { getEnrichment } from "@/data/enrichment";
 import { shuffleArray } from "@/lib/srs";
 import { TOTAL_DAYS, GROUPS_PER_DAY } from "@/data/words";
 import { ChevronLeft, ChevronRight, Shuffle, ArrowLeft, Grid3X3 } from "lucide-react";
@@ -255,16 +257,28 @@ export default function StudyMode({ onBack, initialDay, initialWordId }: StudyMo
             transition={{ duration: 0.25 }}
             className="w-full"
           >
-            <Flashcard
-              word={currentWord}
-              onRate={(quality) => {
-                markWordReviewed(currentWord.id, quality);
-                if (cardIndex < studyWords.length - 1) handleNext();
-              }}
-              showTimer={settings.timerEnabled}
-              timerSeconds={settings.timerSeconds}
-              onTimerEnd={handleNext}
-            />
+            {getEnrichment(currentWord.word) ? (
+              <RichFlashcard
+                word={currentWord}
+                index={cardIndex}
+                total={studyWords.length}
+                onRate={(quality) => {
+                  markWordReviewed(currentWord.id, quality);
+                  if (cardIndex < studyWords.length - 1) handleNext();
+                }}
+              />
+            ) : (
+              <Flashcard
+                word={currentWord}
+                onRate={(quality) => {
+                  markWordReviewed(currentWord.id, quality);
+                  if (cardIndex < studyWords.length - 1) handleNext();
+                }}
+                showTimer={settings.timerEnabled}
+                timerSeconds={settings.timerSeconds}
+                onTimerEnd={handleNext}
+              />
+            )}
           </motion.div>
         </AnimatePresence>
       </div>

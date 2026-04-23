@@ -1,3 +1,62 @@
 uploads = []
-generated = []
 outputs = []
+
+[[generated]]
+id = "cv6qG29GDljzv4LIu5gTB"
+uri = "file://artifacts/gre-flashcards/src/assets/word-illustrations/abound.png"
+type = "image"
+title = "abound illustration"
+
+[[generated]]
+id = "eufpqB3cH5pTWV5zHnZ1R"
+uri = "file://artifacts/gre-flashcards/src/assets/word-illustrations/amorphous.png"
+type = "image"
+title = "amorphous illustration"
+
+[[generated]]
+id = "OZYquzLq9RA_UT0s9Cop-"
+uri = "file://artifacts/gre-flashcards/src/assets/word-illustrations/austere.png"
+type = "image"
+title = "austere illustration"
+
+[[generated]]
+id = "nt5zmZiOeUJO_V-kWbW-5"
+uri = "file://artifacts/gre-flashcards/src/assets/word-illustrations/belie.png"
+type = "image"
+title = "belie illustration"
+
+[[generated]]
+id = "__qoScW7rAlryqaNnxNoT"
+uri = "file://artifacts/gre-flashcards/src/assets/word-illustrations/capricious.png"
+type = "image"
+title = "capricious illustration"
+
+[[generated]]
+id = "748GkHQTVmV6lVqq_ssW_"
+uri = "file://artifacts/gre-flashcards/src/assets/word-illustrations/cerebral.png"
+type = "image"
+title = "cerebral illustration"
+
+[[generated]]
+id = "KiwD0eMZ7YolN08HoFU7l"
+uri = "file://artifacts/gre-flashcards/src/assets/word-illustrations/congenial.png"
+type = "image"
+title = "congenial illustration"
+
+[[generated]]
+id = "D0jb7CSkOelfZFL3HSq6X"
+uri = "file://artifacts/gre-flashcards/src/assets/word-illustrations/conspicuous.png"
+type = "image"
+title = "conspicuous illustration"
+
+[[generated]]
+id = "XPkfMBN2hCAPDbTnFA0lr"
+uri = "file://artifacts/gre-flashcards/src/assets/word-illustrations/cursory.png"
+type = "image"
+title = "cursory illustration"
+
+[[generated]]
+id = "lNfPJc2raywI4fWwIhdCA"
+uri = "file://artifacts/gre-flashcards/src/assets/word-illustrations/daunting.png"
+type = "image"
+title = "daunting illustration"
