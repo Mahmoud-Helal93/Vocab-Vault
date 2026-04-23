@@ -11,13 +11,15 @@ type View = "day-select" | "group-select" | "study";
 interface StudyModeProps {
   onBack: () => void;
   initialDay?: number;
+  initialWordId?: string;
 }
 
-export default function StudyMode({ onBack, initialDay }: StudyModeProps) {
+export default function StudyMode({ onBack, initialDay, initialWordId }: StudyModeProps) {
   const { words, markWordReviewed, settings } = useApp();
-  const [view, setView] = useState<View>(initialDay ? "group-select" : "day-select");
-  const [selectedDay, setSelectedDay] = useState<number>(initialDay ?? 1);
-  const [selectedGroup, setSelectedGroup] = useState<number | null>(null);
+  const initialWord = initialWordId ? words.find((w) => w.id === initialWordId) : undefined;
+  const [view, setView] = useState<View>(initialWord || initialDay ? (initialWord ? "study" : "group-select") : "day-select");
+  const [selectedDay, setSelectedDay] = useState<number>(initialWord?.day ?? initialDay ?? 1);
+  const [selectedGroup, setSelectedGroup] = useState<number | null>(initialWord?.group ?? null);
   const [cardIndex, setCardIndex] = useState(0);
   const [isShuffled, setIsShuffled] = useState(false);
   const [focusMode, setFocusMode] = useState(false);
@@ -29,6 +31,14 @@ export default function StudyMode({ onBack, initialDay }: StudyModeProps) {
         : words.filter((w) => w.day === selectedDay && w.group === selectedGroup);
     return isShuffled ? shuffleArray(base) : base;
   }, [words, selectedDay, selectedGroup, isShuffled]);
+
+  // Jump to specific word card on mount when initialWordId is provided
+  const [didJump, setDidJump] = useState(false);
+  if (!didJump && initialWordId && studyWords.length > 0) {
+    const idx = studyWords.findIndex((w) => w.id === initialWordId);
+    if (idx >= 0) setCardIndex(idx);
+    setDidJump(true);
+  }
 
   const currentWord = studyWords[cardIndex];
 

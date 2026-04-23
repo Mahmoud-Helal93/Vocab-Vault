@@ -11,6 +11,7 @@ import Confusables from "@/pages/Confusables";
 import Analytics from "@/pages/Analytics";
 import Progress from "@/pages/Progress";
 import QuickTen from "@/components/QuickTen";
+import SidebarSearch from "@/components/SidebarSearch";
 import {
   LayoutDashboard, BookOpen, Target, Clock, Settings, Moon, Sun,
   CalendarDays, GitFork, BarChart3, TrendingUp, Zap, ChevronLeft, ChevronRight, Menu,
@@ -48,7 +49,7 @@ function MainApp() {
       case "dashboard":
         return <Dashboard onNavigate={navigate} />;
       case "study":
-        return <StudyMode onBack={() => setPage("dashboard")} initialDay={pageParams.day as number | undefined} />;
+        return <StudyMode onBack={() => setPage("dashboard")} initialDay={pageParams.day as number | undefined} initialWordId={pageParams.wordId as string | undefined} />;
       case "practice":
         return <PracticeMode onBack={() => setPage("dashboard")} initialSource={pageParams.source as string | undefined} />;
       case "review":
@@ -98,6 +99,16 @@ function MainApp() {
           </button>
         )}
       </div>
+
+      {/* Search */}
+      {(!sidebarCollapsed || inDrawer) && (
+        <SidebarSearch
+          onSelect={(w) => {
+            navigate("study", { wordId: w.id });
+            setMobileNavOpen(false);
+          }}
+        />
+      )}
 
       {/* Crunch badge */}
       {crunch.active && (!sidebarCollapsed || inDrawer) && (
