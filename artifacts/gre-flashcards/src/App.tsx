@@ -280,16 +280,6 @@ function MainApp() {
         <main className="pb-24 lg:pb-12">{renderPage()}</main>
       </div>
 
-      {/* Quick 10 FAB */}
-      <button
-        onClick={() => setQuickTenOpen(true)}
-        className="fixed bottom-6 right-4 z-40 flex items-center gap-2 px-4 py-3 rounded-full bg-amber-500 hover:bg-amber-600 text-white font-bold shadow-lg transition-all hover:scale-105 active:scale-95"
-        title="Quick 10 micro-session"
-      >
-        <Zap size={18} />
-        <span className="text-sm">Quick 10</span>
-      </button>
-
       {/* Quick Ten overlay */}
       <AnimatePresence>
         {quickTenOpen && <QuickTen onClose={() => setQuickTenOpen(false)} />}
