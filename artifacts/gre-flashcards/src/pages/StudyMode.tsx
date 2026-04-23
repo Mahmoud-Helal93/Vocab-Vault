@@ -282,18 +282,6 @@ export default function StudyMode({ onBack, initialDay, initialWordId }: StudyMo
           Previous
         </button>
 
-        <div className="flex gap-1">
-          {studyWords.map((_, i) => (
-            <button
-              key={i}
-              onClick={() => setCardIndex(i)}
-              className={`w-2 h-2 rounded-full transition-colors ${
-                i === cardIndex ? "bg-primary" : "bg-muted"
-              }`}
-            />
-          ))}
-        </div>
-
         <button
           onClick={handleNext}
           disabled={cardIndex === studyWords.length - 1}
