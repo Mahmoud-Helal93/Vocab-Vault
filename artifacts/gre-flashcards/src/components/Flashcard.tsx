@@ -3,7 +3,6 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Word } from "@/data/words";
 import { Volume2, RotateCcw } from "lucide-react";
 import { previewIntervals } from "@/lib/srs";
-import WordScene, { hasWordScene } from "@/components/WordScenes";
 
 interface RatingButton {
   quality: number;
@@ -158,20 +157,11 @@ export default function Flashcard({
             </div>
 
             <div className="flex items-center justify-center flex-1 py-4">
-              {hasWordScene(word.word) ? (
-                <div className="w-full flex flex-col items-center gap-3">
-                  <WordScene word={word.word} />
-                  <p className="text-xs text-muted-foreground/60 flex items-center gap-1.5">
-                    <RotateCcw size={12} /> Click to reveal definition
-                  </p>
-                </div>
-              ) : (
-                <div className="text-center">
-                  <RotateCcw size={28} className="text-muted-foreground/40 mx-auto mb-2" />
-                  <p className="text-sm text-muted-foreground/60">Click to reveal definition</p>
-                  <p className="text-xs text-muted-foreground/40 mt-1">or press Space</p>
-                </div>
-              )}
+              <div className="text-center">
+                <RotateCcw size={28} className="text-muted-foreground/40 mx-auto mb-2" />
+                <p className="text-sm text-muted-foreground/60">Click to reveal definition</p>
+                <p className="text-xs text-muted-foreground/40 mt-1">or press Space</p>
+              </div>
             </div>
 
             <div className="flex items-center justify-between text-xs text-muted-foreground">
