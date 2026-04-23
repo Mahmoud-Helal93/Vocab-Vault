@@ -78,40 +78,71 @@ export default function StudyMode({ onBack, initialDay, initialWordId }: StudyMo
           </div>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {Array.from({ length: TOTAL_DAYS }, (_, i) => {
-            const day = i + 1;
-            const dw = dayWords[i];
-            const mastered = dw.filter((w) => w.status === "mastered").length;
-            const pct = Math.round((mastered / dw.length) * 100);
+        <div className="space-y-8">
+          {Array.from({ length: 6 }, (_, w) => {
+            const weekNum = w + 1;
+            const startDay = w * 7 + 1;
+            const endDay = Math.min(startDay + 6, TOTAL_DAYS);
+            const daysInWeek = Array.from({ length: endDay - startDay + 1 }, (_, k) => startDay + k);
+            const weekWordCounts = daysInWeek.reduce(
+              (acc, d) => {
+                const dw = dayWords[d - 1];
+                acc.total += dw.length;
+                acc.mastered += dw.filter((x) => x.status === "mastered").length;
+                return acc;
+              },
+              { total: 0, mastered: 0 }
+            );
+            const weekPct = weekWordCounts.total
+              ? Math.round((weekWordCounts.mastered / weekWordCounts.total) * 100)
+              : 0;
             return (
-              <motion.button
-                key={day}
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: i * 0.05 }}
-                onClick={() => {
-                  setSelectedDay(day);
-                  setSelectedGroup(null);
-                  setCardIndex(0);
-                  setView("group-select");
-                }}
-                className="text-left p-5 bg-card border border-card-border rounded-2xl shadow-sm hover:border-primary/40 hover:shadow-md transition-all"
-              >
-                <div className="flex items-center justify-between mb-3">
-                  <span className="font-semibold text-foreground text-lg">Day {day}</span>
-                  <span className="text-sm text-muted-foreground">{pct}%</span>
+              <div key={weekNum}>
+                <div className="flex items-baseline justify-between mb-3 px-1">
+                  <h2 className="text-sm font-semibold uppercase tracking-wider text-muted-foreground">
+                    Week {weekNum}
+                  </h2>
+                  <span className="text-xs text-muted-foreground tabular-nums">
+                    Day {startDay}{daysInWeek.length > 1 ? `–${endDay}` : ""} · {weekPct}%
+                  </span>
                 </div>
-                <div className="h-1.5 bg-muted rounded-full mb-3 overflow-hidden">
-                  <div
-                    className="h-full bg-primary rounded-full"
-                    style={{ width: `${pct}%` }}
-                  />
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                  {daysInWeek.map((day, idx) => {
+                    const dw = dayWords[day - 1];
+                    const mastered = dw.filter((x) => x.status === "mastered").length;
+                    const pct = Math.round((mastered / dw.length) * 100);
+                    return (
+                      <motion.button
+                        key={day}
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: idx * 0.04 }}
+                        onClick={() => {
+                          setSelectedDay(day);
+                          setSelectedGroup(null);
+                          setCardIndex(0);
+                          setView("group-select");
+                        }}
+                        className="text-left p-5 bg-card border border-card-border rounded-2xl shadow-sm hover:border-primary/40 hover:shadow-md transition-all"
+                      >
+                        <div className="flex items-center justify-between mb-3">
+                          <span className="font-semibold text-foreground text-lg">Day {day}</span>
+                          <span className="text-sm text-muted-foreground">{pct}%</span>
+                        </div>
+                        <div className="h-1.5 bg-muted rounded-full mb-3 overflow-hidden">
+                          <div
+                            className="h-full bg-primary rounded-full"
+                            style={{ width: `${pct}%` }}
+                          />
+                        </div>
+                        <div className="text-xs text-muted-foreground">
+                          {dw.length} words · {mastered} mastered
+                        </div>
+                      </motion.button>
+                    );
+                  })}
                 </div>
-                <div className="text-xs text-muted-foreground">
-                  {dw.length} words · {mastered} mastered
-                </div>
-              </motion.button>
+              </div>
             );
           })}
         </div>
