@@ -279,16 +279,7 @@ export default function RichFlashcard({
 
       {/* Reveal / rate */}
       <div className="mt-2">
-        {!revealed ? (
-          <button
-            onClick={() => setRevealed(true)}
-            className="w-full max-w-md mx-auto flex items-center justify-center gap-2 py-3 rounded-2xl bg-emerald-500 hover:bg-emerald-600 text-white font-semibold shadow-md transition-colors"
-          >
-            <Sparkles size={16} />
-            Rate your recall
-            <span className="text-xs opacity-70 ml-2">(Space)</span>
-          </button>
-        ) : (
+        {!revealed ? null : (
           <AnimatePresence>
             <motion.div
               initial={{ opacity: 0, y: 10 }}
