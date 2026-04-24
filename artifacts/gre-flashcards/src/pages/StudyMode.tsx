@@ -10,7 +10,6 @@ import { ChevronLeft, ChevronRight, Shuffle, ArrowLeft, Grid3X3, Flame, Check, B
 import { BADGES, levelFromXp } from "@/lib/gamification";
 import { loadMissionTestScores, loadMissionTestAttempts, formatRelativeTime } from "@/lib/storage";
 import ninjaMascot from "@assets/Gemini_Generated_Image_hflkzzhflkzzhflk_1776994719274.png";
-import ProgressSidebar from "@/components/ProgressSidebar";
 
 type View = "day-select" | "group-select" | "study";
 
@@ -480,8 +479,8 @@ export default function StudyMode({ onBack, onNavigate, initialDay, initialWordI
     const missionTestBest = loadMissionTestScores()[selectedDay ?? 0];
     const missionTestLastAttempt = loadMissionTestAttempts()[selectedDay ?? 0];
     return (
-      <div className="flex gap-5 px-4 py-8 min-h-[calc(100vh-3.5rem)] lg:min-h-screen">
-        <div className="flex-1 min-w-0 max-w-4xl mx-auto">
+      <div className="px-4 py-8 min-h-[calc(100vh-3.5rem)] lg:min-h-screen">
+        <div className="max-w-4xl mx-auto">
         <div className="flex items-center gap-3 mb-8">
           <button onClick={() => setView("day-select")} className="p-2 rounded-xl hover:bg-muted transition-colors">
             <ArrowLeft size={20} />
@@ -663,7 +662,6 @@ export default function StudyMode({ onBack, onNavigate, initialDay, initialWordI
 
         </div>
         </div>
-        <ProgressSidebar className="hidden lg:block" />
       </div>
     );
   }

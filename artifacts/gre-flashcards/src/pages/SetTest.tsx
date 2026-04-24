@@ -7,7 +7,6 @@ import {
   ArrowLeft, CheckCircle2, XCircle, ChevronLeft, ChevronRight,
   RotateCcw, Trophy, Target, BookOpenText, Pencil,
 } from "lucide-react";
-import ProgressSidebar from "@/components/ProgressSidebar";
 
 interface SetTestProps {
   onBack: () => void;
@@ -525,12 +524,5 @@ function ReviewBlock({
 }
 
 export default function SetTest(props: SetTestProps) {
-  return (
-    <div className="flex gap-5 px-0 lg:px-4 py-0 lg:py-6 min-h-[calc(100vh-3.5rem)] lg:min-h-screen">
-      <div className="flex-1 min-w-0">
-        <SetTestInner {...props} />
-      </div>
-      <ProgressSidebar className="hidden lg:block" />
-    </div>
-  );
+  return <SetTestInner {...props} />;
 }
