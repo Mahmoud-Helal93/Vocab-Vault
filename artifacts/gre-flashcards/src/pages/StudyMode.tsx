@@ -13,6 +13,7 @@ type View = "day-select" | "group-select" | "study";
 
 interface StudyModeProps {
   onBack: () => void;
+  onNavigate?: (page: string, params?: Record<string, unknown>) => void;
   initialDay?: number;
   initialWordId?: string;
 }
@@ -93,7 +94,7 @@ function CircularProgress({ pct, size = 110 }: { pct: number; size?: number }) {
   );
 }
 
-export default function StudyMode({ onBack, initialDay, initialWordId }: StudyModeProps) {
+export default function StudyMode({ onBack, onNavigate, initialDay, initialWordId }: StudyModeProps) {
   const { words, markWordReviewed, settings, streak, gamification } = useApp();
   const initialWord = initialWordId ? words.find((w) => w.id === initialWordId) : undefined;
   const [view, setView] = useState<View>(initialWord || initialDay ? (initialWord ? "study" : "group-select") : "day-select");
@@ -294,19 +295,27 @@ export default function StudyMode({ onBack, initialDay, initialWordId }: StudyMo
                         const dw = dayWords[day - 1] ?? [];
                         const mDone = dw.length > 0 && dw.every((w) => w.status === "mastered");
                         return (
-                          <button
-                            key={day}
-                            onClick={() => {
-                              setSelectedDay(day);
-                              setSelectedGroup(null);
-                              setCardIndex(0);
-                              setView("group-select");
-                            }}
-                            className="flex flex-col items-center gap-1 hover:scale-110 transition-transform"
-                            title={`Mission ${i + 1} — Day ${day}`}
-                          >
-                            <FlagIcon label={`M${i + 1}`} done={mDone} active={!mDone} />
-                          </button>
+                          <div key={day} className="flex flex-col items-center gap-1">
+                            <button
+                              onClick={() => {
+                                setSelectedDay(day);
+                                setSelectedGroup(null);
+                                setCardIndex(0);
+                                setView("group-select");
+                              }}
+                              className="flex flex-col items-center gap-1 hover:scale-110 transition-transform"
+                              title={`Mission ${i + 1} — Day ${day}`}
+                            >
+                              <FlagIcon label={`M${i + 1}`} done={mDone} active={!mDone} />
+                            </button>
+                            <button
+                              onClick={() => onNavigate?.("mission-test", { missionDay: day })}
+                              title={`Mission ${i + 1} Test`}
+                              className="text-[8px] font-bold px-1 py-0.5 rounded bg-violet-100 hover:bg-violet-200 text-violet-700 dark:bg-violet-900/30 dark:text-violet-400 transition-colors leading-none"
+                            >
+                              TEST
+                            </button>
+                          </div>
                         );
                       })}
                     </div>

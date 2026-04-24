@@ -11,6 +11,7 @@ import Confusables from "@/pages/Confusables";
 import Analytics from "@/pages/Analytics";
 import Progress from "@/pages/Progress";
 import Achievements from "@/pages/Achievements";
+import MissionTest from "@/pages/MissionTest";
 import QuickTen from "@/components/QuickTen";
 import SidebarSearch from "@/components/SidebarSearch";
 import BadgeToast from "@/components/BadgeToast";
@@ -21,7 +22,7 @@ import {
   Trophy,
 } from "lucide-react";
 
-type Page = "dashboard" | "study" | "practice" | "review" | "settings" | "plan" | "confusables" | "analytics" | "progress" | "achievements";
+type Page = "dashboard" | "study" | "practice" | "review" | "settings" | "plan" | "confusables" | "analytics" | "progress" | "achievements" | "mission-test";
 
 const NAV_ITEMS: Array<{ id: Page; icon: React.ReactNode; label: string }> = [
   { id: "dashboard",   icon: <LayoutDashboard size={18} />, label: "Home" },
@@ -50,7 +51,7 @@ function MainApp() {
       case "dashboard":
         return <Dashboard onNavigate={navigate} />;
       case "study":
-        return <StudyMode onBack={() => setPage("dashboard")} initialDay={pageParams.day as number | undefined} initialWordId={pageParams.wordId as string | undefined} />;
+        return <StudyMode onBack={() => setPage("dashboard")} onNavigate={navigate} initialDay={pageParams.day as number | undefined} initialWordId={pageParams.wordId as string | undefined} />;
       case "practice":
         return <PracticeMode onBack={() => setPage("dashboard")} initialSource={pageParams.source as string | undefined} />;
       case "review":
@@ -65,6 +66,8 @@ function MainApp() {
         return <Progress onBack={() => setPage("dashboard")} />;
       case "achievements":
         return <Achievements onBack={() => setPage("dashboard")} />;
+      case "mission-test":
+        return <MissionTest onBack={() => setPage("study")} missionDay={(pageParams.missionDay as number) ?? 1} />;
       case "settings":
         return <SettingsPage onBack={() => setPage("dashboard")} />;
       default:
