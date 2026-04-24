@@ -6,7 +6,7 @@ import RichFlashcard from "@/components/RichFlashcard";
 import { getEnrichment } from "@/data/enrichment";
 import { shuffleArray } from "@/lib/srs";
 import { TOTAL_DAYS, GROUPS_PER_DAY, type Word } from "@/data/words";
-import { ChevronLeft, ChevronRight, Shuffle, ArrowLeft, Grid3X3, Flame, Check, BookOpen, Lock, Trophy, Sparkles, Target, BarChart3 } from "lucide-react";
+import { ChevronLeft, ChevronRight, Shuffle, ArrowLeft, Grid3X3, Flame, Check, BookOpen, Lock, Trophy, Sparkles, Target, BarChart3, Crosshair, X } from "lucide-react";
 import { BADGES, levelFromXp } from "@/lib/gamification";
 import { loadMissionTestScores, loadMissionTestAttempts, formatRelativeTime } from "@/lib/storage";
 import ninjaMascot from "@assets/Gemini_Generated_Image_hflkzzhflkzzhflk_1776994719274.png";
@@ -693,34 +693,43 @@ export default function StudyMode({ onBack, onNavigate, initialDay, initialWordI
         onKeyDown={handleArrowKeys}
         style={{ outline: "none" }}
       >
-        {/* Breadcrumb + stats bar */}
-        <div className="flex items-stretch gap-3">
-          <div className="flex items-center gap-3 px-4 py-3 rounded-2xl bg-card border border-card-border flex-1 min-w-0">
-            <button
-              onClick={() => setView("group-select")}
-              className="p-1.5 rounded-lg hover:bg-muted transition-colors shrink-0"
-              aria-label="Back"
-            >
-              <ArrowLeft size={18} />
-            </button>
-            <div className="text-sm font-semibold flex items-center gap-1.5 min-w-0">
-              <span className="text-violet-600 dark:text-violet-400">Mission {selectedDay}</span>
-              <ChevronRight size={14} className="text-muted-foreground shrink-0" />
-              <span className="text-foreground">Set {selectedGroup ?? "All"}</span>
+        {/* Breadcrumb + stats bar — hidden in focus mode */}
+        {!focusMode && (
+          <div className="flex items-stretch gap-3">
+            <div className="flex items-center gap-3 px-4 py-3 rounded-2xl bg-card border border-card-border flex-1 min-w-0">
+              <button
+                onClick={() => setView("group-select")}
+                className="p-1.5 rounded-lg hover:bg-muted transition-colors shrink-0"
+                aria-label="Back"
+              >
+                <ArrowLeft size={18} />
+              </button>
+              <div className="text-sm font-semibold flex items-center gap-1.5 min-w-0">
+                <span className="text-violet-600 dark:text-violet-400">Mission {selectedDay}</span>
+                <ChevronRight size={14} className="text-muted-foreground shrink-0" />
+                <span className="text-foreground">Set {selectedGroup ?? "All"}</span>
+              </div>
             </div>
+            <div className="hidden md:flex items-stretch gap-2 px-4 py-2.5 rounded-2xl bg-card border border-card-border">
+              <StatChip icon={<BookOpen size={16} />} color="violet" label="Words Learned" value={totalMasteredWords} />
+              <Divider />
+              <StatChip icon={<Flame size={16} />} color="rose" label="Missions Done" value={`${missionsDone} / ${TOTAL_DAYS}`} />
+              <Divider />
+              <StatChip icon={<Sparkles size={16} />} color="indigo" label="Sets Completed" value={`${setsDone} / ${totalSets}`} />
+              <Divider />
+              <StatChip icon={<Trophy size={16} />} color="violet-solid" label={`XP Earned · Lv ${lvl.level} (${Math.round(lvl.progress * 100)}%)`} value={gamification.totalXp.toLocaleString()} />
+              <Divider />
+              <StatChip icon={<Flame size={16} />} color="orange" label="Day Streak" value={streak.currentStreak} />
+            </div>
+            <button
+              onClick={() => setFocusMode(true)}
+              title="Enter focus mode"
+              className="flex items-center justify-center w-12 rounded-2xl bg-card border border-card-border text-muted-foreground hover:text-violet-600 hover:border-violet-300 dark:hover:border-violet-700 transition-colors shrink-0"
+            >
+              <Crosshair size={18} />
+            </button>
           </div>
-          <div className="hidden md:flex items-stretch gap-2 px-4 py-2.5 rounded-2xl bg-card border border-card-border">
-            <StatChip icon={<BookOpen size={16} />} color="violet" label="Words Learned" value={totalMasteredWords} />
-            <Divider />
-            <StatChip icon={<Flame size={16} />} color="rose" label="Missions Done" value={`${missionsDone} / ${TOTAL_DAYS}`} />
-            <Divider />
-            <StatChip icon={<Sparkles size={16} />} color="indigo" label="Sets Completed" value={`${setsDone} / ${totalSets}`} />
-            <Divider />
-            <StatChip icon={<Trophy size={16} />} color="violet-solid" label={`XP Earned · Lv ${lvl.level} (${Math.round(lvl.progress * 100)}%)`} value={gamification.totalXp.toLocaleString()} />
-            <Divider />
-            <StatChip icon={<Flame size={16} />} color="orange" label="Day Streak" value={streak.currentStreak} />
-          </div>
-        </div>
+        )}
 
         {/* Numbered progress dots */}
         <div className="flex items-center gap-3 px-5 py-3 rounded-2xl bg-card border border-card-border">
@@ -755,6 +764,16 @@ export default function StudyMode({ onBack, onNavigate, initialDay, initialWordI
           <div className="px-3 py-1 rounded-full bg-violet-50 dark:bg-violet-900/20 text-violet-700 dark:text-violet-300 text-xs font-bold shrink-0">
             {cardIndex + 1} / {studyWords.length}
           </div>
+          {focusMode && (
+            <button
+              onClick={() => setFocusMode(false)}
+              title="Exit focus mode"
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-violet-100 dark:bg-violet-900/30 text-violet-600 dark:text-violet-400 hover:bg-violet-200 dark:hover:bg-violet-900/50 transition-colors text-xs font-semibold shrink-0"
+            >
+              <X size={13} />
+              Exit Focus
+            </button>
+          )}
         </div>
 
         {/* Rich card */}
