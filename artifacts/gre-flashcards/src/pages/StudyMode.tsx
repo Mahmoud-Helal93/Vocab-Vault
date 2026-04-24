@@ -6,7 +6,7 @@ import RichFlashcard from "@/components/RichFlashcard";
 import { getEnrichment } from "@/data/enrichment";
 import { shuffleArray } from "@/lib/srs";
 import { TOTAL_DAYS, GROUPS_PER_DAY, type Word } from "@/data/words";
-import { ChevronLeft, ChevronRight, Shuffle, ArrowLeft, Grid3X3, Flame, Check, BookOpen, Lock, Trophy, Sparkles, Target } from "lucide-react";
+import { ChevronLeft, ChevronRight, Shuffle, ArrowLeft, Grid3X3, Flame, Check, BookOpen, Lock, Trophy, Sparkles, Target, BarChart3 } from "lucide-react";
 import { BADGES, levelFromXp } from "@/lib/gamification";
 import { loadMissionTestScores, loadMissionTestAttempts, formatRelativeTime } from "@/lib/storage";
 import ninjaMascot from "@assets/Gemini_Generated_Image_hflkzzhflkzzhflk_1776994719274.png";
@@ -92,6 +92,32 @@ function CircularProgress({ pct, size = 110 }: { pct: number; size?: number }) {
       <div className="absolute text-center">
         <div className="text-2xl font-bold text-foreground">{pct}%</div>
         <div className="text-[10px] text-muted-foreground leading-tight">Overall<br/>Progress</div>
+      </div>
+    </div>
+  );
+}
+
+function Divider() {
+  return <div className="w-px self-stretch bg-border mx-1" />;
+}
+
+const STAT_COLOR: Record<string, string> = {
+  violet: "bg-violet-50 dark:bg-violet-900/30 text-violet-600 dark:text-violet-400",
+  rose: "bg-rose-50 dark:bg-rose-900/30 text-rose-500 dark:text-rose-400",
+  indigo: "bg-indigo-50 dark:bg-indigo-900/30 text-indigo-500 dark:text-indigo-400",
+  "violet-solid": "bg-violet-500 text-white",
+  orange: "bg-orange-50 dark:bg-orange-900/30 text-orange-500 dark:text-orange-400",
+};
+
+function StatChip({ icon, color, label, value }: { icon: React.ReactNode; color: string; label: string; value: React.ReactNode }) {
+  return (
+    <div className="flex items-center gap-2 px-2">
+      <div className={`w-9 h-9 rounded-full flex items-center justify-center ${STAT_COLOR[color] ?? STAT_COLOR.violet}`}>
+        {icon}
+      </div>
+      <div className="leading-tight">
+        <div className="text-base font-extrabold tabular-nums text-foreground">{value}</div>
+        <div className="text-[10px] text-muted-foreground whitespace-nowrap">{label}</div>
       </div>
     </div>
   );
@@ -643,6 +669,116 @@ export default function StudyMode({ onBack, onNavigate, initialDay, initialWordI
   }
 
   if (!currentWord) return null;
+
+  const isRich = !!getEnrichment(currentWord.word);
+  const lvl = levelFromXp(gamification.totalXp);
+  const totalMasteredWords = words.filter((w) => w.status === "mastered").length;
+  const totalSets = TOTAL_DAYS * GROUPS_PER_DAY;
+  const setsDone = Array.from({ length: TOTAL_DAYS }, (_, di) =>
+    Array.from({ length: GROUPS_PER_DAY }, (_, gi) => {
+      const setWords = words.filter((w) => w.day === di + 1 && w.group === gi + 1);
+      return setWords.length > 0 && setWords.every((w) => w.status === "mastered");
+    }).filter(Boolean).length
+  ).reduce((a, b) => a + b, 0);
+  const missionsDone = Array.from({ length: TOTAL_DAYS }, (_, di) => {
+    const dw = words.filter((w) => w.day === di + 1);
+    return dw.length > 0 && dw.every((w) => w.status === "mastered");
+  }).filter(Boolean).length;
+
+  if (isRich) {
+    return (
+      <div
+        className="min-h-[calc(100vh-3.5rem)] lg:min-h-screen px-4 lg:px-8 py-5 flex flex-col gap-5"
+        tabIndex={0}
+        onKeyDown={handleArrowKeys}
+        style={{ outline: "none" }}
+      >
+        {/* Breadcrumb + stats bar */}
+        <div className="flex items-stretch gap-3">
+          <div className="flex items-center gap-3 px-4 py-3 rounded-2xl bg-card border border-card-border flex-1 min-w-0">
+            <button
+              onClick={() => setView("group-select")}
+              className="p-1.5 rounded-lg hover:bg-muted transition-colors shrink-0"
+              aria-label="Back"
+            >
+              <ArrowLeft size={18} />
+            </button>
+            <div className="text-sm font-semibold flex items-center gap-1.5 min-w-0">
+              <span className="text-violet-600 dark:text-violet-400">Mission {selectedDay}</span>
+              <ChevronRight size={14} className="text-muted-foreground shrink-0" />
+              <span className="text-foreground">Set {selectedGroup ?? "All"}</span>
+            </div>
+          </div>
+          <div className="hidden md:flex items-stretch gap-2 px-4 py-2.5 rounded-2xl bg-card border border-card-border">
+            <StatChip icon={<BookOpen size={16} />} color="violet" label="Words Learned" value={totalMasteredWords} />
+            <Divider />
+            <StatChip icon={<Flame size={16} />} color="rose" label="Missions Done" value={`${missionsDone} / ${TOTAL_DAYS}`} />
+            <Divider />
+            <StatChip icon={<Sparkles size={16} />} color="indigo" label="Sets Completed" value={`${setsDone} / ${totalSets}`} />
+            <Divider />
+            <StatChip icon={<Trophy size={16} />} color="violet-solid" label={`XP Earned · Lv ${lvl.level} (${Math.round(lvl.progress * 100)}%)`} value={gamification.totalXp.toLocaleString()} />
+            <Divider />
+            <StatChip icon={<Flame size={16} />} color="orange" label="Day Streak" value={streak.currentStreak} />
+          </div>
+        </div>
+
+        {/* Numbered progress dots */}
+        <div className="flex items-center gap-3 px-5 py-3 rounded-2xl bg-card border border-card-border">
+          <div className="flex items-center gap-1.5 text-sm font-semibold text-muted-foreground shrink-0">
+            <BarChart3 size={15} /> Progress
+          </div>
+          <div className="flex-1 flex items-center min-w-0 overflow-hidden">
+            {studyWords.map((_, i) => {
+              const active = i === cardIndex;
+              const done = i < cardIndex;
+              return (
+                <div key={i} className="flex items-center flex-1 last:flex-none">
+                  <button
+                    onClick={() => setCardIndex(i)}
+                    className={`shrink-0 w-7 h-7 rounded-full text-xs font-bold flex items-center justify-center transition-all ${
+                      active
+                        ? "bg-violet-500 text-white shadow-md scale-110"
+                        : done
+                          ? "bg-violet-100 dark:bg-violet-900/40 text-violet-700 dark:text-violet-300 border border-violet-300 dark:border-violet-700"
+                          : "bg-transparent text-muted-foreground border border-border hover:border-violet-300"
+                    }`}
+                  >
+                    {i + 1}
+                  </button>
+                  {i < studyWords.length - 1 && (
+                    <div className={`flex-1 h-px ${i < cardIndex ? "bg-violet-300 dark:bg-violet-700" : "bg-border"}`} />
+                  )}
+                </div>
+              );
+            })}
+          </div>
+          <div className="px-3 py-1 rounded-full bg-violet-50 dark:bg-violet-900/20 text-violet-700 dark:text-violet-300 text-xs font-bold shrink-0">
+            {cardIndex + 1} / {studyWords.length}
+          </div>
+        </div>
+
+        {/* Rich card */}
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={currentWord.id}
+            initial={{ opacity: 0, x: 30 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: -30 }}
+            transition={{ duration: 0.25 }}
+          >
+            <RichFlashcard
+              word={currentWord}
+              hasPrev={cardIndex > 0}
+              hasNext={cardIndex < studyWords.length - 1}
+              onPrev={handlePrev}
+              onNext={handleNext}
+              onRate={(quality) => markWordReviewed(currentWord.id, quality)}
+            />
+          </motion.div>
+        </AnimatePresence>
+      </div>
+    );
+  }
 
   return (
     <div
