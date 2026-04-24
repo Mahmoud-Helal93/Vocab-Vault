@@ -5,11 +5,9 @@ import type { Word } from "@/data/words";
 
 interface SidebarSearchProps {
   onSelect: (word: Word) => void;
-  className?: string;
-  placeholder?: string;
 }
 
-export default function SidebarSearch({ onSelect, className, placeholder = "Search words..." }: SidebarSearchProps) {
+export default function SidebarSearch({ onSelect }: SidebarSearchProps) {
   const { words } = useApp();
   const [query, setQuery] = useState("");
   const [open, setOpen] = useState(false);
@@ -54,7 +52,7 @@ export default function SidebarSearch({ onSelect, className, placeholder = "Sear
   };
 
   return (
-    <div ref={containerRef} className={className ?? "relative px-3 pt-3"}>
+    <div ref={containerRef} className="relative px-3 pt-3">
       <div className="relative">
         <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground pointer-events-none" />
         <input
@@ -69,7 +67,7 @@ export default function SidebarSearch({ onSelect, className, placeholder = "Sear
             else if (e.key === "Enter" && results[highlight]) { e.preventDefault(); choose(results[highlight]); }
             else if (e.key === "Escape") { setOpen(false); inputRef.current?.blur(); }
           }}
-          placeholder={placeholder}
+          placeholder="Search words..."
           className="w-full pl-8 pr-7 py-2 text-sm rounded-lg bg-muted/60 border border-transparent focus:bg-background focus:border-border focus:outline-none placeholder:text-muted-foreground"
         />
         {query && (
@@ -83,7 +81,7 @@ export default function SidebarSearch({ onSelect, className, placeholder = "Sear
       </div>
 
       {open && query.trim() && (
-        <div className="absolute left-0 right-0 top-full mt-1 z-50 bg-card border border-border rounded-xl shadow-xl overflow-hidden max-h-80 overflow-y-auto">
+        <div className="absolute left-3 right-3 top-full mt-1 z-50 bg-card border border-border rounded-xl shadow-xl overflow-hidden max-h-80 overflow-y-auto">
           {results.length === 0 ? (
             <div className="px-3 py-3 text-xs text-muted-foreground">No words found</div>
           ) : (

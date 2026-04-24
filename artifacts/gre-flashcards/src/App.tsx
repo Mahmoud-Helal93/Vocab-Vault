@@ -80,15 +80,15 @@ function MainApp() {
 
   const Sidebar = ({ inDrawer = false }: { inDrawer?: boolean }) => (
     <div className="h-full flex flex-col bg-card border-r border-border">
-      {/* Logo — fixed at the very top, never scrolls with tabs */}
-      <div className={`flex items-center ${sidebarCollapsed && !inDrawer ? "justify-center" : "justify-start"} px-3 h-20 bg-card border-b border-border shrink-0 shadow-sm`}>
+      {/* Logo + collapse */}
+      <div className={`flex items-center ${sidebarCollapsed && !inDrawer ? "justify-center" : "justify-between"} px-3 h-16 border-b border-border shrink-0`}>
         <div className="flex items-center gap-2 overflow-hidden">
           {sidebarCollapsed && !inDrawer ? (
-            <div className="w-12 h-12 overflow-hidden flex items-center justify-start shrink-0">
+            <div className="w-9 h-9 overflow-hidden flex items-center justify-start shrink-0">
               <img
                 src={vocabNinjaLogo}
                 alt="Vocab Ninja"
-                className="h-12 w-auto object-contain object-left max-w-none"
+                className="h-9 w-auto object-contain object-left max-w-none"
                 style={{ width: "auto" }}
               />
             </div>
@@ -96,69 +96,67 @@ function MainApp() {
             <img
               src={vocabNinjaLogo}
               alt="Vocab Ninja — Master Words. Master Every Mission."
-              className="h-16 w-auto object-contain shrink-0"
+              className="h-11 w-auto object-contain shrink-0"
             />
           )}
         </div>
-      </div>
-
-      {/* Scrollable area: collapse toggle + crunch badge + tabs */}
-      <div className="flex-1 overflow-y-auto scrollbar-thin">
-        {/* Collapse toggle — sits below logo, controls only the tabs area */}
         {!inDrawer && (
-          <div className={`hidden lg:flex ${sidebarCollapsed ? "justify-center" : "justify-end"} px-2 pt-2`}>
-            <button
-              onClick={() => setSidebarCollapsed((v) => !v)}
-              className="flex items-center justify-center w-7 h-7 rounded-lg hover:bg-muted text-muted-foreground transition-colors"
-              title={sidebarCollapsed ? "Expand sidebar" : "Collapse sidebar"}
-            >
-              {sidebarCollapsed ? <ChevronRight size={16} /> : <ChevronLeft size={16} />}
-            </button>
-          </div>
+          <button
+            onClick={() => setSidebarCollapsed((v) => !v)}
+            className="hidden lg:flex items-center justify-center w-7 h-7 rounded-lg hover:bg-muted text-muted-foreground transition-colors"
+            title={sidebarCollapsed ? "Expand sidebar" : "Collapse sidebar"}
+          >
+            {sidebarCollapsed ? <ChevronRight size={16} /> : <ChevronLeft size={16} />}
+          </button>
         )}
-
-        {/* Crunch badge */}
-        {crunch.active && (!sidebarCollapsed || inDrawer) && (
-          <div className="px-3 pt-3">
-            <div className="text-[10px] font-bold bg-red-500 text-white px-2 py-1 rounded-full text-center animate-pulse">
-              CRUNCH MODE
-            </div>
-          </div>
-        )}
-
-        {/* Nav items */}
-        <nav className="py-3 px-2 space-y-0.5">
-          {NAV_ITEMS.map((item) => {
-            const active = page === item.id;
-            return (
-              <button
-                key={item.id}
-                onClick={() => {
-                  setPage(item.id);
-                  setPageParams({});
-                  setMobileNavOpen(false);
-                }}
-                title={sidebarCollapsed && !inDrawer ? item.label : undefined}
-                className={`group relative w-full flex items-center gap-3 ${sidebarCollapsed && !inDrawer ? "justify-center px-0" : "px-3"} py-2.5 rounded-xl text-sm font-medium transition-all duration-150 ${
-                  active
-                    ? "bg-gradient-to-r from-orange-100 to-orange-50 text-orange-700 dark:from-orange-500/20 dark:to-orange-500/5 dark:text-orange-300 shadow-sm"
-                    : "text-muted-foreground hover:bg-muted hover:text-foreground"
-                }`}
-              >
-                {active && (
-                  <span className="absolute left-0 top-1/2 -translate-y-1/2 h-6 w-1 rounded-r-full bg-orange-500" />
-                )}
-                <span className={`shrink-0 transition-transform ${active ? "scale-110" : "group-hover:scale-105"}`}>
-                  {item.icon}
-                </span>
-                {(!sidebarCollapsed || inDrawer) && (
-                  <span className="truncate">{item.label}</span>
-                )}
-              </button>
-            );
-          })}
-        </nav>
       </div>
+
+      {/* Search */}
+      {(!sidebarCollapsed || inDrawer) && (
+        <SidebarSearch
+          onSelect={(w) => {
+            navigate("study", { wordId: w.id });
+            setMobileNavOpen(false);
+          }}
+        />
+      )}
+
+      {/* Crunch badge */}
+      {crunch.active && (!sidebarCollapsed || inDrawer) && (
+        <div className="px-3 pt-3">
+          <div className="text-[10px] font-bold bg-red-500 text-white px-2 py-1 rounded-full text-center animate-pulse">
+            CRUNCH MODE
+          </div>
+        </div>
+      )}
+
+      {/* Nav items */}
+      <nav className="flex-1 overflow-y-auto py-3 px-2 space-y-1">
+        {NAV_ITEMS.map((item) => {
+          const active = page === item.id;
+          return (
+            <button
+              key={item.id}
+              onClick={() => {
+                setPage(item.id);
+                setPageParams({});
+                setMobileNavOpen(false);
+              }}
+              title={sidebarCollapsed && !inDrawer ? item.label : undefined}
+              className={`w-full flex items-center gap-3 ${sidebarCollapsed && !inDrawer ? "justify-center px-0" : "px-3"} py-2.5 rounded-xl text-sm font-medium transition-colors ${
+                active
+                  ? "bg-orange-100 text-orange-700 dark:bg-orange-500/20 dark:text-orange-300"
+                  : "text-muted-foreground hover:bg-muted hover:text-foreground"
+              }`}
+            >
+              <span className="shrink-0">{item.icon}</span>
+              {(!sidebarCollapsed || inDrawer) && (
+                <span className="truncate">{item.label}</span>
+              )}
+            </button>
+          );
+        })}
+      </nav>
 
       {/* Footer: theme toggle */}
       <div className="border-t border-border p-2 space-y-1">
@@ -235,7 +233,7 @@ function MainApp() {
               <Menu size={20} />
             </button>
             <div className="flex items-center gap-2">
-              <img src={vocabNinjaLogo} alt="Vocab Ninja" className="h-11 w-auto object-contain" />
+              <img src={vocabNinjaLogo} alt="Vocab Ninja" className="h-8 w-auto object-contain" />
               {crunch.active && (
                 <span className="text-[10px] font-bold bg-red-500 text-white px-2 py-0.5 rounded-full animate-pulse">
                   CRUNCH
@@ -252,24 +250,8 @@ function MainApp() {
         </header>
 
         <main className="pb-24 lg:pb-12">
-          <div className="sticky top-14 lg:top-0 z-20 bg-background/90 backdrop-blur px-4 pt-3 pb-2 border-b border-border">
-            <div className="flex items-center gap-3 mb-2">
-              <div className="flex-1 min-w-0 hidden md:block">
-                <GlobalStatsBar onNavigate={navigate} />
-              </div>
-              <div className="relative w-full sm:w-72 md:w-80 lg:w-96 shrink-0 ml-auto">
-                <SidebarSearch
-                  className="relative"
-                  onSelect={(w) => {
-                    navigate("study", { wordId: w.id });
-                    setMobileNavOpen(false);
-                  }}
-                />
-              </div>
-            </div>
-            <div className="md:hidden">
-              <GlobalStatsBar onNavigate={navigate} />
-            </div>
+          <div className="sticky top-14 lg:top-0 z-20 bg-background/90 backdrop-blur px-4 pt-4 pb-2 border-b border-border">
+            <GlobalStatsBar onNavigate={navigate} />
           </div>
           {renderPage()}
         </main>
