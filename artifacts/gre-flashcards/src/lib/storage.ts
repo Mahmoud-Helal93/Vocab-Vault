@@ -11,7 +11,25 @@ export const STORAGE_KEYS = {
   SESSIONS: "gre_sessions",
   CRUNCH: "gre_crunch",
   MICRO_SESSION: "gre_micro_session",
+  MISSION_TEST_SCORES: "gre_mission_test_scores",
 } as const;
+
+export function loadMissionTestScores(): Record<number, number> {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEYS.MISSION_TEST_SCORES);
+    return raw ? (JSON.parse(raw) as Record<number, number>) : {};
+  } catch { return {}; }
+}
+
+export function saveMissionTestScore(day: number, pct: number): void {
+  try {
+    const scores = loadMissionTestScores();
+    if (!scores[day] || pct > scores[day]) {
+      scores[day] = pct;
+      localStorage.setItem(STORAGE_KEYS.MISSION_TEST_SCORES, JSON.stringify(scores));
+    }
+  } catch { /* ignore */ }
+}
 
 export interface Settings {
   darkMode: boolean;

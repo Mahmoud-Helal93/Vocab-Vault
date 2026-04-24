@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useApp } from "@/context/AppContext";
 import { type Word } from "@/data/words";
 import { shuffleArray } from "@/lib/srs";
+import { saveMissionTestScore } from "@/lib/storage";
 import {
   ArrowLeft, Shuffle, CheckCircle2, XCircle, ChevronLeft,
   ChevronRight, RotateCcw, Trophy, ClipboardList,
@@ -397,7 +398,12 @@ function MissionTestInner({ onBack, missionDay = 1 }: MissionTestProps) {
             </button>
           ) : (
             <button
-              onClick={() => setSubmitted(true)}
+              onClick={() => {
+                const finalScore = questions.filter(isCorrect).length;
+                const finalPct = Math.round((finalScore / questions.length) * 100);
+                saveMissionTestScore(missionDay, finalPct);
+                setSubmitted(true);
+              }}
               disabled={!allAnswered}
               className="flex items-center gap-1.5 px-5 py-2.5 rounded-xl bg-green-600 hover:bg-green-700 disabled:bg-muted disabled:text-muted-foreground text-white text-sm font-bold transition-colors"
             >

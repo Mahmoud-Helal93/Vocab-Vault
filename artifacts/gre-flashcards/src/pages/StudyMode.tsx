@@ -6,8 +6,9 @@ import RichFlashcard from "@/components/RichFlashcard";
 import { getEnrichment } from "@/data/enrichment";
 import { shuffleArray } from "@/lib/srs";
 import { TOTAL_DAYS, GROUPS_PER_DAY, type Word } from "@/data/words";
-import { ChevronLeft, ChevronRight, Shuffle, ArrowLeft, Grid3X3, Flame, Check, BookOpen, Lock } from "lucide-react";
+import { ChevronLeft, ChevronRight, Shuffle, ArrowLeft, Grid3X3, Flame, Check, BookOpen, Lock, Trophy } from "lucide-react";
 import { BADGES, levelFromXp } from "@/lib/gamification";
+import { loadMissionTestScores } from "@/lib/storage";
 import ninjaMascot from "@assets/Gemini_Generated_Image_hflkzzhflkzzhflk_1776994719274.png";
 import ProgressSidebar from "@/components/ProgressSidebar";
 
@@ -518,6 +519,7 @@ export default function StudyMode({ onBack, onNavigate, initialDay, initialWordI
   }
 
   if (view === "group-select") {
+    const missionTestBest = loadMissionTestScores()[selectedDay ?? 0];
     return (
       <div className="flex gap-5 px-4 py-8 min-h-[calc(100vh-3.5rem)] lg:min-h-screen">
         <div className="flex-1 min-w-0 max-w-4xl mx-auto">
@@ -656,12 +658,22 @@ export default function StudyMode({ onBack, onNavigate, initialDay, initialWordI
                 </div>
                 <span className="font-semibold text-foreground text-lg">Mission Test</span>
               </div>
-              <span className="text-xs font-semibold px-2 py-1 rounded-full bg-orange-50 text-orange-600 border border-orange-200 dark:bg-orange-900/20 dark:text-orange-400 dark:border-orange-800">
-                30 words
-              </span>
+              <div className="flex items-center gap-2">
+                {typeof missionTestBest === "number" && (
+                  <span className="text-xs font-semibold px-2 py-1 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200 dark:bg-emerald-900/20 dark:text-emerald-400 dark:border-emerald-800 inline-flex items-center gap-1">
+                    <Trophy size={11} /> Best {missionTestBest}%
+                  </span>
+                )}
+                <span className="text-xs font-semibold px-2 py-1 rounded-full bg-orange-50 text-orange-600 border border-orange-200 dark:bg-orange-900/20 dark:text-orange-400 dark:border-orange-800">
+                  30 words
+                </span>
+              </div>
             </div>
             <div className="h-1.5 bg-muted rounded-full mb-4 overflow-hidden">
-              <div className="h-full bg-orange-500 rounded-full" style={{ width: "100%" }} />
+              <div
+                className="h-full bg-orange-500 rounded-full"
+                style={{ width: `${typeof missionTestBest === "number" ? missionTestBest : 0}%` }}
+              />
             </div>
             <div className="flex flex-wrap gap-1.5 mb-3">
               <span className="inline-flex items-center gap-1 text-xs px-2.5 py-1 rounded-full border bg-orange-50 border-orange-200 text-orange-700 dark:bg-orange-900/20 dark:border-orange-800 dark:text-orange-400">
