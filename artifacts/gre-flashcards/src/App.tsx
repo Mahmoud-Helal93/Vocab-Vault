@@ -254,7 +254,10 @@ function MainApp() {
         <main className="pb-24 lg:pb-12">
           <div className="sticky top-14 lg:top-0 z-20 bg-background/90 backdrop-blur px-4 pt-3 pb-2 border-b border-border">
             <div className="flex items-center gap-3 mb-2">
-              <div className="relative w-full sm:w-72 md:w-80 lg:w-96 shrink-0">
+              <div className="flex-1 min-w-0 hidden md:block">
+                <GlobalStatsBar onNavigate={navigate} />
+              </div>
+              <div className="relative w-full sm:w-72 md:w-80 lg:w-96 shrink-0 ml-auto">
                 <SidebarSearch
                   className="relative"
                   onSelect={(w) => {
@@ -262,9 +265,6 @@ function MainApp() {
                     setMobileNavOpen(false);
                   }}
                 />
-              </div>
-              <div className="flex-1 min-w-0 hidden md:block">
-                <GlobalStatsBar onNavigate={navigate} />
               </div>
             </div>
             <div className="md:hidden">
