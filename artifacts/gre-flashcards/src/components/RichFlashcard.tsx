@@ -88,7 +88,6 @@ export default function RichFlashcard({
       >
         <ChevronLeft size={20} strokeWidth={2.5} />
       </motion.button>
-
       {/* Next button — right side */}
       <motion.button
         onClick={handleNext}
@@ -100,7 +99,6 @@ export default function RichFlashcard({
       >
         <ChevronRight size={20} strokeWidth={2.5} />
       </motion.button>
-
       <div className="bg-card border border-card-border rounded-3xl shadow-sm p-7 lg:p-9">
         {/* Status pill (full width) */}
         <div className="flex items-center gap-1.5 text-xs font-semibold text-violet-600 dark:text-violet-400 mb-4">
@@ -125,7 +123,7 @@ export default function RichFlashcard({
                 </button>
               </div>
               <div className="flex flex-col items-end gap-2 shrink-0 ml-4">
-                <p className="text-3xl font-medium text-foreground leading-none" dir="rtl">
+                <p className="text-3xl text-foreground leading-none font-bold" dir="rtl">
                   {word.arabic}
                 </p>
                 {tone && (
