@@ -184,6 +184,51 @@ export default function StudyMode({ onBack, onNavigate, initialDay, initialWordI
       <div className="flex gap-5 px-4 py-6 min-h-[calc(100vh-3.5rem)] lg:min-h-screen">
         {/* ── Main belt table ── */}
         <div className="flex-1 min-w-0">
+          {/* Top stats bar */}
+          <div className="rounded-2xl border border-border bg-card px-5 py-3 mb-5 flex items-center justify-between flex-wrap gap-4">
+            <div className="flex items-center gap-3">
+              <span className="text-2xl">📗</span>
+              <div>
+                <div className="text-base font-bold text-emerald-600 tabular-nums leading-none">{totalMastered.toLocaleString()}</div>
+                <div className="text-[11px] text-muted-foreground mt-0.5">Words Learned</div>
+              </div>
+            </div>
+            <div className="flex items-center gap-3">
+              <span className="text-2xl">🚩</span>
+              <div>
+                <div className="text-base font-bold tabular-nums leading-none">
+                  <span className="text-orange-500">{missionsCompleted}</span>
+                  <span className="text-muted-foreground"> / {TOTAL_DAYS}</span>
+                </div>
+                <div className="text-[11px] text-muted-foreground mt-0.5">Missions Done</div>
+              </div>
+            </div>
+            <div className="flex items-center gap-3">
+              <ShurikenIcon size={26} color="#3B82F6" />
+              <div>
+                <div className="text-base font-bold tabular-nums leading-none">
+                  <span className="text-blue-500">{setsCompleted}</span>
+                  <span className="text-muted-foreground"> / {TOTAL_DAYS * GROUPS_PER_DAY}</span>
+                </div>
+                <div className="text-[11px] text-muted-foreground mt-0.5">Sets Completed</div>
+              </div>
+            </div>
+            <div className="flex items-center gap-3">
+              <div className="w-7 h-7 rounded-full bg-gradient-to-br from-purple-500 to-purple-700 text-white flex items-center justify-center text-[10px] font-extrabold">XP</div>
+              <div>
+                <div className="text-base font-bold text-foreground tabular-nums leading-none">{gamification.totalXp.toLocaleString()}</div>
+                <div className="text-[11px] text-muted-foreground mt-0.5">XP Earned</div>
+              </div>
+            </div>
+            <div className="flex items-center gap-3">
+              <Flame size={24} className="text-orange-500" />
+              <div>
+                <div className="text-base font-bold text-orange-500 tabular-nums leading-none">{streak.currentStreak}</div>
+                <div className="text-[11px] text-muted-foreground mt-0.5">Day Streak</div>
+              </div>
+            </div>
+          </div>
+
           {/* Table column header */}
           <div className="flex items-center mb-3 px-1">
             <div className="w-52 shrink-0">
