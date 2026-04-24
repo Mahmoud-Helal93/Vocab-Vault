@@ -8,6 +8,7 @@ import { shuffleArray } from "@/lib/srs";
 import { TOTAL_DAYS, GROUPS_PER_DAY, type Word } from "@/data/words";
 import { ChevronLeft, ChevronRight, Shuffle, ArrowLeft, Grid3X3, Flame, Check, BookOpen, Lock } from "lucide-react";
 import { BADGES } from "@/lib/gamification";
+import ninjaMascot from "@assets/Gemini_Generated_Image_hflkzzhflkzzhflk_1776994719274.png";
 
 type View = "day-select" | "group-select" | "study";
 
@@ -496,10 +497,9 @@ export default function StudyMode({ onBack, onNavigate, initialDay, initialWordI
           {/* Mascot motivational card */}
           <div className="rounded-2xl border border-border bg-card p-4 flex gap-3">
             <img
-              src="/ninja-mascot.png"
+              src={ninjaMascot}
               alt="Vocab Ninja"
               className="w-14 h-14 shrink-0 object-contain"
-              onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }}
             />
             <div className="text-xs text-muted-foreground leading-relaxed">
               Every word you master is a step toward becoming unstoppable.{" "}
