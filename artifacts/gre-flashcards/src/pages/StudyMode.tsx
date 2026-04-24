@@ -574,16 +574,16 @@ export default function StudyMode({ onBack, onNavigate, initialDay, initialWordI
                 <div className="absolute top-0 left-0 right-0 h-1 bg-orange-500" />
                 <div className="flex items-center justify-between mb-4">
                   <div className="flex items-center gap-2">
-                    <div className="w-7 h-7 rounded-lg bg-orange-100 dark:bg-orange-900/30 flex items-center justify-center">
-                      <span className="text-base">📋</span>
-                    </div>
+                    <span className="text-[18px] leading-none">📋</span>
                     <span className="font-semibold text-foreground text-lg">Mission Test</span>
                   </div>
-                  {typeof missionTestBest === "number" && (
-                    <span className="text-xs font-semibold px-2 py-1 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200 dark:bg-emerald-900/20 dark:text-emerald-400 dark:border-emerald-800 inline-flex items-center gap-1">
-                      <Trophy size={11} /> {missionTestBest}%
-                    </span>
-                  )}
+                  <span className="text-sm text-muted-foreground inline-flex items-center gap-1">
+                    {typeof missionTestBest === "number" ? (
+                      <><Trophy size={12} className="text-orange-500" /> {missionTestBest}%</>
+                    ) : (
+                      "—"
+                    )}
+                  </span>
                 </div>
                 <div className="h-1.5 bg-muted rounded-full mb-4 overflow-hidden">
                   <div
