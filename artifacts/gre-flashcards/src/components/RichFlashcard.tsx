@@ -183,7 +183,7 @@ export default function RichFlashcard({
 
             {/* Word Family */}
             {enr.wordFamily && enr.wordFamily.length > 0 && (
-              <div className="mt-10 mb-6">
+              <div className="mt-10 mb-10">
                 <p className="flex items-center gap-1.5 text-sm font-bold text-violet-700 dark:text-violet-400 mb-2.5">
                   <Users size={15} />
                   Word Family
