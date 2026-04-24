@@ -1,0 +1,39 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+:root {
+  --background: 32 28% 98%;
+  --foreground: 22 30% 12%;
+  --border: 32 18% 88%;
+  --input: 32 18% 85%;
+  --ring: 22 92% 52%;
+
+  --card: 0 0% 100%;
+  --card-foreground: 22 30% 12%;
+  --card-border: 32 18% 90%;
+
+  --popover: 0 0% 100%;
+  --popover-foreground: 22 30% 12%;
+  --popover-border: 32 18% 90%;
+
+  --primary: 22 92% 52%;
+  --primary-foreground: 0 0% 100%;
+
+  --secondary: 32 18% 94%;
+  --secondary-foreground: 22 25% 20%;
+
+  --muted: 32 18% 94%;
+  --muted-foreground: 22 10% 50%;
+
+  --accent: 28 100% 94%;
+  --accent-foreground: 22 80% 35%;
+
+  --destructive: 0 84% 60%;
+  --destructive-foreground: 0 0% 100%;
+
+  --radius: 0.625rem;
+}
+
+html, body {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  background-image: radial-gradient(ellipse 100% 40% at 50% 0%, hsl(22 92% 52% / 0.07), transparent);
+}
