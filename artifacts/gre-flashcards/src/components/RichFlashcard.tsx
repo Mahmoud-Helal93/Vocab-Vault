@@ -169,7 +169,7 @@ export default function RichFlashcard({
               <div>
                 <p className="flex items-center gap-1.5 text-sm font-bold text-violet-700 dark:text-violet-400 mb-2.5">
                   <BookOpen size={15} />
-                  Etymology
+                  Word Root
                 </p>
                 <div className="flex items-stretch gap-2 flex-wrap">
                   {enr.etymology.map((e, i) => (
