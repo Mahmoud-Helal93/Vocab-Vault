@@ -623,12 +623,15 @@ export default function StudyMode({ onBack, onNavigate, initialDay, initialWordI
                           setView("study");
                         }
                       }}
-                      className={`text-xs px-2.5 py-1 rounded-full border cursor-pointer hover:scale-105 hover:shadow-sm transition-all ${
+                      className={`inline-flex items-center gap-1 text-xs px-2.5 py-1 rounded-full border cursor-pointer hover:scale-105 hover:shadow-sm transition-all ${
                         w.status === "mastered"
                           ? "bg-emerald-50 border-emerald-200 text-emerald-700 dark:bg-emerald-900/20 dark:border-emerald-800 dark:text-emerald-400 hover:border-emerald-400"
                           : accent.pill
                       }`}
                     >
+                      {w.status === "mastered" && (
+                        <Check size={10} strokeWidth={3} className="text-emerald-600 dark:text-emerald-400" />
+                      )}
                       {w.word}
                     </span>
                   ))}
