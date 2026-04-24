@@ -7,7 +7,7 @@ import { getEnrichment } from "@/data/enrichment";
 import { shuffleArray } from "@/lib/srs";
 import { TOTAL_DAYS, GROUPS_PER_DAY, type Word } from "@/data/words";
 import { ChevronLeft, ChevronRight, Shuffle, ArrowLeft, Grid3X3, Flame, Check, BookOpen, Lock } from "lucide-react";
-import { BADGES } from "@/lib/gamification";
+import { BADGES, levelFromXp } from "@/lib/gamification";
 import ninjaMascot from "@assets/Gemini_Generated_Image_hflkzzhflkzzhflk_1776994719274.png";
 import ProgressSidebar from "@/components/ProgressSidebar";
 
@@ -222,16 +222,38 @@ export default function StudyMode({ onBack, onNavigate, initialDay, initialWordI
                 <div className="text-[11px] text-muted-foreground mt-0.5">Sets Completed</div>
               </div>
             </button>
-            <button
-              onClick={() => onNavigate?.("achievements")}
-              className="flex items-center gap-3 px-2 py-1 rounded-lg hover:bg-muted transition-colors"
-            >
-              <div className="w-7 h-7 rounded-full bg-gradient-to-br from-purple-500 to-purple-700 text-white flex items-center justify-center text-[10px] font-extrabold">XP</div>
-              <div className="text-left">
-                <div className="text-base font-bold text-foreground tabular-nums leading-none">{gamification.totalXp.toLocaleString()}</div>
-                <div className="text-[11px] text-muted-foreground mt-0.5">XP Earned</div>
-              </div>
-            </button>
+            {(() => {
+              const lvl = levelFromXp(gamification.totalXp);
+              const pct = Math.round(lvl.progress * 100);
+              return (
+                <button
+                  onClick={() => onNavigate?.("achievements")}
+                  className="flex items-center gap-3 px-2 py-1 rounded-lg hover:bg-muted transition-colors"
+                  title={`Level ${lvl.level} · ${lvl.xpInLevel}/${lvl.xpForNext} XP to next level`}
+                >
+                  <div className="relative w-9 h-9 shrink-0">
+                    <svg width="36" height="36" viewBox="0 0 36 36" className="-rotate-90">
+                      <circle cx="18" cy="18" r="15" fill="none" stroke="#E5E7EB" strokeWidth="3" />
+                      <circle
+                        cx="18" cy="18" r="15" fill="none"
+                        stroke="#8B5CF6" strokeWidth="3" strokeLinecap="round"
+                        strokeDasharray={2 * Math.PI * 15}
+                        strokeDashoffset={2 * Math.PI * 15 * (1 - lvl.progress)}
+                      />
+                    </svg>
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <div className="w-6 h-6 rounded-full bg-gradient-to-br from-purple-500 to-purple-700 text-white flex items-center justify-center text-[9px] font-extrabold">
+                        {lvl.level}
+                      </div>
+                    </div>
+                  </div>
+                  <div className="text-left">
+                    <div className="text-base font-bold text-foreground tabular-nums leading-none">{gamification.totalXp.toLocaleString()}</div>
+                    <div className="text-[11px] text-muted-foreground mt-0.5">XP Earned · Lv {lvl.level} ({pct}%)</div>
+                  </div>
+                </button>
+              );
+            })()}
             <button
               onClick={() => onNavigate?.("achievements")}
               className="flex items-center gap-3 px-2 py-1 rounded-lg hover:bg-muted transition-colors"
