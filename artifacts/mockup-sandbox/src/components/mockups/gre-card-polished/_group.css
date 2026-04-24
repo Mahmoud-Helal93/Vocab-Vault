@@ -1,0 +1,26 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Cormorant+Garamond:wght@400;500;600;700&family=Noto+Naskh+Arabic:wght@500;600;700&display=swap');
+
+:root {
+  --gre-bg: #f7f6fb;
+  --gre-card: #ffffff;
+  --gre-border: #ece9f3;
+  --gre-divider: #ebe8f1;
+  --gre-fg: #1a1530;
+  --gre-fg-soft: #4a4564;
+  --gre-muted: #8b85a3;
+  --gre-violet: #7c3aed;
+  --gre-violet-soft: #f4f1ff;
+  --gre-violet-ink: #5b21b6;
+  --gre-amber: #d97706;
+  --gre-amber-soft: #fef6ec;
+  --gre-rose: #e11d48;
+  --gre-rose-soft: #fff1f3;
+}
+
+.gre-polished {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  background: var(--gre-bg);
+  color: var(--gre-fg);
+  min-height: 100vh;
+}
