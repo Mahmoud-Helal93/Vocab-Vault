@@ -629,18 +629,22 @@ export default function StudyMode({ onBack, onNavigate, initialDay, initialWordI
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: (GROUPS_PER_DAY + 1) * 0.07 }}
             onClick={() => onNavigate?.("mission-test", { missionDay: selectedDay })}
-            className="text-left p-5 bg-orange-50 dark:bg-orange-900/20 border-2 border-orange-200 dark:border-orange-800 rounded-2xl shadow-sm hover:border-orange-400 hover:bg-orange-100 dark:hover:bg-orange-900/30 transition-all"
+            className="relative overflow-hidden text-left px-5 py-4 bg-[#F97316] text-white rounded-2xl shadow-sm hover:bg-[#EA580C] transition-colors col-span-full"
           >
-            <div className="flex items-center gap-2 mb-3">
-              <span className="text-lg">📋</span>
-              <span className="font-semibold text-orange-700 dark:text-orange-400">Mission Test</span>
+            <div className="flex items-center gap-3 relative z-10">
+              <div className="w-11 h-11 rounded-xl bg-white/20 flex items-center justify-center shrink-0">
+                <span className="text-xl">📋</span>
+              </div>
+              <div>
+                <div className="font-bold text-xl leading-tight">Mission Test</div>
+                <div className="text-sm opacity-90">10 MCQ · 10 Fill in Blank · 10 True/False</div>
+              </div>
             </div>
-            <div className="text-xs text-orange-600 dark:text-orange-500 leading-relaxed">
-              10 MCQ · 10 Fill in Blank · 10 True/False
-            </div>
-            <div className="mt-2 text-[11px] font-semibold text-orange-500 dark:text-orange-400 uppercase tracking-wider">
-              Test all 30 words →
-            </div>
+            <BookOpen
+              size={120}
+              strokeWidth={1.5}
+              className="absolute -right-2 top-1/2 -translate-y-1/2 text-white/25 pointer-events-none"
+            />
           </motion.button>
         </div>
         </div>
