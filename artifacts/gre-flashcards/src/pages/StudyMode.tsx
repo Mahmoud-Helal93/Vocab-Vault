@@ -563,6 +563,19 @@ export default function StudyMode({ onBack, onNavigate, initialDay, initialWordI
             const gw = words.filter((w) => w.day === selectedDay && w.group === group);
             const mastered = gw.filter((w) => w.status === "mastered").length;
             const pct = Math.round((mastered / gw.length) * 100);
+            const accents = [
+              { bar: "bg-blue-500", icon: "#3B82F6", border: "hover:border-blue-400" },
+              { bar: "bg-purple-500", icon: "#8B5CF6", border: "hover:border-purple-400" },
+              { bar: "bg-pink-500", icon: "#EC4899", border: "hover:border-pink-400" },
+              { bar: "bg-amber-500", icon: "#F59E0B", border: "hover:border-amber-400" },
+              { bar: "bg-emerald-500", icon: "#10B981", border: "hover:border-emerald-400" },
+              { bar: "bg-cyan-500", icon: "#06B6D4", border: "hover:border-cyan-400" },
+              { bar: "bg-rose-500", icon: "#F43F5E", border: "hover:border-rose-400" },
+              { bar: "bg-indigo-500", icon: "#6366F1", border: "hover:border-indigo-400" },
+              { bar: "bg-lime-500", icon: "#84CC16", border: "hover:border-lime-400" },
+              { bar: "bg-fuchsia-500", icon: "#D946EF", border: "hover:border-fuchsia-400" },
+            ];
+            const accent = accents[i % accents.length];
             return (
               <motion.button
                 key={group}
@@ -574,17 +587,18 @@ export default function StudyMode({ onBack, onNavigate, initialDay, initialWordI
                   setCardIndex(0);
                   setView("study");
                 }}
-                className="text-left p-6 bg-card border border-card-border rounded-2xl shadow-sm hover:border-primary/40 transition-all min-h-[260px]"
+                className={`relative overflow-hidden text-left p-6 bg-card border border-card-border rounded-2xl shadow-sm ${accent.border} transition-all min-h-[260px]`}
               >
+                <div className={`absolute top-0 left-0 right-0 h-1 ${accent.bar}`} />
                 <div className="flex items-center justify-between mb-4">
                   <div className="flex items-center gap-2">
-                    <ShurikenIcon size={18} color="#3B82F6" filled={pct === 100} />
+                    <ShurikenIcon size={18} color={accent.icon} filled={pct === 100} />
                     <span className="font-semibold text-foreground text-lg">Set {group}</span>
                   </div>
                   <span className="text-sm text-muted-foreground">{pct}%</span>
                 </div>
                 <div className="h-1.5 bg-muted rounded-full mb-4 overflow-hidden">
-                  <div className="h-full bg-primary rounded-full" style={{ width: `${pct}%` }} />
+                  <div className={`h-full ${accent.bar} rounded-full`} style={{ width: `${pct}%` }} />
                 </div>
                 <div className="flex flex-wrap gap-1.5 mb-3">
                   {gw.map((w, wIdx) => (
