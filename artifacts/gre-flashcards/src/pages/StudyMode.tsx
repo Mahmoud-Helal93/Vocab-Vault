@@ -602,9 +602,8 @@ export default function StudyMode({ onBack, onNavigate, initialDay, initialWordI
                     10 · True/False
                   </span>
                 </div>
-                <div className="text-xs text-muted-foreground flex items-center gap-1">
-                  <span>Test all 30 words</span>
-                  <ChevronRight size={12} />
+                <div className="text-xs text-muted-foreground">
+                  30 words · {typeof missionTestBest === "number" ? `best ${missionTestBest}%` : "not attempted"}
                 </div>
               </motion.button>
             );
