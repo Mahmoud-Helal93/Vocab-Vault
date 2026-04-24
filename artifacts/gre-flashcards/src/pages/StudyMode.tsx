@@ -335,48 +335,6 @@ export default function StudyMode({ onBack, onNavigate, initialDay, initialWordI
             })}
           </div>
 
-          {/* Footer stats */}
-          <div className="mt-6 flex items-center justify-around rounded-2xl border border-border bg-card p-4">
-            <div className="flex items-center gap-2">
-              <span className="text-lg">📗</span>
-              <div>
-                <div className="font-bold text-foreground tabular-nums">{totalWords.toLocaleString()}</div>
-                <div className="text-[10px] text-muted-foreground">Total Words</div>
-              </div>
-            </div>
-            <div className="w-px h-8 bg-border" />
-            <div className="flex items-center gap-2">
-              <span className="text-lg">🚩</span>
-              <div>
-                <div className="font-bold text-foreground tabular-nums">{TOTAL_DAYS}</div>
-                <div className="text-[10px] text-muted-foreground">Missions</div>
-              </div>
-            </div>
-            <div className="w-px h-8 bg-border" />
-            <div className="flex items-center gap-2">
-              <ShurikenIcon size={20} color="#3B82F6" />
-              <div>
-                <div className="font-bold text-foreground tabular-nums">{TOTAL_DAYS * GROUPS_PER_DAY}</div>
-                <div className="text-[10px] text-muted-foreground">Sets</div>
-              </div>
-            </div>
-            <div className="w-px h-8 bg-border" />
-            <div className="flex items-center gap-2">
-              <span className="text-lg">⭐</span>
-              <div>
-                <div className="font-bold text-foreground">Earn XP</div>
-                <div className="text-[10px] text-muted-foreground">Level Up</div>
-              </div>
-            </div>
-            <div className="w-px h-8 bg-border" />
-            <div className="flex items-center gap-2">
-              <span className="text-lg">🏆</span>
-              <div>
-                <div className="font-bold text-foreground">Become a True</div>
-                <div className="text-[10px] text-muted-foreground">Vocab Ninja</div>
-              </div>
-            </div>
-          </div>
         </div>
 
         {/* ── Right sidebar ── */}
