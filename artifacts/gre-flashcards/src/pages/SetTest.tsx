@@ -1,12 +1,18 @@
-import { useState, useMemo, useCallback } from "react";
+import { useState, useMemo, useCallback, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useApp } from "@/context/AppContext";
 import { type Word } from "@/data/words";
 import { shuffleArray } from "@/lib/srs";
 import {
   ArrowLeft, CheckCircle2, XCircle, ChevronLeft, ChevronRight,
-  RotateCcw, Trophy, Target, BookOpenText, Pencil,
+  RotateCcw, Trophy, Target, BookOpenText, Pencil, Clock,
 } from "lucide-react";
+
+function formatDuration(totalSec: number): string {
+  const m = Math.floor(totalSec / 60);
+  const s = totalSec % 60;
+  return `${m}:${s.toString().padStart(2, "0")}`;
+}
 
 interface SetTestProps {
   onBack: () => void;
@@ -106,6 +112,14 @@ function SetTestInner({ onBack, missionDay, group }: SetTestProps) {
   const [fitbInput, setFitbInput] = useState<Record<number, string>>({});
   const [submitted, setSubmitted] = useState(false);
   const [reviewIdx, setReviewIdx] = useState(0);
+  const [timerEnabled, setTimerEnabled] = useState(false);
+  const [elapsedSec, setElapsedSec] = useState(0);
+
+  useEffect(() => {
+    if (!timerEnabled || submitted) return;
+    const id = window.setInterval(() => setElapsedSec((s) => s + 1), 1000);
+    return () => window.clearInterval(id);
+  }, [timerEnabled, submitted]);
 
   const q = questions[currentIdx];
   const totalAnswered = Object.values(answers).filter((a) => a !== null && a !== "").length;
@@ -154,6 +168,7 @@ function SetTestInner({ onBack, missionDay, group }: SetTestProps) {
     setSubmitted(false);
     setReviewIdx(0);
     setSeed((s) => s + 1);
+    setElapsedSec(0);
   }, []);
 
   if (setWords.length === 0) {
@@ -327,11 +342,31 @@ function SetTestInner({ onBack, missionDay, group }: SetTestProps) {
             Set Test
           </h1>
 
-          {/* Right: progress indicator */}
+          {/* Right: timer + progress indicator */}
           <div className="flex items-center justify-end gap-2">
             <span className="text-xs text-muted-foreground hidden sm:inline-flex items-center gap-1.5">
               <SectionIcon q={q} /> {getSection(q)}
             </span>
+            <button
+              onClick={() => {
+                if (timerEnabled) {
+                  setTimerEnabled(false);
+                  setElapsedSec(0);
+                } else {
+                  setTimerEnabled(true);
+                }
+              }}
+              title={timerEnabled ? "Stop timer" : "Start timer"}
+              aria-pressed={timerEnabled}
+              className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-sm font-semibold tabular-nums transition-colors border ${
+                timerEnabled
+                  ? "bg-violet-50 dark:bg-violet-900/20 text-violet-700 dark:text-violet-300 border-violet-200 dark:border-violet-800"
+                  : "bg-transparent text-muted-foreground border-transparent hover:bg-muted hover:text-foreground"
+              }`}
+            >
+              <Clock size={14} />
+              {timerEnabled && <span>{formatDuration(elapsedSec)}</span>}
+            </button>
             <span
               className="text-sm font-semibold text-foreground tabular-nums px-2.5 py-1 rounded-lg bg-muted"
               aria-label={`Question ${currentIdx + 1} of ${questions.length}`}
@@ -415,22 +450,37 @@ function SetTestInner({ onBack, missionDay, group }: SetTestProps) {
           )}
         </div>
 
-        <div className="mt-5 flex flex-wrap gap-1.5">
-          {questions.map((qq, i) => (
-            <button
-              key={qq.id}
-              onClick={() => setCurrentIdx(i)}
-              className={`w-7 h-7 rounded-lg text-xs font-bold transition-colors border ${
-                i === currentIdx
-                  ? "border-violet-500 bg-violet-500 text-white"
-                  : answers[qq.id] !== undefined && answers[qq.id] !== null && answers[qq.id] !== ""
-                  ? "border-green-400 bg-green-50 dark:bg-green-900/30 text-green-700 dark:text-green-400"
-                  : "border-border bg-card text-muted-foreground hover:bg-muted"
-              }`}
-            >
-              {i + 1}
-            </button>
-          ))}
+        <div className="mt-6 flex flex-wrap items-center justify-center gap-2">
+          {questions.map((qq, i) => {
+            const isCurrent = i === currentIdx;
+            const isAnswered =
+              answers[qq.id] !== undefined &&
+              answers[qq.id] !== null &&
+              answers[qq.id] !== "";
+            const status = isCurrent
+              ? "Current question"
+              : isAnswered
+              ? "Answered"
+              : "Not answered";
+            return (
+              <button
+                key={qq.id}
+                onClick={() => setCurrentIdx(i)}
+                title={`Question ${i + 1} · ${getSection(qq)} · ${status}`}
+                aria-label={`Go to question ${i + 1}, ${status}`}
+                aria-current={isCurrent ? "step" : undefined}
+                className={`min-w-[36px] h-9 px-2.5 rounded-full text-xs font-bold transition-all border-2 inline-flex items-center justify-center tabular-nums ${
+                  isCurrent
+                    ? "border-violet-500 bg-violet-500 text-white shadow-sm shadow-violet-500/30 scale-105"
+                    : isAnswered
+                    ? "border-violet-400 bg-transparent text-violet-600 dark:text-violet-400 hover:bg-violet-50 dark:hover:bg-violet-900/20"
+                    : "border-border bg-transparent text-muted-foreground hover:border-violet-300 hover:text-foreground"
+                }`}
+              >
+                {i + 1}
+              </button>
+            );
+          })}
         </div>
       </div>
     </div>
