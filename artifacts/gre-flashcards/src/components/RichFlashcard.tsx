@@ -76,7 +76,7 @@ export default function RichFlashcard({
   };
 
   return (
-    <div className="w-full max-w-6xl mx-auto relative px-14">
+    <div className="w-full max-w-7xl mx-auto relative px-14">
       {/* Prev button — left side */}
       <motion.button
         onClick={onPrev}
@@ -99,7 +99,7 @@ export default function RichFlashcard({
       >
         <ChevronRight size={20} strokeWidth={2.5} />
       </motion.button>
-      <div className="bg-card border border-card-border rounded-3xl shadow-sm p-7 lg:p-9">
+      <div className="bg-card border border-card-border rounded-3xl shadow-sm p-8 lg:p-12">
         {/* Status pill (full width) */}
         <div className="flex items-center gap-1.5 text-xs font-semibold text-violet-600 dark:text-violet-400 mb-4">
           <span className={`w-1.5 h-1.5 rounded-full ${status.dot}`} />
