@@ -4,7 +4,7 @@ import { Word } from "@/data/words";
 import { getEnrichment } from "@/data/enrichment";
 import {
   Volume2, BookOpen, Equal, Plus,
-  ArrowRightLeft, Globe, ChevronLeft, ChevronRight, Layers,
+  ArrowRightLeft, Globe, ChevronLeft, ChevronRight, Layers, Lightbulb,
 } from "lucide-react";
 
 interface RichFlashcardProps {
@@ -239,15 +239,9 @@ export default function RichFlashcard({
         {/* Mnemonic — full-width banner */}
         {enr.mnemonic && (
           <div className="mt-6 rounded-3xl border border-violet-200/70 dark:border-violet-800/60 bg-violet-50 dark:bg-violet-900/15 shadow-sm overflow-hidden flex items-stretch min-h-[96px]">
-            {enr.imageUrl && (
-              <div className="shrink-0 w-36 sm:w-44 relative overflow-hidden">
-                <img
-                  src={enr.imageUrl}
-                  alt=""
-                  className="absolute inset-0 w-full h-full object-cover object-center"
-                />
-              </div>
-            )}
+            <div className="shrink-0 w-20 sm:w-24 flex items-center justify-center bg-violet-100/70 dark:bg-violet-900/30">
+              <Lightbulb className="text-violet-500 dark:text-violet-400" size={32} strokeWidth={1.75} />
+            </div>
             <div className="flex-1 px-5 py-4 flex flex-col justify-center">
               <p className="flex items-center gap-1.5 text-[11px] font-bold tracking-widest uppercase text-violet-500 dark:text-violet-400 mb-1.5">
                 <Globe size={13} />
