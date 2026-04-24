@@ -4,7 +4,7 @@ import { useApp } from "@/context/AppContext";
 import { formatRelativeTime } from "@/lib/storage";
 import {
   ArrowLeft, Bookmark, Search, Trash2, BookOpen, Target,
-  Flame, Sparkles, X,
+  Flame, Sparkles, X, Zap,
 } from "lucide-react";
 
 interface BookmarksProps {
@@ -72,6 +72,17 @@ export default function Bookmarks({ onBack, onNavigate }: BookmarksProps) {
                 : `${bookmarks.length} word${bookmarks.length === 1 ? "" : "s"} saved`}
             </p>
           </div>
+          {bookmarks.length > 0 && (
+            <button
+              onClick={() => onNavigate("practice", { source: "bookmarked" })}
+              className="shrink-0 inline-flex items-center gap-1.5 px-3 py-2 rounded-xl bg-violet-500 hover:bg-violet-600 text-white text-xs font-bold transition-colors"
+              title="Quiz yourself on bookmarked words"
+            >
+              <Zap size={14} />
+              <span className="hidden sm:inline">Practice Bookmarked</span>
+              <span className="sm:hidden">Practice</span>
+            </button>
+          )}
         </div>
       </div>
 

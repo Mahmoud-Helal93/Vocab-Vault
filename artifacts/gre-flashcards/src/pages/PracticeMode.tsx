@@ -6,11 +6,11 @@ import { Word, TOTAL_DAYS } from "@/data/words";
 import { addMistake, generateSessionId, addSession, StudySession, SessionMistake } from "@/lib/storage";
 import {
   ArrowLeft, CheckCircle2, XCircle, ChevronRight, Target, RotateCcw, ListChecks,
-  Keyboard, HelpCircle, BookOpenText,
+  Keyboard, HelpCircle, BookOpenText, Bookmark,
 } from "lucide-react";
 
 type QuestionType = "multiple-choice" | "fill-blank" | "true-false" | "cloze";
-type SourceType = "all" | "day" | "difficult";
+type SourceType = "all" | "day" | "difficult" | "bookmarked";
 
 interface PracticeConfig {
   questionTypes: QuestionType[];
@@ -125,11 +125,16 @@ function classifyError(
 }
 
 function PracticeModeInner({ onBack, initialSource }: PracticeModeProps) {
-  const { words, markWordReviewed, settings } = useApp();
+  const { words, markWordReviewed, settings, bookmarks } = useApp();
   const [phase, setPhase] = useState<"config" | "session" | "results">("config");
   const [config, setConfig] = useState<PracticeConfig>({
     questionTypes: ["multiple-choice"],
-    source: (initialSource === "difficult" ? "difficult" : "all") as SourceType,
+    source:
+      initialSource === "difficult"
+        ? "difficult"
+        : initialSource === "bookmarked"
+        ? "bookmarked"
+        : "all",
     day: 1,
   });
   const [questions, setQuestions] = useState<Question[]>([]);
@@ -158,8 +163,12 @@ function PracticeModeInner({ onBack, initialSource }: PracticeModeProps) {
   const buildPool = useCallback((): Word[] => {
     if (config.source === "difficult") return getDifficultWords(words);
     if (config.source === "day") return words.filter((w) => w.day === config.day);
+    if (config.source === "bookmarked") {
+      const ids = new Set(bookmarks.map((b) => b.wordId));
+      return words.filter((w) => ids.has(w.id));
+    }
     return words;
-  }, [config, words]);
+  }, [config, words, bookmarks]);
 
   const startSession = () => {
     const pool = buildPool();
@@ -320,17 +329,34 @@ function PracticeModeInner({ onBack, initialSource }: PracticeModeProps) {
         <div className="mb-6">
           <p className="text-sm font-semibold uppercase tracking-widest text-muted-foreground mb-3">Word Source</p>
           <div className="grid grid-cols-2 gap-2 mb-3">
-            {(["all", "day", "difficult"] as SourceType[]).map((s) => (
-              <button
-                key={s}
-                onClick={() => setConfig((c) => ({ ...c, source: s }))}
-                className={`py-3 px-4 rounded-xl border-2 font-medium transition-all capitalize ${
-                  config.source === s ? "border-primary bg-primary/5 text-foreground" : "border-card-border bg-card text-muted-foreground hover:border-primary/30"
-                }`}
-              >
-                {s === "all" ? "All Words" : s === "day" ? "By Day" : "Difficult Only"}
-              </button>
-            ))}
+            {(["all", "day", "difficult", "bookmarked"] as SourceType[]).map((s) => {
+              const disabled = s === "bookmarked" && bookmarks.length === 0;
+              const label =
+                s === "all" ? "All Words"
+                : s === "day" ? "By Day"
+                : s === "difficult" ? "Difficult Only"
+                : `Bookmarked${bookmarks.length ? ` (${bookmarks.length})` : ""}`;
+              return (
+                <button
+                  key={s}
+                  onClick={() => !disabled && setConfig((c) => ({ ...c, source: s }))}
+                  disabled={disabled}
+                  title={disabled ? "Bookmark words from a test to use this source" : undefined}
+                  className={`py-3 px-4 rounded-xl border-2 font-medium transition-all inline-flex items-center justify-center gap-2 ${
+                    disabled
+                      ? "border-card-border bg-card text-muted-foreground/50 cursor-not-allowed"
+                      : config.source === s
+                      ? "border-primary bg-primary/5 text-foreground"
+                      : "border-card-border bg-card text-muted-foreground hover:border-primary/30"
+                  }`}
+                >
+                  {s === "bookmarked" && (
+                    <Bookmark size={14} className={config.source === s ? "fill-current" : ""} />
+                  )}
+                  {label}
+                </button>
+              );
+            })}
           </div>
           {config.source === "day" && (
             <div>
@@ -352,7 +378,14 @@ function PracticeModeInner({ onBack, initialSource }: PracticeModeProps) {
           )}
         </div>
 
-        <div className="text-sm text-muted-foreground mb-4">{pool.length} words in pool</div>
+        <div className="text-sm text-muted-foreground mb-4">
+          {pool.length} words in pool
+          {config.source === "bookmarked" && pool.length === 0 && (
+            <span className="block text-xs mt-1">
+              Bookmark words from a Set Test or Mission Test to build a focused review set.
+            </span>
+          )}
+        </div>
 
         <button
           onClick={startSession}
