@@ -1,4 +1,4 @@
-import { useState, useCallback, useMemo } from "react";
+import { useState, useCallback, useMemo, Fragment } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useApp } from "@/context/AppContext";
 import Flashcard from "@/components/Flashcard";
@@ -562,6 +562,52 @@ export default function StudyMode({ onBack, onNavigate, initialDay, initialWordI
 
           {Array.from({ length: GROUPS_PER_DAY }, (_, i) => {
             const group = i + 1;
+            const missionTestCard = (
+              <motion.button
+                key="mission-test"
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: (GROUPS_PER_DAY + 1) * 0.07 }}
+                onClick={() => onNavigate?.("mission-test", { missionDay: selectedDay })}
+                className="relative overflow-hidden text-left p-6 bg-card border border-card-border rounded-2xl shadow-sm hover:border-orange-400 transition-all min-h-[260px]"
+              >
+                <div className="absolute top-0 left-0 right-0 h-1 bg-orange-500" />
+                <div className="flex items-center justify-between mb-4">
+                  <div className="flex items-center gap-2">
+                    <div className="w-7 h-7 rounded-lg bg-orange-100 dark:bg-orange-900/30 flex items-center justify-center">
+                      <span className="text-base">📋</span>
+                    </div>
+                    <span className="font-semibold text-foreground text-lg">Mission Test</span>
+                  </div>
+                  {typeof missionTestBest === "number" && (
+                    <span className="text-xs font-semibold px-2 py-1 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200 dark:bg-emerald-900/20 dark:text-emerald-400 dark:border-emerald-800 inline-flex items-center gap-1">
+                      <Trophy size={11} /> {missionTestBest}%
+                    </span>
+                  )}
+                </div>
+                <div className="h-1.5 bg-muted rounded-full mb-4 overflow-hidden">
+                  <div
+                    className="h-full bg-orange-500 rounded-full"
+                    style={{ width: `${typeof missionTestBest === "number" ? missionTestBest : 0}%` }}
+                  />
+                </div>
+                <div className="flex flex-wrap gap-1.5 mb-3">
+                  <span className="inline-flex items-center gap-1 text-xs px-2.5 py-1 rounded-full border bg-orange-50 border-orange-200 text-orange-700 dark:bg-orange-900/20 dark:border-orange-800 dark:text-orange-400">
+                    10 · MCQ
+                  </span>
+                  <span className="inline-flex items-center gap-1 text-xs px-2.5 py-1 rounded-full border bg-orange-50 border-orange-200 text-orange-700 dark:bg-orange-900/20 dark:border-orange-800 dark:text-orange-400">
+                    10 · Fill in Blank
+                  </span>
+                  <span className="inline-flex items-center gap-1 text-xs px-2.5 py-1 rounded-full border bg-orange-50 border-orange-200 text-orange-700 dark:bg-orange-900/20 dark:border-orange-800 dark:text-orange-400">
+                    10 · True/False
+                  </span>
+                </div>
+                <div className="text-xs text-muted-foreground flex items-center gap-1">
+                  <span>Test all 30 words</span>
+                  <ChevronRight size={12} />
+                </div>
+              </motion.button>
+            );
             const gw = words.filter((w) => w.day === selectedDay && w.group === group);
             const mastered = gw.filter((w) => w.status === "mastered").length;
             const pct = Math.round((mastered / gw.length) * 100);
@@ -578,7 +624,7 @@ export default function StudyMode({ onBack, onNavigate, initialDay, initialWordI
               { bar: "bg-fuchsia-500", icon: "#D946EF", border: "hover:border-fuchsia-400", pill: "bg-fuchsia-50 border-fuchsia-200 text-fuchsia-700 dark:bg-fuchsia-900/20 dark:border-fuchsia-800 dark:text-fuchsia-400 hover:border-fuchsia-400" },
             ];
             const accent = accents[i % accents.length];
-            return (
+            const setCard = (
               <motion.button
                 key={group}
                 initial={{ opacity: 0, y: 10 }}
@@ -641,56 +687,17 @@ export default function StudyMode({ onBack, onNavigate, initialDay, initialWordI
                 <div className="text-xs text-muted-foreground">{gw.length} words · {mastered} mastered</div>
               </motion.button>
             );
+            if (group === 3) {
+              return (
+                <Fragment key={group}>
+                  {setCard}
+                  {missionTestCard}
+                </Fragment>
+              );
+            }
+            return setCard;
           })}
 
-          <motion.button
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: (GROUPS_PER_DAY + 1) * 0.07 }}
-            onClick={() => onNavigate?.("mission-test", { missionDay: selectedDay })}
-            className="relative overflow-hidden text-left p-6 bg-card border border-card-border rounded-2xl shadow-sm hover:border-orange-400 transition-all min-h-[260px] col-span-full"
-          >
-            <div className="absolute top-0 left-0 right-0 h-1 bg-orange-500" />
-            <div className="flex items-center justify-between mb-4">
-              <div className="flex items-center gap-2">
-                <div className="w-7 h-7 rounded-lg bg-orange-100 dark:bg-orange-900/30 flex items-center justify-center">
-                  <span className="text-base">📋</span>
-                </div>
-                <span className="font-semibold text-foreground text-lg">Mission Test</span>
-              </div>
-              <div className="flex items-center gap-2">
-                {typeof missionTestBest === "number" && (
-                  <span className="text-xs font-semibold px-2 py-1 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200 dark:bg-emerald-900/20 dark:text-emerald-400 dark:border-emerald-800 inline-flex items-center gap-1">
-                    <Trophy size={11} /> Best {missionTestBest}%
-                  </span>
-                )}
-                <span className="text-xs font-semibold px-2 py-1 rounded-full bg-orange-50 text-orange-600 border border-orange-200 dark:bg-orange-900/20 dark:text-orange-400 dark:border-orange-800">
-                  30 words
-                </span>
-              </div>
-            </div>
-            <div className="h-1.5 bg-muted rounded-full mb-4 overflow-hidden">
-              <div
-                className="h-full bg-orange-500 rounded-full"
-                style={{ width: `${typeof missionTestBest === "number" ? missionTestBest : 0}%` }}
-              />
-            </div>
-            <div className="flex flex-wrap gap-1.5 mb-3">
-              <span className="inline-flex items-center gap-1 text-xs px-2.5 py-1 rounded-full border bg-orange-50 border-orange-200 text-orange-700 dark:bg-orange-900/20 dark:border-orange-800 dark:text-orange-400">
-                10 · MCQ
-              </span>
-              <span className="inline-flex items-center gap-1 text-xs px-2.5 py-1 rounded-full border bg-orange-50 border-orange-200 text-orange-700 dark:bg-orange-900/20 dark:border-orange-800 dark:text-orange-400">
-                10 · Fill in Blank
-              </span>
-              <span className="inline-flex items-center gap-1 text-xs px-2.5 py-1 rounded-full border bg-orange-50 border-orange-200 text-orange-700 dark:bg-orange-900/20 dark:border-orange-800 dark:text-orange-400">
-                10 · True/False
-              </span>
-            </div>
-            <div className="text-xs text-muted-foreground flex items-center gap-1">
-              <span>Test all 30 words</span>
-              <ChevronRight size={12} />
-            </div>
-          </motion.button>
         </div>
         </div>
         <ProgressSidebar className="hidden lg:block" />
