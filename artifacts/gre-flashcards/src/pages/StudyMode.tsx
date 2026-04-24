@@ -311,7 +311,7 @@ export default function StudyMode({ onBack, onNavigate, initialDay, initialWordI
                             <button
                               onClick={() => onNavigate?.("mission-test", { missionDay: day })}
                               title={`Mission ${i + 1} Test`}
-                              className="text-[8px] font-bold px-1 py-0.5 rounded bg-violet-100 hover:bg-violet-200 text-violet-700 dark:bg-violet-900/30 dark:text-violet-400 transition-colors leading-none"
+                              className="text-[8px] font-bold px-1 py-0.5 rounded bg-orange-100 hover:bg-orange-200 text-orange-700 dark:bg-orange-900/30 dark:text-orange-400 transition-colors leading-none"
                             >
                               TEST
                             </button>
@@ -584,16 +584,16 @@ export default function StudyMode({ onBack, onNavigate, initialDay, initialWordI
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: (GROUPS_PER_DAY + 1) * 0.07 }}
             onClick={() => onNavigate?.("mission-test", { missionDay: selectedDay })}
-            className="text-left p-5 bg-violet-50 dark:bg-violet-900/20 border-2 border-violet-200 dark:border-violet-800 rounded-2xl shadow-sm hover:border-violet-400 hover:bg-violet-100 dark:hover:bg-violet-900/30 transition-all"
+            className="text-left p-5 bg-orange-50 dark:bg-orange-900/20 border-2 border-orange-200 dark:border-orange-800 rounded-2xl shadow-sm hover:border-orange-400 hover:bg-orange-100 dark:hover:bg-orange-900/30 transition-all"
           >
             <div className="flex items-center gap-2 mb-3">
               <span className="text-lg">📋</span>
-              <span className="font-semibold text-violet-700 dark:text-violet-400">Mission Test</span>
+              <span className="font-semibold text-orange-700 dark:text-orange-400">Mission Test</span>
             </div>
-            <div className="text-xs text-violet-600 dark:text-violet-500 leading-relaxed">
+            <div className="text-xs text-orange-600 dark:text-orange-500 leading-relaxed">
               10 MCQ · 10 Fill in Blank · 10 True/False
             </div>
-            <div className="mt-2 text-[11px] font-semibold text-violet-500 dark:text-violet-400 uppercase tracking-wider">
+            <div className="mt-2 text-[11px] font-semibold text-orange-500 dark:text-orange-400 uppercase tracking-wider">
               Test all 30 words →
             </div>
           </motion.button>
@@ -644,7 +644,7 @@ export default function StudyMode({ onBack, onNavigate, initialDay, initialWordI
           <ArrowLeft size={20} />
         </button>
         <div className="text-center">
-          <div className="text-foreground text-[25px] font-bold bg-[#f3fef9]">
+          <div className="text-foreground text-[25px] font-bold bg-[#fff7ed]">
             Mission {selectedDay} · {selectedGroup ? `Set ${selectedGroup}` : "All Words"}
           </div>
         </div>

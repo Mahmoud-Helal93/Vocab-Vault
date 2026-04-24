@@ -36,7 +36,7 @@ const STATUS_PILL: Record<string, { bg: string; dot: string; label: string }> = 
   new:      { bg: "bg-emerald-50 dark:bg-emerald-900/20 text-emerald-700 dark:text-emerald-400", dot: "bg-emerald-500", label: "New" },
   learning: { bg: "bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-400",          dot: "bg-blue-500",    label: "Learning" },
   review:   { bg: "bg-amber-50 dark:bg-amber-900/20 text-amber-700 dark:text-amber-400",      dot: "bg-amber-500",   label: "Review" },
-  mastered: { bg: "bg-violet-50 dark:bg-violet-900/20 text-violet-700 dark:text-violet-400",  dot: "bg-violet-500",  label: "Mastered" },
+  mastered: { bg: "bg-orange-50 dark:bg-orange-900/20 text-orange-700 dark:text-orange-400",  dot: "bg-orange-500",  label: "Mastered" },
 };
 
 const TONE_PILL: Record<string, { bg: string; dot: string }> = {

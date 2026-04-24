@@ -144,7 +144,7 @@ function MainApp() {
               title={sidebarCollapsed && !inDrawer ? item.label : undefined}
               className={`w-full flex items-center gap-3 ${sidebarCollapsed && !inDrawer ? "justify-center px-0" : "px-3"} py-2.5 rounded-xl text-sm font-medium transition-colors ${
                 active
-                  ? "bg-violet-100 text-violet-700 dark:bg-violet-500/20 dark:text-violet-300"
+                  ? "bg-orange-100 text-orange-700 dark:bg-orange-500/20 dark:text-orange-300"
                   : "text-muted-foreground hover:bg-muted hover:text-foreground"
               }`}
             >
@@ -169,7 +169,7 @@ function MainApp() {
             title={sidebarCollapsed && !inDrawer ? mode.label : undefined}
             className={`w-full flex items-center gap-3 ${sidebarCollapsed && !inDrawer ? "justify-center px-0" : "px-3"} py-2.5 rounded-xl text-sm font-medium transition-colors ${
               mode.active
-                ? "bg-violet-100 text-violet-700 dark:bg-violet-500/20 dark:text-violet-300"
+                ? "bg-orange-100 text-orange-700 dark:bg-orange-500/20 dark:text-orange-300"
                 : "text-muted-foreground hover:bg-muted hover:text-foreground"
             }`}
           >

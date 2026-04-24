@@ -67,7 +67,7 @@
   --radius-xl: calc(var(--radius) + 4px);
 }
 
-/* LIGHT MODE */
+/* LIGHT MODE — warm orange/amber theme */
 :root {
   --button-outline: rgba(0,0,0, .10);
   --badge-outline: rgba(0,0,0, .05);
@@ -75,49 +75,49 @@
   --elevate-1: rgba(0,0,0, .03);
   --elevate-2: rgba(0,0,0, .08);
 
-  --background: 220 20% 98%;
-  --foreground: 224 30% 12%;
-  --border: 220 15% 88%;
-  --input: 220 15% 85%;
-  --ring: 243 75% 59%;
+  --background: 32 28% 98%;
+  --foreground: 22 30% 12%;
+  --border: 32 18% 88%;
+  --input: 32 18% 85%;
+  --ring: 22 92% 52%;
 
   --card: 0 0% 100%;
-  --card-foreground: 224 30% 12%;
-  --card-border: 220 15% 90%;
+  --card-foreground: 22 30% 12%;
+  --card-border: 32 18% 90%;
 
   --popover: 0 0% 100%;
-  --popover-foreground: 224 30% 12%;
-  --popover-border: 220 15% 90%;
+  --popover-foreground: 22 30% 12%;
+  --popover-border: 32 18% 90%;
 
-  --primary: 243 75% 59%;
+  --primary: 22 92% 52%;
   --primary-foreground: 0 0% 100%;
 
-  --secondary: 220 15% 94%;
-  --secondary-foreground: 224 30% 20%;
+  --secondary: 32 18% 94%;
+  --secondary-foreground: 22 25% 20%;
 
-  --muted: 220 15% 94%;
-  --muted-foreground: 220 12% 52%;
+  --muted: 32 18% 94%;
+  --muted-foreground: 22 10% 50%;
 
-  --accent: 243 75% 96%;
-  --accent-foreground: 243 75% 40%;
+  --accent: 28 100% 94%;
+  --accent-foreground: 22 80% 35%;
 
   --destructive: 0 84% 60%;
   --destructive-foreground: 0 0% 100%;
 
-  --chart-1: 243 75% 59%;
+  --chart-1: 22 92% 52%;
   --chart-2: 173 58% 39%;
-  --chart-3: 28 75% 55%;
+  --chart-3: 38 92% 50%;
   --chart-4: 280 65% 60%;
   --chart-5: 340 75% 55%;
 
   --sidebar: 0 0% 100%;
-  --sidebar-foreground: 224 30% 12%;
-  --sidebar-border: 220 15% 90%;
-  --sidebar-primary: 243 75% 59%;
+  --sidebar-foreground: 22 30% 12%;
+  --sidebar-border: 32 18% 90%;
+  --sidebar-primary: 22 92% 52%;
   --sidebar-primary-foreground: 0 0% 100%;
-  --sidebar-accent: 243 75% 96%;
-  --sidebar-accent-foreground: 243 75% 40%;
-  --sidebar-ring: 243 75% 59%;
+  --sidebar-accent: 28 100% 94%;
+  --sidebar-accent-foreground: 22 80% 35%;
+  --sidebar-ring: 22 92% 52%;
 
   --app-font-sans: 'Inter', system-ui, -apple-system, sans-serif;
   --app-font-serif: Georgia, serif;
@@ -152,49 +152,49 @@
   --elevate-1: rgba(255,255,255, .04);
   --elevate-2: rgba(255,255,255, .09);
 
-  --background: 224 28% 9%;
-  --foreground: 220 15% 93%;
-  --border: 224 20% 20%;
-  --input: 224 20% 22%;
-  --ring: 243 75% 65%;
+  --background: 22 25% 8%;
+  --foreground: 32 15% 93%;
+  --border: 22 18% 18%;
+  --input: 22 18% 20%;
+  --ring: 22 92% 62%;
 
-  --card: 224 25% 12%;
-  --card-foreground: 220 15% 93%;
-  --card-border: 224 20% 20%;
+  --card: 22 22% 11%;
+  --card-foreground: 32 15% 93%;
+  --card-border: 22 18% 18%;
 
-  --popover: 224 25% 12%;
-  --popover-foreground: 220 15% 93%;
-  --popover-border: 224 20% 20%;
+  --popover: 22 22% 11%;
+  --popover-foreground: 32 15% 93%;
+  --popover-border: 22 18% 18%;
 
-  --primary: 243 75% 65%;
+  --primary: 22 92% 62%;
   --primary-foreground: 0 0% 100%;
 
-  --secondary: 224 20% 18%;
-  --secondary-foreground: 220 15% 80%;
+  --secondary: 22 18% 17%;
+  --secondary-foreground: 32 15% 80%;
 
-  --muted: 224 20% 16%;
-  --muted-foreground: 220 12% 55%;
+  --muted: 22 18% 15%;
+  --muted-foreground: 22 10% 54%;
 
-  --accent: 243 40% 20%;
-  --accent-foreground: 243 75% 75%;
+  --accent: 25 50% 18%;
+  --accent-foreground: 22 92% 75%;
 
   --destructive: 0 72% 51%;
   --destructive-foreground: 0 0% 100%;
 
-  --chart-1: 243 75% 65%;
+  --chart-1: 22 92% 62%;
   --chart-2: 173 58% 49%;
-  --chart-3: 28 75% 60%;
+  --chart-3: 38 92% 55%;
   --chart-4: 280 65% 65%;
   --chart-5: 340 75% 60%;
 
-  --sidebar: 224 25% 10%;
-  --sidebar-foreground: 220 15% 93%;
-  --sidebar-border: 224 20% 20%;
-  --sidebar-primary: 243 75% 65%;
+  --sidebar: 22 25% 9%;
+  --sidebar-foreground: 32 15% 93%;
+  --sidebar-border: 22 18% 18%;
+  --sidebar-primary: 22 92% 62%;
   --sidebar-primary-foreground: 0 0% 100%;
-  --sidebar-accent: 243 40% 20%;
-  --sidebar-accent-foreground: 243 75% 75%;
-  --sidebar-ring: 243 75% 65%;
+  --sidebar-accent: 25 50% 18%;
+  --sidebar-accent-foreground: 22 92% 75%;
+  --sidebar-ring: 22 92% 62%;
 
   --shadow-sm: 0 1px 2px 0 rgba(0,0,0,.3);
   --shadow: 0 1px 3px 0 rgba(0,0,0,.4), 0 1px 2px -1px rgba(0,0,0,.4);
@@ -229,6 +229,12 @@
   body {
     @apply bg-background text-foreground;
     font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    background-image: radial-gradient(ellipse 100% 40% at 50% 0%, hsl(22 92% 52% / 0.07), transparent);
+  }
+
+  .dark body,
+  .dark {
+    background-image: radial-gradient(ellipse 100% 40% at 50% 0%, hsl(22 92% 62% / 0.08), transparent);
   }
 }
 

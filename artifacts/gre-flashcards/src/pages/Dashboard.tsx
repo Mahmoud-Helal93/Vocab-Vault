@@ -48,8 +48,8 @@ export default function Dashboard({ onNavigate }: DashboardProps) {
   const stats = [
     {
       key: "learned", label: "Words Learned", value: progress.known, total: progress.total,
-      delta: "+15%", deltaUp: true, bg: "bg-violet-200/70 dark:bg-violet-500/20",
-      iconBg: "bg-violet-300 dark:bg-violet-400/40", icon: <Brain size={18} />,
+      delta: "+15%", deltaUp: true, bg: "bg-orange-200/70 dark:bg-orange-500/20",
+      iconBg: "bg-orange-300 dark:bg-orange-400/40", icon: <Brain size={18} />,
     },
     {
       key: "mastered", label: "Mastered", value: progress.mastered, total: progress.total,
@@ -76,9 +76,9 @@ export default function Dashboard({ onNavigate }: DashboardProps) {
   const mastered = words.filter((w) => w.status === "mastered").length;
   const newCount = progress.total - learning - review - mastered;
   const donutSegments = [
-    { label: "Mastered", value: mastered, color: "#fbbf24" },
-    { label: "Review",   value: review,   color: "#a78bfa" },
-    { label: "Learning", value: learning, color: "#7dd3fc" },
+    { label: "Mastered", value: mastered, color: "#f97316" },
+    { label: "Review",   value: review,   color: "#fb923c" },
+    { label: "Learning", value: learning, color: "#fbbf24" },
     { label: "New",      value: newCount, color: "#e5e7eb" },
   ];
   const donutTotal = donutSegments.reduce((s, x) => s + x.value, 0) || 1;
@@ -116,7 +116,7 @@ export default function Dashboard({ onNavigate }: DashboardProps) {
   const nextDay = dayProgress.find((d) => d.pct < 100) ?? dayProgress[0];
   const agenda = [
     {
-      time: "Now", color: "bg-violet-100 dark:bg-violet-500/20", accent: "text-violet-700 dark:text-violet-300",
+      time: "Now", color: "bg-orange-100 dark:bg-orange-500/20", accent: "text-orange-700 dark:text-orange-300",
       label: dueWords.length > 0 ? `Daily Review` : `Day ${nextDay.day} Study`,
       sub: dueWords.length > 0 ? `${dueWords.length} words due for review` : `Group ${Math.ceil(((nextDay.mastered + nextDay.review + nextDay.learning) / 10) + 1)} • new vocabulary`,
       action: () => dueWords.length > 0 ? onNavigate("review") : onNavigate("study", { day: nextDay.day }),

@@ -159,7 +159,7 @@ export default function Analytics({ onBack, onStudyWord }: AnalyticsProps) {
           { label: "Current Streak", value: `${streak.currentStreak}d`, icon: <Flame size={18} className="text-orange-500" /> },
           { label: "Best Streak", value: `${streak.longestStreak}d`, icon: <Flame size={18} className="text-red-500" /> },
           { label: "Total Sessions", value: streak.totalSessions, icon: <Target size={18} className="text-blue-500" /> },
-          { label: "Sessions Tracked", value: sessions.length, icon: <BarChart3 size={18} className="text-violet-500" /> },
+          { label: "Sessions Tracked", value: sessions.length, icon: <BarChart3 size={18} className="text-orange-500" /> },
         ].map((stat) => (
           <div key={stat.label} className="bg-card border border-card-border rounded-xl p-4">
             <div className="flex items-center gap-1.5 mb-2">{stat.icon}</div>

@@ -223,7 +223,7 @@ export default function PlanMode({ onBack, onStartSession }: PlanModeProps) {
           <div className="grid grid-cols-2 gap-3 mb-4">
             {[
               { label: "Days Remaining", value: Math.max(daysRemaining, 0), icon: <CalendarDays size={16} />, color: "text-blue-500" },
-              { label: "Words Remaining", value: wordsRemaining, icon: <Target size={16} />, color: "text-violet-500" },
+              { label: "Words Remaining", value: wordsRemaining, icon: <Target size={16} />, color: "text-orange-500" },
               { label: "New Words Today", value: crunch.active ? 0 : newWordsToday, icon: <TrendingUp size={16} />, color: "text-green-500" },
               { label: "Reviews Due", value: dueWords.length, icon: <Clock size={16} />, color: "text-amber-500" },
             ].map((stat) => (

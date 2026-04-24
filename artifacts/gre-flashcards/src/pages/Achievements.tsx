@@ -39,7 +39,7 @@ export default function Achievements({ onBack }: AchievementsProps) {
       {/* Top stats */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-8">
         <StatCard icon={<Star className="text-amber-500" size={20} />} label="Level" value={String(lvl.level)} />
-        <StatCard icon={<Sparkles className="text-violet-500" size={20} />} label="Total XP" value={gamification.totalXp.toLocaleString()} />
+        <StatCard icon={<Sparkles className="text-orange-500" size={20} />} label="Total XP" value={gamification.totalXp.toLocaleString()} />
         <StatCard icon={<Flame className="text-orange-500" size={20} />} label="Streak" value={`${streak.currentStreak}d`} subtle={`Best ${streak.longestStreak}d`} />
         <StatCard icon={<Trophy className="text-yellow-500" size={20} />} label="Badges" value={`${earnedCount}/${BADGES.length}`} />
       </div>
@@ -58,7 +58,7 @@ export default function Achievements({ onBack }: AchievementsProps) {
             initial={{ width: 0 }}
             animate={{ width: `${Math.min(100, lvl.progress * 100)}%` }}
             transition={{ duration: 0.6, ease: "easeOut" }}
-            className="h-full bg-gradient-to-r from-violet-500 via-fuchsia-500 to-amber-500"
+            className="h-full bg-gradient-to-r from-orange-500 via-amber-400 to-yellow-400"
           />
         </div>
       </div>
