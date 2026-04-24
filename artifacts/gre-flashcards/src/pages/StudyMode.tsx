@@ -6,7 +6,8 @@ import RichFlashcard from "@/components/RichFlashcard";
 import { getEnrichment } from "@/data/enrichment";
 import { shuffleArray } from "@/lib/srs";
 import { TOTAL_DAYS, GROUPS_PER_DAY, type Word } from "@/data/words";
-import { ChevronLeft, ChevronRight, Shuffle, ArrowLeft, Grid3X3, Flame, Check } from "lucide-react";
+import { ChevronLeft, ChevronRight, Shuffle, ArrowLeft, Grid3X3, Flame, Check, BookOpen, Lock } from "lucide-react";
+import { BADGES } from "@/lib/gamification";
 
 type View = "day-select" | "group-select" | "study";
 
@@ -16,8 +17,84 @@ interface StudyModeProps {
   initialWordId?: string;
 }
 
+const BELTS = [
+  { num: 1, name: "White Belt",  subtitle: "Foundation",  desc: "Build your word base",        color: "#9CA3AF", bgLight: "#F9FAFB", bgDark: "rgba(156,163,175,0.15)", textColor: "#6B7280" },
+  { num: 2, name: "Yellow Belt", subtitle: "Expansion",   desc: "Grow your vocabulary",         color: "#F59E0B", bgLight: "#FFFBEB", bgDark: "rgba(245,158,11,0.15)",  textColor: "#D97706" },
+  { num: 3, name: "Green Belt",  subtitle: "Strength",    desc: "Build strong word power",       color: "#10B981", bgLight: "#ECFDF5", bgDark: "rgba(16,185,129,0.15)", textColor: "#059669" },
+  { num: 4, name: "Blue Belt",   subtitle: "Precision",   desc: "Sharpen your accuracy",         color: "#3B82F6", bgLight: "#EFF6FF", bgDark: "rgba(59,130,246,0.15)", textColor: "#2563EB" },
+  { num: 5, name: "Purple Belt", subtitle: "Mastery",     desc: "Master complex words",          color: "#8B5CF6", bgLight: "#F5F3FF", bgDark: "rgba(139,92,246,0.15)", textColor: "#7C3AED" },
+  { num: 6, name: "Black Belt",  subtitle: "Expertise",   desc: "Ultimate word mastery",         color: "#1F2937", bgLight: "#F3F4F6", bgDark: "rgba(31,41,55,0.25)",   textColor: "#111827" },
+];
+
+function ShurikenIcon({ size = 22, filled = true, color = "#3B82F6" }: { size?: number; filled?: boolean; color?: string }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none">
+      <path
+        d="M12 2 L14.5 9.5 L22 12 L14.5 14.5 L12 22 L9.5 14.5 L2 12 L9.5 9.5 Z"
+        fill={filled ? color : "none"}
+        stroke={color}
+        strokeWidth={filled ? 0 : 1.5}
+        opacity={filled ? 1 : 0.35}
+      />
+    </svg>
+  );
+}
+
+function FlagIcon({ label, done, active }: { label: string; done: boolean; active: boolean }) {
+  const bg = done ? "#10B981" : active ? "#F97316" : "#FB923C";
+  const opacity = done ? 1 : active ? 1 : 0.85;
+  return (
+    <div className="flex flex-col items-center gap-0.5" style={{ opacity }}>
+      <div
+        className="relative flex items-center justify-center rounded-sm text-white font-bold select-none"
+        style={{ backgroundColor: bg, width: 30, height: 28, fontSize: 9, letterSpacing: "0.02em" }}
+      >
+        {done ? <Check size={11} strokeWidth={3} /> : label}
+        <div
+          className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-0 h-0"
+          style={{ borderLeft: "6px solid transparent", borderRight: "6px solid transparent", borderTop: `6px solid ${bg}` }}
+        />
+      </div>
+    </div>
+  );
+}
+
+function BeltGiIcon({ color, size = 40 }: { color: string; size?: number }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 40 40" fill="none">
+      <rect x="4" y="2" width="32" height="36" rx="4" fill="#F3F4F6" stroke="#E5E7EB" strokeWidth="1"/>
+      <path d="M20 2 L12 14 L20 20 L28 14 Z" fill={color} opacity="0.8"/>
+      <rect x="12" y="18" width="16" height="4" rx="2" fill={color}/>
+    </svg>
+  );
+}
+
+function CircularProgress({ pct, size = 110 }: { pct: number; size?: number }) {
+  const r = (size - 12) / 2;
+  const circ = 2 * Math.PI * r;
+  const offset = circ - (pct / 100) * circ;
+  return (
+    <div className="relative flex items-center justify-center" style={{ width: size, height: size }}>
+      <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`} className="-rotate-90">
+        <circle cx={size / 2} cy={size / 2} r={r} stroke="#E5E7EB" strokeWidth="10" fill="none" />
+        <circle
+          cx={size / 2} cy={size / 2} r={r}
+          stroke="#10B981" strokeWidth="10" fill="none"
+          strokeDasharray={circ}
+          strokeDashoffset={offset}
+          strokeLinecap="round"
+        />
+      </svg>
+      <div className="absolute text-center">
+        <div className="text-2xl font-bold text-foreground">{pct}%</div>
+        <div className="text-[10px] text-muted-foreground leading-tight">Overall<br/>Progress</div>
+      </div>
+    </div>
+  );
+}
+
 export default function StudyMode({ onBack, initialDay, initialWordId }: StudyModeProps) {
-  const { words, markWordReviewed, settings, streak } = useApp();
+  const { words, markWordReviewed, settings, streak, gamification } = useApp();
   const initialWord = initialWordId ? words.find((w) => w.id === initialWordId) : undefined;
   const [view, setView] = useState<View>(initialWord || initialDay ? (initialWord ? "study" : "group-select") : "day-select");
   const [selectedDay, setSelectedDay] = useState<number>(initialWord?.day ?? initialDay ?? 1);
@@ -34,7 +111,6 @@ export default function StudyMode({ onBack, initialDay, initialWordId }: StudyMo
     return isShuffled ? shuffleArray(base) : base;
   }, [words, selectedDay, selectedGroup, isShuffled]);
 
-  // Jump to specific word card on mount when initialWordId is provided
   const [didJump, setDidJump] = useState(false);
   if (!didJump && initialWordId && studyWords.length > 0) {
     const idx = studyWords.findIndex((w) => w.id === initialWordId);
@@ -65,55 +141,364 @@ export default function StudyMode({ onBack, initialDay, initialWordId }: StudyMo
     [words]
   );
 
+  const totalMastered = useMemo(() => words.filter((w) => w.status === "mastered").length, [words]);
+  const totalWords = words.length;
+  const overallPct = totalWords > 0 ? Math.round((totalMastered / totalWords) * 100) : 0;
+
+  const missionsCompleted = useMemo(() => {
+    return Array.from({ length: TOTAL_DAYS }, (_, i) => {
+      const dw = dayWords[i];
+      return dw.length > 0 && dw.every((w) => w.status === "mastered");
+    }).filter(Boolean).length;
+  }, [dayWords]);
+
+  const setsCompleted = useMemo(() => {
+    let count = 0;
+    for (let d = 1; d <= TOTAL_DAYS; d++) {
+      for (let g = 1; g <= GROUPS_PER_DAY; g++) {
+        const gw = words.filter((w) => w.day === d && w.group === g);
+        if (gw.length > 0 && gw.every((w) => w.status === "mastered")) count++;
+      }
+    }
+    return count;
+  }, [words]);
+
+  const allBeltsComplete = missionsCompleted === TOTAL_DAYS;
+
+  const sidebarAchievements = useMemo(() => {
+    const ids = ["five_hundred_mastered", "xp_2500", "streak_7", "streak_14"];
+    const shown = ids.map((id) => {
+      const def = BADGES.find((b) => b.id === id);
+      if (!def) return null;
+      return { ...def, unlocked: !!gamification.badges[id] };
+    }).filter(Boolean);
+    shown.push({ id: "black_belt_custom", emoji: "🥋", title: "Black Belt", description: "Complete all belts", unlocked: allBeltsComplete, category: "milestone", check: () => false } as any);
+    return shown;
+  }, [gamification.badges, allBeltsComplete]);
+
   if (view === "day-select") {
     return (
-      <div className="max-w-4xl mx-auto px-4 py-8">
-        <div className="flex items-center gap-3 mb-8">
-          <button onClick={onBack} className="p-2 rounded-xl hover:bg-muted transition-colors">
-            <ArrowLeft size={20} />
-          </button>
-          <div>
-            <h1 className="text-2xl font-bold text-foreground">Study Mode</h1>
-            <p className="text-muted-foreground text-sm">Select a day to begin</p>
+      <div className="flex gap-5 px-4 py-6 min-h-[calc(100vh-3.5rem)] lg:min-h-screen">
+        {/* ── Main belt table ── */}
+        <div className="flex-1 min-w-0">
+          {/* Top info cards */}
+          <div className="grid grid-cols-3 gap-4 mb-6">
+            <div className="rounded-2xl border border-border bg-card p-4 flex gap-3 items-start">
+              <div className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0" style={{ backgroundColor: "#ECFDF5" }}>
+                <BookOpen size={20} style={{ color: "#10B981" }} />
+              </div>
+              <div>
+                <div className="text-sm font-bold" style={{ color: "#10B981" }}>BELT</div>
+                <div className="text-xs text-muted-foreground leading-snug mt-0.5">
+                  6 Belts represent your mastery journey. Advance to the next belt by completing all 7 missions.
+                </div>
+              </div>
+            </div>
+            <div className="rounded-2xl border border-border bg-card p-4 flex gap-3 items-start">
+              <div className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0" style={{ backgroundColor: "#FFF7ED" }}>
+                <span style={{ fontSize: 20 }}>🚩</span>
+              </div>
+              <div>
+                <div className="text-sm font-bold" style={{ color: "#F97316" }}>MISSION</div>
+                <div className="text-xs text-muted-foreground leading-snug mt-0.5">
+                  7 Missions each belt. One mission per day keeps you consistent and builds momentum.
+                </div>
+              </div>
+            </div>
+            <div className="rounded-2xl border border-border bg-card p-4 flex gap-3 items-start">
+              <div className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0" style={{ backgroundColor: "#EFF6FF" }}>
+                <ShurikenIcon size={22} color="#3B82F6" />
+              </div>
+              <div>
+                <div className="text-sm font-bold" style={{ color: "#3B82F6" }}>SET</div>
+                <div className="text-xs text-muted-foreground leading-snug mt-0.5">
+                  3 Sets per mission. Each set contains 10 carefully selected vocabulary words.
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Table column header */}
+          <div className="flex items-center mb-3 px-1">
+            <div className="w-52 shrink-0">
+              <span className="text-xs font-bold tracking-widest uppercase" style={{ color: "#10B981" }}>
+                {BELTS.length} BELTS
+              </span>
+            </div>
+            <div className="flex-1">
+              <span className="text-xs font-bold tracking-widest uppercase" style={{ color: "#F97316" }}>
+                {TOTAL_DAYS} MISSIONS
+              </span>
+            </div>
+            <div className="w-36 shrink-0 text-right">
+              <span className="text-xs font-bold tracking-widest uppercase" style={{ color: "#3B82F6" }}>
+                {TOTAL_DAYS * GROUPS_PER_DAY} SETS
+              </span>
+            </div>
+          </div>
+
+          {/* Belt rows */}
+          <div className="space-y-3">
+            {BELTS.map((belt, bIdx) => {
+              const startDay = bIdx * 7 + 1;
+              const endDay = Math.min(startDay + 6, TOTAL_DAYS);
+              const missionDays = Array.from({ length: endDay - startDay + 1 }, (_, k) => startDay + k);
+
+              const beltMastered = missionDays.reduce((acc, d) => {
+                const dw = dayWords[d - 1] ?? [];
+                return acc + dw.filter((w) => w.status === "mastered").length;
+              }, 0);
+              const beltTotal = missionDays.reduce((acc, d) => acc + (dayWords[d - 1]?.length ?? 0), 0);
+
+              const setsForBelt: { done: boolean }[] = [];
+              for (const d of missionDays) {
+                for (let g = 1; g <= GROUPS_PER_DAY; g++) {
+                  const gw = words.filter((w) => w.day === d && w.group === g);
+                  setsForBelt.push({ done: gw.length > 0 && gw.every((w) => w.status === "mastered") });
+                }
+              }
+              const setsCompleted = setsForBelt.filter((s) => s.done).length;
+
+              return (
+                <motion.div
+                  key={belt.num}
+                  initial={{ opacity: 0, y: 8 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: bIdx * 0.06 }}
+                  className="rounded-2xl border border-border bg-card overflow-hidden"
+                >
+                  <div className="flex items-center gap-3 p-3">
+                    {/* Belt number circle */}
+                    <div
+                      className="w-8 h-8 rounded-full flex items-center justify-center text-white font-bold text-sm shrink-0"
+                      style={{ backgroundColor: belt.color }}
+                    >
+                      {belt.num}
+                    </div>
+
+                    {/* Belt gi icon */}
+                    <div className="shrink-0">
+                      <BeltGiIcon color={belt.color} size={38} />
+                    </div>
+
+                    {/* Belt info */}
+                    <div className="w-28 shrink-0">
+                      <div className="font-bold text-sm text-foreground">{belt.name}</div>
+                      <div className="text-xs font-medium" style={{ color: belt.textColor }}>{belt.subtitle}</div>
+                      <div className="text-[10px] text-muted-foreground leading-tight">{belt.desc}</div>
+                    </div>
+
+                    {/* Missions (M1–M7) */}
+                    <div className="flex-1 flex items-end gap-1.5 flex-wrap">
+                      {missionDays.map((day, i) => {
+                        const dw = dayWords[day - 1] ?? [];
+                        const mDone = dw.length > 0 && dw.every((w) => w.status === "mastered");
+                        return (
+                          <button
+                            key={day}
+                            onClick={() => {
+                              setSelectedDay(day);
+                              setSelectedGroup(null);
+                              setCardIndex(0);
+                              setView("group-select");
+                            }}
+                            className="flex flex-col items-center gap-1 hover:scale-110 transition-transform"
+                            title={`Mission ${i + 1} — Day ${day}`}
+                          >
+                            <FlagIcon label={`M${i + 1}`} done={mDone} active={!mDone} />
+                          </button>
+                        );
+                      })}
+                    </div>
+
+                    {/* Sets (shuriken icons) */}
+                    <div className="w-28 shrink-0 flex flex-col items-center gap-1">
+                      <div className="flex flex-wrap justify-center gap-1">
+                        {Array.from({ length: Math.min(setsForBelt.length, 6) }, (_, i) => (
+                          <ShurikenIcon
+                            key={i}
+                            size={18}
+                            filled={setsForBelt[i]?.done}
+                            color="#3B82F6"
+                          />
+                        ))}
+                        {setsForBelt.length > 6 && (
+                          <span className="text-[9px] text-muted-foreground">+{setsForBelt.length - 6}</span>
+                        )}
+                      </div>
+                      <div className="text-[9px] text-muted-foreground">(10 words each)</div>
+                    </div>
+
+                    {/* Word count pill */}
+                    <div
+                      className="shrink-0 rounded-xl px-3 py-1.5 text-center ml-1"
+                      style={{ backgroundColor: beltTotal === beltMastered && beltTotal > 0 ? "#ECFDF5" : "#FFF7ED" }}
+                    >
+                      <div
+                        className="text-base font-extrabold tabular-nums"
+                        style={{ color: beltTotal === beltMastered && beltTotal > 0 ? "#10B981" : "#F97316" }}
+                      >
+                        {beltTotal}
+                      </div>
+                      <div className="text-[9px] font-semibold" style={{ color: "#F97316" }}>words</div>
+                    </div>
+                  </div>
+
+                  {/* Progress bar */}
+                  {beltTotal > 0 && (
+                    <div className="h-1 bg-muted">
+                      <div
+                        className="h-full transition-all duration-500"
+                        style={{
+                          width: `${Math.round((beltMastered / beltTotal) * 100)}%`,
+                          backgroundColor: belt.color,
+                        }}
+                      />
+                    </div>
+                  )}
+                </motion.div>
+              );
+            })}
+          </div>
+
+          {/* Footer stats */}
+          <div className="mt-6 flex items-center justify-around rounded-2xl border border-border bg-card p-4">
+            <div className="flex items-center gap-2">
+              <span className="text-lg">📗</span>
+              <div>
+                <div className="font-bold text-foreground tabular-nums">{totalWords.toLocaleString()}</div>
+                <div className="text-[10px] text-muted-foreground">Total Words</div>
+              </div>
+            </div>
+            <div className="w-px h-8 bg-border" />
+            <div className="flex items-center gap-2">
+              <span className="text-lg">🚩</span>
+              <div>
+                <div className="font-bold text-foreground tabular-nums">{TOTAL_DAYS}</div>
+                <div className="text-[10px] text-muted-foreground">Missions</div>
+              </div>
+            </div>
+            <div className="w-px h-8 bg-border" />
+            <div className="flex items-center gap-2">
+              <ShurikenIcon size={20} color="#3B82F6" />
+              <div>
+                <div className="font-bold text-foreground tabular-nums">{TOTAL_DAYS * GROUPS_PER_DAY}</div>
+                <div className="text-[10px] text-muted-foreground">Sets</div>
+              </div>
+            </div>
+            <div className="w-px h-8 bg-border" />
+            <div className="flex items-center gap-2">
+              <span className="text-lg">⭐</span>
+              <div>
+                <div className="font-bold text-foreground">Earn XP</div>
+                <div className="text-[10px] text-muted-foreground">Level Up</div>
+              </div>
+            </div>
+            <div className="w-px h-8 bg-border" />
+            <div className="flex items-center gap-2">
+              <span className="text-lg">🏆</span>
+              <div>
+                <div className="font-bold text-foreground">Become a True</div>
+                <div className="text-[10px] text-muted-foreground">Vocab Ninja</div>
+              </div>
+            </div>
           </div>
         </div>
 
-        <div className="space-y-12">
-          {Array.from({ length: 6 }, (_, w) => {
-            const weekNum = w + 1;
-            const startDay = w * 7 + 1;
-            const endDay = Math.min(startDay + 6, TOTAL_DAYS);
-            const daysInWeek = Array.from({ length: endDay - startDay + 1 }, (_, k) => startDay + k);
-            const weekWordCounts = daysInWeek.reduce(
-              (acc, d) => {
-                const dw = dayWords[d - 1];
-                acc.total += dw.length;
-                acc.mastered += dw.filter((x) => x.status === "mastered").length;
-                return acc;
-              },
-              { total: 0, mastered: 0 }
-            );
-            const weekPct = weekWordCounts.total
-              ? Math.round((weekWordCounts.mastered / weekWordCounts.total) * 100)
-              : 0;
-            return (
-              <SnakeWeek
-                key={weekNum}
-                weekNum={weekNum}
-                startDay={startDay}
-                endDay={endDay}
-                daysInWeek={daysInWeek}
-                weekPct={weekPct}
-                dayWords={dayWords}
-                onPick={(day) => {
-                  setSelectedDay(day);
-                  setSelectedGroup(null);
-                  setCardIndex(0);
-                  setView("group-select");
-                }}
-              />
-            );
-          })}
+        {/* ── Right sidebar ── */}
+        <div className="w-64 shrink-0 space-y-4">
+          {/* Your Progress card */}
+          <div className="rounded-2xl border border-border bg-card p-4">
+            <div className="font-bold text-foreground mb-4">Your Progress</div>
+
+            <div className="flex items-center justify-center mb-4">
+              <CircularProgress pct={overallPct} size={110} />
+            </div>
+
+            <div className="space-y-2.5">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <span className="text-base">📗</span>
+                  <span className="text-xs text-muted-foreground">Words Mastered</span>
+                </div>
+                <span className="text-xs font-bold text-foreground tabular-nums">
+                  {totalMastered.toLocaleString()} / {totalWords.toLocaleString()}
+                </span>
+              </div>
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <span className="text-base">🚩</span>
+                  <span className="text-xs text-muted-foreground">Missions Completed</span>
+                </div>
+                <span className="text-xs font-bold text-foreground tabular-nums">
+                  {missionsCompleted} / {TOTAL_DAYS}
+                </span>
+              </div>
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <ShurikenIcon size={16} color="#3B82F6" />
+                  <span className="text-xs text-muted-foreground">Sets Completed</span>
+                </div>
+                <span className="text-xs font-bold text-foreground tabular-nums">
+                  {setsCompleted} / {TOTAL_DAYS * GROUPS_PER_DAY}
+                </span>
+              </div>
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <span className="text-base">⭐</span>
+                  <span className="text-xs text-muted-foreground">Total XP Earned</span>
+                </div>
+                <span className="text-xs font-bold text-foreground tabular-nums">
+                  {gamification.totalXp.toLocaleString()}
+                </span>
+              </div>
+            </div>
+          </div>
+
+          {/* Achievements card */}
+          <div className="rounded-2xl border border-border bg-card p-4">
+            <div className="flex items-center justify-between mb-3">
+              <div className="font-bold text-foreground">Achievements</div>
+              <button className="text-[11px] text-primary hover:underline">View all</button>
+            </div>
+            <div className="space-y-2">
+              {sidebarAchievements.map((ach: any) => (
+                <div key={ach.id} className="flex items-center gap-2.5">
+                  <div
+                    className="w-8 h-8 rounded-full flex items-center justify-center shrink-0 text-base"
+                    style={{ backgroundColor: ach.unlocked ? "#FEF3C7" : "#F3F4F6" }}
+                  >
+                    {ach.unlocked ? ach.emoji : <Lock size={13} className="text-muted-foreground" />}
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <div className="text-xs font-semibold text-foreground truncate">{ach.title}</div>
+                    <div className="text-[10px] text-muted-foreground truncate">{ach.description}</div>
+                  </div>
+                  {ach.unlocked ? (
+                    <Check size={14} className="text-emerald-500 shrink-0" strokeWidth={2.5} />
+                  ) : (
+                    <Lock size={13} className="text-muted-foreground shrink-0" />
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Mascot motivational card */}
+          <div className="rounded-2xl border border-border bg-card p-4 flex gap-3">
+            <img
+              src="/ninja-mascot.png"
+              alt="Vocab Ninja"
+              className="w-14 h-14 shrink-0 object-contain"
+              onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }}
+            />
+            <div className="text-xs text-muted-foreground leading-relaxed">
+              Every word you master is a step toward becoming unstoppable.{" "}
+              <span className="font-semibold" style={{ color: "#F97316" }}>
+                Keep training, Ninja! 🤙
+              </span>
+            </div>
+          </div>
         </div>
       </div>
     );
@@ -127,13 +512,12 @@ export default function StudyMode({ onBack, initialDay, initialWordId }: StudyMo
             <ArrowLeft size={20} />
           </button>
           <div>
-            <h1 className="text-2xl font-bold text-foreground">Day {selectedDay}</h1>
-            <p className="text-muted-foreground text-sm">Select a group or study all</p>
+            <h1 className="text-2xl font-bold text-foreground">Mission {selectedDay}</h1>
+            <p className="text-muted-foreground text-sm">Select a set or study all</p>
           </div>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          {/* All words option */}
           <motion.button
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
@@ -148,7 +532,7 @@ export default function StudyMode({ onBack, initialDay, initialWordId }: StudyMo
               <Grid3X3 size={22} />
               <div>
                 <div className="font-semibold text-lg">All 30 Words</div>
-                <div className="text-sm opacity-80">Study the entire day</div>
+                <div className="text-sm opacity-80">Study the entire mission</div>
               </div>
             </div>
           </motion.button>
@@ -172,7 +556,10 @@ export default function StudyMode({ onBack, initialDay, initialWordId }: StudyMo
                 className="text-left p-5 bg-card border border-card-border rounded-2xl shadow-sm hover:border-primary/40 transition-all"
               >
                 <div className="flex items-center justify-between mb-3">
-                  <span className="font-semibold text-foreground">Group {group}</span>
+                  <div className="flex items-center gap-2">
+                    <ShurikenIcon size={16} color="#3B82F6" filled={pct === 100} />
+                    <span className="font-semibold text-foreground">Set {group}</span>
+                  </div>
                   <span className="text-sm text-muted-foreground">{pct}%</span>
                 </div>
                 <div className="h-1.5 bg-muted rounded-full mb-3 overflow-hidden">
@@ -196,7 +583,6 @@ export default function StudyMode({ onBack, initialDay, initialWordId }: StudyMo
       onKeyDown={handleArrowKeys}
       style={{ outline: "none" }}
     >
-      {/* Top progress bar (modern) */}
       <div className="shrink-0 mb-4 flex items-center gap-3">
         <span className="text-xs font-semibold text-muted-foreground tabular-nums tracking-wider">
           {String(cardIndex + 1).padStart(2, "0")}
@@ -222,7 +608,6 @@ export default function StudyMode({ onBack, initialDay, initialWordId }: StudyMo
           </span>
         </div>
       </div>
-      {/* Header */}
       <div className="flex items-center justify-between mb-3 shrink-0">
         <button
           onClick={() => setView("group-select")}
@@ -232,11 +617,10 @@ export default function StudyMode({ onBack, initialDay, initialWordId }: StudyMo
         </button>
         <div className="text-center">
           <div className="text-foreground text-[25px] font-bold bg-[#f3fef9]">
-            Day {selectedDay} · {selectedGroup ? `Group ${selectedGroup}` : "All Words"}
+            Mission {selectedDay} · {selectedGroup ? `Set ${selectedGroup}` : "All Words"}
           </div>
         </div>
       </div>
-      {/* Flashcard */}
       <div className={`flex-1 min-h-0 ${focusMode ? "flex items-center justify-center px-8 py-4" : "flex"}`}>
         <AnimatePresence mode="wait">
           <motion.div
@@ -272,7 +656,6 @@ export default function StudyMode({ onBack, initialDay, initialWordId }: StudyMo
           </motion.div>
         </AnimatePresence>
       </div>
-      {/* Nav buttons - symmetric side arrows within study area */}
       <button
         onClick={handlePrev}
         disabled={cardIndex === 0}
@@ -289,142 +672,6 @@ export default function StudyMode({ onBack, initialDay, initialWordId }: StudyMo
       >
         <ChevronRight size={20} />
       </button>
-    </div>
-  );
-}
-
-interface SnakeWeekProps {
-  weekNum: number;
-  startDay: number;
-  endDay: number;
-  daysInWeek: number[];
-  weekPct: number;
-  dayWords: Word[][];
-  onPick: (day: number) => void;
-}
-
-function SnakeWeek({ weekNum, startDay, endDay, daysInWeek, weekPct, dayWords, onPick }: SnakeWeekProps) {
-  // Build snake positions: 4 columns, alternating direction per row.
-  const COLS = 4;
-  const COL_W = 220;
-  const ROW_H = 150;
-  const PAD_X = 40;
-  const PAD_Y = 30;
-
-  type Node = { day: number; row: number; col: number; x: number; y: number };
-  const nodes: Node[] = daysInWeek.map((day, i) => {
-    const row = Math.floor(i / COLS);
-    const colInRow = i % COLS;
-    const col = row % 2 === 0 ? colInRow : COLS - 1 - colInRow;
-    return {
-      day,
-      row,
-      col,
-      x: PAD_X + col * COL_W + COL_W / 2,
-      y: PAD_Y + row * ROW_H + ROW_H / 2,
-    };
-  });
-
-  const totalRows = Math.ceil(daysInWeek.length / COLS);
-  const width = PAD_X * 2 + COLS * COL_W;
-  const height = PAD_Y * 2 + totalRows * ROW_H;
-
-  // Build SVG path through node centers, with rounded turns at row ends.
-  const pathD = nodes
-    .map((n, i) => {
-      if (i === 0) return `M ${n.x} ${n.y}`;
-      const prev = nodes[i - 1];
-      if (n.row === prev.row) {
-        return `L ${n.x} ${n.y}`;
-      }
-      // Curve down to next row, going around the same column edge.
-      const midY = (prev.y + n.y) / 2;
-      return `C ${prev.x + (n.x - prev.x) * 0.15} ${midY}, ${n.x - (n.x - prev.x) * 0.15} ${midY}, ${n.x} ${n.y}`;
-    })
-    .join(" ");
-
-  return (
-    <div>
-      <div className="flex items-baseline justify-between mb-3 px-1">
-        <h2 className="text-sm font-semibold uppercase tracking-wider text-muted-foreground">
-          Week {weekNum}
-        </h2>
-        <span className="text-xs text-muted-foreground tabular-nums">
-          Day {startDay}{daysInWeek.length > 1 ? `–${endDay}` : ""} · {weekPct}%
-        </span>
-      </div>
-      <div className="relative w-full overflow-x-auto">
-        <div className="relative mx-auto" style={{ width, height }}>
-          <svg
-            className="absolute inset-0"
-            width={width}
-            height={height}
-            viewBox={`0 0 ${width} ${height}`}
-            fill="none"
-          >
-            <path
-              d={pathD}
-              stroke="currentColor"
-              className="text-sky-200 dark:text-sky-900"
-              strokeWidth={3}
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              fill="none"
-            />
-          </svg>
-          {nodes.map((n, idx) => {
-            const dw = dayWords[n.day - 1];
-            const mastered = dw.filter((x) => x.status === "mastered").length;
-            const pct = Math.round((mastered / dw.length) * 100);
-            const done = pct === 100;
-            const placeLeft = n.col === 0;
-            return (
-              <motion.div
-                key={n.day}
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ delay: idx * 0.05 }}
-                className="absolute"
-                style={{
-                  left: n.x - 32,
-                  top: n.y - 32,
-                  width: 64,
-                  height: 64,
-                }}
-              >
-                <button
-                  onClick={() => onPick(n.day)}
-                  aria-label={`Day ${n.day}`}
-                  className="group relative w-16 h-16 rounded-full bg-gradient-to-br from-sky-50 to-sky-100 dark:from-sky-900/30 dark:to-sky-800/30 border-2 border-sky-200 dark:border-sky-700 text-sky-700 dark:text-sky-300 font-bold text-xl shadow-sm hover:shadow-lg hover:scale-105 hover:border-sky-400 transition-all flex items-center justify-center"
-                >
-                  {n.day}
-                  <span
-                    className={`absolute -bottom-1 -right-1 w-5 h-5 rounded-full flex items-center justify-center border-2 border-background ${
-                      done
-                        ? "bg-emerald-500 text-white"
-                        : pct > 0
-                        ? "bg-sky-400 text-white"
-                        : "bg-muted text-muted-foreground"
-                    }`}
-                  >
-                    {done ? <Check size={10} strokeWidth={3} /> : null}
-                  </span>
-                </button>
-                <div
-                  className={`absolute top-1/2 -translate-y-1/2 ${
-                    placeLeft ? "right-full mr-3 text-right" : "left-full ml-3 text-left"
-                  } whitespace-nowrap`}
-                >
-                  <div className="text-sm font-semibold text-foreground">Day {n.day}</div>
-                  <div className="text-xs text-muted-foreground">
-                    {mastered} / {dw.length} mastered
-                  </div>
-                </div>
-              </motion.div>
-            );
-          })}
-        </div>
-      </div>
     </div>
   );
 }
