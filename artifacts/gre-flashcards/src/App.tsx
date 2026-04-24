@@ -100,16 +100,20 @@ function MainApp() {
             />
           )}
         </div>
-        {!inDrawer && (
+      </div>
+
+      {/* Collapse toggle — sits below logo, controls only the tabs area */}
+      {!inDrawer && (
+        <div className={`hidden lg:flex ${sidebarCollapsed ? "justify-center" : "justify-end"} px-2 pt-2`}>
           <button
             onClick={() => setSidebarCollapsed((v) => !v)}
-            className="hidden lg:flex items-center justify-center w-7 h-7 rounded-lg hover:bg-muted text-muted-foreground transition-colors"
+            className="flex items-center justify-center w-7 h-7 rounded-lg hover:bg-muted text-muted-foreground transition-colors"
             title={sidebarCollapsed ? "Expand sidebar" : "Collapse sidebar"}
           >
             {sidebarCollapsed ? <ChevronRight size={16} /> : <ChevronLeft size={16} />}
           </button>
-        )}
-      </div>
+        </div>
+      )}
 
       {/* Crunch badge */}
       {crunch.active && (!sidebarCollapsed || inDrawer) && (
