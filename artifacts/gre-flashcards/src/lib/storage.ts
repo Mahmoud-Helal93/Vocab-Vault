@@ -12,12 +12,20 @@ export const STORAGE_KEYS = {
   CRUNCH: "gre_crunch",
   MICRO_SESSION: "gre_micro_session",
   MISSION_TEST_SCORES: "gre_mission_test_scores",
+  MISSION_TEST_ATTEMPTS: "gre_mission_test_attempts",
 } as const;
 
 export function loadMissionTestScores(): Record<number, number> {
   try {
     const raw = localStorage.getItem(STORAGE_KEYS.MISSION_TEST_SCORES);
     return raw ? (JSON.parse(raw) as Record<number, number>) : {};
+  } catch { return {}; }
+}
+
+export function loadMissionTestAttempts(): Record<number, string> {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEYS.MISSION_TEST_ATTEMPTS);
+    return raw ? (JSON.parse(raw) as Record<number, string>) : {};
   } catch { return {}; }
 }
 
@@ -28,7 +36,27 @@ export function saveMissionTestScore(day: number, pct: number): void {
       scores[day] = pct;
       localStorage.setItem(STORAGE_KEYS.MISSION_TEST_SCORES, JSON.stringify(scores));
     }
+    const attempts = loadMissionTestAttempts();
+    attempts[day] = new Date().toISOString();
+    localStorage.setItem(STORAGE_KEYS.MISSION_TEST_ATTEMPTS, JSON.stringify(attempts));
   } catch { /* ignore */ }
+}
+
+export function formatRelativeTime(iso: string): string {
+  const then = new Date(iso).getTime();
+  const diffMs = Date.now() - then;
+  const sec = Math.floor(diffMs / 1000);
+  if (sec < 60) return "just now";
+  const min = Math.floor(sec / 60);
+  if (min < 60) return `${min} min${min === 1 ? "" : "s"} ago`;
+  const hr = Math.floor(min / 60);
+  if (hr < 24) return `${hr} hour${hr === 1 ? "" : "s"} ago`;
+  const day = Math.floor(hr / 24);
+  if (day < 30) return `${day} day${day === 1 ? "" : "s"} ago`;
+  const mo = Math.floor(day / 30);
+  if (mo < 12) return `${mo} month${mo === 1 ? "" : "s"} ago`;
+  const yr = Math.floor(mo / 12);
+  return `${yr} year${yr === 1 ? "" : "s"} ago`;
 }
 
 export interface Settings {

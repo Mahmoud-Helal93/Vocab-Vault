@@ -8,7 +8,7 @@ import { shuffleArray } from "@/lib/srs";
 import { TOTAL_DAYS, GROUPS_PER_DAY, type Word } from "@/data/words";
 import { ChevronLeft, ChevronRight, Shuffle, ArrowLeft, Grid3X3, Flame, Check, BookOpen, Lock, Trophy } from "lucide-react";
 import { BADGES, levelFromXp } from "@/lib/gamification";
-import { loadMissionTestScores } from "@/lib/storage";
+import { loadMissionTestScores, loadMissionTestAttempts, formatRelativeTime } from "@/lib/storage";
 import ninjaMascot from "@assets/Gemini_Generated_Image_hflkzzhflkzzhflk_1776994719274.png";
 import ProgressSidebar from "@/components/ProgressSidebar";
 
@@ -520,6 +520,7 @@ export default function StudyMode({ onBack, onNavigate, initialDay, initialWordI
 
   if (view === "group-select") {
     const missionTestBest = loadMissionTestScores()[selectedDay ?? 0];
+    const missionTestLastAttempt = loadMissionTestAttempts()[selectedDay ?? 0];
     return (
       <div className="flex gap-5 px-4 py-8 min-h-[calc(100vh-3.5rem)] lg:min-h-screen">
         <div className="flex-1 min-w-0 max-w-4xl mx-auto">
@@ -605,6 +606,11 @@ export default function StudyMode({ onBack, onNavigate, initialDay, initialWordI
                 <div className="text-xs text-muted-foreground">
                   30 words · {typeof missionTestBest === "number" ? `best ${missionTestBest}%` : "not attempted"}
                 </div>
+                {missionTestLastAttempt && (
+                  <div className="text-[11px] text-muted-foreground/80 mt-1">
+                    Last attempt: {formatRelativeTime(missionTestLastAttempt)}
+                  </div>
+                )}
               </motion.button>
             );
             const gw = words.filter((w) => w.day === selectedDay && w.group === group);
