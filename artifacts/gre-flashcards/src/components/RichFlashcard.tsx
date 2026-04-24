@@ -76,6 +76,8 @@ export default function RichFlashcard({
     onNext?.();
   };
 
+  const isMission1Set1 = word.day === 1 && word.group === 1;
+
   return (
     <div className="w-full max-w-6xl mx-auto">
       <div className="bg-card border border-card-border rounded-3xl shadow-sm p-7 lg:p-9">
@@ -87,7 +89,7 @@ export default function RichFlashcard({
               {status.label}
             </div>
 
-            <div className="flex items-center gap-3 mb-1">
+            <div className="flex items-center gap-3 mb-1 flex-wrap">
               <h2 className="text-5xl font-bold text-foreground tracking-tight leading-none">
                 {word.word.charAt(0).toUpperCase() + word.word.slice(1)}
               </h2>
@@ -98,6 +100,14 @@ export default function RichFlashcard({
               >
                 <Volume2 size={20} />
               </button>
+              {isMission1Set1 && (
+                <p
+                  className="ml-auto text-2xl font-medium text-foreground/80 leading-none"
+                  dir="rtl"
+                >
+                  {word.arabic}
+                </p>
+              )}
             </div>
             <p className="text-sm italic text-violet-600 dark:text-violet-400 mb-5">{word.pos}</p>
 
@@ -163,21 +173,32 @@ export default function RichFlashcard({
           </div>
 
           {/* RIGHT COLUMN */}
-          <div className="flex flex-col">
-            {/* Arabic + tone */}
-            <div className="flex flex-col items-end gap-2 mb-7 lg:mt-0">
-              <p className="text-3xl font-medium text-foreground" dir="rtl">{word.arabic}</p>
-              {tone && (
+          <div className={`flex flex-col ${isMission1Set1 ? "lg:divide-y lg:divide-border" : ""}`}>
+            {/* Arabic + tone (hidden in Mission 1 Set 1 since Arabic moves next to the word) */}
+            {!isMission1Set1 && (
+              <div className="flex flex-col items-end gap-2 mb-7 lg:mt-0">
+                <p className="text-3xl font-medium text-foreground" dir="rtl">{word.arabic}</p>
+                {tone && (
+                  <span className={`inline-flex items-center gap-1.5 text-xs font-semibold px-3 py-1 rounded-full ${tone.bg}`}>
+                    <span className={`w-1.5 h-1.5 rounded-full ${tone.dot}`} />
+                    {enr.tone}
+                  </span>
+                )}
+              </div>
+            )}
+            {isMission1Set1 && tone && (
+              <div className={`flex justify-end ${isMission1Set1 ? "pb-4" : "mb-7"}`}>
                 <span className={`inline-flex items-center gap-1.5 text-xs font-semibold px-3 py-1 rounded-full ${tone.bg}`}>
                   <span className={`w-1.5 h-1.5 rounded-full ${tone.dot}`} />
                   {enr.tone}
                 </span>
-              )}
-            </div>
+              </div>
+            )}
 
             {/* Word Family */}
             {enr.wordFamily && enr.wordFamily.length > 0 && (
-              <div className="mb-5">
+              <div className={isMission1Set1 ? "py-5" : "mb-5"}>
+
                 <p className="flex items-center gap-1.5 text-sm font-bold text-violet-700 dark:text-violet-400 mb-2.5">
                   <Users size={15} />
                   Word Family
@@ -202,7 +223,7 @@ export default function RichFlashcard({
 
             {/* Etymology */}
             {enr.etymology && enr.etymology.length > 0 && (
-              <div>
+              <div className={isMission1Set1 ? "pt-5" : ""}>
                 <p className="flex items-center gap-1.5 text-sm font-bold text-violet-700 dark:text-violet-400 mb-2.5">
                   <BookOpen size={15} />
                   Etymology
