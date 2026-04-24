@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { Word } from "@/data/words";
 import { getEnrichment } from "@/data/enrichment";
 import {
-  Volume2, Users, BookOpen, Equal, Plus,
+  Volume2, BookOpen, Equal, Plus,
   ArrowRightLeft, Lightbulb, ChevronLeft, ChevronRight,
 } from "lucide-react";
 
@@ -13,7 +13,6 @@ interface RichFlashcardProps {
   onNext?: () => void;
   hasPrev?: boolean;
   hasNext?: boolean;
-  onWordFamilyClick?: (wordName: string) => void;
 }
 
 const STATUS_PILL: Record<string, { dot: string; label: string }> = {
@@ -38,7 +37,6 @@ export default function RichFlashcard({
   onNext,
   hasPrev = true,
   hasNext = true,
-  onWordFamilyClick,
 }: RichFlashcardProps) {
   const enr = getEnrichment(word.word) ?? {};
 
@@ -180,31 +178,6 @@ export default function RichFlashcard({
                 </span>
               )}
             </div>
-
-            {/* Word Family */}
-            {enr.wordFamily && enr.wordFamily.length > 0 && (
-              <div className="mt-10 mb-10">
-                <p className="flex items-center gap-1.5 text-sm font-bold text-violet-700 dark:text-violet-400 mb-2.5">
-                  <Users size={15} />
-                  Word Family
-                </p>
-                <div className="flex flex-wrap gap-2">
-                  {enr.wordFamily.map((wf, i) => (
-                    <button
-                      key={i}
-                      onClick={(e) => { e.stopPropagation(); onWordFamilyClick?.(wf); }}
-                      className={`text-xs font-medium px-3 py-1.5 rounded-full transition-colors ${
-                        i === 0
-                          ? "bg-violet-500 text-white hover:bg-violet-600"
-                          : "border border-violet-200 dark:border-violet-800 text-violet-700 dark:text-violet-400 hover:bg-violet-50 dark:hover:bg-violet-900/20"
-                      }`}
-                    >
-                      {wf}
-                    </button>
-                  ))}
-                </div>
-              </div>
-            )}
 
             {/* Etymology */}
             {enr.etymology && enr.etymology.length > 0 && (
