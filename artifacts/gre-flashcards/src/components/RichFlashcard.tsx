@@ -3,7 +3,7 @@ import { Word } from "@/data/words";
 import { getEnrichment } from "@/data/enrichment";
 import {
   Volume2, BookOpen, Equal, Plus,
-  ArrowRightLeft, Globe, ChevronLeft, ChevronRight,
+  ArrowRightLeft, Globe, ChevronLeft, ChevronRight, Layers,
 } from "lucide-react";
 
 interface RichFlashcardProps {
@@ -191,6 +191,26 @@ export default function RichFlashcard({
                     </p>
                   </div>
                 )}
+              </div>
+            )}
+
+            {/* Word Family */}
+            {enr.wordFamily && enr.wordFamily.length > 0 && (
+              <div className="mt-5">
+                <p className="flex items-center gap-1.5 text-sm font-bold text-violet-700 dark:text-violet-400 mb-2.5">
+                  <Layers size={15} />
+                  Word Family
+                </p>
+                <div className="flex flex-wrap gap-2">
+                  {enr.wordFamily.map((w, i) => (
+                    <span
+                      key={i}
+                      className="inline-block text-xs font-medium px-3 py-1.5 rounded-full bg-violet-50 dark:bg-violet-900/20 text-violet-700 dark:text-violet-300 border border-violet-200 dark:border-violet-800"
+                    >
+                      {w}
+                    </span>
+                  ))}
+                </div>
               </div>
             )}
           </div>
