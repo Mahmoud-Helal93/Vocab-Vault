@@ -81,14 +81,14 @@ function MainApp() {
   const Sidebar = ({ inDrawer = false }: { inDrawer?: boolean }) => (
     <div className="h-full flex flex-col bg-card border-r border-border">
       {/* Logo — fixed at the very top, never scrolls with tabs */}
-      <div className={`flex items-center ${sidebarCollapsed && !inDrawer ? "justify-center" : "justify-start"} px-3 h-16 bg-card border-b border-border shrink-0 shadow-sm`}>
+      <div className={`flex items-center ${sidebarCollapsed && !inDrawer ? "justify-center" : "justify-start"} px-3 h-20 bg-card border-b border-border shrink-0 shadow-sm`}>
         <div className="flex items-center gap-2 overflow-hidden">
           {sidebarCollapsed && !inDrawer ? (
-            <div className="w-9 h-9 overflow-hidden flex items-center justify-start shrink-0">
+            <div className="w-12 h-12 overflow-hidden flex items-center justify-start shrink-0">
               <img
                 src={vocabNinjaLogo}
                 alt="Vocab Ninja"
-                className="h-9 w-auto object-contain object-left max-w-none"
+                className="h-12 w-auto object-contain object-left max-w-none"
                 style={{ width: "auto" }}
               />
             </div>
@@ -96,7 +96,7 @@ function MainApp() {
             <img
               src={vocabNinjaLogo}
               alt="Vocab Ninja — Master Words. Master Every Mission."
-              className="h-11 w-auto object-contain shrink-0"
+              className="h-16 w-auto object-contain shrink-0"
             />
           )}
         </div>
@@ -235,7 +235,7 @@ function MainApp() {
               <Menu size={20} />
             </button>
             <div className="flex items-center gap-2">
-              <img src={vocabNinjaLogo} alt="Vocab Ninja" className="h-8 w-auto object-contain" />
+              <img src={vocabNinjaLogo} alt="Vocab Ninja" className="h-11 w-auto object-contain" />
               {crunch.active && (
                 <span className="text-[10px] font-bold bg-red-500 text-white px-2 py-0.5 rounded-full animate-pulse">
                   CRUNCH
