@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { motion } from "framer-motion";
 import { Word } from "@/data/words";
 import { getEnrichment } from "@/data/enrichment";
 import {
@@ -75,7 +76,31 @@ export default function RichFlashcard({
   };
 
   return (
-    <div className="w-full max-w-6xl mx-auto">
+    <div className="w-full max-w-6xl mx-auto relative px-14">
+      {/* Prev button — left side */}
+      <motion.button
+        onClick={onPrev}
+        disabled={!hasPrev}
+        whileHover={{ scale: 1.1 }}
+        whileTap={{ scale: 0.85 }}
+        transition={{ type: "spring", stiffness: 400, damping: 17 }}
+        className="absolute left-0 top-1/2 -translate-y-1/2 z-10 w-11 h-11 rounded-full bg-white dark:bg-zinc-800 border border-border shadow-md flex items-center justify-center text-violet-500 dark:text-violet-400 disabled:opacity-25 disabled:cursor-not-allowed"
+      >
+        <ChevronLeft size={20} strokeWidth={2.5} />
+      </motion.button>
+
+      {/* Next button — right side */}
+      <motion.button
+        onClick={handleNext}
+        disabled={!hasNext}
+        whileHover={{ scale: 1.1 }}
+        whileTap={{ scale: 0.85 }}
+        transition={{ type: "spring", stiffness: 400, damping: 17 }}
+        className="absolute right-0 top-1/2 -translate-y-1/2 z-10 w-11 h-11 rounded-full bg-violet-500 hover:bg-violet-600 shadow-md flex items-center justify-center text-white disabled:opacity-25 disabled:cursor-not-allowed"
+      >
+        <ChevronRight size={20} strokeWidth={2.5} />
+      </motion.button>
+
       <div className="bg-card border border-card-border rounded-3xl shadow-sm p-7 lg:p-9">
         {/* Status pill (full width) */}
         <div className="flex items-center gap-1.5 text-xs font-semibold text-violet-600 dark:text-violet-400 mb-4">
@@ -245,26 +270,6 @@ export default function RichFlashcard({
             </div>
           </div>
         )}
-
-        {/* Prev / Next */}
-        <div className="flex items-center justify-between mt-8 pt-5 border-t border-border">
-          <button
-            onClick={onPrev}
-            disabled={!hasPrev}
-            className="flex items-center gap-1.5 px-4 py-2 rounded-xl border border-border hover:bg-muted transition-colors disabled:opacity-30 disabled:cursor-not-allowed text-sm font-medium"
-          >
-            <ChevronLeft size={16} />
-            Previous
-          </button>
-          <button
-            onClick={handleNext}
-            disabled={!hasNext}
-            className="flex items-center gap-1.5 px-5 py-2 rounded-xl bg-violet-500 hover:bg-violet-600 text-white transition-colors disabled:opacity-30 disabled:cursor-not-allowed text-sm font-semibold shadow-sm"
-          >
-            Next
-            <ChevronRight size={16} />
-          </button>
-        </div>
       </div>
     </div>
   );
