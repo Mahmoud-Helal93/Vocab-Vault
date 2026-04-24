@@ -300,39 +300,54 @@ function SetTestInner({ onBack, missionDay, group }: SetTestProps) {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-violet-50 via-white to-blue-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 flex flex-col">
-      <div className="sticky top-0 z-10 bg-white/80 dark:bg-gray-900/80 backdrop-blur border-b border-border px-4 py-3">
-        <div className="flex items-center gap-3">
-          <button onClick={onBack} className="p-2 rounded-xl hover:bg-muted transition-colors text-muted-foreground">
-            <ArrowLeft size={18} />
-          </button>
-          <div className="flex-1 min-w-0">
-            <h1 className="font-bold text-base text-foreground truncate">
-              Mission {missionDay} · Set {group} Test
-            </h1>
-            <p className="text-xs text-muted-foreground">
-              10 questions · {setWords.length} words from this set
-            </p>
+      <div className="sticky top-0 z-10 bg-white/80 dark:bg-gray-900/80 backdrop-blur border-b border-border">
+        <div className="px-4 py-3 grid grid-cols-[1fr_auto_1fr] items-center gap-3">
+          {/* Left: back + breadcrumb */}
+          <div className="flex items-center gap-2 min-w-0">
+            <button
+              onClick={onBack}
+              aria-label="Back"
+              className="p-2 rounded-xl hover:bg-muted transition-colors text-muted-foreground shrink-0"
+            >
+              <ArrowLeft size={18} />
+            </button>
+            <nav aria-label="Breadcrumb" className="min-w-0">
+              <ol className="flex items-center gap-1 text-xs text-muted-foreground truncate">
+                <li className="truncate">Mission {missionDay}</li>
+                <li className="text-muted-foreground/50">›</li>
+                <li className="truncate">Set {group}</li>
+                <li className="text-muted-foreground/50">›</li>
+                <li className="truncate text-foreground font-medium">Test</li>
+              </ol>
+            </nav>
+          </div>
+
+          {/* Center: page title */}
+          <h1 className="font-bold text-base text-foreground text-center whitespace-nowrap">
+            Set Test
+          </h1>
+
+          {/* Right: progress indicator */}
+          <div className="flex items-center justify-end gap-2">
+            <span className="text-xs text-muted-foreground hidden sm:inline-flex items-center gap-1.5">
+              <SectionIcon q={q} /> {getSection(q)}
+            </span>
+            <span
+              className="text-sm font-semibold text-foreground tabular-nums px-2.5 py-1 rounded-lg bg-muted"
+              aria-label={`Question ${currentIdx + 1} of ${questions.length}`}
+            >
+              {currentIdx + 1} / {questions.length}
+            </span>
           </div>
         </div>
 
-        <div className="mt-3 space-y-1">
-          <div className="flex justify-between text-xs text-muted-foreground">
-            <span className="flex items-center gap-1.5">
-              <SectionIcon q={q} /> {getSection(q)}
-            </span>
-            <span>{currentIdx + 1} / {questions.length}</span>
-          </div>
-          <div className="h-2 bg-muted rounded-full overflow-hidden">
-            <motion.div
-              className="h-full rounded-full bg-violet-500"
-              animate={{ width: `${progress}%` }}
-              transition={{ duration: 0.3 }}
-            />
-          </div>
-          <div className="flex justify-between text-xs text-muted-foreground">
-            <span>{totalAnswered} answered</span>
-            <span>{questions.length - totalAnswered} remaining</span>
-          </div>
+        {/* Thin animated progress bar */}
+        <div className="h-1 bg-muted overflow-hidden">
+          <motion.div
+            className="h-full bg-violet-500"
+            animate={{ width: `${progress}%` }}
+            transition={{ duration: 0.3 }}
+          />
         </div>
       </div>
 
