@@ -540,15 +540,22 @@ export default function StudyMode({ onBack, onNavigate, initialDay, initialWordI
               setCardIndex(0);
               setView("study");
             }}
-            className="text-left p-5 bg-primary text-primary-foreground rounded-2xl shadow-sm hover:opacity-90 transition-opacity col-span-full"
+            className="relative overflow-hidden text-left px-5 py-4 bg-[#F97316] text-white rounded-2xl shadow-sm hover:bg-[#EA580C] transition-colors col-span-full"
           >
-            <div className="flex items-center gap-3">
-              <Grid3X3 size={22} />
+            <div className="flex items-center gap-3 relative z-10">
+              <div className="w-11 h-11 rounded-xl bg-white/20 flex items-center justify-center shrink-0">
+                <Grid3X3 size={22} className="text-white" />
+              </div>
               <div>
-                <div className="font-semibold text-lg">All 30 Words</div>
-                <div className="text-sm opacity-80">Study the entire mission</div>
+                <div className="font-bold text-xl leading-tight">All 30 Words</div>
+                <div className="text-sm opacity-90">Study the entire mission</div>
               </div>
             </div>
+            <BookOpen
+              size={120}
+              strokeWidth={1.5}
+              className="absolute -right-2 top-1/2 -translate-y-1/2 text-white/25 pointer-events-none"
+            />
           </motion.button>
 
           {Array.from({ length: GROUPS_PER_DAY }, (_, i) => {
