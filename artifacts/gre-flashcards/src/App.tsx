@@ -81,7 +81,7 @@ function MainApp() {
   const Sidebar = ({ inDrawer = false }: { inDrawer?: boolean }) => (
     <div className="h-full flex flex-col bg-card border-r border-border">
       {/* Logo — fixed at the very top, never scrolls with tabs */}
-      <div className={`flex items-center ${sidebarCollapsed && !inDrawer ? "justify-center" : "justify-start"} px-3 h-[92px] bg-card border-b border-border shrink-0 shadow-sm`}>
+      <div className={`flex items-center ${sidebarCollapsed && !inDrawer ? "justify-center" : "justify-start"} px-3 h-20 bg-card border-b border-border shrink-0 shadow-sm`}>
         <div className="flex items-center gap-2 overflow-hidden">
           {sidebarCollapsed && !inDrawer ? (
             <div className="w-12 h-12 overflow-hidden flex items-center justify-start shrink-0">
