@@ -577,13 +577,32 @@ export default function StudyMode({ onBack, onNavigate, initialDay, initialWordI
                   <div className="h-full bg-primary rounded-full" style={{ width: `${pct}%` }} />
                 </div>
                 <div className="flex flex-wrap gap-1.5 mb-3">
-                  {gw.map((w) => (
+                  {gw.map((w, wIdx) => (
                     <span
                       key={w.id}
-                      className={`text-xs px-2.5 py-1 rounded-full border ${
+                      role="button"
+                      tabIndex={0}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setSelectedGroup(group);
+                        setCardIndex(wIdx);
+                        setIsShuffled(false);
+                        setView("study");
+                      }}
+                      onKeyDown={(e) => {
+                        if (e.key === "Enter" || e.key === " ") {
+                          e.preventDefault();
+                          e.stopPropagation();
+                          setSelectedGroup(group);
+                          setCardIndex(wIdx);
+                          setIsShuffled(false);
+                          setView("study");
+                        }
+                      }}
+                      className={`text-xs px-2.5 py-1 rounded-full border cursor-pointer hover:scale-105 hover:shadow-sm transition-all ${
                         w.status === "mastered"
-                          ? "bg-emerald-50 border-emerald-200 text-emerald-700 dark:bg-emerald-900/20 dark:border-emerald-800 dark:text-emerald-400"
-                          : "bg-muted/50 border-border text-foreground"
+                          ? "bg-emerald-50 border-emerald-200 text-emerald-700 dark:bg-emerald-900/20 dark:border-emerald-800 dark:text-emerald-400 hover:border-emerald-400"
+                          : "bg-muted/50 border-border text-foreground hover:border-primary/50"
                       }`}
                     >
                       {w.word}
