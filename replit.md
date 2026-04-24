@@ -32,3 +32,7 @@ See the `pnpm-workspace` skill for workspace structure, TypeScript setup, and pa
 - Active app: `artifacts/gre-flashcards` (Vocab Ninja — GRE vocabulary flashcards)
 - Frontend dev server: Vite on port 5000, host `0.0.0.0`, `allowedHosts: true` for the Replit iframe proxy
 - Workflow `Start application` runs the dev command above and is the entry point
+
+## Vocab Ninja — Notable Features
+
+- **Bookmarks** (`src/pages/Bookmarks.tsx`): word-level bookmarks persisted to `localStorage` under the `gre_bookmarks` key. Bookmarks are added from the redesigned SetTest / MissionTest results screens (bookmark button next to each reviewed question) and managed via `bookmarks` / `isBookmarked` / `toggleBookmark` / `removeBookmark` exposed by `AppContext`. The Bookmarks page lives in the sidebar between **Test** and **Achievements** and supports search, source filtering (Set Test / Mission Test), Study and Retake actions.

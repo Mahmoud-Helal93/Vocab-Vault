@@ -97,7 +97,7 @@ function SectionIcon({ q, size = 14 }: { q: Question; size?: number }) {
 }
 
 function SetTestInner({ onBack, missionDay, group }: SetTestProps) {
-  const { words, streak, gamification } = useApp();
+  const { words, streak, gamification, isBookmarked, toggleBookmark } = useApp();
 
   const setWords = useMemo(
     () => words.filter((w) => w.day === missionDay && w.group === group),
@@ -121,7 +121,6 @@ function SetTestInner({ onBack, missionDay, group }: SetTestProps) {
   const [elapsedSec, setElapsedSec] = useState(0);
   const [difficulty, setDifficulty] = useState<Difficulty>("medium");
   const [reviewFilter, setReviewFilter] = useState<"all" | "incorrect">("all");
-  const [bookmarks, setBookmarks] = useState<Set<number>>(new Set());
   const [showAllReview, setShowAllReview] = useState(false);
 
   useEffect(() => {
@@ -210,15 +209,6 @@ function SetTestInner({ onBack, missionDay, group }: SetTestProps) {
       : pct >= 60
       ? "Keep reviewing your mistakes and you'll ace it next time!"
       : "Don't give up — review these words and try again.";
-
-    function toggleBookmark(id: number) {
-      setBookmarks((prev) => {
-        const next = new Set(prev);
-        if (next.has(id)) next.delete(id);
-        else next.add(id);
-        return next;
-      });
-    }
 
     function scrollToReview() {
       document.getElementById("review-answers-section")?.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -511,7 +501,7 @@ function SetTestInner({ onBack, missionDay, group }: SetTestProps) {
                   const why = qq.type === "fitb"
                     ? `"${qq.word.word}" means ${qq.word.definition.toLowerCase()}.`
                     : `"${qq.word.word}" means "${qq.word.definition}".`;
-                  const isBookmarked = bookmarks.has(qq.id);
+                  const bookmarked = isBookmarked(qq.word.id);
                   const promptText = qq.type === "mcq"
                     ? `Which definition matches "${qq.word.word}"?`
                     : qq.sentence;
@@ -561,16 +551,16 @@ function SetTestInner({ onBack, missionDay, group }: SetTestProps) {
 
                         <div className="flex md:flex-col items-center md:items-end gap-2 shrink-0">
                           <button
-                            onClick={() => toggleBookmark(qq.id)}
-                            aria-label={isBookmarked ? "Remove bookmark" : "Bookmark this question"}
-                            aria-pressed={isBookmarked}
+                            onClick={() => toggleBookmark({ wordId: qq.word.id, word: qq.word.word, source: "set-test", missionDay, group })}
+                            aria-label={bookmarked ? "Remove bookmark" : "Bookmark this question"}
+                            aria-pressed={bookmarked}
                             className={`p-1.5 rounded-lg border transition-colors ${
-                              isBookmarked
+                              bookmarked
                                 ? "border-violet-300 bg-violet-50 dark:bg-violet-900/30 text-violet-600 dark:text-violet-400"
                                 : "border-border text-muted-foreground hover:text-foreground hover:bg-muted"
                             }`}
                           >
-                            <Bookmark size={14} className={isBookmarked ? "fill-current" : ""} />
+                            <Bookmark size={14} className={bookmarked ? "fill-current" : ""} />
                           </button>
                           <button
                             type="button"

@@ -3,9 +3,10 @@ import {
 } from "react";
 import { Word } from "@/data/words";
 import {
-  Settings, StreakData, PlanSettings, CrunchState,
+  Settings, StreakData, PlanSettings, CrunchState, BookmarkEntry,
   loadWords, saveWords, loadSettings, saveSettings,
   loadStreak, updateStreak, loadPlan, savePlan, loadCrunch, saveCrunch,
+  loadBookmarks, saveBookmarks,
 } from "@/lib/storage";
 import { calculateNextReview } from "@/lib/srs";
 import {
@@ -29,6 +30,10 @@ interface AppContextType {
   updateCrunch: (updates: Partial<CrunchState>) => void;
   resetAllProgress: () => void;
   setWords: React.Dispatch<React.SetStateAction<Word[]>>;
+  bookmarks: BookmarkEntry[];
+  isBookmarked: (wordId: string) => boolean;
+  toggleBookmark: (entry: Omit<BookmarkEntry, "addedAt">) => void;
+  removeBookmark: (wordId: string) => void;
 }
 
 const AppContext = createContext<AppContextType | null>(null);
@@ -41,8 +46,36 @@ export function AppProvider({ children }: { children: ReactNode }) {
   const [crunch, setCrunch] = useState<CrunchState>(loadCrunch());
   const [gamification, setGamification] = useState<GamificationState>(loadGamification());
   const [newlyUnlockedBadges, setNewlyUnlockedBadges] = useState<BadgeDef[]>([]);
+  const [bookmarks, setBookmarks] = useState<BookmarkEntry[]>(loadBookmarks);
 
   const dismissBadgeToasts = useCallback(() => setNewlyUnlockedBadges([]), []);
+
+  const isBookmarked = useCallback(
+    (wordId: string) => bookmarks.some((b) => b.wordId === wordId),
+    [bookmarks]
+  );
+
+  const toggleBookmark = useCallback(
+    (entry: Omit<BookmarkEntry, "addedAt">) => {
+      setBookmarks((prev) => {
+        const existing = prev.find((b) => b.wordId === entry.wordId);
+        const next = existing
+          ? prev.filter((b) => b.wordId !== entry.wordId)
+          : [{ ...entry, addedAt: new Date().toISOString() }, ...prev];
+        saveBookmarks(next);
+        return next;
+      });
+    },
+    []
+  );
+
+  const removeBookmark = useCallback((wordId: string) => {
+    setBookmarks((prev) => {
+      const next = prev.filter((b) => b.wordId !== wordId);
+      saveBookmarks(next);
+      return next;
+    });
+  }, []);
 
   useEffect(() => {
     setWords(loadWords());
@@ -169,6 +202,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
         gamification, newlyUnlockedBadges, dismissBadgeToasts,
         updateWord, markWordReviewed, updateSettings,
         updatePlan, updateCrunch, resetAllProgress, setWords,
+        bookmarks, isBookmarked, toggleBookmark, removeBookmark,
       }}
     >
       {children}

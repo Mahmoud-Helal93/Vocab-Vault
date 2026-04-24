@@ -13,7 +13,30 @@ export const STORAGE_KEYS = {
   MICRO_SESSION: "gre_micro_session",
   MISSION_TEST_SCORES: "gre_mission_test_scores",
   MISSION_TEST_ATTEMPTS: "gre_mission_test_attempts",
+  BOOKMARKS: "gre_bookmarks",
 } as const;
+
+export interface BookmarkEntry {
+  wordId: string;
+  word: string;
+  source: "set-test" | "mission-test";
+  missionDay: number;
+  group?: number;
+  addedAt: string;
+}
+
+export function loadBookmarks(): BookmarkEntry[] {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEYS.BOOKMARKS);
+    return raw ? (JSON.parse(raw) as BookmarkEntry[]) : [];
+  } catch { return []; }
+}
+
+export function saveBookmarks(bookmarks: BookmarkEntry[]): void {
+  try {
+    localStorage.setItem(STORAGE_KEYS.BOOKMARKS, JSON.stringify(bookmarks));
+  } catch { /* ignore */ }
+}
 
 export function loadMissionTestScores(): Record<number, number> {
   try {

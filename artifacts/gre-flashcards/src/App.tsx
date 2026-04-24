@@ -13,6 +13,7 @@ import Progress from "@/pages/Progress";
 import Achievements from "@/pages/Achievements";
 import MissionTest from "@/pages/MissionTest";
 import SetTest from "@/pages/SetTest";
+import Bookmarks from "@/pages/Bookmarks";
 import QuickTen from "@/components/QuickTen";
 import SidebarSearch from "@/components/SidebarSearch";
 import BadgeToast from "@/components/BadgeToast";
@@ -21,16 +22,17 @@ import vocabNinjaLogo from "@assets/Gemini_Generated_Image_tgtyf7tgtyf7tgty_1776
 import {
   LayoutDashboard, BookOpen, Target, Clock, Settings, Moon, Sun,
   CalendarDays, GitFork, BarChart3, TrendingUp, Zap, ChevronLeft, ChevronRight, Menu,
-  Trophy,
+  Trophy, Bookmark,
 } from "lucide-react";
 
-type Page = "dashboard" | "study" | "practice" | "review" | "settings" | "plan" | "confusables" | "analytics" | "progress" | "achievements" | "mission-test" | "set-test";
+type Page = "dashboard" | "study" | "practice" | "review" | "settings" | "plan" | "confusables" | "analytics" | "progress" | "achievements" | "mission-test" | "set-test" | "bookmarks";
 
 const NAV_ITEMS: Array<{ id: Page; icon: React.ReactNode; label: string }> = [
   { id: "dashboard",   icon: <LayoutDashboard size={18} />, label: "Home" },
   { id: "study",       icon: <BookOpen size={18} />,        label: "Learn" },
   { id: "review",      icon: <Clock size={18} />,           label: "Review" },
   { id: "practice",    icon: <Target size={18} />,          label: "Test" },
+  { id: "bookmarks",   icon: <Bookmark size={18} />,        label: "Bookmarks" },
   { id: "achievements",icon: <Trophy size={18} />,          label: "Achievements" },
   { id: "settings",    icon: <Settings size={18} />,        label: "Settings" },
 ];
@@ -78,6 +80,8 @@ function MainApp() {
             group={(pageParams.group as number) ?? 1}
           />
         );
+      case "bookmarks":
+        return <Bookmarks onBack={() => setPage("dashboard")} onNavigate={navigate} />;
       case "settings":
         return <SettingsPage onBack={() => setPage("dashboard")} />;
       default:
