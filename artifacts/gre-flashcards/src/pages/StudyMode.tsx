@@ -6,7 +6,7 @@ import RichFlashcard from "@/components/RichFlashcard";
 import { getEnrichment } from "@/data/enrichment";
 import { shuffleArray } from "@/lib/srs";
 import { TOTAL_DAYS, GROUPS_PER_DAY, type Word } from "@/data/words";
-import { ChevronLeft, ChevronRight, Shuffle, ArrowLeft, Grid3X3, Flame, Check, BookOpen, Lock, Trophy } from "lucide-react";
+import { ChevronLeft, ChevronRight, Shuffle, ArrowLeft, Grid3X3, Flame, Check, BookOpen, Lock, Trophy, Sparkles, Target } from "lucide-react";
 import { BADGES, levelFromXp } from "@/lib/gamification";
 import { loadMissionTestScores, loadMissionTestAttempts, formatRelativeTime } from "@/lib/storage";
 import ninjaMascot from "@assets/Gemini_Generated_Image_hflkzzhflkzzhflk_1776994719274.png";
@@ -181,220 +181,234 @@ export default function StudyMode({ onBack, onNavigate, initialDay, initialWordI
   }, [gamification.badges, allBeltsComplete]);
 
   if (view === "day-select") {
+    // Find the first incomplete mission for the "Resume" CTA
+    const resumeDay = (() => {
+      for (let d = 1; d <= TOTAL_DAYS; d++) {
+        const dw = dayWords[d - 1] ?? [];
+        if (dw.length === 0) continue;
+        const allDone = dw.every((w) => w.status === "mastered");
+        if (!allDone) return d;
+      }
+      return null;
+    })();
+
+    const openMission = (day: number) => {
+      setSelectedDay(day);
+      setSelectedGroup(null);
+      setCardIndex(0);
+      setView("group-select");
+    };
+
     return (
-      <div className="flex gap-5 px-4 py-6 min-h-[calc(100vh-3.5rem)] lg:min-h-screen">
-        {/* ── Main belt table ── */}
-        <div className="flex-1 min-w-0">
-          {/* Table column header */}
-          <div className="flex items-center mb-3 px-1">
-            <div className="w-52 shrink-0">
-              <span className="text-xs font-bold tracking-widest uppercase" style={{ color: "#10B981" }}>
-                {BELTS.length} BELTS
-              </span>
+      <div className="px-4 py-6 max-w-[1240px] mx-auto min-h-[calc(100vh-3.5rem)] lg:min-h-screen">
+        {/* ── Compact summary strip ── */}
+        <div className="flex items-center gap-3 mb-5">
+          <div className="flex-1 rounded-2xl border border-border bg-card px-4 py-3 flex items-center gap-4">
+            <div className="flex items-center gap-2">
+              <Target size={18} className="text-orange-500" />
+              <div>
+                <div className="text-xl font-extrabold tabular-nums leading-none text-foreground">{overallPct}%</div>
+                <div className="text-[10px] text-muted-foreground mt-0.5">Mastery</div>
+              </div>
             </div>
-            <div className="flex-1">
-              <span className="text-xs font-bold tracking-widest uppercase" style={{ color: "#F97316" }}>
-                {TOTAL_DAYS} MISSIONS
-              </span>
-            </div>
-            <div className="w-36 shrink-0 text-right">
-              <span className="text-xs font-bold tracking-widest uppercase" style={{ color: "#3B82F6" }}>
-                {TOTAL_DAYS * GROUPS_PER_DAY} SETS
-              </span>
+            <div className="h-8 w-px bg-border" />
+            <div className="flex-1 grid grid-cols-3 gap-3">
+              <div>
+                <div className="text-sm font-bold tabular-nums text-foreground">
+                  {totalMastered.toLocaleString()}
+                  <span className="text-muted-foreground font-normal text-xs">/{totalWords.toLocaleString()}</span>
+                </div>
+                <div className="text-[10px] text-muted-foreground">Words</div>
+              </div>
+              <div>
+                <div className="text-sm font-bold tabular-nums text-orange-600">
+                  {missionsCompleted}
+                  <span className="text-muted-foreground font-normal text-xs">/{TOTAL_DAYS}</span>
+                </div>
+                <div className="text-[10px] text-muted-foreground">Missions</div>
+              </div>
+              <div>
+                <div className="text-sm font-bold tabular-nums text-blue-600">
+                  {setsCompleted}
+                  <span className="text-muted-foreground font-normal text-xs">/{TOTAL_DAYS * GROUPS_PER_DAY}</span>
+                </div>
+                <div className="text-[10px] text-muted-foreground">Sets</div>
+              </div>
             </div>
           </div>
-
-          {/* Belt rows */}
-          <div className="space-y-3">
-            {BELTS.map((belt, bIdx) => {
-              const startDay = bIdx * 7 + 1;
-              const endDay = Math.min(startDay + 6, TOTAL_DAYS);
-              const missionDays = Array.from({ length: endDay - startDay + 1 }, (_, k) => startDay + k);
-
-              const beltMastered = missionDays.reduce((acc, d) => {
-                const dw = dayWords[d - 1] ?? [];
-                return acc + dw.filter((w) => w.status === "mastered").length;
-              }, 0);
-              const beltTotal = missionDays.reduce((acc, d) => acc + (dayWords[d - 1]?.length ?? 0), 0);
-
-              const setsForBelt: { done: boolean }[] = [];
-              for (const d of missionDays) {
-                for (let g = 1; g <= GROUPS_PER_DAY; g++) {
-                  const gw = words.filter((w) => w.day === d && w.group === g);
-                  setsForBelt.push({ done: gw.length > 0 && gw.every((w) => w.status === "mastered") });
-                }
-              }
-              const setsCompleted = setsForBelt.filter((s) => s.done).length;
-
-              return (
-                <motion.div
-                  key={belt.num}
-                  initial={{ opacity: 0, y: 8 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: bIdx * 0.06 }}
-                  className="rounded-2xl border border-border bg-card overflow-hidden"
-                >
-                  <div className="flex items-center gap-3 p-3">
-                    {/* Belt number circle */}
-                    <div
-                      className="w-8 h-8 rounded-full flex items-center justify-center text-white font-bold text-sm shrink-0"
-                      style={{ backgroundColor: belt.color }}
-                    >
-                      {belt.num}
-                    </div>
-
-                    {/* Belt gi icon */}
-                    <div className="shrink-0">
-                      <BeltGiIcon color={belt.color} size={38} />
-                    </div>
-
-                    {/* Belt info */}
-                    <div className="w-28 shrink-0">
-                      <div className="font-bold text-sm text-foreground">{belt.name}</div>
-                      <div className="text-xs font-medium" style={{ color: belt.textColor }}>{belt.subtitle}</div>
-                      <div className="text-[10px] text-muted-foreground leading-tight">{belt.desc}</div>
-                    </div>
-
-                    {/* Missions (M1–M7) */}
-                    <div className="flex-1 flex items-end gap-1.5 flex-wrap">
-                      {missionDays.map((day, i) => {
-                        const dw = dayWords[day - 1] ?? [];
-                        const mDone = dw.length > 0 && dw.every((w) => w.status === "mastered");
-                        return (
-                          <div key={day} className="flex flex-col items-center gap-1">
-                            <button
-                              onClick={() => {
-                                setSelectedDay(day);
-                                setSelectedGroup(null);
-                                setCardIndex(0);
-                                setView("group-select");
-                              }}
-                              className="flex flex-col items-center gap-1 hover:scale-110 transition-transform"
-                              title={`Mission ${i + 1} — Day ${day}`}
-                            >
-                              <FlagIcon label={`M${i + 1}`} done={mDone} active={!mDone} />
-                            </button>
-                            <button
-                              onClick={() => onNavigate?.("mission-test", { missionDay: day })}
-                              title={`Mission ${i + 1} Test`}
-                              className="text-[8px] font-bold px-1 py-0.5 rounded bg-orange-100 hover:bg-orange-200 text-orange-700 dark:bg-orange-900/30 dark:text-orange-400 transition-colors leading-none"
-                            >
-                              TEST
-                            </button>
-                          </div>
-                        );
-                      })}
-                    </div>
-
-                    {/* Sets (shuriken icons) */}
-                    <div className="w-28 shrink-0 flex flex-col items-center gap-1">
-                      <div className="flex flex-wrap justify-center gap-1">
-                        {Array.from({ length: Math.min(setsForBelt.length, 6) }, (_, i) => (
-                          <ShurikenIcon
-                            key={i}
-                            size={18}
-                            filled={setsForBelt[i]?.done}
-                            color="#3B82F6"
-                          />
-                        ))}
-                        {setsForBelt.length > 6 && (
-                          <span className="text-[9px] text-muted-foreground">+{setsForBelt.length - 6}</span>
-                        )}
-                      </div>
-                      <div className="text-[9px] text-muted-foreground">(10 words each)</div>
-                    </div>
-
-                    {/* Word count pill */}
-                    <div
-                      className="shrink-0 rounded-xl px-3 py-1.5 text-center ml-1"
-                      style={{ backgroundColor: beltTotal === beltMastered && beltTotal > 0 ? "#ECFDF5" : "#FFF7ED" }}
-                    >
-                      <div
-                        className="text-base font-extrabold tabular-nums"
-                        style={{ color: beltTotal === beltMastered && beltTotal > 0 ? "#10B981" : "#F97316" }}
-                      >
-                        {beltTotal}
-                      </div>
-                      <div className="text-[9px] font-semibold" style={{ color: "#F97316" }}>words</div>
-                    </div>
-                  </div>
-
-                  {/* Progress bar */}
-                  {beltTotal > 0 && (
-                    <div className="h-1 bg-muted">
-                      <div
-                        className="h-full transition-all duration-500"
-                        style={{
-                          width: `${Math.round((beltMastered / beltTotal) * 100)}%`,
-                          backgroundColor: belt.color,
-                        }}
-                      />
-                    </div>
-                  )}
-                </motion.div>
-              );
-            })}
-          </div>
-
+          {resumeDay !== null && (
+            <button
+              onClick={() => openMission(resumeDay)}
+              className="rounded-2xl px-4 py-3 bg-orange-500 text-white text-sm font-bold flex items-center gap-2 shadow-sm hover:bg-orange-600 transition-colors"
+              data-testid="button-resume-mission"
+            >
+              <Sparkles size={14} /> Resume Mission {resumeDay}
+            </button>
+          )}
         </div>
 
-        {/* ── Right sidebar ── */}
-        <div className="w-64 shrink-0 space-y-4">
-          {/* Your Progress card */}
-          <div className="rounded-2xl border border-border bg-card p-4">
-            <div className="font-bold text-foreground mb-4">Your Progress</div>
+        {/* ── Belt sections ── */}
+        <div className="space-y-4">
+          {BELTS.map((belt, bIdx) => {
+            const startDay = bIdx * 7 + 1;
+            const endDay = Math.min(startDay + 6, TOTAL_DAYS);
+            const missionDays = Array.from({ length: endDay - startDay + 1 }, (_, k) => startDay + k);
 
-            <div className="flex items-center justify-center mb-4">
-              <CircularProgress pct={overallPct} size={110} />
-            </div>
+            const beltMastered = missionDays.reduce((acc, d) => {
+              const dw = dayWords[d - 1] ?? [];
+              return acc + dw.filter((w) => w.status === "mastered").length;
+            }, 0);
+            const beltTotal = missionDays.reduce((acc, d) => acc + (dayWords[d - 1]?.length ?? 0), 0);
+            const beltPct = beltTotal > 0 ? Math.round((beltMastered / beltTotal) * 100) : 0;
+            const beltComplete = beltTotal > 0 && beltMastered === beltTotal;
 
-            <div className="space-y-2.5">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-2">
-                  <span className="text-base">📗</span>
-                  <span className="text-xs text-muted-foreground">Words Mastered</span>
-                </div>
-                <span className="text-xs font-bold text-foreground tabular-nums">
-                  {totalMastered.toLocaleString()} / {totalWords.toLocaleString()}
-                </span>
-              </div>
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-2">
-                  <span className="text-base">🚩</span>
-                  <span className="text-xs text-muted-foreground">Missions Completed</span>
-                </div>
-                <span className="text-xs font-bold text-foreground tabular-nums">
-                  {missionsCompleted} / {TOTAL_DAYS}
-                </span>
-              </div>
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-2">
-                  <ShurikenIcon size={16} color="#3B82F6" />
-                  <span className="text-xs text-muted-foreground">Sets Completed</span>
-                </div>
-                <span className="text-xs font-bold text-foreground tabular-nums">
-                  {setsCompleted} / {TOTAL_DAYS * GROUPS_PER_DAY}
-                </span>
-              </div>
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-2">
-                  <span className="text-base">⭐</span>
-                  <span className="text-xs text-muted-foreground">Total XP Earned</span>
-                </div>
-                <span className="text-xs font-bold text-foreground tabular-nums">
-                  {gamification.totalXp.toLocaleString()}
-                </span>
-              </div>
-            </div>
-          </div>
+            // Belt Test → goes to last day in this belt's range
+            const beltTestDay = missionDays[missionDays.length - 1];
 
+            return (
+              <motion.section
+                key={belt.num}
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: bIdx * 0.06 }}
+                className="rounded-2xl border border-border bg-card overflow-hidden"
+              >
+                {/* Belt header strip */}
+                <div
+                  className="flex items-center gap-3 px-4 py-3 border-b border-border"
+                  style={{ background: `linear-gradient(90deg, ${belt.color}14, transparent 60%)` }}
+                >
+                  <div
+                    className="w-9 h-9 rounded-xl flex items-center justify-center text-white font-extrabold shrink-0 shadow-sm"
+                    style={{ backgroundColor: belt.color }}
+                  >
+                    {belt.num}
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-baseline gap-2 flex-wrap">
+                      <span className="font-extrabold text-base text-foreground">{belt.name}</span>
+                      <span className="text-xs font-medium" style={{ color: belt.textColor }}>{belt.subtitle}</span>
+                    </div>
+                    <div className="text-[11px] text-muted-foreground">{belt.desc}</div>
+                  </div>
+                  <div className="hidden sm:flex items-center gap-2 w-56">
+                    <div className="flex-1 h-1.5 rounded-full bg-muted overflow-hidden">
+                      <div className="h-full transition-all" style={{ width: `${beltPct}%`, backgroundColor: belt.color }} />
+                    </div>
+                    <span className="text-[11px] font-bold tabular-nums w-9 text-right" style={{ color: belt.textColor }}>{beltPct}%</span>
+                  </div>
+                  <div className="text-right shrink-0 w-24">
+                    <div className="text-base font-extrabold tabular-nums" style={{ color: belt.textColor }}>
+                      {beltMastered}<span className="text-muted-foreground font-normal text-xs">/{beltTotal}</span>
+                    </div>
+                    <div className="text-[10px] text-muted-foreground">words</div>
+                  </div>
+                  <button
+                    onClick={() => onNavigate?.("mission-test", { missionDay: beltTestDay })}
+                    className="shrink-0 rounded-lg border px-3 py-1.5 text-[11px] font-bold transition-colors border-orange-200 bg-orange-50 text-orange-700 hover:bg-orange-100 dark:border-orange-900/40 dark:bg-orange-900/20 dark:text-orange-300 dark:hover:bg-orange-900/30"
+                    data-testid={`button-belt-test-${belt.num}`}
+                  >
+                    {beltComplete ? "Belt Test ✓" : "Belt Test"}
+                  </button>
+                </div>
+
+                {/* Mission grid */}
+                <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-2 p-3">
+                  {missionDays.map((day, i) => {
+                    const missionNum = i + 1;
+                    const dw = dayWords[day - 1] ?? [];
+                    const mastered = dw.filter((w) => w.status === "mastered").length;
+                    const total = dw.length;
+                    const pct = total > 0 ? Math.round((mastered / total) * 100) : 0;
+                    const done = total > 0 && mastered === total;
+                    const inProgress = !done && dw.some((w) => w.status === "mastered" || w.status === "learning");
+                    const setStates = Array.from({ length: GROUPS_PER_DAY }, (_, g) => {
+                      const gw = words.filter((w) => w.day === day && w.group === g + 1);
+                      return gw.length > 0 && gw.every((w) => w.status === "mastered");
+                    });
+
+                    return (
+                      <button
+                        key={day}
+                        onClick={() => openMission(day)}
+                        className={`group rounded-xl border bg-card p-3 text-left flex flex-col gap-2 min-h-[110px] transition-all hover:-translate-y-0.5 hover:shadow-md ${
+                          done
+                            ? "border-emerald-200 dark:border-emerald-900/40"
+                            : inProgress
+                            ? "border-orange-300 ring-2 ring-orange-100 dark:border-orange-700 dark:ring-orange-900/30"
+                            : "border-border"
+                        }`}
+                        title={`Mission ${missionNum} — Day ${day}`}
+                        data-testid={`button-mission-${day}`}
+                      >
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center gap-1.5">
+                            <div
+                              className="w-5 h-5 rounded-md flex items-center justify-center text-[10px] font-extrabold text-white"
+                              style={{ backgroundColor: done ? "#10B981" : belt.color }}
+                            >
+                              {done ? <Check size={11} strokeWidth={3} /> : missionNum}
+                            </div>
+                            <span className="text-xs font-bold text-foreground">M{missionNum}</span>
+                          </div>
+                          <span className="text-[10px] text-muted-foreground tabular-nums">D{day}</span>
+                        </div>
+
+                        <div className="flex items-center gap-1.5">
+                          {setStates.map((s, idx) => (
+                            <div
+                              key={idx}
+                              className="w-2 h-2 rounded-full transition-all"
+                              style={{
+                                backgroundColor: s ? belt.color : undefined,
+                                border: s ? "none" : `1.5px solid ${belt.color}55`,
+                              }}
+                            />
+                          ))}
+                          <span className="text-[10px] text-muted-foreground ml-auto tabular-nums">
+                            {mastered}/{total}
+                          </span>
+                        </div>
+
+                        <div className="h-1 rounded-full bg-muted overflow-hidden mt-auto">
+                          <div
+                            className="h-full transition-all"
+                            style={{ width: `${pct}%`, backgroundColor: done ? "#10B981" : belt.color }}
+                          />
+                        </div>
+
+                        <div className="flex items-center justify-between">
+                          <span
+                            className={`text-[10px] font-semibold ${
+                              done
+                                ? "text-emerald-600 dark:text-emerald-400"
+                                : inProgress
+                                ? "text-orange-600 dark:text-orange-400"
+                                : "text-muted-foreground"
+                            }`}
+                          >
+                            {done ? "Complete" : inProgress ? "In progress" : "Not started"}
+                          </span>
+                          <ChevronRight size={11} className="text-muted-foreground group-hover:translate-x-0.5 transition-transform" />
+                        </div>
+                      </button>
+                    );
+                  })}
+                </div>
+              </motion.section>
+            );
+          })}
+        </div>
+
+        {/* ── Achievements + Mascot row ── */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 mt-5">
           {/* Achievements card */}
-          <div className="rounded-2xl border border-border bg-card p-4">
+          <div className="rounded-2xl border border-border bg-card p-4 lg:col-span-2">
             <div className="flex items-center justify-between mb-3">
               <div className="font-bold text-foreground">Achievements</div>
               <button className="text-[11px] text-primary hover:underline">View all</button>
             </div>
-            <div className="space-y-2">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-2">
               {sidebarAchievements.map((ach: any) => (
                 <div key={ach.id} className="flex items-center gap-2.5">
                   <div
@@ -418,7 +432,7 @@ export default function StudyMode({ onBack, onNavigate, initialDay, initialWordI
           </div>
 
           {/* Mascot motivational card */}
-          <div className="rounded-2xl border border-border bg-card p-4 flex gap-3">
+          <div className="rounded-2xl border border-border bg-card p-4 flex gap-3 items-center">
             <img
               src={ninjaMascot}
               alt="Vocab Ninja"
