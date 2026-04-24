@@ -250,9 +250,11 @@ function MainApp() {
         </header>
 
         <main className="pb-24 lg:pb-12">
-          <div className="sticky top-14 lg:top-0 z-20 bg-background/90 backdrop-blur px-4 pt-4 pb-2 border-b border-border">
-            <GlobalStatsBar onNavigate={navigate} />
-          </div>
+          {page !== "dashboard" && (
+            <div className="sticky top-14 lg:top-0 z-20 bg-background/90 backdrop-blur px-4 pt-4 pb-2 border-b border-border">
+              <GlobalStatsBar onNavigate={navigate} />
+            </div>
+          )}
           {renderPage()}
         </main>
       </div>
