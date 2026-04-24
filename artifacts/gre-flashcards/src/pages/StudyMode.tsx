@@ -792,6 +792,11 @@ export default function StudyMode({ onBack, onNavigate, initialDay, initialWordI
               onPrev={handlePrev}
               onNext={handleNext}
               onRate={(quality) => markWordReviewed(currentWord.id, quality)}
+              onTest={
+                selectedGroup !== null && cardIndex === studyWords.length - 1
+                  ? () => onNavigate?.("set-test", { missionDay: selectedDay, group: selectedGroup })
+                  : undefined
+              }
             />
           </motion.div>
         </AnimatePresence>

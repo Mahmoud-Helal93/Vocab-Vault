@@ -4,7 +4,7 @@ import { Word } from "@/data/words";
 import { getEnrichment } from "@/data/enrichment";
 import {
   Volume2, BookOpen, Equal, Plus,
-  ArrowRightLeft, Globe, ChevronLeft, ChevronRight, Layers, Lightbulb,
+  ArrowRightLeft, Globe, ChevronLeft, ChevronRight, Layers, Lightbulb, Sparkles,
 } from "lucide-react";
 
 interface RichFlashcardProps {
@@ -14,6 +14,8 @@ interface RichFlashcardProps {
   onNext?: () => void;
   hasPrev?: boolean;
   hasNext?: boolean;
+  onTest?: () => void;
+  testCtaLabel?: string;
 }
 
 const STATUS_PILL: Record<string, { dot: string; label: string }> = {
@@ -38,22 +40,29 @@ export default function RichFlashcard({
   onNext,
   hasPrev = true,
   hasNext = true,
+  onTest,
+  testCtaLabel = "Test Yourself",
 }: RichFlashcardProps) {
   const enr = getEnrichment(word.word) ?? {};
+  const showTestCta = !hasNext && !!onTest;
 
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
       const tag = (e.target as HTMLElement).tagName;
       if (tag === "INPUT" || tag === "TEXTAREA") return;
       if (e.key === "ArrowLeft" && hasPrev) onPrev?.();
-      if (e.key === "ArrowRight" && hasNext) {
-        onRate?.(3);
-        onNext?.();
+      if (e.key === "ArrowRight") {
+        if (hasNext) {
+          onRate?.(3);
+          onNext?.();
+        } else if (showTestCta) {
+          onTest?.();
+        }
       }
     };
     window.addEventListener("keydown", handler);
     return () => window.removeEventListener("keydown", handler);
-  }, [onPrev, onNext, onRate, hasPrev, hasNext]);
+  }, [onPrev, onNext, onRate, onTest, hasPrev, hasNext, showTestCta]);
 
   const speak = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -88,17 +97,33 @@ export default function RichFlashcard({
       >
         <ChevronLeft size={20} strokeWidth={2.5} />
       </motion.button>
-      {/* Next button — right side */}
-      <motion.button
-        onClick={handleNext}
-        disabled={!hasNext}
-        whileHover={{ scale: 1.1 }}
-        whileTap={{ scale: 0.85 }}
-        transition={{ type: "spring", stiffness: 400, damping: 17 }}
-        className="absolute right-0 top-1/2 -translate-y-1/2 z-10 w-11 h-11 rounded-full bg-violet-500 hover:bg-violet-600 shadow-md flex items-center justify-center text-white disabled:opacity-25 disabled:cursor-not-allowed"
-      >
-        <ChevronRight size={20} strokeWidth={2.5} />
-      </motion.button>
+      {/* Next button — right side. Becomes "Test Yourself" CTA on the last card of a set. */}
+      {showTestCta ? (
+        <motion.button
+          onClick={onTest}
+          whileHover={{ scale: 1.04 }}
+          whileTap={{ scale: 0.96 }}
+          transition={{ type: "spring", stiffness: 400, damping: 17 }}
+          className="absolute right-0 top-1/2 -translate-y-1/2 z-10 h-11 px-4 rounded-full bg-gradient-to-r from-violet-500 to-violet-600 hover:from-violet-600 hover:to-violet-700 shadow-md flex items-center gap-2 text-white text-sm font-bold whitespace-nowrap"
+          data-testid="button-test-yourself"
+          title="Take the set test"
+        >
+          <Sparkles size={16} strokeWidth={2.5} />
+          {testCtaLabel}
+          <ChevronRight size={16} strokeWidth={2.5} />
+        </motion.button>
+      ) : (
+        <motion.button
+          onClick={handleNext}
+          disabled={!hasNext}
+          whileHover={{ scale: 1.1 }}
+          whileTap={{ scale: 0.85 }}
+          transition={{ type: "spring", stiffness: 400, damping: 17 }}
+          className="absolute right-0 top-1/2 -translate-y-1/2 z-10 w-11 h-11 rounded-full bg-violet-500 hover:bg-violet-600 shadow-md flex items-center justify-center text-white disabled:opacity-25 disabled:cursor-not-allowed"
+        >
+          <ChevronRight size={20} strokeWidth={2.5} />
+        </motion.button>
+      )}
       <div className="bg-card border border-card-border rounded-3xl shadow-sm p-8 lg:p-12">
         {/* Status pill (full width) */}
         <div className="flex items-center gap-1.5 text-xs font-semibold text-violet-600 dark:text-violet-400 mb-4">

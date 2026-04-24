@@ -12,6 +12,7 @@ import Analytics from "@/pages/Analytics";
 import Progress from "@/pages/Progress";
 import Achievements from "@/pages/Achievements";
 import MissionTest from "@/pages/MissionTest";
+import SetTest from "@/pages/SetTest";
 import QuickTen from "@/components/QuickTen";
 import SidebarSearch from "@/components/SidebarSearch";
 import BadgeToast from "@/components/BadgeToast";
@@ -23,7 +24,7 @@ import {
   Trophy,
 } from "lucide-react";
 
-type Page = "dashboard" | "study" | "practice" | "review" | "settings" | "plan" | "confusables" | "analytics" | "progress" | "achievements" | "mission-test";
+type Page = "dashboard" | "study" | "practice" | "review" | "settings" | "plan" | "confusables" | "analytics" | "progress" | "achievements" | "mission-test" | "set-test";
 
 const NAV_ITEMS: Array<{ id: Page; icon: React.ReactNode; label: string }> = [
   { id: "dashboard",   icon: <LayoutDashboard size={18} />, label: "Home" },
@@ -69,6 +70,14 @@ function MainApp() {
         return <Achievements onBack={() => setPage("dashboard")} />;
       case "mission-test":
         return <MissionTest onBack={() => setPage("study")} missionDay={(pageParams.missionDay as number) ?? 1} />;
+      case "set-test":
+        return (
+          <SetTest
+            onBack={() => setPage("study")}
+            missionDay={(pageParams.missionDay as number) ?? 1}
+            group={(pageParams.group as number) ?? 1}
+          />
+        );
       case "settings":
         return <SettingsPage onBack={() => setPage("dashboard")} />;
       default:
