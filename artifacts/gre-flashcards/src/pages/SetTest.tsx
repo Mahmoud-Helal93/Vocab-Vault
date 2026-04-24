@@ -351,7 +351,7 @@ function SetTestInner({ onBack, missionDay, group }: SetTestProps) {
         </div>
       </div>
 
-      <div className="flex-1 max-w-2xl mx-auto w-full px-4 py-6">
+      <div className="flex-1 max-w-[700px] mx-auto w-full px-4 py-6">
         <AnimatePresence mode="wait">
           <motion.div
             key={currentIdx}
@@ -359,33 +359,32 @@ function SetTestInner({ onBack, missionDay, group }: SetTestProps) {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -16 }}
             transition={{ duration: 0.18 }}
-            className="rounded-2xl border border-border bg-card shadow-sm overflow-hidden"
+            className="rounded-[20px] border border-border bg-card shadow-lg shadow-violet-500/5 p-6 sm:p-8"
           >
-            <div className="bg-violet-500/10 border-b border-violet-100 dark:border-violet-900/30 px-5 py-3 flex items-center gap-2">
-              <SectionIcon q={q} size={16} />
-              <span className="text-sm font-semibold text-violet-700 dark:text-violet-400">{getSection(q)}</span>
-              <span className="ml-auto text-xs text-muted-foreground font-mono">Q{currentIdx + 1}</span>
+            <div className="flex items-center justify-between mb-6">
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-violet-100 dark:bg-violet-900/30 text-violet-700 dark:text-violet-300 text-xs font-semibold">
+                <SectionIcon q={q} size={12} /> {getSection(q)}
+              </span>
+              <span className="text-xs text-muted-foreground font-mono">Q{currentIdx + 1}</span>
             </div>
 
-            <div className="p-5">
-              {q.type === "mcq" && (
-                <MCQView
-                  q={q}
-                  answer={answers[q.id] ?? undefined}
-                  onAnswer={(a) => recordAnswer(q.id, a)}
-                />
-              )}
-              {q.type === "fitb" && (
-                <FITBView
-                  q={q}
-                  inputValue={fitbInput[q.id] ?? ""}
-                  onInput={(v) => {
-                    setFitbInput((prev) => ({ ...prev, [q.id]: v }));
-                    recordAnswer(q.id, v);
-                  }}
-                />
-              )}
-            </div>
+            {q.type === "mcq" && (
+              <MCQView
+                q={q}
+                answer={answers[q.id] ?? undefined}
+                onAnswer={(a) => recordAnswer(q.id, a)}
+              />
+            )}
+            {q.type === "fitb" && (
+              <FITBView
+                q={q}
+                inputValue={fitbInput[q.id] ?? ""}
+                onInput={(v) => {
+                  setFitbInput((prev) => ({ ...prev, [q.id]: v }));
+                  recordAnswer(q.id, v);
+                }}
+              />
+            )}
           </motion.div>
         </AnimatePresence>
 
@@ -473,32 +472,62 @@ function MCQView({
 function FITBView({
   q, inputValue, onInput,
 }: { q: FITBQuestion; inputValue: string; onInput: (v: string) => void }) {
+  const [showHint, setShowHint] = useState(false);
+  const parts = q.sentence.split("_____");
+
   return (
     <div>
-      <p className="text-xs uppercase tracking-widest text-muted-foreground mb-1 font-semibold">
+      <p className="text-xs uppercase tracking-widest text-muted-foreground mb-4 font-semibold text-center">
         Complete the sentence
       </p>
-      <p className="text-base text-foreground mb-4 leading-relaxed italic">"{q.sentence}"</p>
+
+      <p className="text-lg sm:text-xl text-foreground mb-7 leading-relaxed text-center font-medium">
+        <span className="text-muted-foreground">“</span>
+        {parts.map((part, i) => (
+          <span key={i}>
+            <span className="italic">{part}</span>
+            {i < parts.length - 1 && (
+              <span className="inline-block align-baseline mx-1 px-3 py-0.5 min-w-[90px] text-center text-violet-700 dark:text-violet-300 bg-violet-50 dark:bg-violet-900/20 border-b-2 border-dashed border-violet-400 rounded-md not-italic font-semibold">
+                _____
+              </span>
+            )}
+          </span>
+        ))}
+        <span className="text-muted-foreground">”</span>
+      </p>
+
       {q.hintSynonyms.length > 0 && (
-        <div className="mb-4 flex flex-wrap items-center gap-2">
-          <span className="text-xs uppercase tracking-wider text-muted-foreground font-semibold">Synonyms:</span>
-          {q.hintSynonyms.map((s) => (
-            <span
-              key={s}
-              className="text-xs font-medium px-2.5 py-1 rounded-full bg-violet-50 dark:bg-violet-900/20 text-violet-700 dark:text-violet-300 border border-violet-200 dark:border-violet-800"
+        <div className="mb-5 min-h-[28px]">
+          {!showHint ? (
+            <button
+              onClick={() => setShowHint(true)}
+              className="text-xs font-semibold text-violet-600 dark:text-violet-400 hover:text-violet-700 hover:underline transition-colors inline-flex items-center gap-1"
             >
-              {s}
-            </span>
-          ))}
+              💡 Show hint
+            </button>
+          ) : (
+            <div className="flex flex-wrap items-center gap-2">
+              <span className="text-xs uppercase tracking-wider text-muted-foreground font-semibold">Hints:</span>
+              {q.hintSynonyms.map((s) => (
+                <span
+                  key={s}
+                  className="text-xs font-medium px-2.5 py-1 rounded-full bg-violet-50 dark:bg-violet-900/20 text-violet-700 dark:text-violet-300 border border-violet-200 dark:border-violet-800"
+                >
+                  {s}
+                </span>
+              ))}
+            </div>
+          )}
         </div>
       )}
-      <label className="text-sm text-muted-foreground block mb-2">Type the missing word:</label>
+
       <input
         type="text"
         value={inputValue}
         onChange={(e) => onInput(e.target.value)}
-        placeholder="Enter the word..."
-        className="w-full px-4 py-3 rounded-xl border-2 border-border bg-background text-foreground text-sm font-medium focus:outline-none focus:border-violet-500 transition-colors placeholder:text-muted-foreground/50"
+        placeholder="Type your answer…"
+        autoFocus
+        className="w-full px-4 py-3.5 rounded-xl border-2 border-border bg-background text-foreground text-base font-medium focus:outline-none focus:border-violet-500 focus:ring-4 focus:ring-violet-500/20 transition-all placeholder:text-muted-foreground/50"
         autoComplete="off"
         spellCheck={false}
       />
