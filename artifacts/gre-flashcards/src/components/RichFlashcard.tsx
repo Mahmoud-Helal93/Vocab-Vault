@@ -106,7 +106,7 @@ export default function RichFlashcard({
           {status.label}
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-[1.6fr_1fr] gap-x-6 gap-y-8">
+        <div className="grid grid-cols-1 lg:grid-cols-[1.3fr_1fr] gap-x-8 gap-y-8">
           {/* LEFT COLUMN */}
           <div className="rounded-3xl border border-border/60 bg-muted/20 dark:bg-muted/10 shadow-sm p-5 flex flex-col min-w-0">
             <div className="flex items-start justify-between gap-6 mb-1">
