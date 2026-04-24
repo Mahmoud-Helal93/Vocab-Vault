@@ -11,11 +11,11 @@ export const modules: ModuleMap = {
   "./components/mockups/gre-app-layouts/MissionDeckBold.tsx": () => import("../components/mockups/gre-app-layouts/MissionDeckBold.tsx"),
   "./components/mockups/gre-app-layouts/MissionDeckTight.tsx": () => import("../components/mockups/gre-app-layouts/MissionDeckTight.tsx"),
   "./components/mockups/gre-app-layouts/TopRail.tsx": () => import("../components/mockups/gre-app-layouts/TopRail.tsx"),
-  "./components/mockups/gre-card-redesign/ActiveRecall.tsx": () => import("../components/mockups/gre-card-redesign/ActiveRecall.tsx"),
-  "./components/mockups/gre-card-redesign/Constellation.tsx": () => import("../components/mockups/gre-card-redesign/Constellation.tsx"),
-  "./components/mockups/gre-card-redesign/Storyboard.tsx": () => import("../components/mockups/gre-card-redesign/Storyboard.tsx"),
   "./components/mockups/gre-variants/Coach.tsx": () => import("../components/mockups/gre-variants/Coach.tsx"),
   "./components/mockups/gre-variants/Feed.tsx": () => import("../components/mockups/gre-variants/Feed.tsx"),
   "./components/mockups/gre-variants/Library.tsx": () => import("../components/mockups/gre-variants/Library.tsx"),
-  "./components/mockups/gre-variants/Quest.tsx": () => import("../components/mockups/gre-variants/Quest.tsx")
+  "./components/mockups/gre-variants/Quest.tsx": () => import("../components/mockups/gre-variants/Quest.tsx"),
+  "./components/mockups/gre-card-redesign/ActiveRecall.tsx": () => import("../components/mockups/gre-card-redesign/ActiveRecall.tsx"),
+  "./components/mockups/gre-card-redesign/Constellation.tsx": () => import("../components/mockups/gre-card-redesign/Constellation.tsx"),
+  "./components/mockups/gre-card-redesign/Storyboard.tsx": () => import("../components/mockups/gre-card-redesign/Storyboard.tsx")
 };
