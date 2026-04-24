@@ -184,43 +184,6 @@ export default function StudyMode({ onBack, onNavigate, initialDay, initialWordI
       <div className="flex gap-5 px-4 py-6 min-h-[calc(100vh-3.5rem)] lg:min-h-screen">
         {/* ── Main belt table ── */}
         <div className="flex-1 min-w-0">
-          {/* Top info cards */}
-          <div className="grid grid-cols-3 gap-4 mb-6">
-            <div className="rounded-2xl border border-border bg-card p-4 flex gap-3 items-start">
-              <div className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0" style={{ backgroundColor: "#ECFDF5" }}>
-                <BookOpen size={20} style={{ color: "#10B981" }} />
-              </div>
-              <div>
-                <div className="text-sm font-bold" style={{ color: "#10B981" }}>BELT</div>
-                <div className="text-xs text-muted-foreground leading-snug mt-0.5">
-                  6 Belts represent your mastery journey. Advance to the next belt by completing all 7 missions.
-                </div>
-              </div>
-            </div>
-            <div className="rounded-2xl border border-border bg-card p-4 flex gap-3 items-start">
-              <div className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0" style={{ backgroundColor: "#FFF7ED" }}>
-                <span style={{ fontSize: 20 }}>🚩</span>
-              </div>
-              <div>
-                <div className="text-sm font-bold" style={{ color: "#F97316" }}>MISSION</div>
-                <div className="text-xs text-muted-foreground leading-snug mt-0.5">
-                  7 Missions each belt. One mission per day keeps you consistent and builds momentum.
-                </div>
-              </div>
-            </div>
-            <div className="rounded-2xl border border-border bg-card p-4 flex gap-3 items-start">
-              <div className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0" style={{ backgroundColor: "#EFF6FF" }}>
-                <ShurikenIcon size={22} color="#3B82F6" />
-              </div>
-              <div>
-                <div className="text-sm font-bold" style={{ color: "#3B82F6" }}>SET</div>
-                <div className="text-xs text-muted-foreground leading-snug mt-0.5">
-                  3 Sets per mission. Each set contains 10 carefully selected vocabulary words.
-                </div>
-              </div>
-            </div>
-          </div>
-
           {/* Table column header */}
           <div className="flex items-center mb-3 px-1">
             <div className="w-52 shrink-0">
