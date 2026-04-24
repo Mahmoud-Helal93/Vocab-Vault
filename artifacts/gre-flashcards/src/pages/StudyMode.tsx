@@ -564,17 +564,31 @@ export default function StudyMode({ onBack, onNavigate, initialDay, initialWordI
                   setCardIndex(0);
                   setView("study");
                 }}
-                className="text-left p-5 bg-card border border-card-border rounded-2xl shadow-sm hover:border-primary/40 transition-all"
+                className="text-left p-6 bg-card border border-card-border rounded-2xl shadow-sm hover:border-primary/40 transition-all min-h-[260px]"
               >
-                <div className="flex items-center justify-between mb-3">
+                <div className="flex items-center justify-between mb-4">
                   <div className="flex items-center gap-2">
-                    <ShurikenIcon size={16} color="#3B82F6" filled={pct === 100} />
-                    <span className="font-semibold text-foreground">Set {group}</span>
+                    <ShurikenIcon size={18} color="#3B82F6" filled={pct === 100} />
+                    <span className="font-semibold text-foreground text-lg">Set {group}</span>
                   </div>
                   <span className="text-sm text-muted-foreground">{pct}%</span>
                 </div>
-                <div className="h-1.5 bg-muted rounded-full mb-3 overflow-hidden">
+                <div className="h-1.5 bg-muted rounded-full mb-4 overflow-hidden">
                   <div className="h-full bg-primary rounded-full" style={{ width: `${pct}%` }} />
+                </div>
+                <div className="flex flex-wrap gap-1.5 mb-3">
+                  {gw.map((w) => (
+                    <span
+                      key={w.id}
+                      className={`text-xs px-2.5 py-1 rounded-full border ${
+                        w.status === "mastered"
+                          ? "bg-emerald-50 border-emerald-200 text-emerald-700 dark:bg-emerald-900/20 dark:border-emerald-800 dark:text-emerald-400"
+                          : "bg-muted/50 border-border text-foreground"
+                      }`}
+                    >
+                      {w.word}
+                    </span>
+                  ))}
                 </div>
                 <div className="text-xs text-muted-foreground">{gw.length} words · {mastered} mastered</div>
               </motion.button>
