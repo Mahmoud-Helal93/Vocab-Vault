@@ -3,7 +3,7 @@ import { Word } from "@/data/words";
 import { getEnrichment } from "@/data/enrichment";
 import {
   Volume2, BookOpen, Equal, Plus,
-  ArrowRightLeft, Lightbulb, ChevronLeft, ChevronRight,
+  ArrowRightLeft, Globe, ChevronLeft, ChevronRight,
 } from "lucide-react";
 
 interface RichFlashcardProps {
@@ -144,21 +144,6 @@ export default function RichFlashcard({
                 );
               })}
             </div>
-
-            {/* Mnemonic */}
-            {enr.mnemonic && (
-              <div className="rounded-2xl bg-violet-50 dark:bg-violet-900/15 p-4">
-                <div className="flex gap-3">
-                  <div className="shrink-0 w-9 h-9 rounded-full bg-white dark:bg-violet-900/30 flex items-center justify-center">
-                    <Lightbulb size={18} className="text-violet-500 dark:text-violet-400" />
-                  </div>
-                  <div className="flex-1">
-                    <p className="text-sm font-bold text-violet-700 dark:text-violet-300 mb-1">Mnemonic</p>
-                    <p className="text-sm text-foreground/85 leading-snug">{enr.mnemonic}</p>
-                  </div>
-                </div>
-              </div>
-            )}
           </div>
 
           {/* RIGHT COLUMN — divider + Arabic, tone, Word Family, Etymology */}
@@ -210,6 +195,36 @@ export default function RichFlashcard({
             )}
           </div>
         </div>
+
+        {/* Mnemonic — full-width banner */}
+        {enr.mnemonic && (
+          <div className="mt-6 rounded-2xl bg-violet-50 dark:bg-violet-900/15 overflow-hidden flex items-stretch min-h-[96px]">
+            {enr.imageUrl && (
+              <div className="shrink-0 w-36 sm:w-44 relative overflow-hidden">
+                <img
+                  src={enr.imageUrl}
+                  alt=""
+                  className="absolute inset-0 w-full h-full object-cover object-center"
+                />
+              </div>
+            )}
+            <div className="flex-1 px-5 py-4 flex flex-col justify-center">
+              <p className="flex items-center gap-1.5 text-[11px] font-bold tracking-widest uppercase text-violet-500 dark:text-violet-400 mb-1.5">
+                <Globe size={13} />
+                Mnemonic
+              </p>
+              <p className="text-sm text-foreground/85 leading-snug">
+                {enr.mnemonic.split(new RegExp(`(\\b${word.word}\\w*\\b)`, "gi")).map((part, i) =>
+                  new RegExp(`^${word.word}`, "i").test(part) ? (
+                    <strong key={i} className="font-bold text-violet-600 dark:text-violet-400 uppercase">{part}</strong>
+                  ) : (
+                    <span key={i}>{part}</span>
+                  )
+                )}
+              </p>
+            </div>
+          </div>
+        )}
 
         {/* Prev / Next */}
         <div className="flex items-center justify-between mt-8 pt-5 border-t border-border">
