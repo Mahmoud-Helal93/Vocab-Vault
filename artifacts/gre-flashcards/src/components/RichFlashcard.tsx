@@ -110,7 +110,7 @@ export default function RichFlashcard({
 
         <div className="grid grid-cols-1 lg:grid-cols-[1.6fr_1fr] gap-x-6 gap-y-8">
           {/* LEFT COLUMN */}
-          <div className="rounded-2xl border border-border p-5 flex flex-col min-w-0">
+          <div className="rounded-3xl border border-border/60 bg-muted/20 dark:bg-muted/10 shadow-sm p-5 flex flex-col min-w-0">
             <div className="flex items-start justify-between gap-6 mb-1">
               <div className="flex items-center gap-3 flex-wrap">
                 <h2 className="text-5xl font-bold text-foreground tracking-tight leading-none">
@@ -188,7 +188,7 @@ export default function RichFlashcard({
           <div className="flex flex-col min-w-0 gap-4">
             {/* Etymology */}
             {enr.etymology && enr.etymology.length > 0 && (
-              <div className="rounded-2xl border border-border p-4">
+              <div className="rounded-3xl border border-border/60 bg-muted/20 dark:bg-muted/10 shadow-sm p-4">
                 <p className="flex items-center gap-1.5 text-[11px] font-bold tracking-widest uppercase text-violet-600 dark:text-violet-400 mb-3">
                   <BookOpen size={13} />
                   Word Root
@@ -218,7 +218,7 @@ export default function RichFlashcard({
 
             {/* Word Family */}
             {enr.wordFamily && enr.wordFamily.length > 0 && (
-              <div className="rounded-2xl border border-border p-4">
+              <div className="rounded-3xl border border-border/60 bg-muted/20 dark:bg-muted/10 shadow-sm p-4">
                 <p className="flex items-center gap-1.5 text-[11px] font-bold tracking-widest uppercase text-violet-600 dark:text-violet-400 mb-3">
                   <Layers size={13} />
                   Word Family
@@ -240,7 +240,7 @@ export default function RichFlashcard({
 
         {/* Mnemonic — full-width banner */}
         {enr.mnemonic && (
-          <div className="mt-6 rounded-2xl border border-violet-200 dark:border-violet-800 bg-violet-50 dark:bg-violet-900/15 overflow-hidden flex items-stretch min-h-[96px]">
+          <div className="mt-6 rounded-3xl border border-violet-200/70 dark:border-violet-800/60 bg-violet-50 dark:bg-violet-900/15 shadow-sm overflow-hidden flex items-stretch min-h-[96px]">
             {enr.imageUrl && (
               <div className="shrink-0 w-36 sm:w-44 relative overflow-hidden">
                 <img
