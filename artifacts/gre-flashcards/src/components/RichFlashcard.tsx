@@ -123,7 +123,7 @@ export default function RichFlashcard({
                 </button>
               </div>
               <div className="flex flex-col items-end gap-2 shrink-0 ml-4">
-                <p className="text-3xl text-foreground leading-none font-bold" dir="rtl">
+                <p className="text-3xl leading-none font-black text-foreground" dir="rtl" style={{ fontFamily: "'Cairo', sans-serif", fontWeight: 900 }}>
                   {word.arabic}
                 </p>
                 {tone && (
