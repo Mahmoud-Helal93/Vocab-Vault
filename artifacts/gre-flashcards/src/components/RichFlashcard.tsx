@@ -85,7 +85,7 @@ export default function RichFlashcard({
           {status.label}
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-[1.6fr_1fr] gap-x-10 gap-y-8">
+        <div className="grid grid-cols-1 lg:grid-cols-[1.6fr_1fr] gap-x-6 gap-y-8">
           {/* LEFT COLUMN */}
           <div className="flex flex-col min-w-0">
             <div className="flex items-center gap-3 mb-1 flex-wrap">
@@ -164,7 +164,7 @@ export default function RichFlashcard({
           </div>
 
           {/* RIGHT COLUMN — divider + Arabic, tone, Word Family, Etymology */}
-          <div className="flex flex-col min-w-0 lg:pl-10">
+          <div className="flex flex-col min-w-0 lg:pl-2">
             {/* Arabic + tone */}
             <div className="flex flex-col items-end gap-3 mb-6">
               <p
