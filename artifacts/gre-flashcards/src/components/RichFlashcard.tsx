@@ -111,17 +111,30 @@ export default function RichFlashcard({
         <div className="grid grid-cols-1 lg:grid-cols-[1.6fr_1fr] gap-x-6 gap-y-8">
           {/* LEFT COLUMN */}
           <div className="flex flex-col min-w-0">
-            <div className="flex items-center gap-3 mb-1 flex-wrap">
-              <h2 className="text-5xl font-bold text-foreground tracking-tight leading-none">
-                {word.word.charAt(0).toUpperCase() + word.word.slice(1)}
-              </h2>
-              <button
-                onClick={speak}
-                className="p-1.5 rounded-full text-violet-500 hover:bg-violet-50 dark:hover:bg-violet-900/20 transition-colors"
-                title="Pronounce"
-              >
-                <Volume2 size={20} />
-              </button>
+            <div className="flex items-start justify-between gap-6 mb-1">
+              <div className="flex items-center gap-3 flex-wrap">
+                <h2 className="text-5xl font-bold text-foreground tracking-tight leading-none">
+                  {word.word.charAt(0).toUpperCase() + word.word.slice(1)}
+                </h2>
+                <button
+                  onClick={speak}
+                  className="p-1.5 rounded-full text-violet-500 hover:bg-violet-50 dark:hover:bg-violet-900/20 transition-colors"
+                  title="Pronounce"
+                >
+                  <Volume2 size={20} />
+                </button>
+              </div>
+              <div className="flex flex-col items-end gap-2 shrink-0 ml-4">
+                <p className="text-3xl font-medium text-foreground leading-none" dir="rtl">
+                  {word.arabic}
+                </p>
+                {tone && (
+                  <span className={`inline-flex items-center gap-1.5 text-xs font-semibold px-3 py-1 rounded-full ${tone.bg}`}>
+                    <span className={`w-1.5 h-1.5 rounded-full ${tone.dot}`} />
+                    {enr.tone}
+                  </span>
+                )}
+              </div>
             </div>
             <p className="text-sm italic text-violet-600 dark:text-violet-400 mb-5">{word.pos}</p>
 
@@ -171,24 +184,8 @@ export default function RichFlashcard({
             </div>
           </div>
 
-          {/* RIGHT COLUMN — divider + Arabic, tone, Word Family, Etymology */}
+          {/* RIGHT COLUMN — Word Root, Word Family */}
           <div className="flex flex-col min-w-0 lg:pl-2">
-            {/* Arabic + tone */}
-            <div className="flex flex-col items-end gap-3 mb-6">
-              <p
-                className="text-4xl font-medium text-foreground leading-none"
-                dir="rtl"
-              >
-                {word.arabic}
-              </p>
-              {tone && (
-                <span className={`inline-flex items-center gap-1.5 text-xs font-semibold px-3 py-1 rounded-full ${tone.bg}`}>
-                  <span className={`w-1.5 h-1.5 rounded-full ${tone.dot}`} />
-                  {enr.tone}
-                </span>
-              )}
-            </div>
-
             {/* Etymology */}
             {enr.etymology && enr.etymology.length > 0 && (
               <div>
