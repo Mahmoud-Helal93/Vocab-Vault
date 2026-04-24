@@ -23,5 +23,12 @@ pnpm workspace monorepo using TypeScript. Each package manages its own dependenc
 - `pnpm --filter @workspace/api-spec run codegen` — regenerate API hooks and Zod schemas from OpenAPI spec
 - `pnpm --filter @workspace/db run push` — push DB schema changes (dev only)
 - `pnpm --filter @workspace/api-server run dev` — run API server locally
+- `PORT=5000 BASE_PATH=/ pnpm --filter @workspace/gre-flashcards run dev` — run the GRE flashcards (Vocab Ninja) frontend on Replit (port 5000)
 
 See the `pnpm-workspace` skill for workspace structure, TypeScript setup, and package details.
+
+## Replit Setup
+
+- Active app: `artifacts/gre-flashcards` (Vocab Ninja — GRE vocabulary flashcards)
+- Frontend dev server: Vite on port 5000, host `0.0.0.0`, `allowedHosts: true` for the Replit iframe proxy
+- Workflow `Start application` runs the dev command above and is the entry point
