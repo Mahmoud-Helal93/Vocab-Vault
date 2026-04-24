@@ -164,7 +164,7 @@ export default function RichFlashcard({
           </div>
 
           {/* RIGHT COLUMN — divider + Arabic, tone, Word Family, Etymology */}
-          <div className="flex flex-col min-w-0 lg:border-l lg:border-border lg:pl-10">
+          <div className="flex flex-col min-w-0 lg:pl-10">
             {/* Arabic + tone */}
             <div className="flex flex-col items-end gap-3 mb-6">
               <p
