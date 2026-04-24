@@ -7,7 +7,8 @@ import {
   ArrowLeft, CheckCircle2, XCircle, ChevronLeft, ChevronRight,
   RotateCcw, Trophy, Target, BookOpenText, Pencil, Clock,
   BookOpen, Flame, Star, Flag, TrendingUp, HelpCircle,
-  Lightbulb, Zap, RefreshCw, BarChart3,
+  Lightbulb, Zap, RefreshCw, BarChart3, Bookmark, Filter,
+  ChevronDown, ExternalLink,
 } from "lucide-react";
 
 type Difficulty = "easy" | "medium" | "hard";
@@ -119,6 +120,9 @@ function SetTestInner({ onBack, missionDay, group }: SetTestProps) {
   const [timerEnabled, setTimerEnabled] = useState(false);
   const [elapsedSec, setElapsedSec] = useState(0);
   const [difficulty, setDifficulty] = useState<Difficulty>("medium");
+  const [reviewFilter, setReviewFilter] = useState<"all" | "incorrect">("all");
+  const [bookmarks, setBookmarks] = useState<Set<number>>(new Set());
+  const [showAllReview, setShowAllReview] = useState(false);
 
   useEffect(() => {
     if (!timerEnabled || submitted) return;
@@ -185,133 +189,532 @@ function SetTestInner({ onBack, missionDay, group }: SetTestProps) {
   }
 
   if (submitted) {
-    const rq = questions[reviewIdx];
+    const incorrectQuestions = questions.filter((qq) => !isCorrect(qq));
+    const correctCount = score;
+    const incorrectCount = incorrectQuestions.length;
+    const skippedCount = questions.filter((qq) => {
+      const a = answers[qq.id];
+      return a === undefined || a === null || a === "";
+    }).length;
+    const xpEarned = correctCount * 20;
+    const struggledWords = Array.from(
+      new Map(incorrectQuestions.map((qq) => [qq.word.id, qq.word])).values()
+    ).slice(0, 6);
+    const visibleQuestions = reviewFilter === "all" ? questions : incorrectQuestions;
+    const previewQuestions = showAllReview ? visibleQuestions : visibleQuestions.slice(0, 3);
+
+    const heroEmoji = pct >= 90 ? "🏆" : pct >= 75 ? "🎉" : pct >= 60 ? "🙂" : "😬";
+    const heroTitle = pct >= 90 ? "Excellent work!" : pct >= 75 ? "Great job!" : pct >= 60 ? "Good effort!" : "Keep practicing!";
+    const heroSubtitle = pct >= 90
+      ? "You aced it. Crush the next set!"
+      : pct >= 60
+      ? "Keep reviewing your mistakes and you'll ace it next time!"
+      : "Don't give up — review these words and try again.";
+
+    function toggleBookmark(id: number) {
+      setBookmarks((prev) => {
+        const next = new Set(prev);
+        if (next.has(id)) next.delete(id);
+        else next.add(id);
+        return next;
+      });
+    }
+
+    function scrollToReview() {
+      document.getElementById("review-answers-section")?.scrollIntoView({ behavior: "smooth", block: "start" });
+      setReviewFilter("incorrect");
+    }
+
     return (
-      <div className="min-h-screen bg-gradient-to-br from-violet-50 via-white to-blue-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 flex flex-col">
-        <div className="sticky top-0 z-10 bg-white/80 dark:bg-gray-900/80 backdrop-blur border-b border-border px-4 py-3 flex items-center gap-3">
-          <button onClick={onBack} className="p-2 rounded-xl hover:bg-muted transition-colors text-muted-foreground">
-            <ArrowLeft size={18} />
-          </button>
-          <div className="flex-1">
-            <h1 className="font-bold text-base text-foreground">
-              Mission {missionDay} · Set {group} Test — Results
-            </h1>
-            <p className="text-[11px] text-muted-foreground">10 questions · Set {group} words only</p>
+      <div className="min-h-screen bg-gradient-to-br from-violet-50 via-white to-pink-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 flex flex-col">
+        {/* ===== Sticky header ===== */}
+        <div className="sticky top-0 z-10 bg-white/80 dark:bg-gray-900/80 backdrop-blur border-b border-border">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 flex items-center gap-3">
+            <button
+              onClick={onBack}
+              aria-label="Back"
+              className="p-2 rounded-xl hover:bg-muted transition-colors text-muted-foreground shrink-0"
+            >
+              <ArrowLeft size={18} />
+            </button>
+            <nav aria-label="Breadcrumb" className="flex-1 min-w-0">
+              <ol className="flex items-center gap-1 text-sm text-muted-foreground truncate">
+                <li className="truncate">Mission {missionDay}</li>
+                <li className="text-muted-foreground/50">›</li>
+                <li className="truncate">Set {group}</li>
+                <li className="text-muted-foreground/50">›</li>
+                <li className="truncate text-violet-600 dark:text-violet-400 font-semibold">Results</li>
+              </ol>
+            </nav>
+            <button
+              onClick={scrollToReview}
+              disabled={incorrectCount === 0}
+              className="hidden sm:inline-flex items-center gap-1.5 px-3 py-2 rounded-xl bg-card border border-border text-sm font-semibold text-foreground hover:bg-muted transition-colors disabled:opacity-40"
+            >
+              <BookOpen size={14} /> Review Mistakes
+            </button>
+            <button
+              onClick={handleReset}
+              className="inline-flex items-center gap-1.5 px-3 sm:px-4 py-2 rounded-xl bg-violet-500 hover:bg-violet-600 text-white text-sm font-semibold transition-colors shadow-sm shadow-violet-500/30"
+            >
+              <RotateCcw size={14} /> Retake Test
+            </button>
           </div>
-          <button
-            onClick={handleReset}
-            className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-violet-100 hover:bg-violet-200 text-violet-700 text-sm font-medium transition-colors"
-          >
-            <RotateCcw size={14} /> Retake
-          </button>
         </div>
 
-        <div className="max-w-3xl mx-auto w-full px-4 py-6 space-y-5">
+        <div className="max-w-7xl mx-auto w-full px-4 sm:px-6 py-6 space-y-5">
+          {/* ===== Hero card ===== */}
           <motion.div
-            initial={{ scale: 0.9, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            className={`rounded-2xl border-2 ${grade.border} ${grade.bg} p-6 text-center`}
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="rounded-[20px] border border-violet-200/70 dark:border-violet-800/50 bg-gradient-to-br from-pink-50 via-violet-50 to-violet-100 dark:from-violet-950/40 dark:via-violet-900/20 dark:to-violet-950/40 p-6 sm:p-8 grid grid-cols-1 md:grid-cols-[auto_1fr_auto] gap-6 items-center overflow-hidden relative"
           >
-            <div className="text-5xl mb-2">{grade.emoji}</div>
-            <div className={`text-2xl font-bold mb-1 ${grade.color}`}>{grade.label}</div>
-            <div className="text-4xl font-extrabold text-foreground">{score}/{questions.length}</div>
-            <div className="text-muted-foreground text-sm mt-1">{pct}% correct</div>
+            <Donut value={pct} size={140} stroke={12} label={`${correctCount} / ${questions.length}`} sublabel="Correct" />
+            <div className="min-w-0">
+              <div className="flex items-center gap-2 mb-1">
+                <span className="text-3xl">{heroEmoji}</span>
+                <h2 className="text-2xl sm:text-3xl font-extrabold text-violet-700 dark:text-violet-300">
+                  {heroTitle}
+                </h2>
+              </div>
+              <p className="text-sm text-foreground font-medium mb-1">
+                You got <span className="font-bold">{correctCount}</span> out of <span className="font-bold">{questions.length}</span> correct.
+              </p>
+              <p className="text-sm text-muted-foreground mb-4">{heroSubtitle}</p>
+              <div className="flex flex-wrap gap-2">
+                <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/80 dark:bg-gray-900/40 border border-violet-200 dark:border-violet-800 text-xs font-bold text-foreground">
+                  <Star size={12} className="text-amber-400 fill-amber-400" />
+                  +{xpEarned} XP earned
+                </span>
+                <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/80 dark:bg-gray-900/40 border border-orange-200 dark:border-orange-800 text-xs font-bold text-foreground">
+                  <Flame size={12} className="text-orange-500" />
+                  {streak.currentStreak} day streak
+                </span>
+              </div>
+            </div>
+            {/* Decorative mountain illustration */}
+            <div className="hidden md:block relative w-44 h-32 shrink-0" aria-hidden="true">
+              <svg viewBox="0 0 200 140" fill="none" className="w-full h-full">
+                <circle cx="40" cy="35" r="8" fill="currentColor" className="text-violet-200 dark:text-violet-800" />
+                <circle cx="55" cy="32" r="6" fill="currentColor" className="text-violet-200 dark:text-violet-800" />
+                <path d="M0 130 L60 50 L100 90 L130 60 L180 110 L200 130 Z" fill="currentColor" className="text-violet-300 dark:text-violet-700" />
+                <path d="M40 130 L100 40 L140 80 L180 50 L200 90 L200 130 Z" fill="currentColor" className="text-violet-400 dark:text-violet-600" />
+                <path d="M85 75 L100 40 L115 75 Z" fill="currentColor" className="text-white dark:text-violet-300" opacity="0.9" />
+                <line x1="160" y1="50" x2="160" y2="20" stroke="currentColor" className="text-violet-600 dark:text-violet-400" strokeWidth="1.5" />
+                <path d="M160 20 L172 24 L160 28 Z" fill="currentColor" className="text-violet-500 dark:text-violet-400" />
+              </svg>
+            </div>
           </motion.div>
 
-          {scoreByType && (
-            <div className="grid grid-cols-2 gap-3">
-              {[
-                { label: "Multiple Choice", key: "mcq" as const, icon: <BookOpenText size={18} /> },
-                { label: "Fill in Blank",   key: "fitb" as const, icon: <Pencil size={18} /> },
-              ].map(({ label, key, icon }) => {
-                const val = scoreByType[key];
-                const total = totalByType[key];
-                const p = total > 0 ? Math.round((val / total) * 100) : 0;
-                return (
-                  <div key={key} className="rounded-xl border border-border bg-card p-3 text-center">
-                    <div className="flex items-center justify-center mb-1 text-violet-500">{icon}</div>
-                    <div className="font-bold text-foreground">{val}/{total}</div>
-                    <div className="text-xs text-muted-foreground">{label}</div>
-                    <div className="mt-2 h-1.5 bg-muted rounded-full overflow-hidden">
-                      <div
-                        className="h-full rounded-full transition-all"
-                        style={{
-                          width: `${p}%`,
-                          backgroundColor: p >= 70 ? "#10B981" : p >= 50 ? "#F59E0B" : "#EF4444",
-                        }}
-                      />
+          {/* ===== Performance Breakdown + Score Summary ===== */}
+          <div className="grid grid-cols-1 lg:grid-cols-[1fr_320px] gap-5">
+            <div className="rounded-[20px] border border-border bg-card shadow-sm p-5">
+              <h3 className="text-sm font-bold text-foreground mb-4">Performance Breakdown</h3>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                {scoreByType && [
+                  { label: "Multiple Choice", key: "mcq" as const, Icon: BookOpenText },
+                  { label: "Fill in the Blank", key: "fitb" as const, Icon: Pencil },
+                ].map(({ label, key, Icon }) => {
+                  const val = scoreByType[key];
+                  const total = totalByType[key];
+                  const p = total > 0 ? Math.round((val / total) * 100) : 0;
+                  const status = p >= 80 ? { text: "Great", cls: "bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400" }
+                    : p >= 60 ? { text: "Almost there", cls: "bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400" }
+                    : { text: "Needs work", cls: "bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400" };
+                  return (
+                    <div key={key} className="rounded-xl border border-border bg-background p-4 relative">
+                      <span className={`absolute top-3 right-3 px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wide ${status.cls}`}>
+                        {status.text}
+                      </span>
+                      <div className="flex items-start gap-3 mb-2">
+                        <div className="w-10 h-10 rounded-xl bg-violet-100 dark:bg-violet-900/30 flex items-center justify-center text-violet-600 dark:text-violet-400 shrink-0">
+                          <Icon size={18} />
+                        </div>
+                        <div className="min-w-0">
+                          <p className="text-xs font-semibold text-muted-foreground">{label}</p>
+                          <p className="text-2xl font-extrabold text-foreground tabular-nums">
+                            {val} <span className="text-sm font-bold text-muted-foreground">/ {total}</span>
+                          </p>
+                          <p className="text-xs text-muted-foreground">{p}% Accuracy</p>
+                        </div>
+                      </div>
+                      <div className="mt-3 h-1.5 bg-muted rounded-full overflow-hidden">
+                        <motion.div
+                          className={`h-full rounded-full ${p >= 80 ? "bg-green-500" : p >= 60 ? "bg-violet-500" : "bg-red-500"}`}
+                          initial={{ width: 0 }}
+                          animate={{ width: `${p}%` }}
+                          transition={{ duration: 0.6, delay: 0.1 }}
+                        />
+                      </div>
                     </div>
-                  </div>
-                );
-              })}
+                  );
+                })}
+              </div>
             </div>
-          )}
 
-          <div className="rounded-2xl border border-border bg-card overflow-hidden">
-            <div className="px-4 py-3 border-b border-border flex items-center justify-between">
-              <h2 className="font-semibold text-sm text-foreground flex items-center gap-2">
-                <Target size={15} /> Review Answers
-              </h2>
-              <div className="flex items-center gap-1">
+            <div className="rounded-[20px] border border-border bg-card shadow-sm p-5">
+              <h3 className="text-sm font-bold text-foreground mb-3">Score Summary</h3>
+              <dl className="space-y-2.5 text-sm">
+                <div className="flex items-center justify-between">
+                  <dt className="text-green-600 dark:text-green-400 font-semibold">Correct Answers</dt>
+                  <dd className="font-extrabold text-foreground tabular-nums">{correctCount}</dd>
+                </div>
+                <div className="flex items-center justify-between">
+                  <dt className="text-red-600 dark:text-red-400 font-semibold">Incorrect Answers</dt>
+                  <dd className="font-extrabold text-foreground tabular-nums">{incorrectCount}</dd>
+                </div>
+                <div className="flex items-center justify-between">
+                  <dt className="text-muted-foreground font-medium">Skipped</dt>
+                  <dd className="font-extrabold text-foreground tabular-nums">{skippedCount}</dd>
+                </div>
+                <div className="flex items-center justify-between">
+                  <dt className="text-muted-foreground font-medium">Total Questions</dt>
+                  <dd className="font-extrabold text-foreground tabular-nums">{questions.length}</dd>
+                </div>
+                <div className="flex items-center justify-between pt-2 border-t border-border">
+                  <dt className="text-violet-600 dark:text-violet-400 font-bold">Overall Accuracy</dt>
+                  <dd className="font-extrabold text-violet-600 dark:text-violet-400 tabular-nums">{pct}%</dd>
+                </div>
+              </dl>
+            </div>
+          </div>
+
+          {/* ===== Insights + Struggled Words ===== */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
+            <div className="rounded-[20px] border border-border bg-card shadow-sm p-5">
+              <h3 className="text-sm font-bold text-foreground inline-flex items-center gap-2 mb-4">
+                <TrendingUp size={15} className="text-violet-600 dark:text-violet-400" />
+                Your Performance Insights
+              </h3>
+              <ul className="space-y-3 text-sm">
+                {(() => {
+                  const mcqP = totalByType.mcq > 0 ? (scoreByType?.mcq ?? 0) / totalByType.mcq : 1;
+                  const fitbP = totalByType.fitb > 0 ? (scoreByType?.fitb ?? 0) / totalByType.fitb : 1;
+                  const weakerType = fitbP < mcqP ? "Fill in the Blank" : "Multiple Choice";
+                  return (
+                    <>
+                      <li className="flex items-start gap-3">
+                        <Target size={16} className="text-red-500 mt-0.5 shrink-0" />
+                        <div>
+                          <p className="font-semibold text-foreground">You struggled most with {weakerType}.</p>
+                          <p className="text-xs text-muted-foreground">Focus on vocabulary context and word forms.</p>
+                        </div>
+                      </li>
+                      <li className="flex items-start gap-3">
+                        <Lightbulb size={16} className="text-amber-500 mt-0.5 shrink-0" />
+                        <div>
+                          <p className="font-semibold text-foreground">You missed questions on similar meanings.</p>
+                          <p className="text-xs text-muted-foreground">Review synonyms and nuances.</p>
+                        </div>
+                      </li>
+                      <li className="flex items-start gap-3">
+                        <BookOpen size={16} className="text-violet-500 mt-0.5 shrink-0" />
+                        <div>
+                          <p className="font-semibold text-foreground">
+                            Recommended:{" "}
+                            <button
+                              onClick={handleReset}
+                              className="text-violet-600 dark:text-violet-400 underline hover:no-underline"
+                            >
+                              Review Set {group} – Mission {missionDay}
+                            </button>
+                          </p>
+                          <p className="text-xs text-muted-foreground">These words appeared in your mistakes.</p>
+                        </div>
+                      </li>
+                    </>
+                  );
+                })()}
+              </ul>
+            </div>
+
+            <div className="rounded-[20px] border border-border bg-card shadow-sm p-5">
+              <div className="flex items-center justify-between mb-4">
+                <h3 className="text-sm font-bold text-foreground inline-flex items-center gap-2">
+                  <BookOpen size={15} className="text-violet-600 dark:text-violet-400" />
+                  Words You Struggled With
+                </h3>
+                {struggledWords.length > 0 && (
+                  <button
+                    onClick={scrollToReview}
+                    className="text-xs font-semibold text-violet-600 dark:text-violet-400 hover:underline"
+                  >
+                    View all
+                  </button>
+                )}
+              </div>
+              {struggledWords.length === 0 ? (
+                <p className="text-sm text-muted-foreground py-4 text-center">
+                  Perfect run — no struggled words! 🎉
+                </p>
+              ) : (
+                <>
+                  <div className="flex flex-wrap gap-2 mb-4">
+                    {struggledWords.map((w) => (
+                      <span
+                        key={w.id}
+                        className="px-3 py-1 rounded-full bg-red-50 dark:bg-red-900/20 text-red-700 dark:text-red-400 text-xs font-semibold border border-red-200 dark:border-red-800"
+                      >
+                        {w.word}
+                      </span>
+                    ))}
+                  </div>
+                  <div className="rounded-xl bg-pink-50 dark:bg-pink-900/10 border border-pink-200 dark:border-pink-800 px-3 py-2.5 inline-flex items-center gap-2 text-xs text-foreground">
+                    <Star size={12} className="text-violet-500 fill-violet-500" />
+                    <span><span className="font-bold">Tip:</span> Review these words to improve your next score!</span>
+                  </div>
+                </>
+              )}
+            </div>
+          </div>
+
+          {/* ===== Review Your Answers ===== */}
+          <div id="review-answers-section" className="rounded-[20px] border border-border bg-card shadow-sm">
+            <div className="px-5 py-4 border-b border-border flex items-center justify-between gap-3">
+              <h3 className="text-sm font-bold text-foreground">Review Your Answers</h3>
+              <div className="flex items-center gap-1 bg-muted rounded-full p-1">
                 <button
-                  onClick={() => setReviewIdx((i) => Math.max(0, i - 1))}
-                  disabled={reviewIdx === 0}
-                  className="p-1 rounded-lg hover:bg-muted disabled:opacity-30 transition-colors"
+                  onClick={() => { setReviewFilter("all"); setShowAllReview(false); }}
+                  className={`px-3 py-1.5 rounded-full text-xs font-semibold transition-colors ${
+                    reviewFilter === "all"
+                      ? "bg-violet-500 text-white shadow-sm"
+                      : "text-muted-foreground hover:text-foreground"
+                  }`}
                 >
-                  <ChevronLeft size={16} />
+                  All Questions
                 </button>
-                <span className="text-xs text-muted-foreground px-2">{reviewIdx + 1}/{questions.length}</span>
                 <button
-                  onClick={() => setReviewIdx((i) => Math.min(questions.length - 1, i + 1))}
-                  disabled={reviewIdx === questions.length - 1}
-                  className="p-1 rounded-lg hover:bg-muted disabled:opacity-30 transition-colors"
+                  onClick={() => { setReviewFilter("incorrect"); setShowAllReview(false); }}
+                  disabled={incorrectCount === 0}
+                  className={`px-3 py-1.5 rounded-full text-xs font-semibold transition-colors disabled:opacity-40 ${
+                    reviewFilter === "incorrect"
+                      ? "bg-violet-500 text-white shadow-sm"
+                      : "text-muted-foreground hover:text-foreground"
+                  }`}
                 >
-                  <ChevronRight size={16} />
+                  Incorrect Only
                 </button>
               </div>
             </div>
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={reviewIdx}
-                initial={{ opacity: 0, x: 20 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -20 }}
-                transition={{ duration: 0.15 }}
-                className="p-4"
-              >
-                <div className="flex items-start gap-3">
-                  <div className="mt-0.5 shrink-0">
-                    {isCorrect(rq)
-                      ? <CheckCircle2 size={20} className="text-green-500" />
-                      : <XCircle size={20} className="text-red-500" />}
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <div className="text-xs text-muted-foreground mb-1 flex items-center gap-1.5">
-                      <SectionIcon q={rq} /> {getSection(rq)}
-                    </div>
-                    <ReviewBlock q={rq} userAnswer={answers[rq.id]} correct={isCorrect(rq)} />
-                  </div>
-                </div>
-              </motion.div>
-            </AnimatePresence>
 
-            <div className="px-4 pb-3 flex flex-wrap gap-1.5">
-              {questions.map((qq, i) => (
+            {visibleQuestions.length === 0 ? (
+              <p className="text-sm text-muted-foreground p-8 text-center">No questions to review.</p>
+            ) : (
+              <ul className="divide-y divide-border">
+                {previewQuestions.map((qq) => {
+                  const ok = isCorrect(qq);
+                  const idx = questions.indexOf(qq);
+                  const userAns = answers[qq.id];
+                  const userAnsText = userAns === undefined || userAns === null || userAns === ""
+                    ? "—" : String(userAns);
+                  const correctText = qq.type === "mcq" ? qq.correct : qq.word.word;
+                  const why = qq.type === "fitb"
+                    ? `"${qq.word.word}" means ${qq.word.definition.toLowerCase()}.`
+                    : `"${qq.word.word}" means "${qq.word.definition}".`;
+                  const isBookmarked = bookmarks.has(qq.id);
+                  const promptText = qq.type === "mcq"
+                    ? `Which definition matches "${qq.word.word}"?`
+                    : qq.sentence;
+
+                  return (
+                    <li key={qq.id} className="p-4 sm:p-5">
+                      <div className="grid grid-cols-1 md:grid-cols-[auto_1fr_minmax(0,180px)_minmax(0,1.2fr)_auto] gap-3 md:gap-4 items-start">
+                        <div className={`w-7 h-7 rounded-full flex items-center justify-center shrink-0 ${
+                          ok ? "bg-green-500" : "bg-red-500"
+                        }`}>
+                          {ok
+                            ? <CheckCircle2 size={16} className="text-white" />
+                            : <XCircle size={16} className="text-white" />}
+                        </div>
+
+                        <div className="min-w-0">
+                          <div className="flex items-center gap-2 mb-1">
+                            <span className="text-xs font-bold text-muted-foreground tabular-nums">{idx + 1}</span>
+                            <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-violet-100 dark:bg-violet-900/30 text-violet-700 dark:text-violet-300 text-[10px] font-semibold">
+                              <SectionIcon q={qq} size={10} /> {getSection(qq)}
+                            </span>
+                          </div>
+                          <p className="text-sm text-foreground leading-snug line-clamp-3">
+                            {promptText}
+                          </p>
+                        </div>
+
+                        <div className="text-xs space-y-1">
+                          <div>
+                            <p className={`font-semibold ${ok ? "text-green-600 dark:text-green-400" : "text-red-600 dark:text-red-400"}`}>
+                              Your answer
+                            </p>
+                            <p className="text-foreground font-medium break-words">{userAnsText}</p>
+                          </div>
+                          {!ok && (
+                            <div>
+                              <p className="font-semibold text-green-600 dark:text-green-400">Correct answer</p>
+                              <p className="text-foreground font-medium break-words">{correctText}</p>
+                            </div>
+                          )}
+                        </div>
+
+                        <div className="rounded-xl bg-muted/60 dark:bg-muted/30 px-3 py-2.5 text-xs">
+                          <p className="font-bold text-foreground mb-0.5">Why?</p>
+                          <p className="text-muted-foreground leading-snug">{why}</p>
+                        </div>
+
+                        <div className="flex md:flex-col items-center md:items-end gap-2 shrink-0">
+                          <button
+                            onClick={() => toggleBookmark(qq.id)}
+                            aria-label={isBookmarked ? "Remove bookmark" : "Bookmark this question"}
+                            aria-pressed={isBookmarked}
+                            className={`p-1.5 rounded-lg border transition-colors ${
+                              isBookmarked
+                                ? "border-violet-300 bg-violet-50 dark:bg-violet-900/30 text-violet-600 dark:text-violet-400"
+                                : "border-border text-muted-foreground hover:text-foreground hover:bg-muted"
+                            }`}
+                          >
+                            <Bookmark size={14} className={isBookmarked ? "fill-current" : ""} />
+                          </button>
+                          <button
+                            type="button"
+                            className="inline-flex items-center gap-1 px-2 py-1 rounded-lg bg-green-50 dark:bg-green-900/20 text-green-700 dark:text-green-400 text-[10px] font-bold whitespace-nowrap"
+                            title="Practice this word (coming soon)"
+                          >
+                            Practice this word <ExternalLink size={10} />
+                          </button>
+                        </div>
+                      </div>
+                    </li>
+                  );
+                })}
+              </ul>
+            )}
+
+            {visibleQuestions.length > 3 && (
+              <div className="px-5 py-3 border-t border-border flex justify-center">
                 <button
-                  key={qq.id}
-                  onClick={() => setReviewIdx(i)}
-                  className={`w-7 h-7 rounded-lg text-xs font-bold transition-colors border ${
-                    i === reviewIdx
-                      ? "border-violet-400 bg-violet-100 text-violet-700"
-                      : isCorrect(qq)
-                      ? "border-green-300 bg-green-50 text-green-700"
-                      : "border-red-300 bg-red-50 text-red-700"
-                  }`}
+                  onClick={() => setShowAllReview((s) => !s)}
+                  className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-muted hover:bg-muted/70 text-foreground text-xs font-semibold transition-colors"
                 >
-                  {i + 1}
+                  {showAllReview ? "Show less" : `View all ${visibleQuestions.length} questions`}
+                  <ChevronDown size={12} className={`transition-transform ${showAllReview ? "rotate-180" : ""}`} />
                 </button>
-              ))}
+              </div>
+            )}
+
+            {/* Question Navigation row */}
+            <div className="px-5 py-4 border-t border-border flex flex-col sm:flex-row sm:items-center gap-3">
+              <span className="text-sm font-semibold text-foreground shrink-0">Question Navigation</span>
+              <div className="flex-1 flex flex-wrap items-center gap-1.5">
+                {questions.map((qq, i) => {
+                  const a = answers[qq.id];
+                  const isSkipped = a === undefined || a === null || a === "";
+                  const ok = isCorrect(qq);
+                  return (
+                    <button
+                      key={qq.id}
+                      onClick={() => {
+                        setReviewFilter("all");
+                        setShowAllReview(true);
+                        document.getElementById("review-answers-section")?.scrollIntoView({ behavior: "smooth" });
+                      }}
+                      title={`Question ${i + 1} · ${isSkipped ? "Skipped" : ok ? "Correct" : "Incorrect"}`}
+                      className={`min-w-[34px] h-8 px-2 rounded-full text-xs font-bold transition-colors border-2 inline-flex items-center justify-center tabular-nums ${
+                        isSkipped
+                          ? "border-border bg-transparent text-muted-foreground"
+                          : ok
+                          ? "border-green-400 bg-green-50 dark:bg-green-900/20 text-green-700 dark:text-green-400"
+                          : "border-red-400 bg-red-50 dark:bg-red-900/20 text-red-700 dark:text-red-400"
+                      }`}
+                    >
+                      {i + 1}
+                    </button>
+                  );
+                })}
+              </div>
+              <div className="flex flex-wrap items-center gap-3 text-xs text-muted-foreground shrink-0">
+                <span className="inline-flex items-center gap-1.5">
+                  <span className="w-2 h-2 rounded-full bg-green-500" /> Correct
+                </span>
+                <span className="inline-flex items-center gap-1.5">
+                  <span className="w-2 h-2 rounded-full bg-red-500" /> Incorrect
+                </span>
+                <span className="inline-flex items-center gap-1.5">
+                  <span className="w-2 h-2 rounded-full border border-muted-foreground/40" /> Skipped
+                </span>
+                <button
+                  onClick={() => setReviewFilter(reviewFilter === "all" ? "incorrect" : "all")}
+                  className="p-1 rounded-lg border border-border hover:bg-muted transition-colors"
+                  title="Toggle filter"
+                  aria-label="Toggle filter"
+                >
+                  <Filter size={12} />
+                </button>
+              </div>
             </div>
+          </div>
+
+          {/* ===== Bottom CTA banner ===== */}
+          <div className="rounded-[20px] border border-border bg-card shadow-sm p-5 grid grid-cols-1 sm:grid-cols-[1.2fr_1fr_1fr_1fr] gap-3 sm:gap-4 items-stretch">
+            <div className="flex items-center gap-3 min-w-0">
+              <div className="w-12 h-12 rounded-full bg-gradient-to-br from-amber-200 to-amber-400 flex items-center justify-center shrink-0">
+                <Trophy size={22} className="text-amber-700" />
+              </div>
+              <div className="min-w-0">
+                <p className="font-bold text-foreground">Keep going!</p>
+                <p className="text-xs text-muted-foreground leading-snug">
+                  You're getting better every day.<br />
+                  Consistency is the key to mastery.
+                </p>
+              </div>
+            </div>
+
+            <button
+              onClick={handleReset}
+              className="rounded-xl border border-violet-200 dark:border-violet-800 bg-violet-50/50 dark:bg-violet-900/20 hover:bg-violet-100 dark:hover:bg-violet-900/40 p-3 text-left transition-colors flex items-center gap-3"
+            >
+              <div className="w-9 h-9 rounded-xl bg-white dark:bg-gray-900 flex items-center justify-center shrink-0">
+                <RotateCcw size={16} className="text-violet-600" />
+              </div>
+              <div className="min-w-0 flex-1">
+                <p className="text-sm font-bold text-foreground">Retake Test</p>
+                <p className="text-[11px] text-muted-foreground">Try again and beat your score</p>
+              </div>
+              <span className="w-7 h-7 rounded-full bg-violet-500 text-white flex items-center justify-center shrink-0">
+                <ChevronRight size={14} />
+              </span>
+            </button>
+
+            <button
+              onClick={scrollToReview}
+              disabled={incorrectCount === 0}
+              className="rounded-xl border border-blue-200 dark:border-blue-800 bg-blue-50/50 dark:bg-blue-900/20 hover:bg-blue-100 dark:hover:bg-blue-900/40 disabled:opacity-50 p-3 text-left transition-colors flex items-center gap-3"
+            >
+              <div className="w-9 h-9 rounded-xl bg-white dark:bg-gray-900 flex items-center justify-center shrink-0">
+                <Target size={16} className="text-blue-600" />
+              </div>
+              <div className="min-w-0 flex-1">
+                <p className="text-sm font-bold text-foreground">Practice Mistakes Only</p>
+                <p className="text-[11px] text-muted-foreground">Focus on incorrect questions</p>
+              </div>
+              <span className="w-7 h-7 rounded-full bg-blue-500 text-white flex items-center justify-center shrink-0">
+                <ChevronRight size={14} />
+              </span>
+            </button>
+
+            <button
+              type="button"
+              onClick={onBack}
+              className="rounded-xl border border-green-200 dark:border-green-800 bg-green-50/50 dark:bg-green-900/20 hover:bg-green-100 dark:hover:bg-green-900/40 p-3 text-left transition-colors flex items-center gap-3"
+            >
+              <div className="w-9 h-9 rounded-xl bg-white dark:bg-gray-900 flex items-center justify-center shrink-0">
+                <BookOpen size={16} className="text-green-600" />
+              </div>
+              <div className="min-w-0 flex-1">
+                <p className="text-sm font-bold text-foreground">Review Words</p>
+                <p className="text-[11px] text-muted-foreground">Study the words from this test</p>
+              </div>
+              <span className="w-7 h-7 rounded-full bg-green-500 text-white flex items-center justify-center shrink-0">
+                <ChevronRight size={14} />
+              </span>
+            </button>
           </div>
         </div>
       </div>
@@ -646,12 +1049,23 @@ function SetTestInner({ onBack, missionDay, group }: SetTestProps) {
   );
 }
 
-function Donut({ value }: { value: number }) {
-  const size = 64;
-  const stroke = 7;
+function Donut({
+  value,
+  size = 64,
+  stroke = 7,
+  label,
+  sublabel,
+}: {
+  value: number;
+  size?: number;
+  stroke?: number;
+  label?: string;
+  sublabel?: string;
+}) {
   const r = (size - stroke) / 2;
   const circ = 2 * Math.PI * r;
   const dash = (Math.max(0, Math.min(100, value)) / 100) * circ;
+  const isLarge = size >= 100;
   return (
     <div className="relative shrink-0" style={{ width: size, height: size }}>
       <svg width={size} height={size} className="-rotate-90">
@@ -674,11 +1088,19 @@ function Donut({ value }: { value: number }) {
           strokeDasharray={circ}
           initial={false}
           animate={{ strokeDashoffset: circ - dash }}
-          transition={{ duration: 0.4 }}
+          transition={{ duration: 0.6 }}
         />
       </svg>
-      <div className="absolute inset-0 flex items-center justify-center text-xs font-bold text-violet-700 dark:text-violet-300 tabular-nums">
-        {value}%
+      <div className="absolute inset-0 flex flex-col items-center justify-center text-violet-700 dark:text-violet-300 tabular-nums leading-tight">
+        <span className={`font-extrabold ${isLarge ? "text-2xl" : "text-xs"}`}>
+          {value}%
+        </span>
+        {label && (
+          <span className="text-[11px] font-semibold text-foreground mt-0.5">{label}</span>
+        )}
+        {sublabel && (
+          <span className="text-[10px] text-muted-foreground">{sublabel}</span>
+        )}
       </div>
     </div>
   );
