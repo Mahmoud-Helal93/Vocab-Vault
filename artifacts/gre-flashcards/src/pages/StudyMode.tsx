@@ -564,16 +564,16 @@ export default function StudyMode({ onBack, onNavigate, initialDay, initialWordI
             const mastered = gw.filter((w) => w.status === "mastered").length;
             const pct = Math.round((mastered / gw.length) * 100);
             const accents = [
-              { bar: "bg-blue-500", icon: "#3B82F6", border: "hover:border-blue-400" },
-              { bar: "bg-purple-500", icon: "#8B5CF6", border: "hover:border-purple-400" },
-              { bar: "bg-pink-500", icon: "#EC4899", border: "hover:border-pink-400" },
-              { bar: "bg-amber-500", icon: "#F59E0B", border: "hover:border-amber-400" },
-              { bar: "bg-emerald-500", icon: "#10B981", border: "hover:border-emerald-400" },
-              { bar: "bg-cyan-500", icon: "#06B6D4", border: "hover:border-cyan-400" },
-              { bar: "bg-rose-500", icon: "#F43F5E", border: "hover:border-rose-400" },
-              { bar: "bg-indigo-500", icon: "#6366F1", border: "hover:border-indigo-400" },
-              { bar: "bg-lime-500", icon: "#84CC16", border: "hover:border-lime-400" },
-              { bar: "bg-fuchsia-500", icon: "#D946EF", border: "hover:border-fuchsia-400" },
+              { bar: "bg-blue-500", icon: "#3B82F6", border: "hover:border-blue-400", pill: "bg-blue-50 border-blue-200 text-blue-700 dark:bg-blue-900/20 dark:border-blue-800 dark:text-blue-400 hover:border-blue-400" },
+              { bar: "bg-purple-500", icon: "#8B5CF6", border: "hover:border-purple-400", pill: "bg-purple-50 border-purple-200 text-purple-700 dark:bg-purple-900/20 dark:border-purple-800 dark:text-purple-400 hover:border-purple-400" },
+              { bar: "bg-pink-500", icon: "#EC4899", border: "hover:border-pink-400", pill: "bg-pink-50 border-pink-200 text-pink-700 dark:bg-pink-900/20 dark:border-pink-800 dark:text-pink-400 hover:border-pink-400" },
+              { bar: "bg-amber-500", icon: "#F59E0B", border: "hover:border-amber-400", pill: "bg-amber-50 border-amber-200 text-amber-700 dark:bg-amber-900/20 dark:border-amber-800 dark:text-amber-400 hover:border-amber-400" },
+              { bar: "bg-emerald-500", icon: "#10B981", border: "hover:border-emerald-400", pill: "bg-emerald-50 border-emerald-200 text-emerald-700 dark:bg-emerald-900/20 dark:border-emerald-800 dark:text-emerald-400 hover:border-emerald-400" },
+              { bar: "bg-cyan-500", icon: "#06B6D4", border: "hover:border-cyan-400", pill: "bg-cyan-50 border-cyan-200 text-cyan-700 dark:bg-cyan-900/20 dark:border-cyan-800 dark:text-cyan-400 hover:border-cyan-400" },
+              { bar: "bg-rose-500", icon: "#F43F5E", border: "hover:border-rose-400", pill: "bg-rose-50 border-rose-200 text-rose-700 dark:bg-rose-900/20 dark:border-rose-800 dark:text-rose-400 hover:border-rose-400" },
+              { bar: "bg-indigo-500", icon: "#6366F1", border: "hover:border-indigo-400", pill: "bg-indigo-50 border-indigo-200 text-indigo-700 dark:bg-indigo-900/20 dark:border-indigo-800 dark:text-indigo-400 hover:border-indigo-400" },
+              { bar: "bg-lime-500", icon: "#84CC16", border: "hover:border-lime-400", pill: "bg-lime-50 border-lime-200 text-lime-700 dark:bg-lime-900/20 dark:border-lime-800 dark:text-lime-400 hover:border-lime-400" },
+              { bar: "bg-fuchsia-500", icon: "#D946EF", border: "hover:border-fuchsia-400", pill: "bg-fuchsia-50 border-fuchsia-200 text-fuchsia-700 dark:bg-fuchsia-900/20 dark:border-fuchsia-800 dark:text-fuchsia-400 hover:border-fuchsia-400" },
             ];
             const accent = accents[i % accents.length];
             return (
@@ -626,7 +626,7 @@ export default function StudyMode({ onBack, onNavigate, initialDay, initialWordI
                       className={`text-xs px-2.5 py-1 rounded-full border cursor-pointer hover:scale-105 hover:shadow-sm transition-all ${
                         w.status === "mastered"
                           ? "bg-emerald-50 border-emerald-200 text-emerald-700 dark:bg-emerald-900/20 dark:border-emerald-800 dark:text-emerald-400 hover:border-emerald-400"
-                          : "bg-muted/50 border-border text-foreground hover:border-primary/50"
+                          : accent.pill
                       }`}
                     >
                       {w.word}
