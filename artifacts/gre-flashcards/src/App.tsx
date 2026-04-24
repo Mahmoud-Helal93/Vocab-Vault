@@ -15,6 +15,7 @@ import MissionTest from "@/pages/MissionTest";
 import QuickTen from "@/components/QuickTen";
 import SidebarSearch from "@/components/SidebarSearch";
 import BadgeToast from "@/components/BadgeToast";
+import GlobalStatsBar from "@/components/GlobalStatsBar";
 import vocabNinjaLogo from "@assets/Gemini_Generated_Image_tgtyf7tgtyf7tgty_1776986903352.png";
 import {
   LayoutDashboard, BookOpen, Target, Clock, Settings, Moon, Sun,
@@ -248,7 +249,12 @@ function MainApp() {
           </div>
         </header>
 
-        <main className="pb-24 lg:pb-12">{renderPage()}</main>
+        <main className="pb-24 lg:pb-12">
+          <div className="px-4 pt-4">
+            <GlobalStatsBar onNavigate={navigate} />
+          </div>
+          {renderPage()}
+        </main>
       </div>
 
       {/* Quick Ten overlay */}
