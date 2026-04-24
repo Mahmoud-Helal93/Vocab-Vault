@@ -94,7 +94,7 @@ function getSectionIcon(q: Question): string {
 
 type AnswerMap = Record<number, string | boolean | null>;
 
-export default function MissionTest({ onBack, missionDay = 1 }: MissionTestProps) {
+function MissionTestInner({ onBack, missionDay = 1 }: MissionTestProps) {
   const { words } = useApp();
   const [isShuffled, setIsShuffled] = useState(false);
   const [currentIdx, setCurrentIdx] = useState(0);
@@ -550,6 +550,19 @@ function ReviewQuestion({
       {!correct && (
         <p className="text-sm text-green-700 font-bold">Correct: {q.isTrue ? "True" : "False"}</p>
       )}
+    </div>
+  );
+}
+
+import ProgressSidebar from "@/components/ProgressSidebar";
+
+export default function MissionTest(props: MissionTestProps) {
+  return (
+    <div className="flex gap-5 px-0 lg:px-4 py-0 lg:py-6 min-h-[calc(100vh-3.5rem)] lg:min-h-screen">
+      <div className="flex-1 min-w-0">
+        <MissionTestInner {...props} />
+      </div>
+      <ProgressSidebar className="hidden lg:block" />
     </div>
   );
 }

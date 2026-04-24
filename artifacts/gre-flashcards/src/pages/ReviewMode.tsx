@@ -4,6 +4,7 @@ import { useApp } from "@/context/AppContext";
 import Flashcard from "@/components/Flashcard";
 import { getDueWords } from "@/lib/srs";
 import { ArrowLeft, CheckCircle2, Clock } from "lucide-react";
+import ProgressSidebar from "@/components/ProgressSidebar";
 
 interface ReviewModeProps {
   onBack: () => void;
@@ -60,7 +61,8 @@ export default function ReviewMode({ onBack }: ReviewModeProps) {
   }
 
   return (
-    <div className="max-w-4xl mx-auto px-4 py-8">
+    <div className="flex gap-5 px-4 py-8 min-h-[calc(100vh-3.5rem)] lg:min-h-screen">
+      <div className="flex-1 min-w-0 max-w-4xl mx-auto w-full">
       <div className="flex items-center gap-3 mb-6">
         <button onClick={onBack} className="p-2 rounded-xl hover:bg-muted transition-colors">
           <ArrowLeft size={20} />
@@ -100,6 +102,8 @@ export default function ReviewMode({ onBack }: ReviewModeProps) {
           />
         </motion.div>
       </AnimatePresence>
+      </div>
+      <ProgressSidebar className="hidden lg:block" />
     </div>
   );
 }

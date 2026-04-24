@@ -124,7 +124,7 @@ function classifyError(
   return "wrong_definition";
 }
 
-export default function PracticeMode({ onBack, initialSource }: PracticeModeProps) {
+function PracticeModeInner({ onBack, initialSource }: PracticeModeProps) {
   const { words, markWordReviewed, settings } = useApp();
   const [phase, setPhase] = useState<"config" | "session" | "results">("config");
   const [config, setConfig] = useState<PracticeConfig>({
@@ -585,6 +585,19 @@ export default function PracticeMode({ onBack, initialSource }: PracticeModeProp
 
         </motion.div>
       </AnimatePresence>
+    </div>
+  );
+}
+
+import ProgressSidebar from "@/components/ProgressSidebar";
+
+export default function PracticeMode(props: PracticeModeProps) {
+  return (
+    <div className="flex gap-5 px-0 lg:px-4 py-0 lg:py-6 min-h-[calc(100vh-3.5rem)] lg:min-h-screen">
+      <div className="flex-1 min-w-0">
+        <PracticeModeInner {...props} />
+      </div>
+      <ProgressSidebar className="hidden lg:block" />
     </div>
   );
 }
