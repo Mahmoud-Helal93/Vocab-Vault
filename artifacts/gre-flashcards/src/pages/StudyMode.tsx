@@ -646,22 +646,38 @@ export default function StudyMode({ onBack, onNavigate, initialDay, initialWordI
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: (GROUPS_PER_DAY + 1) * 0.07 }}
             onClick={() => onNavigate?.("mission-test", { missionDay: selectedDay })}
-            className="relative overflow-hidden text-left px-5 py-4 bg-[#F97316] text-white rounded-2xl shadow-sm hover:bg-[#EA580C] transition-colors col-span-full"
+            className="relative overflow-hidden text-left p-6 bg-card border border-card-border rounded-2xl shadow-sm hover:border-orange-400 transition-all min-h-[260px] col-span-full"
           >
-            <div className="flex items-center gap-3 relative z-10">
-              <div className="w-11 h-11 rounded-xl bg-white/20 flex items-center justify-center shrink-0">
-                <span className="text-xl">📋</span>
+            <div className="absolute top-0 left-0 right-0 h-1 bg-orange-500" />
+            <div className="flex items-center justify-between mb-4">
+              <div className="flex items-center gap-2">
+                <div className="w-7 h-7 rounded-lg bg-orange-100 dark:bg-orange-900/30 flex items-center justify-center">
+                  <span className="text-base">📋</span>
+                </div>
+                <span className="font-semibold text-foreground text-lg">Mission Test</span>
               </div>
-              <div>
-                <div className="font-bold text-xl leading-tight">Mission Test</div>
-                <div className="text-sm opacity-90">10 MCQ · 10 Fill in Blank · 10 True/False</div>
-              </div>
+              <span className="text-xs font-semibold px-2 py-1 rounded-full bg-orange-50 text-orange-600 border border-orange-200 dark:bg-orange-900/20 dark:text-orange-400 dark:border-orange-800">
+                30 words
+              </span>
             </div>
-            <BookOpen
-              size={120}
-              strokeWidth={1.5}
-              className="absolute -right-2 top-1/2 -translate-y-1/2 text-white/25 pointer-events-none"
-            />
+            <div className="h-1.5 bg-muted rounded-full mb-4 overflow-hidden">
+              <div className="h-full bg-orange-500 rounded-full" style={{ width: "100%" }} />
+            </div>
+            <div className="flex flex-wrap gap-1.5 mb-3">
+              <span className="inline-flex items-center gap-1 text-xs px-2.5 py-1 rounded-full border bg-orange-50 border-orange-200 text-orange-700 dark:bg-orange-900/20 dark:border-orange-800 dark:text-orange-400">
+                10 · MCQ
+              </span>
+              <span className="inline-flex items-center gap-1 text-xs px-2.5 py-1 rounded-full border bg-orange-50 border-orange-200 text-orange-700 dark:bg-orange-900/20 dark:border-orange-800 dark:text-orange-400">
+                10 · Fill in Blank
+              </span>
+              <span className="inline-flex items-center gap-1 text-xs px-2.5 py-1 rounded-full border bg-orange-50 border-orange-200 text-orange-700 dark:bg-orange-900/20 dark:border-orange-800 dark:text-orange-400">
+                10 · True/False
+              </span>
+            </div>
+            <div className="text-xs text-muted-foreground flex items-center gap-1">
+              <span>Test all 30 words</span>
+              <ChevronRight size={12} />
+            </div>
           </motion.button>
         </div>
         </div>
