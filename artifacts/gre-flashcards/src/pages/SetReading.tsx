@@ -1,4 +1,4 @@
-import { useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   ArrowLeft,
@@ -242,8 +242,37 @@ export default function SetReading({
   const [currentQ, setCurrentQ] = useState(0);
   const [focusMode, setFocusMode] = useState(false);
   const [highlightWord, setHighlightWord] = useState<string | null>(null);
+  const [previewWord, setPreviewWord] = useState<string | null>(null);
 
   const storyRef = useRef<HTMLElement | null>(null);
+  const chipsContainerRef = useRef<HTMLDivElement | null>(null);
+
+  const wordInfoMap = useMemo(() => {
+    const map: Record<string, { pos: string; definition: string }> = {};
+    for (const w of setWords) {
+      map[w.word.toLowerCase()] = { pos: w.pos, definition: w.definition };
+    }
+    return map;
+  }, [setWords]);
+
+  useEffect(() => {
+    if (!previewWord) return;
+    const handler = (e: MouseEvent) => {
+      const t = e.target as Node | null;
+      if (chipsContainerRef.current && t && !chipsContainerRef.current.contains(t)) {
+        setPreviewWord(null);
+      }
+    };
+    const keyHandler = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setPreviewWord(null);
+    };
+    document.addEventListener("mousedown", handler);
+    document.addEventListener("keydown", keyHandler);
+    return () => {
+      document.removeEventListener("mousedown", handler);
+      document.removeEventListener("keydown", keyHandler);
+    };
+  }, [previewWord]);
 
   if (!reading) {
     return (
@@ -310,18 +339,11 @@ export default function SetReading({
   };
 
   const onChipClick = (w: string) => {
-    setHighlightWord(w);
-    requestAnimationFrame(() => {
-      const target = document.querySelector(
-        `[data-target-word="${w}"]`,
-      ) as HTMLElement | null;
-      if (target) {
-        target.scrollIntoView({ behavior: "smooth", block: "center" });
-      } else {
-        scrollToStory();
-      }
+    setPreviewWord((prev) => {
+      const next = prev === w ? null : w;
+      setHighlightWord(next);
+      return next;
     });
-    window.setTimeout(() => setHighlightWord(null), 2200);
   };
 
   return (
@@ -413,22 +435,59 @@ export default function SetReading({
                   Tap a word to preview
                 </span>
               </div>
-              <div className="flex flex-wrap gap-2">
-                {reading.words.map((w) => (
-                  <button
-                    key={w}
-                    type="button"
-                    onClick={() => onChipClick(w)}
-                    className={`group inline-flex items-center gap-1.5 text-sm font-semibold px-3 py-1.5 rounded-full border transition-all ${
-                      highlightWord === w
-                        ? "border-orange-400 bg-orange-50 text-orange-700 dark:bg-orange-500/15 dark:border-orange-500/40 dark:text-orange-300 shadow-sm"
-                        : "border-border bg-background hover:border-emerald-300 hover:bg-emerald-50/50 dark:hover:bg-emerald-500/10 text-foreground"
-                    }`}
-                  >
-                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 shrink-0" />
-                    {w}
-                  </button>
-                ))}
+              <div ref={chipsContainerRef} className="flex flex-wrap gap-2">
+                {reading.words.map((w) => {
+                  const isOpen = previewWord === w;
+                  const info = wordInfoMap[w];
+                  return (
+                    <div key={w} className="relative">
+                      <button
+                        type="button"
+                        onClick={() => onChipClick(w)}
+                        aria-expanded={isOpen}
+                        className={`group inline-flex items-center gap-1.5 text-sm font-semibold px-3 py-1.5 rounded-full border transition-all ${
+                          isOpen || highlightWord === w
+                            ? "border-orange-400 bg-orange-50 text-orange-700 dark:bg-orange-500/15 dark:border-orange-500/40 dark:text-orange-300 shadow-sm"
+                            : "border-border bg-background hover:border-emerald-300 hover:bg-emerald-50/50 dark:hover:bg-emerald-500/10 text-foreground"
+                        }`}
+                      >
+                        <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 shrink-0" />
+                        {w}
+                      </button>
+                      <AnimatePresence>
+                        {isOpen && (
+                          <motion.div
+                            initial={{ opacity: 0, y: -4, scale: 0.98 }}
+                            animate={{ opacity: 1, y: 0, scale: 1 }}
+                            exit={{ opacity: 0, y: -4, scale: 0.98 }}
+                            transition={{ duration: 0.12 }}
+                            role="dialog"
+                            className="absolute z-30 left-0 top-full mt-2 w-72 max-w-[80vw] rounded-xl border border-border bg-popover text-popover-foreground shadow-xl p-3"
+                          >
+                            <div
+                              className="absolute -top-1.5 left-5 w-3 h-3 rotate-45 bg-popover border-l border-t border-border"
+                              aria-hidden
+                            />
+                            <div className="flex items-baseline gap-2 mb-1.5">
+                              <span className="text-base font-extrabold text-foreground">
+                                {w}
+                              </span>
+                              {info?.pos && (
+                                <span className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground italic">
+                                  {info.pos}
+                                </span>
+                              )}
+                            </div>
+                            <p className="text-xs leading-relaxed text-foreground/90">
+                              {info?.definition ??
+                                "Definition will appear in the flashcards."}
+                            </p>
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
+                    </div>
+                  );
+                })}
               </div>
             </div>
 
