@@ -349,7 +349,7 @@ export const THEME_LIST: MissionThemeDef[] = [
   MISSION_THEMES.royal,
 ];
 
-export const DEFAULT_MISSION_THEME: MissionThemeId = "violet";
+export const DEFAULT_GLOBAL_THEME: MissionThemeId = "brand";
 
 const THEME_IDS = new Set<MissionThemeId>(
   Object.keys(MISSION_THEMES) as MissionThemeId[]
@@ -359,55 +359,24 @@ function isThemeId(value: unknown): value is MissionThemeId {
   return typeof value === "string" && THEME_IDS.has(value as MissionThemeId);
 }
 
-export function defaultThemeForMission(missionDay: number): MissionThemeId {
-  if (missionDay === 1) return "brand";
-  return DEFAULT_MISSION_THEME;
-}
+const STORAGE_KEY = "gre_global_theme";
 
-export type MissionThemeMap = Record<number, MissionThemeId>;
-
-const STORAGE_KEY = "gre_mission_themes";
-
-export function loadMissionThemes(): MissionThemeMap {
+export function loadGlobalTheme(): MissionThemeId {
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
-    if (!raw) return {};
-    const parsed = JSON.parse(raw) as Record<string, unknown>;
-    const result: MissionThemeMap = {};
-    for (const [k, v] of Object.entries(parsed)) {
-      const day = Number(k);
-      if (Number.isFinite(day) && isThemeId(v)) {
-        result[day] = v;
-      }
-    }
-    return result;
-  } catch {
-    return {};
-  }
-}
-
-export function saveMissionThemes(map: MissionThemeMap): void {
-  try {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(map));
+    if (raw && isThemeId(raw)) return raw;
   } catch {
     /* ignore */
   }
+  return DEFAULT_GLOBAL_THEME;
 }
 
-export function resolveMissionThemeId(
-  missionDay: number,
-  map: MissionThemeMap
-): MissionThemeId {
-  const stored = map[missionDay];
-  if (stored && isThemeId(stored)) return stored;
-  return defaultThemeForMission(missionDay);
-}
-
-export function resolveMissionTheme(
-  missionDay: number,
-  map: MissionThemeMap
-): MissionThemeDef {
-  return MISSION_THEMES[resolveMissionThemeId(missionDay, map)];
+export function saveGlobalTheme(themeId: MissionThemeId): void {
+  try {
+    localStorage.setItem(STORAGE_KEY, themeId);
+  } catch {
+    /* ignore */
+  }
 }
 
 export function themeClass(themeId: MissionThemeId): string {

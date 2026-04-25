@@ -98,8 +98,7 @@ function SectionIcon({ q, size = 14 }: { q: Question; size?: number }) {
 }
 
 function SetTestInner({ onBack, missionDay, group }: SetTestProps) {
-  const { words, streak, gamification, isBookmarked, toggleBookmark, getMissionThemeId } = useApp();
-  const themeId = getMissionThemeId(missionDay);
+  const { words, streak, gamification, isBookmarked, toggleBookmark, globalThemeId: themeId } = useApp();
 
   const setWords = useMemo(
     () => words.filter((w) => w.day === missionDay && w.group === group),

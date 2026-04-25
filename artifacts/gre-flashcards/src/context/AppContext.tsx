@@ -14,9 +14,8 @@ import {
   XP_REWARDS, evaluateBadges, BadgeDef,
 } from "@/lib/gamification";
 import {
-  MissionThemeId, MissionThemeMap, MissionThemeDef,
-  loadMissionThemes, saveMissionThemes,
-  resolveMissionThemeId, resolveMissionTheme,
+  MissionThemeId, MissionThemeDef, MISSION_THEMES,
+  loadGlobalTheme, saveGlobalTheme,
 } from "@/lib/missionThemes";
 
 interface AppContextType {
@@ -39,11 +38,9 @@ interface AppContextType {
   isBookmarked: (wordId: string) => boolean;
   toggleBookmark: (entry: Omit<BookmarkEntry, "addedAt">) => void;
   removeBookmark: (wordId: string) => void;
-  missionThemes: MissionThemeMap;
-  getMissionThemeId: (missionDay: number) => MissionThemeId;
-  getMissionTheme: (missionDay: number) => MissionThemeDef;
-  setMissionTheme: (missionDay: number, themeId: MissionThemeId) => void;
-  resetMissionTheme: (missionDay: number) => void;
+  globalThemeId: MissionThemeId;
+  globalTheme: MissionThemeDef;
+  setGlobalTheme: (themeId: MissionThemeId) => void;
 }
 
 const AppContext = createContext<AppContextType | null>(null);
@@ -57,40 +54,16 @@ export function AppProvider({ children }: { children: ReactNode }) {
   const [gamification, setGamification] = useState<GamificationState>(loadGamification());
   const [newlyUnlockedBadges, setNewlyUnlockedBadges] = useState<BadgeDef[]>([]);
   const [bookmarks, setBookmarks] = useState<BookmarkEntry[]>(loadBookmarks);
-  const [missionThemes, setMissionThemesState] = useState<MissionThemeMap>(loadMissionThemes);
+  const [globalThemeId, setGlobalThemeIdState] = useState<MissionThemeId>(loadGlobalTheme);
 
   const dismissBadgeToasts = useCallback(() => setNewlyUnlockedBadges([]), []);
 
-  const getMissionThemeId = useCallback(
-    (missionDay: number) => resolveMissionThemeId(missionDay, missionThemes),
-    [missionThemes]
-  );
-
-  const getMissionTheme = useCallback(
-    (missionDay: number) => resolveMissionTheme(missionDay, missionThemes),
-    [missionThemes]
-  );
-
-  const setMissionTheme = useCallback(
-    (missionDay: number, themeId: MissionThemeId) => {
-      setMissionThemesState((prev) => {
-        const next = { ...prev, [missionDay]: themeId };
-        saveMissionThemes(next);
-        return next;
-      });
-    },
-    []
-  );
-
-  const resetMissionTheme = useCallback((missionDay: number) => {
-    setMissionThemesState((prev) => {
-      if (!(missionDay in prev)) return prev;
-      const next = { ...prev };
-      delete next[missionDay];
-      saveMissionThemes(next);
-      return next;
-    });
+  const setGlobalTheme = useCallback((themeId: MissionThemeId) => {
+    setGlobalThemeIdState(themeId);
+    saveGlobalTheme(themeId);
   }, []);
+
+  const globalTheme = MISSION_THEMES[globalThemeId];
 
   const isBookmarked = useCallback(
     (wordId: string) => bookmarks.some((b) => b.wordId === wordId),
@@ -245,8 +218,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
         updateWord, markWordReviewed, updateSettings,
         updatePlan, updateCrunch, resetAllProgress, setWords,
         bookmarks, isBookmarked, toggleBookmark, removeBookmark,
-        missionThemes, getMissionThemeId, getMissionTheme,
-        setMissionTheme, resetMissionTheme,
+        globalThemeId, globalTheme, setGlobalTheme,
       }}
     >
       {children}

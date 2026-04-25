@@ -18,9 +18,9 @@ interface MissionDetailProps {
   missionDay: number;
 }
 
-// Per-set accent palettes are now sourced from the active mission theme
-// (see `src/lib/missionThemes.ts`). The user can pick a different theme
-// per mission from the Settings page.
+// Per-set accent palettes are sourced from the active global theme
+// (see `src/lib/missionThemes.ts`). The user picks one theme that
+// applies to all missions from the Settings page.
 
 function MountainArt() {
   return (
@@ -124,8 +124,7 @@ function RoadmapNode({
 }
 
 export default function MissionDetail({ onBack, onNavigate, missionDay }: MissionDetailProps) {
-  const { words, streak, gamification, getMissionTheme } = useApp();
-  const theme = getMissionTheme(missionDay);
+  const { words, streak, gamification, globalTheme: theme } = useApp();
 
   const missionWords = useMemo(
     () => words.filter((w) => w.day === missionDay),

@@ -124,7 +124,7 @@ function StatChip({ icon, color, label, value }: { icon: React.ReactNode; color:
 }
 
 export default function StudyMode({ onBack, onNavigate, initialDay, initialWordId }: StudyModeProps) {
-  const { words, markWordReviewed, settings, streak, gamification, getMissionTheme } = useApp();
+  const { words, markWordReviewed, settings, streak, gamification, globalTheme, globalThemeId } = useApp();
   const initialWord = initialWordId ? words.find((w) => w.id === initialWordId) : undefined;
   const [view, setView] = useState<View>(initialWord || initialDay ? (initialWord ? "study" : "group-select") : "day-select");
   const [selectedDay, setSelectedDay] = useState<number>(initialWord?.day ?? initialDay ?? 1);
@@ -485,7 +485,7 @@ export default function StudyMode({ onBack, onNavigate, initialDay, initialWordI
     const missionTestBest = loadMissionTestScores()[selectedDay ?? 0];
     const missionTestLastAttempt = loadMissionTestAttempts()[selectedDay ?? 0];
     return (
-      <div className={`px-4 py-8 min-h-[calc(100vh-3.5rem)] lg:min-h-screen ${themeClass(getMissionTheme(selectedDay).id)}`}>
+      <div className={`px-4 py-8 min-h-[calc(100vh-3.5rem)] lg:min-h-screen ${themeClass(globalThemeId)}`}>
         <div className="max-w-4xl mx-auto">
         <div className="flex items-center gap-3 mb-8">
           <button onClick={() => setView("day-select")} className="p-2 rounded-xl hover:bg-muted transition-colors">
@@ -591,12 +591,10 @@ export default function StudyMode({ onBack, onNavigate, initialDay, initialWordI
               { bar: "bg-lime-500", icon: "#84CC16", border: "hover:border-lime-400", pill: "bg-lime-50 border-lime-200 text-lime-700 dark:bg-lime-900/20 dark:border-lime-800 dark:text-lime-400 hover:border-lime-400" },
               { bar: "bg-fuchsia-500", icon: "#D946EF", border: "hover:border-fuchsia-400", pill: "bg-fuchsia-50 border-fuchsia-200 text-fuchsia-700 dark:bg-fuchsia-900/20 dark:border-fuchsia-800 dark:text-fuchsia-400 hover:border-fuchsia-400" },
             ];
-            // Pull set accents from the active mission theme. Themes other
-            // than the default `violet` use a brand-tinted 3-stop palette;
-            // `violet` falls back to the original rainbow accents array so
-            // missions without a custom theme keep their existing colors.
-            const themeForSelected = getMissionTheme(selectedDay);
-            const palette = themeForSelected.id === "violet" ? accents : themeForSelected.studyAccents;
+            // Pull set accents from the active global theme. The default
+            // `violet` theme falls back to the original rainbow accents array
+            // so the look stays unchanged when no custom theme is selected.
+            const palette = globalTheme.id === "violet" ? accents : globalTheme.studyAccents;
             const accent = palette[i % palette.length];
             const setCard = (
               <motion.button
@@ -698,7 +696,7 @@ export default function StudyMode({ onBack, onNavigate, initialDay, initialWordI
   if (isRich) {
     return (
       <div
-        className={`min-h-[calc(100vh-3.5rem)] lg:min-h-screen px-4 lg:px-8 py-5 flex flex-col gap-5 ${themeClass(getMissionTheme(selectedDay).id)}`}
+        className={`min-h-[calc(100vh-3.5rem)] lg:min-h-screen px-4 lg:px-8 py-5 flex flex-col gap-5 ${themeClass(globalThemeId)}`}
         tabIndex={0}
         onKeyDown={handleArrowKeys}
         style={{ outline: "none" }}
@@ -820,7 +818,7 @@ export default function StudyMode({ onBack, onNavigate, initialDay, initialWordI
 
   return (
     <div
-      className={`relative flex flex-col ${focusMode ? "fixed inset-0 bg-background z-50 overflow-auto" : "h-[calc(100vh-3.5rem)] lg:h-screen px-16 pt-6 pb-4 overflow-hidden"} ${themeClass(getMissionTheme(selectedDay).id)}`}
+      className={`relative flex flex-col ${focusMode ? "fixed inset-0 bg-background z-50 overflow-auto" : "h-[calc(100vh-3.5rem)] lg:h-screen px-16 pt-6 pb-4 overflow-hidden"} ${themeClass(globalThemeId)}`}
       tabIndex={0}
       onKeyDown={handleArrowKeys}
       style={{ outline: "none" }}
