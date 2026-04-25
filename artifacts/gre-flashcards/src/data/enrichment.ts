@@ -160,6 +160,128 @@ export const ENRICHMENT: Record<string, WordEnrichment> = {
     imageUrl: dauntingImg,
   },
 
+  // ── Mission 2 · Set 1 ──
+  adulterate: {
+    shortDef: "To make impure by mixing in inferior substances.",
+    tone: "Negative",
+    antonyms: ["purify", "refine"],
+    mnemonic: "Think of an 'adult-rate' drink watered down for kids — it's been ADULTERATED, no longer pure.",
+    wordFamily: ["adulteration", "adulterant", "adulterator"],
+    etymology: [
+      { part: "ad-", language: "Latin", meaning: "to, toward" },
+      { part: "alterare", language: "Latin", meaning: "to alter, change" },
+    ],
+    etymologyMeaning: "to change something for the worse",
+  },
+  advocate: {
+    shortDef: "To publicly support a cause; a person who supports one.",
+    tone: "Positive",
+    antonyms: ["oppose", "discourage"],
+    mnemonic: "An ADVOCATE 'adds a vote' to your side, speaking up loud and clear for you.",
+    wordFamily: ["advocacy", "advocator", "advocated"],
+    etymology: [
+      { part: "ad-", language: "Latin", meaning: "to, toward" },
+      { part: "vocare", language: "Latin", meaning: "to call" },
+    ],
+    etymologyMeaning: "to call to one's aid",
+  },
+  aggrandize: {
+    shortDef: "To increase power, wealth, or status; to exaggerate.",
+    tone: "Negative",
+    antonyms: ["belittle", "diminish"],
+    mnemonic: "AG-GRAND-IZE — to make yourself sound 'a-grand' (great) by puffing things up.",
+    wordFamily: ["aggrandizement", "aggrandizer", "aggrandizing"],
+    etymology: [
+      { part: "ad-", language: "Latin", meaning: "to" },
+      { part: "grandis", language: "Latin", meaning: "great, large" },
+    ],
+    etymologyMeaning: "to make great",
+  },
+  alacrity: {
+    shortDef: "Brisk, cheerful eagerness to do something.",
+    tone: "Positive",
+    antonyms: ["reluctance", "apathy"],
+    mnemonic: "Sounds like 'a-LACK-rity' but it's the opposite — lacking nothing in eagerness, all energy!",
+    wordFamily: ["alacritous", "alacritously"],
+    etymology: [
+      { part: "alacer", language: "Latin", meaning: "lively, brisk" },
+      { part: "-itas", language: "Latin", meaning: "state of being" },
+    ],
+    etymologyMeaning: "state of liveliness",
+  },
+  ambivalent: {
+    shortDef: "Having mixed or conflicting feelings about something.",
+    tone: "Neutral",
+    antonyms: ["certain", "decisive"],
+    mnemonic: "AMBI- (both) + VALENT (strong) — both sides pull on you with equal strength.",
+    wordFamily: ["ambivalence", "ambivalently"],
+    etymology: [
+      { part: "ambi-", language: "Latin", meaning: "both" },
+      { part: "valere", language: "Latin", meaning: "to be strong" },
+    ],
+    etymologyMeaning: "having strong feelings on both sides",
+  },
+  ameliorate: {
+    shortDef: "To make a bad situation better; to improve.",
+    tone: "Positive",
+    antonyms: ["worsen", "aggravate"],
+    mnemonic: "A-MEL-IORATE sounds like 'a-melody' — adding sweetness to make a rough situation better.",
+    wordFamily: ["amelioration", "ameliorative", "ameliorator"],
+    etymology: [
+      { part: "ad-", language: "Latin", meaning: "to" },
+      { part: "melior", language: "Latin", meaning: "better" },
+    ],
+    etymologyMeaning: "to make better",
+  },
+  amenable: {
+    shortDef: "Open to suggestion; willing to cooperate.",
+    tone: "Positive",
+    antonyms: ["stubborn", "uncooperative"],
+    mnemonic: "An AMENABLE friend says 'amen, able to do that!' — agreeable and ready to go along.",
+    wordFamily: ["amenability", "amenably"],
+    etymology: [
+      { part: "amener", language: "Old French", meaning: "to lead, bring" },
+      { part: "minare", language: "Latin", meaning: "to drive (animals)" },
+    ],
+    etymologyMeaning: "able to be led",
+  },
+  anachronistic: {
+    shortDef: "Belonging to the wrong time period; out of date.",
+    tone: "Negative",
+    antonyms: ["modern", "contemporary"],
+    mnemonic: "ANA- (against) + CHRONO (time) — fighting against time by sitting in the wrong era.",
+    wordFamily: ["anachronism", "anachronistically"],
+    etymology: [
+      { part: "ana-", language: "Greek", meaning: "against, backward" },
+      { part: "chronos", language: "Greek", meaning: "time" },
+    ],
+    etymologyMeaning: "against the (correct) time",
+  },
+  audacious: {
+    shortDef: "Boldly daring; willing to take big risks.",
+    tone: "Neutral",
+    antonyms: ["timid", "cautious"],
+    mnemonic: "AUDACIOUS sounds like 'audio-shouts' — loud, fearless and bold, demanding to be heard.",
+    wordFamily: ["audacity", "audaciously", "audaciousness"],
+    etymology: [
+      { part: "audax", language: "Latin", meaning: "bold, daring" },
+      { part: "audere", language: "Latin", meaning: "to dare" },
+    ],
+    etymologyMeaning: "full of daring",
+  },
+  avaricious: {
+    shortDef: "Excessively greedy for money or possessions.",
+    tone: "Negative",
+    antonyms: ["generous", "selfless"],
+    mnemonic: "AVAR-ICIOUS sounds like 'a-very-vicious' grab for money — never satisfied, always wanting more.",
+    wordFamily: ["avarice", "avariciously", "avariciousness"],
+    etymology: [
+      { part: "avere", language: "Latin", meaning: "to crave, long for" },
+      { part: "-icius", language: "Latin", meaning: "tending to" },
+    ],
+    etymologyMeaning: "tending to crave (wealth)",
+  },
+
   // ── Mission 2 · Set 2 ──
   banal: {
     shortDef: "Lacking originality; commonplace and dull.",
@@ -280,6 +402,128 @@ export const ENRICHMENT: Record<string, WordEnrichment> = {
       { part: "volvere", language: "Latin", meaning: "to roll, turn" },
     ],
     etymologyMeaning: "rolled together; twisted up",
+  },
+
+  // ── Mission 2 · Set 3 ──
+  covet: {
+    shortDef: "To strongly desire something belonging to another.",
+    tone: "Negative",
+    antonyms: ["renounce", "reject"],
+    mnemonic: "If you COVET something, you 'co-vet' it constantly in your mind — never letting go of the desire.",
+    wordFamily: ["covetous", "covetously", "covetousness"],
+    etymology: [
+      { part: "cupiditas", language: "Latin", meaning: "desire, longing" },
+      { part: "cupere", language: "Latin", meaning: "to long for" },
+    ],
+    etymologyMeaning: "intense longing",
+  },
+  craven: {
+    shortDef: "Shamefully cowardly; lacking even basic courage.",
+    tone: "Negative",
+    antonyms: ["brave", "valiant"],
+    mnemonic: "A CRAVEN person 'craves a haven' — running for shelter at the first sign of trouble.",
+    wordFamily: ["cravenly", "cravenness"],
+    etymology: [
+      { part: "cravant", language: "Old French", meaning: "vanquished, defeated" },
+      { part: "crepare", language: "Latin", meaning: "to crack, break" },
+    ],
+    etymologyMeaning: "broken in spirit",
+  },
+  decorum: {
+    shortDef: "Polite, dignified behavior appropriate to the setting.",
+    tone: "Positive",
+    antonyms: ["impropriety", "rudeness"],
+    mnemonic: "Think of room DECOR — DECORUM is the social 'decor' that makes any room appropriate.",
+    wordFamily: ["decorous", "decorously", "indecorum"],
+    etymology: [
+      { part: "decorum", language: "Latin", meaning: "that which is fitting" },
+      { part: "decere", language: "Latin", meaning: "to be fitting" },
+    ],
+    etymologyMeaning: "what is fitting and proper",
+  },
+  deft: {
+    shortDef: "Quick, neat, and skillful in action.",
+    tone: "Positive",
+    antonyms: ["clumsy", "awkward"],
+    mnemonic: "DEFT rhymes with 'left' — but a deft hand uses both with effortless skill.",
+    wordFamily: ["deftly", "deftness"],
+    etymology: [
+      { part: "dæfte", language: "Old English", meaning: "gentle, mild" },
+      { part: "ge-dæfte", language: "Old English", meaning: "fitting, suitable" },
+    ],
+    etymologyMeaning: "fitting and gentle in motion",
+  },
+  demur: {
+    shortDef: "To politely object or show reluctance.",
+    tone: "Neutral",
+    antonyms: ["agree", "consent"],
+    mnemonic: "DEMUR sounds like 'de-murmur' — a quiet, polite grumble of disagreement.",
+    wordFamily: ["demurral", "demurring", "demurrer"],
+    etymology: [
+      { part: "de-", language: "Latin", meaning: "away" },
+      { part: "morari", language: "Latin", meaning: "to delay, linger" },
+    ],
+    etymologyMeaning: "to delay, hold back",
+  },
+  derivative: {
+    shortDef: "Imitative; copied from another source and lacking originality.",
+    tone: "Negative",
+    antonyms: ["original", "innovative"],
+    mnemonic: "DERIVATIVE work is 'derived' from someone else — like a knock-off that just copies the original.",
+    wordFamily: ["derive", "derivation", "derivatively"],
+    etymology: [
+      { part: "de-", language: "Latin", meaning: "down, from" },
+      { part: "rivus", language: "Latin", meaning: "stream" },
+    ],
+    etymologyMeaning: "drawn off from a stream (source)",
+  },
+  desiccate: {
+    shortDef: "To dry out completely; to remove all moisture.",
+    tone: "Neutral",
+    antonyms: ["hydrate", "moisten"],
+    mnemonic: "DESICCATE sounds like 'desert-cake' — dry, crumbly, all moisture baked out.",
+    wordFamily: ["desiccation", "desiccated", "desiccator"],
+    etymology: [
+      { part: "de-", language: "Latin", meaning: "completely" },
+      { part: "siccare", language: "Latin", meaning: "to dry" },
+    ],
+    etymologyMeaning: "to dry completely",
+  },
+  diatribe: {
+    shortDef: "A long, bitter verbal attack or angry speech.",
+    tone: "Negative",
+    antonyms: ["praise", "tribute"],
+    mnemonic: "Picture a 'die-a-tribe' — a furious tirade so harsh it could wipe out a whole tribe of listeners.",
+    wordFamily: ["diatribist", "diatribic"],
+    etymology: [
+      { part: "dia-", language: "Greek", meaning: "through" },
+      { part: "tribein", language: "Greek", meaning: "to wear, rub" },
+    ],
+    etymologyMeaning: "to wear away (with harsh words)",
+  },
+  incredulous: {
+    shortDef: "Unwilling or unable to believe something.",
+    tone: "Neutral",
+    antonyms: ["credulous", "trusting"],
+    mnemonic: "IN- (not) + CREDULOUS (believing) — flat-out refusing to buy what you're being told.",
+    wordFamily: ["incredulity", "incredulously"],
+    etymology: [
+      { part: "in-", language: "Latin", meaning: "not" },
+      { part: "credere", language: "Latin", meaning: "to believe" },
+    ],
+    etymologyMeaning: "not believing",
+  },
+  ingenuous: {
+    shortDef: "Innocently honest and trusting; charmingly naive.",
+    tone: "Positive",
+    antonyms: ["cunning", "deceitful"],
+    mnemonic: "An INGENUOUS person is 'in-genuine' through and through — open as a child, no tricks.",
+    wordFamily: ["ingenuously", "ingenuousness", "ingénue"],
+    etymology: [
+      { part: "in-", language: "Latin", meaning: "in, into" },
+      { part: "gignere", language: "Latin", meaning: "to be born" },
+    ],
+    etymologyMeaning: "native, free-born; naturally honest",
   },
 };
 
