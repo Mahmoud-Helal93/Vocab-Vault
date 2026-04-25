@@ -6,6 +6,7 @@ import RichFlashcard from "@/components/RichFlashcard";
 import { getEnrichment } from "@/data/enrichment";
 import { shuffleArray } from "@/lib/srs";
 import { TOTAL_DAYS, GROUPS_PER_DAY, type Word } from "@/data/words";
+import { themeClass } from "@/lib/missionThemes";
 import { ChevronLeft, ChevronRight, Shuffle, ArrowLeft, Grid3X3, Flame, Check, BookOpen, Lock, Trophy, Sparkles, Target, BarChart3, Crosshair, X } from "lucide-react";
 import { BADGES, levelFromXp } from "@/lib/gamification";
 import { loadMissionTestScores, loadMissionTestAttempts, formatRelativeTime } from "@/lib/storage";
@@ -123,7 +124,7 @@ function StatChip({ icon, color, label, value }: { icon: React.ReactNode; color:
 }
 
 export default function StudyMode({ onBack, onNavigate, initialDay, initialWordId }: StudyModeProps) {
-  const { words, markWordReviewed, settings, streak, gamification } = useApp();
+  const { words, markWordReviewed, settings, streak, gamification, getMissionTheme } = useApp();
   const initialWord = initialWordId ? words.find((w) => w.id === initialWordId) : undefined;
   const [view, setView] = useState<View>(initialWord || initialDay ? (initialWord ? "study" : "group-select") : "day-select");
   const [selectedDay, setSelectedDay] = useState<number>(initialWord?.day ?? initialDay ?? 1);
@@ -484,7 +485,7 @@ export default function StudyMode({ onBack, onNavigate, initialDay, initialWordI
     const missionTestBest = loadMissionTestScores()[selectedDay ?? 0];
     const missionTestLastAttempt = loadMissionTestAttempts()[selectedDay ?? 0];
     return (
-      <div className={`px-4 py-8 min-h-[calc(100vh-3.5rem)] lg:min-h-screen${selectedDay === 1 ? " theme-mission-1" : ""}`}>
+      <div className={`px-4 py-8 min-h-[calc(100vh-3.5rem)] lg:min-h-screen ${themeClass(getMissionTheme(selectedDay).id)}`}>
         <div className="max-w-4xl mx-auto">
         <div className="flex items-center gap-3 mb-8">
           <button onClick={() => setView("day-select")} className="p-2 rounded-xl hover:bg-muted transition-colors">
@@ -590,13 +591,12 @@ export default function StudyMode({ onBack, onNavigate, initialDay, initialWordI
               { bar: "bg-lime-500", icon: "#84CC16", border: "hover:border-lime-400", pill: "bg-lime-50 border-lime-200 text-lime-700 dark:bg-lime-900/20 dark:border-lime-800 dark:text-lime-400 hover:border-lime-400" },
               { bar: "bg-fuchsia-500", icon: "#D946EF", border: "hover:border-fuchsia-400", pill: "bg-fuchsia-50 border-fuchsia-200 text-fuchsia-700 dark:bg-fuchsia-900/20 dark:border-fuchsia-800 dark:text-fuchsia-400 hover:border-fuchsia-400" },
             ];
-            // Mission 1 uses the brand orange→pink palette across all sets to match the hero header.
-            const brandAccents = [
-              { bar: "bg-orange-500", icon: "#F97316", border: "hover:border-orange-400", pill: "bg-orange-50 border-orange-200 text-orange-700 dark:bg-orange-900/20 dark:border-orange-800 dark:text-orange-400 hover:border-orange-400" },
-              { bar: "bg-gradient-to-r from-orange-500 to-pink-500", icon: "#F97316", border: "hover:border-orange-400", pill: "bg-orange-50 border-orange-200 text-orange-700 dark:bg-orange-900/20 dark:border-orange-800 dark:text-orange-400 hover:border-orange-400" },
-              { bar: "bg-pink-500", icon: "#EC4899", border: "hover:border-pink-400", pill: "bg-pink-50 border-pink-200 text-pink-700 dark:bg-pink-900/20 dark:border-pink-800 dark:text-pink-400 hover:border-pink-400" },
-            ];
-            const palette = selectedDay === 1 ? brandAccents : accents;
+            // Pull set accents from the active mission theme. Themes other
+            // than the default `violet` use a brand-tinted 3-stop palette;
+            // `violet` falls back to the original rainbow accents array so
+            // missions without a custom theme keep their existing colors.
+            const themeForSelected = getMissionTheme(selectedDay);
+            const palette = themeForSelected.id === "violet" ? accents : themeForSelected.studyAccents;
             const accent = palette[i % palette.length];
             const setCard = (
               <motion.button
@@ -698,7 +698,7 @@ export default function StudyMode({ onBack, onNavigate, initialDay, initialWordI
   if (isRich) {
     return (
       <div
-        className={`min-h-[calc(100vh-3.5rem)] lg:min-h-screen px-4 lg:px-8 py-5 flex flex-col gap-5${selectedDay === 1 ? " theme-mission-1" : ""}`}
+        className={`min-h-[calc(100vh-3.5rem)] lg:min-h-screen px-4 lg:px-8 py-5 flex flex-col gap-5 ${themeClass(getMissionTheme(selectedDay).id)}`}
         tabIndex={0}
         onKeyDown={handleArrowKeys}
         style={{ outline: "none" }}
@@ -820,7 +820,7 @@ export default function StudyMode({ onBack, onNavigate, initialDay, initialWordI
 
   return (
     <div
-      className={`relative flex flex-col ${focusMode ? "fixed inset-0 bg-background z-50 overflow-auto" : "h-[calc(100vh-3.5rem)] lg:h-screen px-16 pt-6 pb-4 overflow-hidden"}${selectedDay === 1 ? " theme-mission-1" : ""}`}
+      className={`relative flex flex-col ${focusMode ? "fixed inset-0 bg-background z-50 overflow-auto" : "h-[calc(100vh-3.5rem)] lg:h-screen px-16 pt-6 pb-4 overflow-hidden"} ${themeClass(getMissionTheme(selectedDay).id)}`}
       tabIndex={0}
       onKeyDown={handleArrowKeys}
       style={{ outline: "none" }}

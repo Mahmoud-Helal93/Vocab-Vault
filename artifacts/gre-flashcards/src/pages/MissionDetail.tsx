@@ -4,6 +4,7 @@ import { useApp } from "@/context/AppContext";
 import { GROUPS_PER_DAY, TOTAL_DAYS } from "@/data/words";
 import { hasSetReading } from "@/data/setReadings";
 import { loadMissionTestScores, loadMissionTestAttempts, formatRelativeTime } from "@/lib/storage";
+import { themeClass } from "@/lib/missionThemes";
 import {
   ArrowLeft, BookOpen, Star, Award, Trophy, Lock, ChevronRight,
   Sparkles, ListChecks, Keyboard, HelpCircle, Flame, Target,
@@ -17,55 +18,9 @@ interface MissionDetailProps {
   missionDay: number;
 }
 
-const SET_ACCENTS = [
-  {
-    stripe: "from-violet-500 to-violet-600",
-    pillBg: "bg-violet-100 dark:bg-violet-900/30",
-    pillText: "text-violet-700 dark:text-violet-300",
-    icon: "text-violet-500",
-    btn: "from-violet-500 to-violet-600 hover:from-violet-600 hover:to-violet-700",
-  },
-  {
-    stripe: "from-pink-500 to-pink-600",
-    pillBg: "bg-pink-100 dark:bg-pink-900/30",
-    pillText: "text-pink-700 dark:text-pink-300",
-    icon: "text-pink-500",
-    btn: "from-pink-500 to-pink-600 hover:from-pink-600 hover:to-pink-700",
-  },
-  {
-    stripe: "from-fuchsia-500 to-fuchsia-600",
-    pillBg: "bg-fuchsia-100 dark:bg-fuchsia-900/30",
-    pillText: "text-fuchsia-700 dark:text-fuchsia-300",
-    icon: "text-fuchsia-500",
-    btn: "from-fuchsia-500 to-fuchsia-600 hover:from-fuchsia-600 hover:to-fuchsia-700",
-  },
-];
-
-// Mission 1 uses the brand orange→pink palette (matches the hero header gradient).
-// Each set picks a slightly different stop along the same orange→pink range for variety.
-const BRAND_SET_ACCENTS = [
-  {
-    stripe: "from-orange-400 to-orange-500",
-    pillBg: "bg-orange-100 dark:bg-orange-900/30",
-    pillText: "text-orange-700 dark:text-orange-300",
-    icon: "text-orange-500",
-    btn: "from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700",
-  },
-  {
-    stripe: "from-orange-500 to-pink-500",
-    pillBg: "bg-orange-100 dark:bg-orange-900/30",
-    pillText: "text-orange-700 dark:text-orange-300",
-    icon: "text-orange-500",
-    btn: "from-orange-500 to-pink-500 hover:from-orange-600 hover:to-pink-600",
-  },
-  {
-    stripe: "from-pink-500 to-pink-600",
-    pillBg: "bg-pink-100 dark:bg-pink-900/30",
-    pillText: "text-pink-700 dark:text-pink-300",
-    icon: "text-pink-500",
-    btn: "from-pink-500 to-pink-600 hover:from-pink-600 hover:to-pink-700",
-  },
-];
+// Per-set accent palettes are now sourced from the active mission theme
+// (see `src/lib/missionThemes.ts`). The user can pick a different theme
+// per mission from the Settings page.
 
 function MountainArt() {
   return (
@@ -169,7 +124,8 @@ function RoadmapNode({
 }
 
 export default function MissionDetail({ onBack, onNavigate, missionDay }: MissionDetailProps) {
-  const { words, streak, gamification } = useApp();
+  const { words, streak, gamification, getMissionTheme } = useApp();
+  const theme = getMissionTheme(missionDay);
 
   const missionWords = useMemo(
     () => words.filter((w) => w.day === missionDay),
@@ -286,7 +242,7 @@ export default function MissionDetail({ onBack, onNavigate, missionDay }: Missio
   ];
 
   return (
-    <div className={`min-h-screen bg-gradient-to-br from-violet-50/40 via-background to-orange-50/40 dark:from-gray-900 dark:via-gray-900 dark:to-gray-900${missionDay === 1 ? " theme-mission-1" : ""}`}>
+    <div className={`min-h-screen bg-gradient-to-br from-violet-50/40 via-background to-orange-50/40 dark:from-gray-900 dark:via-gray-900 dark:to-gray-900 ${themeClass(theme.id)}`}>
       <div className="max-w-6xl mx-auto px-4 sm:px-6 py-6 space-y-6">
         {/* ── Header ── */}
         <div className="flex items-start sm:items-center gap-3 flex-wrap">
@@ -328,10 +284,7 @@ export default function MissionDetail({ onBack, onNavigate, missionDay }: Missio
           initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
           className="relative overflow-hidden rounded-3xl p-6 sm:p-8 text-white shadow-lg"
-          style={{
-            background:
-              "linear-gradient(120deg, #FB923C 0%, #F97316 35%, #EC4899 100%)",
-          }}
+          style={{ background: theme.heroGradient }}
         >
           <div className="grid grid-cols-1 md:grid-cols-[1fr_240px] gap-6 items-center">
             <div className="space-y-4 relative z-10">
@@ -441,11 +394,9 @@ export default function MissionDetail({ onBack, onNavigate, missionDay }: Missio
         {/* ── Set + Mission Test cards ── */}
         <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           {sets.map((s, i) => {
-            // Mission 1 uses the brand orange→pink palette across all 3 sets.
-            const useBrand = missionDay === 1;
             // Set 2 in Mission 2 keeps the legacy violet accent style as Set 1.
-            const violetSet2 = s.group === 2 && missionDay === 2;
-            const palette = useBrand ? BRAND_SET_ACCENTS : SET_ACCENTS;
+            const violetSet2 = s.group === 2 && missionDay === 2 && theme.id === "violet";
+            const palette = theme.setAccents;
             const accentIdx = violetSet2 ? 0 : i % palette.length;
             const accent = palette[accentIdx];
             const visibleWords = s.words.slice(0, 8);
