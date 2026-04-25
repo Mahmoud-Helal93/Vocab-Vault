@@ -58,7 +58,7 @@ export default function Achievements({ onBack }: AchievementsProps) {
             initial={{ width: 0 }}
             animate={{ width: `${Math.min(100, lvl.progress * 100)}%` }}
             transition={{ duration: 0.6, ease: "easeOut" }}
-            className="h-full bg-gradient-to-r from-orange-500 via-amber-400 to-yellow-400"
+            className="h-full bg-brand-gradient"
           />
         </div>
       </div>

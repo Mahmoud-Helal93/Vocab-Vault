@@ -269,7 +269,7 @@ export default function StudyMode({ onBack, onNavigate, initialDay, initialWordI
           {resumeDay !== null && (
             <button
               onClick={() => openMission(resumeDay)}
-              className="rounded-2xl px-4 py-3 bg-orange-500 text-white text-sm font-bold flex items-center gap-2 shadow-sm hover:bg-orange-600 transition-colors"
+              className="btn-brand rounded-2xl px-4 py-3 text-sm font-bold flex items-center gap-2"
               data-testid="button-resume-mission"
             >
               <Sparkles size={14} /> Resume Mission {resumeDay}

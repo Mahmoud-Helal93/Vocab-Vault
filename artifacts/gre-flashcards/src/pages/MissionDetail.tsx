@@ -490,7 +490,7 @@ export default function MissionDetail({ onBack, onNavigate, missionDay }: Missio
             transition={{ delay: 0.16 }}
             className="rounded-2xl border border-border bg-card overflow-hidden flex flex-col"
           >
-            <div className="h-1.5 bg-gradient-to-r from-orange-400 to-orange-500" />
+            <div className="h-1.5 bg-brand-gradient" />
             <div className="p-5 flex flex-col gap-4 flex-1">
               <div className="flex items-center justify-between gap-2">
                 <div className="flex items-center gap-2 min-w-0">
@@ -545,7 +545,7 @@ export default function MissionDetail({ onBack, onNavigate, missionDay }: Missio
                 disabled={!missionTestUnlocked}
                 className={`mt-auto inline-flex items-center justify-center gap-1.5 w-full py-2.5 rounded-xl font-bold text-sm transition-all ${
                   missionTestUnlocked
-                    ? "bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white"
+                    ? "btn-brand"
                     : "bg-orange-100 dark:bg-orange-900/20 text-orange-700 dark:text-orange-300 cursor-not-allowed"
                 }`}
               >

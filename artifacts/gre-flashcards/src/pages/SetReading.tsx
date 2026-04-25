@@ -238,7 +238,7 @@ export default function SetReading({
           </h1>
           <button
             onClick={() => onContinue(firstWordId)}
-            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-orange-500 text-white font-bold text-sm shadow hover:bg-orange-600 transition"
+            className="btn-brand inline-flex items-center gap-2 px-5 py-2.5 rounded-xl font-bold text-sm"
           >
             Continue to Flashcards <ChevronRight size={16} />
           </button>
@@ -338,38 +338,34 @@ export default function SetReading({
             <motion.div
               initial={{ opacity: 0, y: 8 }}
               animate={{ opacity: 1, y: 0 }}
-              className="relative overflow-hidden rounded-3xl shadow-md"
-              style={{
-                background:
-                  "linear-gradient(125deg, #FED7AA 0%, #FDBA74 45%, #FCA5A5 100%)",
-              }}
+              className="bg-brand-gradient relative overflow-hidden rounded-3xl shadow-md"
             >
               <div className="grid grid-cols-1 sm:grid-cols-[1fr_220px] gap-4 p-6 sm:p-7 items-center">
                 <div className="space-y-3 relative z-10 min-w-0">
-                  <div className="w-12 h-12 rounded-2xl bg-white/85 backdrop-blur flex items-center justify-center shadow-sm">
-                    <BookOpen size={22} className="text-orange-600" />
+                  <div className="w-12 h-12 rounded-2xl bg-white/90 backdrop-blur flex items-center justify-center shadow-sm">
+                    <BookOpen size={22} style={{ color: "hsl(var(--brand-orange))" }} />
                   </div>
-                  <h2 className="text-2xl sm:text-[28px] font-extrabold leading-tight text-orange-950">
+                  <h2 className="text-2xl sm:text-[28px] font-extrabold leading-tight text-white drop-shadow-sm">
                     {reading.title}
                   </h2>
-                  <p className="text-sm sm:text-[15px] text-orange-950/85 leading-relaxed max-w-md">
+                  <p className="text-sm sm:text-[15px] text-white/90 leading-relaxed max-w-md">
                     {reading.subtitle}
                   </p>
                   <div className="pt-1">
                     <button
                       onClick={scrollToStory}
-                      className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-orange-600 text-white font-bold text-sm shadow-md hover:bg-orange-700 hover:-translate-y-0.5 transition-all"
+                      className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-white text-foreground font-bold text-sm shadow-md hover:-translate-y-0.5 hover:shadow-lg transition-all"
                     >
-                      <BookOpen size={16} />
+                      <BookOpen size={16} style={{ color: "hsl(var(--brand-orange))" }} />
                       Start Reading
                     </button>
                   </div>
-                  <div className="flex flex-wrap items-center gap-4 pt-1 text-xs sm:text-sm font-semibold text-orange-950/85">
+                  <div className="flex flex-wrap items-center gap-4 pt-1 text-xs sm:text-sm font-semibold text-white/95">
                     <span className="inline-flex items-center gap-1.5">
                       <Clock size={14} /> {reading.readingMinutes} min read
                     </span>
                     <span className="inline-flex items-center gap-1.5">
-                      <Zap size={14} className="text-amber-700" /> +20 XP
+                      <Zap size={14} className="text-yellow-200" /> +20 XP
                     </span>
                   </div>
                 </div>
@@ -530,7 +526,7 @@ export default function SetReading({
                 <div className="mt-3 space-y-2">
                   <button
                     onClick={() => onContinue(firstWordId)}
-                    className="w-full inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-orange-500 text-white font-bold text-sm shadow hover:bg-orange-600 hover:-translate-y-0.5 transition-all"
+                    className="btn-brand w-full inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl font-bold text-sm"
                   >
                     Start Learning Flashcards <ChevronRight size={16} />
                   </button>
@@ -706,7 +702,7 @@ export default function SetReading({
                   {currentQ < totalQuestions - 1 ? (
                     <button
                       onClick={goNext}
-                      className="inline-flex items-center gap-1 text-xs font-bold px-3 py-2 rounded-lg bg-orange-500 text-white hover:bg-orange-600 transition"
+                      className="btn-brand inline-flex items-center gap-1 text-xs font-bold px-3 py-2 rounded-lg"
                     >
                       Next <ChevronRight size={14} />
                     </button>
@@ -716,7 +712,7 @@ export default function SetReading({
                       disabled={!allAnswered}
                       className={`inline-flex items-center gap-1 text-xs font-bold px-3 py-2 rounded-lg transition ${
                         allAnswered
-                          ? "bg-orange-500 text-white hover:bg-orange-600"
+                          ? "btn-brand"
                           : "bg-muted text-muted-foreground cursor-not-allowed"
                       }`}
                     >
@@ -733,7 +729,7 @@ export default function SetReading({
                 </div>
 
                 {submitted && (
-                  <div className="mt-4 rounded-xl bg-gradient-to-r from-orange-500 to-pink-500 text-white p-3 text-center">
+                  <div className="mt-4 rounded-xl bg-brand-gradient text-white p-3 text-center">
                     <div className="text-[10px] font-bold uppercase tracking-wider text-white/85">
                       Your Score
                     </div>
@@ -760,7 +756,7 @@ export default function SetReading({
             </div>
             <button
               onClick={() => setFocusMode(false)}
-              className="inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-orange-500 text-white font-bold text-sm hover:bg-orange-600 transition"
+              className="btn-brand inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl font-bold text-sm"
             >
               Exit focus mode
             </button>

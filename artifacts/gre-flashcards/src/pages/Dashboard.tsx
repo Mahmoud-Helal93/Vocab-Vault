@@ -541,7 +541,7 @@ export default function Dashboard({ onNavigate }: DashboardProps) {
             {resumeMission !== null && (
               <button
                 onClick={() => onNavigate("mission-detail", { missionDay: resumeMission })}
-                className="hidden sm:flex shrink-0 items-center gap-2 rounded-lg bg-orange-500 hover:bg-orange-600 text-white text-xs font-bold px-3 py-1.5 shadow-sm transition-colors"
+                className="btn-brand hidden sm:flex shrink-0 items-center gap-2 rounded-lg text-xs font-bold px-3 py-1.5"
               >
                 <Sparkles size={12} /> Resume Mission {resumeMission}
               </button>
@@ -595,7 +595,7 @@ export default function Dashboard({ onNavigate }: DashboardProps) {
                       <Zap size={12} fill="currentColor" /> +{item.xp} XP
                     </div>
                     {active ? (
-                      <div className="bg-orange-500 text-white text-[11px] font-bold px-4 py-1.5 rounded-lg shadow-sm group-hover:bg-orange-600 transition-colors">
+                      <div className="btn-brand text-[11px] font-bold px-4 py-1.5 rounded-lg">
                         Start
                       </div>
                     ) : (

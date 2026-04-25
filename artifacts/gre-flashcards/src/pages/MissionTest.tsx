@@ -252,7 +252,7 @@ function MissionTestInner({ onBack, missionDay = 1 }: MissionTestProps) {
             </button>
             <button
               onClick={handleReset}
-              className="inline-flex items-center gap-1.5 px-3 sm:px-4 py-2 rounded-xl bg-orange-500 hover:bg-orange-600 text-white text-sm font-semibold transition-colors shadow-sm shadow-orange-500/30"
+              className="btn-brand inline-flex items-center gap-1.5 px-3 sm:px-4 py-2 rounded-xl text-sm font-semibold"
             >
               <RotateCcw size={14} /> Retake Test
             </button>
@@ -891,7 +891,7 @@ function MissionTestInner({ onBack, missionDay = 1 }: MissionTestProps) {
                 {currentIdx < questions.length - 1 ? (
                   <button
                     onClick={() => setCurrentIdx((i) => i + 1)}
-                    className="flex items-center gap-1.5 px-5 py-2.5 rounded-xl bg-orange-500 hover:bg-orange-600 text-white text-sm font-semibold transition-colors shadow-sm shadow-orange-500/30"
+                    className="btn-brand flex items-center gap-1.5 px-5 py-2.5 rounded-xl text-sm font-semibold"
                   >
                     Next <ChevronRight size={16} />
                   </button>
