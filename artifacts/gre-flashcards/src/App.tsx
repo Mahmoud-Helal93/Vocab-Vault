@@ -20,6 +20,7 @@ import QuickTen from "@/components/QuickTen";
 import SidebarSearch from "@/components/SidebarSearch";
 import BadgeToast from "@/components/BadgeToast";
 import GlobalStatsBar from "@/components/GlobalStatsBar";
+import ThemeChip from "@/components/ThemeChip";
 import vocabNinjaLogo from "@assets/Gemini_Generated_Image_tgtyf7tgtyf7tgty_1776986903352.png";
 import {
   LayoutDashboard, BookOpen, Target, Clock, Settings, Moon, Sun,
@@ -197,8 +198,9 @@ function MainApp() {
         })}
       </nav>
 
-      {/* Footer: theme toggle */}
+      {/* Footer: theme chip + light/dark toggle */}
       <div className="border-t border-border p-2 space-y-1">
+        <ThemeChip collapsed={sidebarCollapsed && !inDrawer} />
         {[
           { id: "light", label: "Light mode", icon: <Sun size={18} />, active: !settings.darkMode },
           { id: "dark",  label: "Dark mode",  icon: <Moon size={18} />, active: settings.darkMode },
