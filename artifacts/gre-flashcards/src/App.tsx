@@ -23,7 +23,7 @@ import GlobalStatsBar from "@/components/GlobalStatsBar";
 import vocabNinjaLogo from "@assets/Gemini_Generated_Image_tgtyf7tgtyf7tgty_1776986903352.png";
 import {
   LayoutDashboard, BookOpen, Target, Clock, Settings, Moon, Sun,
-  CalendarDays, GitFork, BarChart3, TrendingUp, Zap, ChevronLeft, ChevronRight, Menu,
+  CalendarDays, GitFork, BarChart3, TrendingUp, Zap, Menu,
   Trophy, Bookmark,
 } from "lucide-react";
 
@@ -141,10 +141,11 @@ function MainApp() {
         {!inDrawer && (
           <button
             onClick={() => setSidebarCollapsed((v) => !v)}
-            className="hidden lg:flex items-center justify-center w-7 h-7 rounded-lg hover:bg-muted text-muted-foreground transition-colors"
+            className="hidden lg:flex p-2 rounded-xl hover:bg-muted text-foreground transition-colors"
             title={sidebarCollapsed ? "Expand sidebar" : "Collapse sidebar"}
+            aria-label={sidebarCollapsed ? "Expand sidebar" : "Collapse sidebar"}
           >
-            {sidebarCollapsed ? <ChevronRight size={16} /> : <ChevronLeft size={16} />}
+            <Menu size={20} />
           </button>
         )}
       </div>
