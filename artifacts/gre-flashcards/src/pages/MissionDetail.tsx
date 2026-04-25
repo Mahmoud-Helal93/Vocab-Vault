@@ -41,6 +41,32 @@ const SET_ACCENTS = [
   },
 ];
 
+// Mission 1 uses the brand orange→pink palette (matches the hero header gradient).
+// Each set picks a slightly different stop along the same orange→pink range for variety.
+const BRAND_SET_ACCENTS = [
+  {
+    stripe: "from-orange-400 to-orange-500",
+    pillBg: "bg-orange-100 dark:bg-orange-900/30",
+    pillText: "text-orange-700 dark:text-orange-300",
+    icon: "text-orange-500",
+    btn: "from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700",
+  },
+  {
+    stripe: "from-orange-500 to-pink-500",
+    pillBg: "bg-orange-100 dark:bg-orange-900/30",
+    pillText: "text-orange-700 dark:text-orange-300",
+    icon: "text-orange-500",
+    btn: "from-orange-500 to-pink-500 hover:from-orange-600 hover:to-pink-600",
+  },
+  {
+    stripe: "from-pink-500 to-pink-600",
+    pillBg: "bg-pink-100 dark:bg-pink-900/30",
+    pillText: "text-pink-700 dark:text-pink-300",
+    icon: "text-pink-500",
+    btn: "from-pink-500 to-pink-600 hover:from-pink-600 hover:to-pink-700",
+  },
+];
+
 function MountainArt() {
   return (
     <svg
@@ -260,7 +286,7 @@ export default function MissionDetail({ onBack, onNavigate, missionDay }: Missio
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-violet-50/40 via-background to-orange-50/40 dark:from-gray-900 dark:via-gray-900 dark:to-gray-900">
+    <div className={`min-h-screen bg-gradient-to-br from-violet-50/40 via-background to-orange-50/40 dark:from-gray-900 dark:via-gray-900 dark:to-gray-900${missionDay === 1 ? " theme-mission-1" : ""}`}>
       <div className="max-w-6xl mx-auto px-4 sm:px-6 py-6 space-y-6">
         {/* ── Header ── */}
         <div className="flex items-start sm:items-center gap-3 flex-wrap">
@@ -415,11 +441,13 @@ export default function MissionDetail({ onBack, onNavigate, missionDay }: Missio
         {/* ── Set + Mission Test cards ── */}
         <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           {sets.map((s, i) => {
-            // Set 2 in Missions 1 and 2 uses the same violet accent style as Set 1
-            const violetSet2 =
-              s.group === 2 && (missionDay === 1 || missionDay === 2);
-            const accentIdx = violetSet2 ? 0 : i % SET_ACCENTS.length;
-            const accent = SET_ACCENTS[accentIdx];
+            // Mission 1 uses the brand orange→pink palette across all 3 sets.
+            const useBrand = missionDay === 1;
+            // Set 2 in Mission 2 keeps the legacy violet accent style as Set 1.
+            const violetSet2 = s.group === 2 && missionDay === 2;
+            const palette = useBrand ? BRAND_SET_ACCENTS : SET_ACCENTS;
+            const accentIdx = violetSet2 ? 0 : i % palette.length;
+            const accent = palette[accentIdx];
             const visibleWords = s.words.slice(0, 8);
             const more = Math.max(0, s.words.length - visibleWords.length);
             return (

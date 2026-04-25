@@ -216,7 +216,7 @@ function SetTestInner({ onBack, missionDay, group }: SetTestProps) {
     }
 
     return (
-      <div className="min-h-screen bg-gradient-to-br from-violet-50 via-white to-pink-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 flex flex-col">
+      <div className={`min-h-screen bg-gradient-to-br from-violet-50 via-white to-pink-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 flex flex-col${missionDay === 1 ? " theme-mission-1" : ""}`}>
         {/* ===== Sticky header ===== */}
         <div className="sticky top-0 z-10 bg-white/80 dark:bg-gray-900/80 backdrop-blur border-b border-border">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 flex items-center gap-3">
@@ -716,7 +716,7 @@ function SetTestInner({ onBack, missionDay, group }: SetTestProps) {
     : 0;
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-violet-50 via-white to-blue-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 flex flex-col">
+    <div className={`min-h-screen bg-gradient-to-br from-violet-50 via-white to-blue-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 flex flex-col${missionDay === 1 ? " theme-mission-1" : ""}`}>
       {/* ===== Sticky header ===== */}
       <div className="sticky top-0 z-10 bg-white/80 dark:bg-gray-900/80 backdrop-blur border-b border-border">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 grid grid-cols-[1fr_auto_1fr] items-center gap-3">

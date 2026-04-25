@@ -314,4 +314,37 @@
               0 3px 8px -2px hsl(var(--brand-orange) / 0.6);
 }
 .btn-brand:active { filter: brightness(0.97); }
+
+/* ── Mission 1 brand color theme ──────────────────────────── *
+ * Remaps Tailwind's violet & fuchsia palette CSS variables to the
+ * brand orange/pink palette inside any subtree wrapped with
+ * `.theme-mission-1`. This lets us recolor entire pages (Set Test,
+ * Study Mode, Mission Detail, etc.) for Mission 1 without touching
+ * each className. Other missions remain unchanged.
+ */
+.theme-mission-1 {
+  --color-violet-50:  var(--color-orange-50);
+  --color-violet-100: var(--color-orange-100);
+  --color-violet-200: var(--color-orange-200);
+  --color-violet-300: var(--color-orange-300);
+  --color-violet-400: var(--color-orange-400);
+  --color-violet-500: var(--color-orange-500);
+  --color-violet-600: var(--color-orange-600);
+  --color-violet-700: var(--color-orange-700);
+  --color-violet-800: var(--color-orange-800);
+  --color-violet-900: var(--color-orange-900);
+  --color-violet-950: var(--color-orange-950);
+
+  --color-fuchsia-50:  var(--color-pink-50);
+  --color-fuchsia-100: var(--color-pink-100);
+  --color-fuchsia-200: var(--color-pink-200);
+  --color-fuchsia-300: var(--color-pink-300);
+  --color-fuchsia-400: var(--color-pink-400);
+  --color-fuchsia-500: var(--color-pink-500);
+  --color-fuchsia-600: var(--color-pink-600);
+  --color-fuchsia-700: var(--color-pink-700);
+  --color-fuchsia-800: var(--color-pink-800);
+  --color-fuchsia-900: var(--color-pink-900);
+  --color-fuchsia-950: var(--color-pink-950);
+}
 .btn-brand:disabled { opacity: 0.55; filter: grayscale(0.2); cursor: not-allowed; }
