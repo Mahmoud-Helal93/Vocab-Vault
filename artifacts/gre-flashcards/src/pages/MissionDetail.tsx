@@ -410,8 +410,10 @@ export default function MissionDetail({ onBack, onNavigate, missionDay }: Missio
         {/* ── Set + Mission Test cards ── */}
         <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           {sets.map((s, i) => {
-            // Set 2 in Mission 1 uses the same accent style as Set 1
-            const accentIdx = missionDay === 1 && s.group === 2 ? 0 : i % SET_ACCENTS.length;
+            // Set 2 in Missions 1 and 2 uses the same violet accent style as Set 1
+            const violetSet2 =
+              s.group === 2 && (missionDay === 1 || missionDay === 2);
+            const accentIdx = violetSet2 ? 0 : i % SET_ACCENTS.length;
             const accent = SET_ACCENTS[accentIdx];
             const visibleWords = s.words.slice(0, 8);
             const more = Math.max(0, s.words.length - visibleWords.length);

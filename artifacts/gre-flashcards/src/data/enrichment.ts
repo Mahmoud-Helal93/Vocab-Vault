@@ -159,6 +159,128 @@ export const ENRICHMENT: Record<string, WordEnrichment> = {
     etymologyMeaning: "to subdue or overwhelm",
     imageUrl: dauntingImg,
   },
+
+  // ── Mission 2 · Set 2 ──
+  banal: {
+    shortDef: "Lacking originality; commonplace and dull.",
+    tone: "Negative",
+    antonyms: ["original", "fresh"],
+    mnemonic: "Picture a brown 'banana' everyone has seen a million times — totally BANAL, nothing new!",
+    wordFamily: ["banality", "banally"],
+    etymology: [
+      { part: "ban", language: "Old French", meaning: "common, public summons" },
+      { part: "-al", language: "French", meaning: "relating to" },
+    ],
+    etymologyMeaning: "open to all (hence ordinary)",
+  },
+  benign: {
+    shortDef: "Gentle, harmless, and kindly in nature.",
+    tone: "Positive",
+    antonyms: ["malignant", "harmful"],
+    mnemonic: "'Be-NICE' sounds like BENIGN — a benign smile is a nice, harmless one.",
+    wordFamily: ["benignly", "benignity", "benignant"],
+    etymology: [
+      { part: "bene-", language: "Latin", meaning: "well, good" },
+      { part: "gnus", language: "Latin", meaning: "born" },
+    ],
+    etymologyMeaning: "well-born, of good nature",
+  },
+  brazen: {
+    shortDef: "Boldly shameless and unembarrassed.",
+    tone: "Negative",
+    antonyms: ["shy", "timid"],
+    mnemonic: "Imagine a face of solid brass — a BRAZEN look that nothing can embarrass.",
+    wordFamily: ["brazenly", "brazenness"],
+    etymology: [
+      { part: "bræs", language: "Old English", meaning: "brass" },
+      { part: "-en", language: "Old English", meaning: "made of" },
+    ],
+    etymologyMeaning: "made of brass; hard-faced",
+  },
+  calumny: {
+    shortDef: "A false statement spread to damage someone's reputation.",
+    tone: "Negative",
+    antonyms: ["praise", "compliment"],
+    mnemonic: "Sounds like 'CALL-um-knee' — calling someone bad names behind their back.",
+    wordFamily: ["calumnious", "calumniate", "calumniator"],
+    etymology: [
+      { part: "calumnia", language: "Latin", meaning: "trickery, false accusation" },
+      { part: "calvi", language: "Latin", meaning: "to deceive" },
+    ],
+    etymologyMeaning: "false and malicious accusation",
+  },
+  candid: {
+    shortDef: "Open, honest, and straightforward in expression.",
+    tone: "Positive",
+    antonyms: ["evasive", "guarded"],
+    mnemonic: "A 'candle' shines clear light — a CANDID person speaks clearly with nothing hidden.",
+    wordFamily: ["candor", "candidly", "candidness"],
+    etymology: [
+      { part: "candidus", language: "Latin", meaning: "white, bright, pure" },
+      { part: "candēre", language: "Latin", meaning: "to shine" },
+    ],
+    etymologyMeaning: "shining white; pure and frank",
+  },
+  castigate: {
+    shortDef: "To criticize or scold someone severely.",
+    tone: "Negative",
+    antonyms: ["praise", "commend"],
+    mnemonic: "Imagine a 'cast' (rod) used to 'gate' bad behavior — a stern CASTIGATING from a strict teacher.",
+    wordFamily: ["castigation", "castigator", "castigatory"],
+    etymology: [
+      { part: "castus", language: "Latin", meaning: "pure" },
+      { part: "agere", language: "Latin", meaning: "to drive, act" },
+    ],
+    etymologyMeaning: "to drive toward purity through punishment",
+  },
+  caustic: {
+    shortDef: "Bitingly sharp; able to burn or corrode.",
+    tone: "Negative",
+    antonyms: ["soothing", "kind"],
+    mnemonic: "A CAUSTIC remark is like acid on the skin — it burns whatever it touches.",
+    wordFamily: ["caustically", "causticity"],
+    etymology: [
+      { part: "kaustikos", language: "Greek", meaning: "burning, capable of burning" },
+      { part: "kaiein", language: "Greek", meaning: "to burn" },
+    ],
+    etymologyMeaning: "able to burn",
+  },
+  construe: {
+    shortDef: "To interpret or explain the meaning of something.",
+    tone: "Neutral",
+    antonyms: ["misinterpret", "ignore"],
+    mnemonic: "When you CONSTRUE, you 'construct' a meaning — you build understanding from the clues.",
+    wordFamily: ["construal", "construction", "misconstrue"],
+    etymology: [
+      { part: "com-", language: "Latin", meaning: "together" },
+      { part: "struere", language: "Latin", meaning: "to build" },
+    ],
+    etymologyMeaning: "to build together; piece together a meaning",
+  },
+  contrite: {
+    shortDef: "Deeply sorry for having done wrong.",
+    tone: "Negative",
+    antonyms: ["unrepentant", "indifferent"],
+    mnemonic: "A CONTRITE heart feels 'contracted' — squeezed small with regret over a mistake.",
+    wordFamily: ["contritely", "contrition"],
+    etymology: [
+      { part: "com-", language: "Latin", meaning: "thoroughly" },
+      { part: "terere", language: "Latin", meaning: "to rub, grind" },
+    ],
+    etymologyMeaning: "thoroughly worn down by guilt",
+  },
+  convoluted: {
+    shortDef: "Twisted, intricate, and hard to follow.",
+    tone: "Negative",
+    antonyms: ["simple", "straightforward"],
+    mnemonic: "Picture a 'convo' that twists and turns endlessly — a CONVOLUTED maze of words.",
+    wordFamily: ["convolution", "convolute", "convoluting"],
+    etymology: [
+      { part: "com-", language: "Latin", meaning: "together" },
+      { part: "volvere", language: "Latin", meaning: "to roll, turn" },
+    ],
+    etymologyMeaning: "rolled together; twisted up",
+  },
 };
 
 export function getEnrichment(wordKey: string): WordEnrichment | undefined {
