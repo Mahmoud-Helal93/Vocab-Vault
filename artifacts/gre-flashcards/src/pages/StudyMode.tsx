@@ -385,20 +385,16 @@ export default function StudyMode({ onBack, onNavigate, initialDay, initialWordI
                         </div>
 
                         <div className="flex items-center gap-1.5">
-                          {setStates.map((s, idx) => {
-                            // Yellow Belt (bIdx === 1) reuses White Belt set styling
-                            const setColor = bIdx === 1 ? BELTS[0].color : belt.color;
-                            return (
-                              <div
-                                key={idx}
-                                className="w-2 h-2 rounded-full transition-all"
-                                style={{
-                                  backgroundColor: s ? setColor : undefined,
-                                  border: s ? "none" : `1.5px solid ${setColor}55`,
-                                }}
-                              />
-                            );
-                          })}
+                          {setStates.map((s, idx) => (
+                            <div
+                              key={idx}
+                              className="w-2 h-2 rounded-full transition-all"
+                              style={{
+                                backgroundColor: s ? belt.color : undefined,
+                                border: s ? "none" : `1.5px solid ${belt.color}55`,
+                              }}
+                            />
+                          ))}
                           <span className="text-[10px] text-muted-foreground ml-auto tabular-nums">
                             {mastered}/{total}
                           </span>
