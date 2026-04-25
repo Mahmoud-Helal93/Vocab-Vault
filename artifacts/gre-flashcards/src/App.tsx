@@ -15,6 +15,7 @@ import MissionTest from "@/pages/MissionTest";
 import SetTest from "@/pages/SetTest";
 import Bookmarks from "@/pages/Bookmarks";
 import MissionDetail from "@/pages/MissionDetail";
+import SetReading from "@/pages/SetReading";
 import QuickTen from "@/components/QuickTen";
 import SidebarSearch from "@/components/SidebarSearch";
 import BadgeToast from "@/components/BadgeToast";
@@ -26,7 +27,7 @@ import {
   Trophy, Bookmark,
 } from "lucide-react";
 
-type Page = "dashboard" | "study" | "practice" | "review" | "settings" | "plan" | "confusables" | "analytics" | "progress" | "achievements" | "mission-test" | "set-test" | "bookmarks" | "mission-detail";
+type Page = "dashboard" | "study" | "practice" | "review" | "settings" | "plan" | "confusables" | "analytics" | "progress" | "achievements" | "mission-test" | "set-test" | "bookmarks" | "mission-detail" | "set-reading";
 
 const NAV_ITEMS: Array<{ id: Page; icon: React.ReactNode; label: string }> = [
   { id: "dashboard",   icon: <LayoutDashboard size={18} />, label: "Home" },
@@ -89,6 +90,21 @@ function MainApp() {
             onBack={() => setPage("study")}
             onNavigate={navigate}
             missionDay={(pageParams.missionDay as number) ?? 1}
+          />
+        );
+      case "set-reading":
+        return (
+          <SetReading
+            onBack={() => setPage("mission-detail")}
+            onContinue={(firstWordId) => {
+              if (firstWordId) navigate("study", { wordId: firstWordId });
+              else
+                navigate("study", {
+                  day: (pageParams.missionDay as number) ?? 1,
+                });
+            }}
+            missionDay={(pageParams.missionDay as number) ?? 1}
+            group={(pageParams.group as number) ?? 1}
           />
         );
       case "settings":

@@ -2,6 +2,7 @@ import { useMemo } from "react";
 import { motion } from "framer-motion";
 import { useApp } from "@/context/AppContext";
 import { GROUPS_PER_DAY, TOTAL_DAYS } from "@/data/words";
+import { hasSetReading } from "@/data/setReadings";
 import { loadMissionTestScores, loadMissionTestAttempts, formatRelativeTime } from "@/lib/storage";
 import {
   ArrowLeft, BookOpen, Star, Award, Trophy, Lock, ChevronRight,
@@ -205,6 +206,10 @@ export default function MissionDetail({ onBack, onNavigate, missionDay }: Missio
   };
 
   const startSet = (group: number) => {
+    if (hasSetReading(missionDay, group)) {
+      onNavigate("set-reading", { missionDay, group });
+      return;
+    }
     const firstWord = missionWords.find((w) => w.group === group);
     if (firstWord) onNavigate("study", { wordId: firstWord.id });
     else onNavigate("study", { day: missionDay });

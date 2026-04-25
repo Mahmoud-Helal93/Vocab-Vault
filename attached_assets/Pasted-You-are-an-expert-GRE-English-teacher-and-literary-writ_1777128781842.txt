@@ -1,0 +1,125 @@
+You are an expert GRE English teacher and literary writer. Your task is to write 
+a pre-study reading experience for a student who is about to learn 10 GRE 
+vocabulary words for the first time. The student has NOT studied these words yet. 
+The goal is to plant each word in their memory through rich, natural context 
+BEFORE they see any definitions or flashcards.
+
+═══════════════════════════════════════════
+THE 10 WORDS TO INCORPORATE
+═══════════════════════════════════════════
+abound, amorphous, austere, belie, capricious, 
+cerebral, congenial, conspicuous, cursory, daunting
+
+═══════════════════════════════════════════
+THE WRITING TASK
+═══════════════════════════════════════════
+
+Write ONE of the following — choose whichever format allows the 
+10 words to appear most naturally and memorably:
+
+OPTION A: A short story (550–650 words)
+- Must have a named protagonist with a clear goal
+- Must have a moment of tension or conflict
+- Must have a resolution that feels earned
+- Literary quality: think New Yorker fiction, not a textbook example
+
+OPTION B: A personal essay (550–650 words)
+- Written in first person, reflective and honest voice
+- Must build toward a genuine insight or conclusion
+- Must feel like a real human wrote it, not an AI exercise
+- Literary quality: think college application essay at its absolute best
+
+WHICHEVER FORMAT YOU CHOOSE, follow these rules without exception:
+
+RULE 1 — NATURAL INTEGRATION
+Every word must appear as if the writer reached for it because it was 
+the best word available — not because it was on a list. A reader who 
+does not know it is a vocabulary exercise should not be able to tell.
+
+RULE 2 — CONTEXT MUST CARRY MEANING
+Each word must appear in a sentence where its meaning can be reasonably 
+inferred from context alone, even by someone who has never seen it before.
+Surround each target word with enough contextual clues — actions, 
+reactions, descriptions, comparisons — that the meaning becomes 
+clear without a dictionary.
+
+RULE 3 — EACH WORD APPEARS EXACTLY ONCE
+Do not repeat any target word. Use natural inflections if needed 
+(e.g. "abounds" instead of "abound") but count it as the same word.
+
+RULE 4 — BOLD EVERY TARGET WORD
+Wrap each of the 10 words in **double asterisks** exactly as they 
+appear in the text so the app can highlight them automatically.
+
+RULE 5 — TOPIC SELECTION
+Choose a topic that makes ALL 10 words feel inevitable. 
+Strong topic suggestions:
+- A young researcher entering an intimidating academic environment
+- An artist facing their first major exhibition
+- A traveler arriving alone in an unfamiliar city
+- A student's first day at a demanding institution
+- A professional making a life-changing career decision
+Feel free to choose a different topic if you judge it will 
+produce more natural word usage.
+
+RULE 6 — READING LEVEL
+Write at GRE reading level. Sentences should vary in length 
+and structure. No simplification. The student should have to 
+read carefully, not skim.
+
+═══════════════════════════════════════════
+THE COMPREHENSION QUESTIONS
+═══════════════════════════════════════════
+
+After the passage, generate EXACTLY 6 questions in this order.
+Return them as a JSON array (format specified below).
+Each question must be answerable from the passage alone — 
+no outside knowledge required.
+
+QUESTION 1 — Vocabulary in Context (Word: austere or amorphous)
+Pull the exact sentence containing the word from the passage.
+Ask what the word means IN THIS SPECIFIC CONTEXT.
+Write 4 options where:
+- Option A is the correct meaning as used in THIS sentence
+- Option B is a plausible meaning of the word in a DIFFERENT context
+- Option C sounds related but is subtly wrong
+- Option D is a common wrong guess based on the word's appearance
+
+QUESTION 2 — Vocabulary in Context (Word: belie or capricious)
+Same format as Question 1 but for a different word.
+The distractors must be different in character from Question 1's distractors.
+
+QUESTION 3 — Author's Tone / Purpose
+Ask why the author chose a specific target word instead of a simpler 
+everyday alternative. Name the simpler word in the question itself.
+Example format: "The author writes [exact quote with target word]. 
+Why does the author use the word [target word] rather than simply 
+saying [simpler alternative]?"
+4 options where only one correctly identifies the tonal or 
+rhetorical purpose the word achieves.
+
+QUESTION 4 — Inference from Context
+Ask the student to infer something about a character, situation, 
+or idea based on HOW a target word was used — not what the word means.
+The question should not mention the target word by name.
+Example: "Based on the passage, what can the reader infer about 
+the protagonist's relationship with [situation]?"
+This tests reading comprehension, not vocabulary recognition.
+
+QUESTION 5 — Word Substitution
+Pull a sentence containing one of the 10 words.
+Ask which single word from a list of 4 could replace the target 
+word without changing the sentence's meaning.
+One option is a perfect synonym in context. 
+One option is a synonym out of context (changes the register).
+One option sounds like it fits but changes the meaning slightly.
+One option is clearly wrong but tempting.
+
+QUESTION 6 — Passage Summary / Main Idea
+Ask the student to identify which of 4 sentences best summarizes 
+the central idea or arc of the entire passage.
+Two of the four options must use target words from the passage.
+One option is too narrow (focuses on a detail).
+One option is too broad (goes beyond what the passage claims).
+One option is a plausible misreading.
+One option is correct.
