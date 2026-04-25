@@ -14,8 +14,6 @@ import {
   RotateCcw,
   Maximize2,
   Minimize2,
-  Library,
-  Award,
 } from "lucide-react";
 import { getSetReading, type ReadingQuestion } from "@/data/setReadings";
 import { useApp } from "@/context/AppContext";
@@ -173,49 +171,6 @@ function FlashcardArt() {
       <circle cx="100" cy="34" r="2" fill="#FDE68A" />
       <circle cx="14" cy="80" r="2.5" fill="#FB923C" opacity="0.6" />
     </svg>
-  );
-}
-
-function StepIcon({
-  step,
-  active,
-  done,
-  color,
-  Icon,
-}: {
-  step: number;
-  active: boolean;
-  done: boolean;
-  color: "orange" | "violet" | "blue";
-  Icon: React.ComponentType<{ size?: number }>;
-}) {
-  const ringMap = {
-    orange:
-      "border-orange-400 bg-orange-50 text-orange-600 dark:bg-orange-500/15 dark:text-orange-300 dark:border-orange-500/40",
-    violet:
-      "border-violet-400 bg-violet-50 text-violet-600 dark:bg-violet-500/15 dark:text-violet-300 dark:border-violet-500/40",
-    blue:
-      "border-blue-400 bg-blue-50 text-blue-600 dark:bg-blue-500/15 dark:text-blue-300 dark:border-blue-500/40",
-  } as const;
-  const dim =
-    "border-border bg-muted/40 text-muted-foreground dark:bg-gray-800/40";
-  return (
-    <div
-      className={`relative w-12 h-12 rounded-full border-2 flex items-center justify-center shrink-0 transition-colors ${
-        active || done ? ringMap[color] : dim
-      }`}
-    >
-      {done ? <CheckCircle2 size={20} /> : <Icon size={20} />}
-      <span
-        className={`absolute -top-1 -right-1 w-5 h-5 rounded-full text-[10px] font-bold flex items-center justify-center ${
-          active || done
-            ? "bg-white text-foreground border border-border shadow-sm"
-            : "bg-muted text-muted-foreground"
-        }`}
-      >
-        {step}
-      </span>
-    </div>
   );
 }
 
@@ -548,65 +503,43 @@ export default function SetReading({
           {/* ── RIGHT COLUMN ── */}
           {!focusMode && (
             <aside className="space-y-5 lg:sticky lg:top-4 lg:self-start min-w-0">
-              {/* Learning Journey */}
+              {/* Ready CTA card (moved up to replace the Learning Journey) */}
               <div className="rounded-2xl border border-border bg-card p-5 shadow-sm">
-                <h3 className="text-sm font-bold text-foreground mb-4">
-                  Your learning journey
-                </h3>
-                <div className="relative flex items-start justify-between gap-2">
-                  {/* connector line */}
-                  <div
-                    className="absolute top-6 left-8 right-8 h-0.5 bg-gradient-to-r from-orange-300 via-violet-300 to-blue-300 dark:from-orange-500/30 dark:via-violet-500/30 dark:to-blue-500/30"
-                    aria-hidden
-                  />
-                  {[
-                    {
-                      n: 1,
-                      title: "Read the Story",
-                      sub: "Understand the context and flow",
-                      color: "orange" as const,
-                      Icon: BookOpen,
-                      active: true,
-                      done: false,
-                    },
-                    {
-                      n: 2,
-                      title: "Learn the Words",
-                      sub: "Master the 10 new vocabulary words",
-                      color: "violet" as const,
-                      Icon: Library,
-                      active: false,
-                      done: false,
-                    },
-                    {
-                      n: 3,
-                      title: "Test Yourself",
-                      sub: "Review and test your knowledge",
-                      color: "blue" as const,
-                      Icon: Award,
-                      active: false,
-                      done: false,
-                    },
-                  ].map((s) => (
-                    <div
-                      key={s.n}
-                      className="relative flex flex-col items-center text-center flex-1 min-w-0"
-                    >
-                      <StepIcon
-                        step={s.n}
-                        active={s.active}
-                        done={s.done}
-                        color={s.color}
-                        Icon={s.Icon}
-                      />
-                      <div className="mt-2 text-xs font-bold text-foreground leading-tight">
-                        {s.n}. {s.title}
-                      </div>
-                      <div className="text-[11px] text-muted-foreground leading-snug mt-1 px-1">
-                        {s.sub}
-                      </div>
+                <div className="grid grid-cols-[1fr_84px] gap-3 items-center">
+                  <div>
+                    <h3 className="text-sm font-extrabold text-foreground leading-tight">
+                      Ready to learn these words?
+                    </h3>
+                    <p className="text-xs text-muted-foreground mt-1 leading-snug">
+                      Let's master these {reading.words.length} words with
+                      interactive flashcards.
+                    </p>
+                  </div>
+                  <div className="relative h-20">
+                    <div className="absolute inset-0">
+                      <FlashcardArt />
                     </div>
-                  ))}
+                    <img
+                      src={vocabNinjaLogo}
+                      alt=""
+                      className="absolute bottom-0 left-1/2 -translate-x-1/2 h-9 w-auto object-contain drop-shadow"
+                      aria-hidden
+                    />
+                  </div>
+                </div>
+                <div className="mt-3 space-y-2">
+                  <button
+                    onClick={() => onContinue(firstWordId)}
+                    className="w-full inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-orange-500 text-white font-bold text-sm shadow hover:bg-orange-600 hover:-translate-y-0.5 transition-all"
+                  >
+                    Start Learning Flashcards <ChevronRight size={16} />
+                  </button>
+                  <button
+                    onClick={scrollToStory}
+                    className="w-full inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-background border border-border text-foreground font-semibold text-sm hover:bg-muted transition-all"
+                  >
+                    <RotateCcw size={14} /> Review Story Again
+                  </button>
                 </div>
               </div>
 
@@ -814,45 +747,6 @@ export default function SetReading({
                 )}
               </div>
 
-              {/* Ready CTA card */}
-              <div className="rounded-2xl border border-border bg-card p-5 shadow-sm">
-                <div className="grid grid-cols-[1fr_84px] gap-3 items-center">
-                  <div>
-                    <h3 className="text-sm font-extrabold text-foreground leading-tight">
-                      Ready to learn these words?
-                    </h3>
-                    <p className="text-xs text-muted-foreground mt-1 leading-snug">
-                      Let's master these {reading.words.length} words with
-                      interactive flashcards.
-                    </p>
-                  </div>
-                  <div className="relative h-20">
-                    <div className="absolute inset-0">
-                      <FlashcardArt />
-                    </div>
-                    <img
-                      src={vocabNinjaLogo}
-                      alt=""
-                      className="absolute bottom-0 left-1/2 -translate-x-1/2 h-9 w-auto object-contain drop-shadow"
-                      aria-hidden
-                    />
-                  </div>
-                </div>
-                <div className="mt-3 space-y-2">
-                  <button
-                    onClick={() => onContinue(firstWordId)}
-                    className="w-full inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-orange-500 text-white font-bold text-sm shadow hover:bg-orange-600 hover:-translate-y-0.5 transition-all"
-                  >
-                    Start Learning Flashcards <ChevronRight size={16} />
-                  </button>
-                  <button
-                    onClick={scrollToStory}
-                    className="w-full inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-background border border-border text-foreground font-semibold text-sm hover:bg-muted transition-all"
-                  >
-                    <RotateCcw size={14} /> Review Story Again
-                  </button>
-                </div>
-              </div>
             </aside>
           )}
         </div>
