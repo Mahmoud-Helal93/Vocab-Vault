@@ -701,9 +701,13 @@ export default function StudyMode({ onBack, onNavigate, initialDay, initialWordI
           <div className="flex items-stretch gap-3">
             <div className="flex items-center gap-3 px-4 py-3 rounded-2xl bg-card border border-card-border flex-1 min-w-0">
               <button
-                onClick={() => setView("group-select")}
+                onClick={() =>
+                  onNavigate
+                    ? onNavigate("mission-detail", { missionDay: selectedDay })
+                    : setView("group-select")
+                }
                 className="p-1.5 rounded-lg hover:bg-muted transition-colors shrink-0"
-                aria-label="Back"
+                aria-label="Back to mission"
               >
                 <ArrowLeft size={18} />
               </button>
@@ -841,8 +845,13 @@ export default function StudyMode({ onBack, onNavigate, initialDay, initialWordI
       </div>
       <div className="flex items-center justify-between mb-3 shrink-0">
         <button
-          onClick={() => setView("group-select")}
+          onClick={() =>
+            onNavigate
+              ? onNavigate("mission-detail", { missionDay: selectedDay })
+              : setView("group-select")
+          }
           className="p-2 rounded-xl hover:bg-muted transition-colors"
+          aria-label="Back to mission"
         >
           <ArrowLeft size={20} />
         </button>
