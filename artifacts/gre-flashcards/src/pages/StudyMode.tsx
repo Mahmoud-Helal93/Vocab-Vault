@@ -218,6 +218,11 @@ export default function StudyMode({ onBack, onNavigate, initialDay, initialWordI
     })();
 
     const openMission = (day: number) => {
+      if (onNavigate) {
+        onNavigate("mission-detail", { missionDay: day });
+        return;
+      }
+      // Fallback (no navigator): keep legacy in-page view.
       setSelectedDay(day);
       setSelectedGroup(null);
       setCardIndex(0);

@@ -357,7 +357,7 @@ export default function Dashboard({ onNavigate }: DashboardProps) {
       action: () =>
         dueWords.length > 0
           ? onNavigate("review")
-          : onNavigate("study", { day: nextDay.day }),
+          : onNavigate("mission-detail", { missionDay: nextDay.day }),
     },
     {
       time: "10 min",
@@ -540,7 +540,7 @@ export default function Dashboard({ onNavigate }: DashboardProps) {
             </div>
             {resumeMission !== null && (
               <button
-                onClick={() => onNavigate("study", { day: resumeMission })}
+                onClick={() => onNavigate("mission-detail", { missionDay: resumeMission })}
                 className="hidden sm:flex shrink-0 items-center gap-2 rounded-lg bg-orange-500 hover:bg-orange-600 text-white text-xs font-bold px-3 py-1.5 shadow-sm transition-colors"
               >
                 <Sparkles size={12} /> Resume Mission {resumeMission}
@@ -751,7 +751,7 @@ export default function Dashboard({ onNavigate }: DashboardProps) {
                       return (
                         <button
                           key={d.day}
-                          onClick={() => onNavigate("study", { day: d.day })}
+                          onClick={() => onNavigate("mission-detail", { missionDay: d.day })}
                           className={`relative rounded-xl border bg-card p-3 flex flex-col gap-2 min-h-[90px] cursor-pointer hover:-translate-y-0.5 hover:shadow-md transition-all text-left ${
                             done
                               ? "border-emerald-200 dark:border-emerald-900/40 bg-emerald-50/30 dark:bg-emerald-900/10"
