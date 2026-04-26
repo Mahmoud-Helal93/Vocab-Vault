@@ -769,47 +769,52 @@ export default function StudyMode({ onBack, onNavigate, initialDay, initialWordI
                 Learn the word in depth before you move on.
               </p>
             </div>
-            <div className="flex items-start gap-2 shrink-0 ml-auto">
+            <div className="flex items-center gap-2 shrink-0 ml-auto">
               <button
-                onClick={handlePrev}
-                disabled={cardIndex === 0}
-                className="h-11 px-3 sm:px-4 rounded-xl bg-white dark:bg-zinc-900 border border-border hover:bg-muted text-sm font-semibold flex items-center gap-2 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+                onClick={() => setFocusMode(true)}
+                title="Enter focus mode"
+                aria-label="Focus mode"
+                className="h-11 w-11 rounded-xl bg-white dark:bg-zinc-900 border border-border hover:bg-muted text-muted-foreground hover:text-orange-600 flex items-center justify-center transition-colors"
               >
-                <ArrowLeft size={16} />
-                <span className="hidden sm:inline">Previous Word</span>
+                <Crosshair size={18} />
               </button>
-              <div className="flex flex-col gap-2">
-                {isLastCard && selectedGroup !== null ? (
-                  <button
-                    onClick={() => onNavigate?.("set-test", { missionDay: selectedDay, group: selectedGroup })}
-                    className="h-11 px-4 sm:px-5 rounded-xl bg-gradient-to-r from-orange-400 to-orange-600 hover:from-orange-500 hover:to-orange-700 text-white text-sm font-bold flex items-center justify-center gap-2 shadow-sm transition-all"
-                    data-testid="button-test-yourself"
-                  >
-                    <Sparkles size={16} />
-                    Test Yourself
-                  </button>
-                ) : (
-                  <button
-                    onClick={() => {
-                      markWordReviewed(currentWord.id, 3);
-                      handleNext();
-                    }}
-                    disabled={isLastCard}
-                    className="h-11 px-4 sm:px-5 rounded-xl bg-gradient-to-r from-orange-400 to-orange-600 hover:from-orange-500 hover:to-orange-700 text-white text-sm font-bold flex items-center justify-between gap-3 shadow-sm disabled:opacity-50 disabled:cursor-not-allowed transition-all"
-                  >
-                    <span>Next Word</span>
-                    <ChevronRight size={16} />
-                  </button>
-                )}
-                <button
-                  onClick={() => setFocusMode(true)}
-                  className="h-9 px-4 rounded-xl bg-white dark:bg-zinc-900 border border-border hover:bg-muted text-xs font-semibold flex items-center justify-center gap-2 transition-colors"
-                >
-                  <Crosshair size={14} />
-                  Focus Mode
-                </button>
-              </div>
             </div>
+          </div>
+        )}
+
+        {/* Previous / Next word controls — sit above the word section */}
+        {!focusMode && (
+          <div className="flex items-center justify-end gap-2">
+            <button
+              onClick={handlePrev}
+              disabled={cardIndex === 0}
+              className="h-11 px-4 rounded-xl bg-white dark:bg-zinc-900 border border-border hover:bg-muted text-sm font-semibold flex items-center gap-2 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+            >
+              <ArrowLeft size={16} />
+              <span className="hidden sm:inline">Previous Word</span>
+            </button>
+            {isLastCard && selectedGroup !== null ? (
+              <button
+                onClick={() => onNavigate?.("set-test", { missionDay: selectedDay, group: selectedGroup })}
+                className="h-11 px-5 rounded-xl bg-gradient-to-r from-orange-400 to-orange-600 hover:from-orange-500 hover:to-orange-700 text-white text-sm font-bold flex items-center justify-center gap-2 shadow-sm transition-all"
+                data-testid="button-test-yourself"
+              >
+                <Sparkles size={16} />
+                Test Yourself
+              </button>
+            ) : (
+              <button
+                onClick={() => {
+                  markWordReviewed(currentWord.id, 3);
+                  handleNext();
+                }}
+                disabled={isLastCard}
+                className="h-11 px-5 rounded-xl bg-gradient-to-r from-orange-400 to-orange-600 hover:from-orange-500 hover:to-orange-700 text-white text-sm font-bold flex items-center justify-between gap-3 shadow-sm disabled:opacity-50 disabled:cursor-not-allowed transition-all"
+              >
+                <span>Next Word</span>
+                <ChevronRight size={16} />
+              </button>
+            )}
           </div>
         )}
 
