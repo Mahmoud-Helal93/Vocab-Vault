@@ -539,15 +539,20 @@ export default function SetReading({
                 </div>
               </div>
 
-              {/* Comprehension Check */}
-              <div className="rounded-2xl border border-border bg-card p-5 shadow-sm">
-                <div className="flex items-center justify-between mb-4 flex-wrap gap-2">
-                  <h3 className="text-sm font-bold text-foreground">
-                    Comprehension Check
-                  </h3>
-                  <div className="flex items-center gap-2">
-                    <div className="flex items-center gap-1">
-                      {reading.questions.map((qq, qi) => {
+            </aside>
+          )}
+        </div>
+
+        {/* ── Comprehension Check (full width, below the story) ── */}
+        {!focusMode && (
+          <div className="rounded-2xl border border-border bg-card p-5 shadow-sm">
+            <div className="flex items-center justify-between mb-4 flex-wrap gap-2">
+              <h3 className="text-sm font-bold text-foreground">
+                Comprehension Check
+              </h3>
+              <div className="flex items-center gap-2">
+                <div className="flex items-center gap-1">
+                  {reading.questions.map((qq, qi) => {
                         const ans = answers[qq.id];
                         const answered =
                           ans !== null && ans !== undefined;
@@ -741,11 +746,8 @@ export default function SetReading({
                     </div>
                   </div>
                 )}
-              </div>
-
-            </aside>
-          )}
-        </div>
+          </div>
+        )}
 
         {/* When focus mode is on, surface a slim CTA at the bottom */}
         {focusMode && (
