@@ -2466,6 +2466,845 @@ He filed it the next morning.`,
   ],
 };
 
+const MISSION_7_SET_1: SetReading = {
+  title: "The Branch on Eaton Avenue",
+  subtitle:
+    "A short story about a small library, a budget vote, and the difference between loud opinions and good ones.",
+  format: "Short Story",
+  readingMinutes: 4,
+  words: [
+    "appease",
+    "arbitrary",
+    "archaic",
+    "clamorous",
+    "dearth",
+    "explicable",
+    "hyperbole",
+    "immutable",
+    "indefatigable",
+    "indolent",
+  ],
+  passage: `When the city council voted, in early March, to cut the operating budget of the Eaton Avenue Branch Library by thirty-eight percent, the head librarian — a slow-spoken woman named Consuela Ailes — did not, as several of her younger colleagues expected, immediately call the public meeting that the library's regulations entitled her to call. She walked, instead, to the back office, sat down with the budget, and read it three times before she let herself feel anything about it.
+
+Her senior assistant, Pell, had a different temperament. He spent that evening in the staff room arguing, with a kind of generous **hyperbole**, that the council had effectively voted to close the branch by half measures, and that nothing short of a packed-room community protest would force a reconsideration. Pell was not wrong about the arithmetic. He was not, perhaps, quite right about the rest.
+
+Consuela had been a librarian for thirty-one years. She had seen this particular cycle before. The cycle, in her experience, ran roughly as follows: a council made a budget decision that looked **arbitrary** to the people it affected; an **indefatigable** organizer mobilized a **clamorous** crowd; the council, embarrassed in public, restored a token portion of the cut; and the underlying disagreement — about what a branch library was *for* — went unresolved for another two years.
+
+She did not want a token. She wanted, this time, a real conversation.
+
+She read the cut again on the second morning. It had a clear internal logic, even if she disagreed with it. The council had used three years of door-count data to argue that Eaton Avenue served, on average, fewer patrons per open hour than any other branch in the system. The data was real. The conclusion the council had drawn from it — that fewer patrons meant fewer hours warranted — was also, she had to admit, not entirely **explicable** away.
+
+Where the council was wrong, she believed, was in treating the door-count number as if it were **immutable**. The branch had been quiet for three years for reasons she could name: a temporary closure of the bus line that brought the elderly patrons; a school redistricting that had moved the after-school children to a different building; an **archaic** opening schedule that had stayed on paper long after the neighborhood's working hours had shifted. None of those reasons were the library's fault, exactly. None of them were permanent, either.
+
+She asked Pell to come into her office on the third morning.
+
+She did not ask him to abandon the protest. She asked him, instead, to delay it by two weeks. In those two weeks, she said, she wanted the staff to assemble what she called a "patron-hour memorandum" — a single document, no more than ten pages, showing the council exactly which underlying conditions had produced the door-count number and which of them were already changing. The memorandum would not **appease** the council; it would simply give the council something concrete to argue with, instead of a chant.
+
+Pell was, briefly, suspicious. The slow approach, he said, had a long history of being used by **indolent** institutions to wait out their critics. He was not wrong about that, either. But he agreed, after a pause, to the two weeks.
+
+The memorandum was finished, six staff members and a long Saturday later, on the fourteenth day. It was nine pages. It was not eloquent. It was, however, the kind of document that was difficult to argue with on a single reading, which meant the council, when it received it, was forced to schedule a working session rather than a vote.
+
+The protest, when it eventually happened, happened anyway. But it happened with the memorandum in every councillor's hand — and it was, for the first time in Consuela's memory, not the loudest argument in the room. The branch kept twenty-nine of its thirty-eight percent.
+
+Pell brought Consuela coffee that evening without being asked. They drank it in the staff room. Neither of them said the word "victory." The **dearth** of it, in the conversation, was perhaps the most honest thing about the day.`,
+  questions: [
+    {
+      id: 1,
+      kind: "vocab-context",
+      prompt: 'In this sentence, the word "hyperbole" most nearly means:',
+      quote:
+        '"He spent that evening in the staff room arguing, with a kind of generous hyperbole, that the council had effectively voted to close the branch by half measures..."',
+      options: [
+        "A precise, narrowly accurate description.",
+        "An exaggerated statement or claim not meant to be taken literally.",
+        "A formal complaint filed in writing.",
+        "A neutral summary of facts.",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Hyperbole" denotes deliberate exaggeration. Pell\'s "voted to close the branch" overstates a thirty-eight-percent cut, which the narrator notes is good arithmetic but not quite right.',
+    },
+    {
+      id: 2,
+      kind: "vocab-context",
+      prompt: 'In this sentence, the word "immutable" most nearly means:',
+      quote:
+        '"Where the council was wrong, she believed, was in treating the door-count number as if it were immutable."',
+      options: [
+        "Highly classified and confidential.",
+        "Unchanging and incapable of being altered.",
+        "Slightly inaccurate but still useful.",
+        "Recorded only on paper rather than digitally.",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Immutable" describes something that cannot change. Consuela\'s point is that the door-count number is a product of changing conditions she can name — bus routes, school zoning, opening hours.',
+    },
+    {
+      id: 3,
+      kind: "tone-purpose",
+      prompt:
+        'The narrator says the cut "looked arbitrary" to the people it affected. Why use "arbitrary" rather than simply "unfair"?',
+      options: [
+        '"Arbitrary" and "unfair" are exact synonyms; the choice is purely stylistic.',
+        '"Arbitrary" specifies that decisions appear to be made by personal whim rather than by reason — exactly the appearance Consuela then refuses to leave unchallenged with her memorandum.',
+        '"Arbitrary" implies an illegal decision, which is what Consuela ultimately proves.',
+        '"Arbitrary" means "made by a single person," and Pell is the one who actually made the cut.',
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Arbitrary" captures the look of a decision made by whim — and the memorandum reframes the cut as the council\'s reasoned reading of one specific number, which gives the conversation a real footing.',
+    },
+    {
+      id: 4,
+      kind: "inference",
+      prompt:
+        "Based on the passage, what can the reader most reasonably infer about why Consuela asks Pell to delay the protest by two weeks?",
+      options: [
+        "She has been told privately by a council member that the cut will be reversed if no public protest is held.",
+        "She is hoping that public attention will fade and that the council will simply forget about the cut.",
+        "She has seen the protest-and-token cycle play out before and wants to give the council a concrete document to argue with, rather than just a chant, so the underlying disagreement can be addressed.",
+        "She believes Pell is too inexperienced to organize a successful protest and wants more time to coach him.",
+      ],
+      correctIndex: 2,
+      explanation:
+        "The passage explicitly traces the cycle Consuela has seen and explains that the memorandum is meant to give the council something concrete to argue with instead of a chant.",
+    },
+    {
+      id: 5,
+      kind: "substitution",
+      prompt:
+        'Which single word could replace "indolent" in the sentence below without changing its meaning?',
+      quote:
+        '"The slow approach, he said, had a long history of being used by indolent institutions to wait out their critics."',
+      options: [
+        "Energetic",
+        "Lazy",
+        "Honest",
+        "Modern",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Lazy" — wanting to avoid effort — captures "indolent." Pell\'s worry is precisely that the slow approach can be a cover for inaction.',
+    },
+    {
+      id: 6,
+      kind: "main-idea",
+      prompt:
+        "Which sentence best summarizes the central idea or arc of the passage?",
+      options: [
+        "An angry community protest forces a city council to reverse a budget cut entirely on the night of the meeting.",
+        "A junior librarian leads a public campaign while the head librarian refuses to help, and the branch is closed within a year.",
+        "A senior librarian, instead of leading an immediate protest against a budget cut, builds an evidence-based memorandum that reframes the public debate and recovers most of the lost funding.",
+        "A city council quietly restores a library's budget after discovering that its own door-count data was incorrect.",
+      ],
+      correctIndex: 2,
+      explanation:
+        "The arc tracks Consuela's deliberate decision to slow Pell's protest, build the memorandum, and let it carry the eventual public moment.",
+    },
+  ],
+};
+
+const MISSION_7_SET_2: SetReading = {
+  title: "Three Weeks at the Verdant Council",
+  subtitle:
+    "A short story about a trade association, a careful beat reporter, and the patience required to write a fair piece.",
+  format: "Short Story",
+  readingMinutes: 4,
+  words: [
+    "insular",
+    "intransigent",
+    "intrepid",
+    "irreverent",
+    "loathe",
+    "malign",
+    "malleable",
+    "neophyte",
+    "plastic",
+    "platitude",
+  ],
+  passage: `The first thing the Verdant Council's communications director said to Hala Mariéssen, when she arrived for the agreed three-week observation, was that he hoped she was not the kind of reporter who arrived with the headline already written. He said it pleasantly, with practiced timing — the kind of opening sentence Hala had heard, in some form, on thirty similar visits, and which she had long since learned not to take personally.
+
+She was, in fact, not that kind of reporter. She was also not — she had to remind herself, on the first morning — a **neophyte**, even though the council's senior members were going to treat her as one, simply because she was the only person in the room under forty.
+
+The Verdant Council was a regional trade association of about two hundred member firms in the specialty timber industry. The council had a reputation — fairly or not — for being **insular**: a closed circle of family-owned businesses that distrusted outside scrutiny, that **loathed** the trade press in particular, and that had been, for as long as anyone outside the industry could remember, **intransigent** about disclosing even basic operating data to non-members.
+
+Her editor's instructions had been short. He wanted neither a hagiography nor an exposé. He wanted a piece that would describe how the council actually worked. Whether what she found ultimately reflected well on the council was not, he said, her problem to predetermine.
+
+The first week was, predictably, performative. The senior members had clearly agreed in advance which version of themselves the council would present. Their answers fell into a small number of well-rehearsed shapes: the **platitude** about "shared regional values," the careful deflection about "proprietary methods," the slightly **irreverent** joke about "the press" delivered with a smile that asked her to laugh along. She laughed when it was warranted and made no notes that anyone could see.
+
+The second week was where the reporting actually began. By then some council members had begun to forget she was there. She watched a procurement meeting in which the chair, a woman named Voss, was, by any honest measure, **intrepid**: she pushed back against a long-standing supplier on a contract clause that nobody else in the room had been willing to question for, by the supplier's own admission, eleven years. Hala wrote that down exactly as it happened.
+
+She also watched, the following afternoon, a back-corridor conversation in which a different senior member spoke about a regulator in terms it would have been easy, and inaccurate, to use to **malign** him in a single quoted sentence. It was the kind of moment a less careful reporter would have built a paragraph around. Hala did not. The full conversation, when she replayed her notes that night, was clearly the venting of a tired man at the end of a long week, not the institutional position of the council. She left it out.
+
+The third week was the hardest. By then she had enough material to write three different pieces — a flattering one, a damning one, and the more **malleable**, more honest piece somewhere in the middle that would satisfy neither the council's communications director nor the readers who had been hoping for a scandal. The middle piece was the one her editor wanted. It was also, she suspected, the one her own reputation in this beat would survive on for the next decade.
+
+She did not write the **plastic** version of the council's leadership that the communications director, in their final interview, kept gently nudging her toward. She wrote, instead, the version her notes supported. The council's response, a week after the article ran, was a single line: *We disagree with several characterizations and have no further comment.*
+
+It was, she felt, the closest thing to a compliment the council had ever paid a reporter.`,
+  questions: [
+    {
+      id: 1,
+      kind: "vocab-context",
+      prompt: 'In this sentence, the word "insular" most nearly means:',
+      quote:
+        '"The council had a reputation — fairly or not — for being insular: a closed circle of family-owned businesses that distrusted outside scrutiny..."',
+      options: [
+        "Concerned with national rather than local issues.",
+        "Closed off from and uninterested in cultures or perspectives outside one\'s own.",
+        "Heavily insulated against financial losses.",
+        "Strictly governed by written rules.",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Insular" describes a group cut off from the world outside its own circle — exactly the closed quality the colon spells out.',
+    },
+    {
+      id: 2,
+      kind: "vocab-context",
+      prompt: 'In this sentence, the verb "malign" most nearly means:',
+      quote:
+        '"...a different senior member spoke about a regulator in terms it would have been easy, and inaccurate, to use to malign him in a single quoted sentence."',
+      options: [
+        "To formally cross-examine in a hearing.",
+        "To speak about someone in a spitefully critical or unfair way.",
+        "To compliment in an exaggerated manner.",
+        "To explain a position carefully.",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Malign" means to speak unfairly ill of someone. Hala notices that the easy quote would have done that — and would have been inaccurate — so she leaves it out.',
+    },
+    {
+      id: 3,
+      kind: "tone-purpose",
+      prompt:
+        'The narrator describes some answers as "the platitude about \'shared regional values.\'" Why use "platitude" rather than simply "phrase"?',
+      options: [
+        '"Platitude" and "phrase" are exact synonyms; the choice is purely decorative.',
+        '"Platitude" carries the sense of a trite, unoriginal remark uttered as if profound — exactly the rehearsed, content-free quality of the council\'s first-week answers.',
+        '"Platitude" specifies that the answers were rehearsed in writing rather than spoken.',
+        '"Platitude" means a sentence taken from a contract; here it refers to the actual council bylaws.',
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Platitude" sharpens the picture: not just a phrase, but a tired one offered with the appearance of substance. It frames why the first week\'s reporting yielded so little.',
+    },
+    {
+      id: 4,
+      kind: "inference",
+      prompt:
+        "Based on the passage, what can the reader most reasonably infer about why Hala leaves the back-corridor conversation out of her piece?",
+      options: [
+        "The communications director told her in advance that any back-corridor material would be off the record.",
+        "She did not have a clean recording of the conversation and could not verify the exact wording.",
+        "She judges, after replaying her notes, that the conversation was personal venting at the end of a long week rather than the institutional position of the council, so quoting it would have been easy and inaccurate.",
+        "Her editor specifically forbade her from including any conversations involving regulators.",
+      ],
+      correctIndex: 2,
+      explanation:
+        "The passage states this directly: replaying her notes, Hala recognizes the conversation as venting, not policy, and decides that the easy quote would have been inaccurate.",
+    },
+    {
+      id: 5,
+      kind: "substitution",
+      prompt:
+        'Which single word could replace "intrepid" in the sentence below without changing its meaning?',
+      quote:
+        '"...the chair, a woman named Voss, was, by any honest measure, intrepid: she pushed back against a long-standing supplier on a contract clause..."',
+      options: [
+        "Hesitant",
+        "Fearless",
+        "Indifferent",
+        "Apologetic",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Fearless" — willing to act in the face of resistance — captures "intrepid." The other options reverse the sentence\'s meaning.',
+    },
+    {
+      id: 6,
+      kind: "main-idea",
+      prompt:
+        "Which sentence best summarizes the central idea or arc of the passage?",
+      options: [
+        "An ambitious reporter publishes a damning exposé of a closed industry council and is barred from the trade beat.",
+        "A reporter, given three weeks inside a closed trade council, resists writing either the flattering or the damning version and produces a careful middle account that her notes actually support.",
+        "A trade council successfully manipulates a young reporter into writing exactly the favorable piece its communications director wanted.",
+        "A communications director coaches a council to deliver only platitudes during interviews so that no real reporting is possible.",
+      ],
+      correctIndex: 1,
+      explanation:
+        "The arc tracks Hala from the rehearsed first week through the unguarded second week to the hardest third week, where she chooses the honest middle piece over either easier version.",
+    },
+  ],
+};
+
+const MISSION_7_SET_3: SetReading = {
+  title: "The Tributary Below the Mill",
+  subtitle:
+    "A short story about a field station, a quiet stream, and a season-long observation nobody else had made yet.",
+  format: "Short Story",
+  readingMinutes: 4,
+  words: [
+    "prescient",
+    "pristine",
+    "reproach",
+    "robust",
+    "salubrious",
+    "sanction",
+    "sedulous",
+    "soporific",
+    "stern",
+    "tendentious",
+  ],
+  passage: `The Calbery Field Station, where Mateo Eluard had been placed for his second postdoctoral year, sat in a glacial valley about ninety minutes by gravel road from the nearest town. It was — by reputation, by photograph, and by the lazy testimony of every visiting committee that had ever filed a report on it — one of the most **pristine** small watersheds in the country. The director, an unsmiling man named Ivor Halst, had spent twenty-seven years protecting that reputation with the kind of quiet, **sedulous** care that made other field stations, in comparison, look unserious.
+
+Mateo's task, that summer, was small and specific. He was to take weekly samples from the unnamed tributary that ran below the old mill at the south end of the valley, and to add a single line to the station's long-running database. Nothing about the tributary, in twenty years of recordkeeping, had ever been remarkable. The line he was expected to add, week after week, was expected to look very much like the line that had preceded it.
+
+In his fourth week, the line did not look the same.
+
+The numbers were not dramatic. They were, in fact, the kind of small upward drift that a less careful reader might have dismissed as instrument noise. Mateo recalibrated his probe, took the samples again on a different day, and got the same drift. He said nothing in the staff meeting that Friday.
+
+He spent the next three Saturdays walking the tributary on foot. The valley was, in late July, almost aggressively **salubrious** — clean cold air, no flies, the sound of the stream the only thing in the silence — and the walking gave him time to think about what he was, and was not, prepared to claim. He found, on the third Saturday, a small seep he did not recognize, on the upslope side of the mill, that did not appear on any of the station's maps.
+
+He brought the seep, and his four weeks of probe data, to Halst on a Monday morning.
+
+Halst listened. Halst was, famously, **stern** in these conversations — a man who had **reproached** more than one previous postdoc for what he called "**tendentious** fieldwork," meaning data presented with a conclusion attached before the data justified it. Mateo had been warned about this in his very first week. He brought no conclusion. He brought a map, four data points, and a request — not a recommendation — that the seep be added to the next month's sampling rotation.
+
+Halst read the page twice.
+
+What he said, after a long pause, surprised the rest of the staff that afternoon. He told Mateo that the request was both **prescient** and overdue, and that the station would, with the institute's **sanction**, expand the sampling rotation to include the seep beginning the following Monday. He also said — and this was the part Mateo would replay later — that he had been waiting, for several years, for one of his postdocs to walk that particular slope on a Saturday and notice what Mateo had noticed. The fact that the previous five had not, he said, was less a comment on the seep than on the **soporific** effect of inheriting a database that had reported "no change" for two decades.
+
+The new sampling, by October, had confirmed the drift. The seep, by December, had been traced to a slow seasonal infiltration from the old mill's long-decommissioned settling pond — a small, **robust** finding, neither alarming nor trivial, that would shape the station's next ten years of work on the tributary.
+
+Mateo's name was the first on the resulting paper. Halst, who almost never accepted second authorship on anything originating at his station, accepted it on this one without comment.`,
+  questions: [
+    {
+      id: 1,
+      kind: "vocab-context",
+      prompt: 'In this sentence, the word "pristine" most nearly means:',
+      quote:
+        '"It was...one of the most pristine small watersheds in the country."',
+      options: [
+        "Heavily monitored by environmental regulators.",
+        "In its original, unspoiled, and pure condition.",
+        "Frequently visited by tourists.",
+        "Used primarily for industrial purposes.",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Pristine" describes a place still in its untouched, original state — the reputation Halst has spent twenty-seven years protecting.',
+    },
+    {
+      id: 2,
+      kind: "vocab-context",
+      prompt: 'In this sentence, the word "sedulous" most nearly means:',
+      quote:
+        '"The director, an unsmiling man named Ivor Halst, had spent twenty-seven years protecting that reputation with the kind of quiet, sedulous care..."',
+      options: [
+        "Bored and inattentive.",
+        "Showing dedication and steady diligence.",
+        "Theatrical and showy.",
+        "Frequently absent from his post.",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Sedulous" denotes diligent, persistent application — the unshowy, steady care Halst is known for.',
+    },
+    {
+      id: 3,
+      kind: "tone-purpose",
+      prompt:
+        'Halst is said to reproach previous postdocs for "tendentious fieldwork." Why does the narrator use "tendentious" rather than simply "biased"?',
+      options: [
+        '"Tendentious" and "biased" mean exactly the same thing; the choice is purely stylistic.',
+        '"Tendentious" specifies fieldwork shaped by an agenda — data presented with a conclusion attached before the data justify it — which is precisely the fault Mateo is careful to avoid.',
+        '"Tendentious" means "incomplete," and Halst is complaining that the previous postdocs did not finish their work.',
+        '"Tendentious" implies criminal misconduct, which is why the previous postdocs were dismissed.',
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Tendentious" sharpens the criticism: data marshaled to push a chosen conclusion. The narrator then shows Mateo bringing data, a map, and a request — but no conclusion.',
+    },
+    {
+      id: 4,
+      kind: "inference",
+      prompt:
+        "Based on the passage, what can the reader most reasonably infer about why Mateo presents Halst with \"a request, not a recommendation\"?",
+      options: [
+        "Station policy specifically prohibits postdocs from making formal recommendations to the director.",
+        "He has not yet collected enough data to know whether the seep is significant and so cannot honestly recommend anything.",
+        "He has learned that Halst rejects fieldwork that arrives with conclusions already attached, so framing the matter as a procedural request lets the data be evaluated on its own terms.",
+        "He is hoping to share authorship on the eventual paper and believes a request rather than a recommendation strengthens that claim.",
+      ],
+      correctIndex: 2,
+      explanation:
+        "The passage emphasizes Halst's complaint about \"tendentious fieldwork\" and immediately notes that Mateo brought no conclusion — only a map, four data points, and the request to expand sampling.",
+    },
+    {
+      id: 5,
+      kind: "substitution",
+      prompt:
+        'Which single word could replace "stern" in the sentence below without changing its meaning?',
+      quote: '"Halst was, famously, stern in these conversations..."',
+      options: [
+        "Lenient",
+        "Severe",
+        "Distracted",
+        "Apologetic",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Severe" — serious and unrelenting — captures "stern." The other options change or reverse the sentence\'s meaning.',
+    },
+    {
+      id: 6,
+      kind: "main-idea",
+      prompt:
+        "Which sentence best summarizes the central idea or arc of the passage?",
+      options: [
+        "A postdoc discovers a major contamination event and forces the field station to issue an emergency public warning within a week.",
+        "A field station director punishes a postdoc for noticing a small drift in the data that turns out, on review, to be instrument noise.",
+        "A careful postdoc identifies a small, unexplained drift in the data, walks the watershed on his own time to understand it, and presents his finding without overclaiming, leading to a meaningful reshaping of the station's work.",
+        "A field station, after twenty years of unchanged data, is closed when its long-decommissioned settling pond is discovered.",
+      ],
+      correctIndex: 2,
+      explanation:
+        "The arc tracks Mateo from the unremarkable assignment, through the careful weekend walking, to the request that respects Halst's standards — and the reshaping of the station's work that follows.",
+    },
+  ],
+};
+
+const MISSION_8_SET_1: SetReading = {
+  title: "The Last Recital at the Astor Room",
+  subtitle:
+    "A short story about a young pianist, a flamboyant rival, and a recital program that almost did not happen at all.",
+  format: "Short Story",
+  readingMinutes: 4,
+  words: [
+    "accentuate",
+    "conjectural",
+    "convivial",
+    "decadent",
+    "egregious",
+    "evanescent",
+    "flamboyant",
+    "forestall",
+    "gainsay",
+    "galvanize",
+  ],
+  passage: `The Astor Room had not been a fashionable address in fifty years. It sat above a closed bakery on a long block in Brooklyn, two flights up a stair whose runner had worn through to the wood, and it survived — when other rooms of its kind had not — only because Hanna Vasic had refused to let it close. Hanna, eighty-one now, had given her own student recital there in 1962, and she still ran the small Wednesday-evening concert series in which her better students performed for an audience of twenty or thirty regulars.
+
+Lina Marek was, by Hanna's quiet estimate, the strongest student she had taught in a decade. She was also, on the Wednesday in question, eight minutes from walking out.
+
+The trouble was a young man named Sevan Doric, whose name had been added to the program two weeks earlier by the building's new co-tenant, a small chamber society that had begun renting the room on Thursdays. Sevan was a **flamboyant** performer — ruffled shirts, theatrical bows, an interpretation of Liszt that Hanna had once described, with the most measured of voices, as "**decadent** in the bad sense." He had decided that Lina's slot, at the end of the program, ought to be his.
+
+"I am not going to **gainsay** him in public," Lina said. She was sitting on the bench in the small green room, in her black recital dress, her hands flat on her thighs. "I am also not going to play after him."
+
+Hanna sat down on the stool across from her.
+
+"Then we will not put you after him," Hanna said.
+
+What Hanna did, in the next six minutes, would later be described by the regulars as the most graceful piece of programming they had ever seen her execute. She did not confront Sevan. She did not rearrange the order publicly. Instead she walked out into the hall, found the chamber society's chair, and said, in her **convivial**, perfectly courteous public voice, that she was so glad Sevan had come, and that the room would benefit enormously from hearing him as the program's final guest — a placement, she explained, traditionally reserved at the Astor Room for the visiting performer whom the audience would most remember.
+
+The chair, flattered, agreed at once. Sevan, flattered, agreed at once.
+
+Lina, having been moved earlier in the program, played seventh.
+
+She had prepared two Schubert impromptus and a small Janáček piece — the Janáček selected, originally, to **forestall** any direct comparison with the Liszt that Sevan would inevitably play. She did not need it now. What she needed was to **accentuate**, in the Schubert, the long quiet line that Hanna had been working with her on for three months — the line that did not announce itself, the line that an inattentive listener could miss entirely.
+
+She played it.
+
+Whatever she did in those nine minutes — the regulars would later describe it in the **conjectural**, slightly awed way that audiences describe performances they cannot quite explain — the room went very still. The Schubert's softest passages, almost **evanescent**, seemed to **galvanize** the audience into a quality of listening Hanna had not heard in the room in years. When Lina lifted her hands at the end, no one moved for a full second.
+
+Sevan played afterward. He played, as expected, with an **egregious** amount of pedal and a finale that drew an involuntary wince from the chamber society's chair.
+
+The applause, when it came for him, was warm and polite.
+
+The applause, when the audience filed out, returned to Lina at the back of the hall — quietly, one regular at a time — for nearly twenty minutes.
+
+Hanna locked the room herself that night. She did not say anything to Lina about Sevan. She said only, on the stairs, that the Janáček could wait until next month.`,
+  questions: [
+    {
+      id: 1,
+      kind: "vocab-context",
+      prompt: 'In this sentence, the word "convivial" most nearly means:',
+      quote:
+        '"...she walked out into the hall, found the chamber society\'s chair, and said, in her convivial, perfectly courteous public voice..."',
+      options: [
+        "Cold and dismissive.",
+        "Warmly sociable and good-humored.",
+        "Quiet and shy.",
+        "Loud and boastful.",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Convivial" describes a friendly, warmly sociable manner — the public voice Hanna uses to flatter the chamber society\'s chair into accepting her suggestion.',
+    },
+    {
+      id: 2,
+      kind: "vocab-context",
+      prompt: 'In this sentence, the word "evanescent" most nearly means:',
+      quote:
+        '"The Schubert\'s softest passages, almost evanescent, seemed to galvanize the audience..."',
+      options: [
+        "Loud and forceful.",
+        "Quickly fading and almost vanishing.",
+        "Repeated many times.",
+        "Played out of tune.",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Evanescent" means quickly fading or close to vanishing — fitting for the softest, almost-disappearing passages of the Schubert.',
+    },
+    {
+      id: 3,
+      kind: "tone-purpose",
+      prompt:
+        'Hanna once described Sevan\'s Liszt as "decadent in the bad sense." Why does the narrator include this carefully qualified phrase rather than simply calling the playing "showy"?',
+      options: [
+        '"Decadent" and "showy" are synonyms; the qualification is meaningless.',
+        'The qualifier signals that "decadent" can sometimes be a compliment in music criticism but that Hanna means the pejorative reading — playing that is overripe and self-indulgent.',
+        '"Decadent" means "old-fashioned," and Hanna is complaining that Sevan plays the wrong era of repertoire.',
+        '"Decadent" implies illegal conduct, which is why Sevan is later excluded from the program.',
+      ],
+      correctIndex: 1,
+      explanation:
+        'The phrase "in the bad sense" tells the reader that "decadent" is being used pejoratively here — overripe, self-indulgent playing — not as the aesthetic compliment the word can sometimes carry.',
+    },
+    {
+      id: 4,
+      kind: "inference",
+      prompt:
+        "Why, most likely, does Hanna move Lina earlier in the program rather than refusing to add Sevan at all?",
+      options: [
+        "Hanna is afraid of Sevan and does not want a public confrontation she might lose.",
+        "Hanna recognizes she cannot easily exclude a guest invited by the building's new co-tenant, but she can quietly reframe the schedule so that Lina performs to a fresh, attentive room while protecting both performers' dignity.",
+        "Hanna believes Sevan is the stronger pianist and wants to give him the spotlight.",
+        "The chamber society's chair has formally demanded that Sevan close the program, leaving Hanna no other option.",
+      ],
+      correctIndex: 1,
+      explanation:
+        "Hanna avoids a public fight she might not win, flatters the chamber society into accepting Lina's earlier slot, and ends up with Lina playing seventh — to a fresh, attentive audience — while still letting Sevan close.",
+    },
+    {
+      id: 5,
+      kind: "substitution",
+      prompt:
+        'Which single word could replace "galvanize" in the sentence below without changing its meaning?',
+      quote:
+        '"The Schubert\'s softest passages, almost evanescent, seemed to galvanize the audience..."',
+      options: [
+        "Bore",
+        "Energize",
+        "Confuse",
+        "Dismiss",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Energize" — to rouse into active attention — captures "galvanize." The other options reverse or weaken the meaning.',
+    },
+    {
+      id: 6,
+      kind: "main-idea",
+      prompt:
+        "Which sentence best summarizes the central idea or arc of the passage?",
+      options: [
+        "A young pianist publicly humiliates a flamboyant rival and is rewarded with a record contract.",
+        "A teacher rewrites a recital program with quiet diplomacy so that a strong student can play to an attentive audience without confronting a showy guest, and the student delivers a performance that lingers with the room.",
+        "A famous concert hall closes after a final, disappointing recital marred by an egregious display of bad taste.",
+        "An eighty-one-year-old teacher decides to retire after a younger pianist refuses to share the stage.",
+      ],
+      correctIndex: 1,
+      explanation:
+        "The arc tracks Hanna's small, courteous reordering of the program, Lina's quiet seventh-slot performance, and the audience response that follows — all without a public confrontation with Sevan.",
+    },
+  ],
+};
+
+const MISSION_8_SET_2: SetReading = {
+  title: "The Notice on the Bulletin Board",
+  subtitle:
+    "A short story about a small office, a quiet succession, and a campaign conducted entirely in pinned notes.",
+  format: "Short Story",
+  readingMinutes: 4,
+  words: [
+    "indiscriminate",
+    "innocuous",
+    "momentary",
+    "mundane",
+    "nettlesome",
+    "nullify",
+    "obviate",
+    "omnipresent",
+    "oust",
+    "palpable",
+  ],
+  passage: `The Lindgren Translation Office occupied the second floor of a brick building in Hartford — four desks, two file cabinets, and a coffee machine whose hum had become so **omnipresent** that no one in the office could remember what the room sounded like without it. For twenty-three years, the office had been run by Imogen Sahl, a translator of Swedish technical documents whose contracts paid the rent for everyone else's more interesting work.
+
+Imogen was, in February, three weeks from retirement. The replacement she had recommended to the firm's owner was Anders Korhonen, a quiet senior translator with twenty-six years at the firm. The owner had agreed in principle.
+
+The trouble was a younger translator named Petra Velm, who believed that she — and not Anders — should run the office.
+
+Petra's campaign, that February, was conducted almost entirely through small notices pinned to the office bulletin board.
+
+The notices were, on first reading, **indiscriminate** and **innocuous**. A note about parking. A note about coffee filters. A note about the photocopier's paper drawer. None of them named Anders. Each of them, however, addressed a tiny, **mundane** operational problem that Anders had — at some point in the previous month — failed to anticipate. The note about parking referred, obliquely, to the morning Anders had blocked the loading bay. The note about coffee filters referred to the day Anders had, distractedly, started the machine without one. The note about the photocopier referred to a paper jam Anders had not reported.
+
+By the third week, the bulletin board was so dense with these small, polite notices that the **palpable** purpose of the wall had shifted. It was no longer a place where the office shared information. It was a place where one person, without ever raising her voice, was building a quiet brief against another.
+
+Imogen, who missed almost nothing, missed nothing here.
+
+She did not confront Petra. She did not, that week, take down the notices. What she did was add one of her own, in her own small careful hand, to the top of the board:
+
+"As of March 1, all internal operational notes are to be sent through email and addressed to the senior translator on duty, who will determine whether the matter requires a response. The bulletin board is reserved for client notices and statutory postings. — I.S."
+
+The notice did not name Petra. It did not need to. It also did not, by itself, **oust** her from the office, or **nullify** the small file of complaints she had been quietly building. It simply **obviated** the bulletin board as a tool. Without the wall, the campaign collapsed.
+
+Anders took over the office on March 2. Petra remained at her desk; her contract was not in question. The two of them — and this is the part of the story that the office still tells — settled, within a month, into a working relationship that was not warm, but was not **nettlesome** either. Petra discovered, slowly, that Anders was very good at the parts of the work she found tedious; Anders discovered, slowly, that Petra was very good at the parts of the work he found difficult.
+
+Imogen, on her last day, took down all of the notices from the bulletin board herself. She put them, without ceremony, into the recycling bin.
+
+She did not say anything about it. She paused only for a **momentary** glance at the cleared cork — which was, after twenty-three years, the first time anyone in the office could remember seeing it bare — and then she left.`,
+  questions: [
+    {
+      id: 1,
+      kind: "vocab-context",
+      prompt: 'In this sentence, the word "innocuous" most nearly means:',
+      quote:
+        '"The notices were, on first reading, indiscriminate and innocuous."',
+      options: [
+        "Aggressive and obviously hostile.",
+        "Harmless on the surface; offering nothing apparently objectionable.",
+        "Highly technical and difficult to understand.",
+        "Written in a foreign language.",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Innocuous" means harmless on the surface — which is precisely the point: each note seems unobjectionable on its own, even though the cumulative effect is a campaign.',
+    },
+    {
+      id: 2,
+      kind: "vocab-context",
+      prompt: 'In this sentence, the word "palpable" most nearly means:',
+      quote:
+        '"...the bulletin board was so dense with these small, polite notices that the palpable purpose of the wall had shifted."',
+      options: [
+        "Hidden and secret.",
+        "So clear that it could almost be touched or felt.",
+        "Officially sanctioned by management.",
+        "Trivial and easily ignored.",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Palpable" describes something so clearly perceptible it can almost be physically felt — here, the unmistakable shift in what the bulletin board was being used for.',
+    },
+    {
+      id: 3,
+      kind: "tone-purpose",
+      prompt:
+        'In the opening sentence, the narrator describes the coffee machine\'s hum as "omnipresent." What does this word choice contribute to the tone of the passage?',
+      options: [
+        'It announces that the story will be a fast-paced thriller about office sabotage.',
+        'It establishes a tone of quiet, almost invisible constancy — the kind of background fact that nobody notices but everybody depends on, which mirrors how the office\'s long-running culture has been shaped by Imogen herself.',
+        '"Omnipresent" is an error for "occasional" and contributes nothing of importance.',
+        'It signals that surveillance equipment has been installed in the office.',
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Omnipresent" sets a tone of unobtrusive, taken-for-granted constancy. The reader is being prepared for a story in which the most consequential person in the room is the one whose presence is least announced.',
+    },
+    {
+      id: 4,
+      kind: "inference",
+      prompt:
+        "Why, most likely, does Imogen post a procedural rule about the bulletin board rather than simply taking down Petra's notices or confronting her directly?",
+      options: [
+        "She is afraid of Petra and is trying to avoid being noticed by her at all.",
+        "She wants Anders, not herself, to be seen as the one who acted against Petra.",
+        "A direct confrontation would treat the campaign as personal and might sharpen the conflict; a quiet rule change removes the tool the campaign depends on, ends it without naming anyone, and leaves Petra in place but disarmed.",
+        "Office regulations forbid her, as the outgoing manager, from removing material from the bulletin board.",
+      ],
+      correctIndex: 2,
+      explanation:
+        "The passage emphasizes that the rule does not name Petra and does not, by itself, push her out — it simply removes the bulletin board as an instrument of the campaign. The conflict ends without a confrontation.",
+    },
+    {
+      id: 5,
+      kind: "substitution",
+      prompt:
+        'Which single word or phrase could replace "obviated" in the sentence below without changing its meaning?',
+      quote:
+        '"It simply obviated the bulletin board as a tool."',
+      options: [
+        "Magnified",
+        "Made unnecessary",
+        "Damaged beyond repair",
+        "Praised publicly",
+      ],
+      correctIndex: 1,
+      explanation:
+        'To "obviate" something is to remove the need for it or render it unnecessary. The new email rule does exactly that to the bulletin-board campaign.',
+    },
+    {
+      id: 6,
+      kind: "main-idea",
+      prompt:
+        "Which sentence best summarizes the central idea or arc of the passage?",
+      options: [
+        "An office descends into open conflict between two translators, ending with one of them being publicly fired.",
+        "A retiring manager dismantles a quiet campaign against her chosen successor by changing a small office rule, ending the conflict without confrontation and leaving the workplace intact.",
+        "A bulletin board is removed because of a building safety inspection, and an unrelated personnel change happens at the same time.",
+        "An ambitious junior translator successfully takes over an office after pinning enough complaints to the bulletin board.",
+      ],
+      correctIndex: 1,
+      explanation:
+        "The arc moves from Petra's escalating notices, through Imogen's small procedural posting, to the collapse of the campaign and a workable post-handover relationship — a quiet, decisive resolution.",
+    },
+  ],
+};
+
+const MISSION_8_SET_3: SetReading = {
+  title: "The Provost's Quiet Ledger",
+  subtitle:
+    "A short story about a small black notebook, a slow pattern, and a dean who resigned for personal reasons.",
+  format: "Short Story",
+  readingMinutes: 4,
+  words: [
+    "perfidy",
+    "profuse",
+    "pugnacious",
+    "sagacious",
+    "sanguine",
+    "scant",
+    "skullduggery",
+    "trivial",
+    "utilitarian",
+    "vapid",
+  ],
+  passage: `The Provost's office at Beresford College was a small, almost **utilitarian** room on the second floor of the administration building — two filing cabinets, a desk, a window looking out onto the quad, and a worn leather chair in which the current provost, Margit Halloran, had been sitting for eleven years. There was nothing flashy in the room and nothing personal in it beyond a single framed photograph of her late husband. People who came in for the first time often left mildly disappointed. The room did not match the rumors of the woman who worked in it.
+
+Margit was, by reputation in the system, the most **sagacious** provost the college had ever had. She was also, by reputation, almost impossible to alarm. The board called her **sanguine** in good times and sanguine in bad ones, which was meant — depending on the year — as either a compliment or a complaint.
+
+The matter that came across her desk in early October was, on its face, **trivial**. A junior administrator in the registrar's office, a man named Wallis, had filed a small complaint against the dean of admissions. The dean, Wallis claimed, had pressured him to rewrite a transcript for a donor's son.
+
+Margit read the complaint twice. Then, instead of summoning the dean, she opened the small black ledger she had kept, in pencil, for eleven years.
+
+The ledger had no title and no organizational logic any outsider would have recognized. It contained, for every academic year of her tenure, a single short line per administrator — a sentence about a small thing that had crossed her desk and that she had judged, at the time, worth remembering. The line for the dean of admissions, that fall, was the seventh entry under his name. The previous six lines, taken individually, would have looked unremarkable. Read together, they did not.
+
+What the ledger described, when Margit set the six entries side by side, was not a single, dramatic act of **perfidy**. It was a slow pattern of small **skullduggery** — a transcript adjusted here, a deadline waived there, a fee quietly forgiven for a name the dean recognized — none of it, on its own, sufficient grounds for discipline. All of it, taken together, conduct the college could not continue to ignore.
+
+Margit did not, that week, confront the dean. She did not give him the **pugnacious** meeting that some on the board would later say he deserved. What she did, instead, was send the ledger pages — without commentary, without a recommendation — to the chair of the trustees, with a short note saying only that the chair might want to read them before the November meeting.
+
+The chair read them on a Sunday.
+
+By the following Friday, the dean had resigned. The official letter cited "personal reasons." The press release was **vapid** in the way that all such releases are vapid — three short sentences, a thank-you, a wish for future success.
+
+The donor's son, whose transcript had not in fact been rewritten — Wallis had refused, and had filed the complaint precisely because of that refusal — graduated on time the following spring with the grades he had actually earned.
+
+Margit, who could have given a long, **profuse** statement to the campus paper about what she had done, gave none. She said only, when the editor cornered her on the quad, that the matter had been handled within the appropriate offices, and that there was **scant** reason to revisit it now.
+
+She walked back to her utilitarian room and closed the door.
+
+The ledger went back into the drawer.`,
+  questions: [
+    {
+      id: 1,
+      kind: "vocab-context",
+      prompt: 'In this sentence, the word "sagacious" most nearly means:',
+      quote:
+        '"Margit was, by reputation in the system, the most sagacious provost the college had ever had."',
+      options: [
+        "Easily flattered.",
+        "Showing keen judgment and wise discernment.",
+        "Slow to make decisions.",
+        "Outwardly charming but secretly ambitious.",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Sagacious" denotes wise, discerning judgment — exactly the reputation Margit demonstrates in how she handles the dean.',
+    },
+    {
+      id: 2,
+      kind: "vocab-context",
+      prompt: 'In this sentence, the word "perfidy" most nearly means:',
+      quote:
+        '"What the ledger described...was not a single, dramatic act of perfidy."',
+      options: [
+        "An accidental clerical error.",
+        "A serious breach of trust or betrayal.",
+        "An expensive purchase.",
+        "A formal academic ceremony.",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Perfidy" means deliberate breach of trust or betrayal. The narrator distinguishes this from the slower pattern of small misconduct the ledger actually documents.',
+    },
+    {
+      id: 3,
+      kind: "tone-purpose",
+      prompt:
+        'The press release announcing the dean\'s resignation is described as "vapid in the way that all such releases are vapid." What does this phrasing contribute to the passage?',
+      options: [
+        'It signals that the narrator is angry at the college and wants the reader to demand a public investigation.',
+        'It quietly suggests that the official statement is deliberately empty of content — three polite sentences that say nothing real — which mirrors the larger point that the actual decision was made off the page, in Margit\'s office.',
+        '"Vapid" is being used as a compliment here, meaning "well-written."',
+        'It is a stylistic accident with no bearing on the meaning of the passage.',
+      ],
+      correctIndex: 1,
+      explanation:
+        'The repetition emphasizes that the press release is content-free by design. The real action — Margit\'s ledger pages going to the chair — happened away from any public statement, which is the point.',
+    },
+    {
+      id: 4,
+      kind: "inference",
+      prompt:
+        "Why, most likely, does Margit send the ledger pages to the chair of the trustees \"without commentary, without a recommendation\"?",
+      options: [
+        "She is uncertain whether the dean has done anything wrong and wants the chair to decide.",
+        "She is required by college policy to forward all complaints to the chair without analysis.",
+        "She trusts the cumulative pattern in the ledger to speak for itself, and she wants the chair to reach the necessary conclusion independently — which protects the eventual decision from looking like a personal campaign on Margit's part.",
+        "She is hoping the chair will overlook the pattern entirely and let the dean stay in place.",
+      ],
+      correctIndex: 2,
+      explanation:
+        "The passage stresses that the previous six lines in the ledger \"would have looked unremarkable\" alone but \"taken together\" did not. Sending the pages without commentary lets the pattern itself do the work and keeps the decision the chair's, not Margit's.",
+    },
+    {
+      id: 5,
+      kind: "substitution",
+      prompt:
+        'Which single word could replace "sanguine" in the sentence below without changing its meaning?',
+      quote:
+        '"The board called her sanguine in good times and sanguine in bad ones..."',
+      options: [
+        "Panicked",
+        "Optimistic",
+        "Hostile",
+        "Indifferent",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Sanguine" means optimistic or hopefully composed, especially under pressure — which is exactly the steadiness the board is describing.',
+    },
+    {
+      id: 6,
+      kind: "main-idea",
+      prompt:
+        "Which sentence best summarizes the central idea or arc of the passage?",
+      options: [
+        "A junior administrator publicly accuses a dean of admissions and is rewarded with a promotion the following spring.",
+        "A provost confronts a dean of admissions in a heated meeting that ends in his immediate, public dismissal.",
+        "A provost uses a quietly maintained record of small incidents to surface a slow pattern of misconduct, lets the trustees draw the obvious conclusion on their own, and resolves the matter without public confrontation or fanfare.",
+        "A donor's son has his transcript rewritten and graduates a year early thanks to the dean's intervention.",
+      ],
+      correctIndex: 2,
+      explanation:
+        "The arc moves from a single \"trivial\" complaint, through Margit's eleven-year ledger and the six-entry pattern it reveals, to the chair's quiet weekend reading and the dean's resignation — all handled without a public meeting.",
+    },
+  ],
+};
+
 export const SET_READINGS: Record<string, SetReading> = {
   "1-1": MISSION_1_SET_1,
   "1-2": MISSION_1_SET_2,
@@ -2485,6 +3324,12 @@ export const SET_READINGS: Record<string, SetReading> = {
   "6-1": MISSION_6_SET_1,
   "6-2": MISSION_6_SET_2,
   "6-3": MISSION_6_SET_3,
+  "7-1": MISSION_7_SET_1,
+  "7-2": MISSION_7_SET_2,
+  "7-3": MISSION_7_SET_3,
+  "8-1": MISSION_8_SET_1,
+  "8-2": MISSION_8_SET_2,
+  "8-3": MISSION_8_SET_3,
 };
 
 export function getSetReading(day: number, group: number): SetReading | null {
