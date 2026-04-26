@@ -16,6 +16,7 @@ interface RichFlashcardProps {
   hasNext?: boolean;
   onTest?: () => void;
   testCtaLabel?: string;
+  hideNav?: boolean;
 }
 
 const STATUS_PILL: Record<string, { dot: string; label: string }> = {
@@ -42,6 +43,7 @@ export default function RichFlashcard({
   hasNext = true,
   onTest,
   testCtaLabel = "Test Yourself",
+  hideNav = false,
 }: RichFlashcardProps) {
   const enr = getEnrichment(word.word) ?? {};
   const showTestCta = !hasNext && !!onTest;
@@ -85,44 +87,48 @@ export default function RichFlashcard({
   };
 
   return (
-    <div className="w-full max-w-7xl mx-auto relative px-14">
-      {/* Prev button — left side */}
-      <motion.button
-        onClick={onPrev}
-        disabled={!hasPrev}
-        whileHover={{ scale: 1.1 }}
-        whileTap={{ scale: 0.85 }}
-        transition={{ type: "spring", stiffness: 400, damping: 17 }}
-        className="absolute left-0 top-1/2 -translate-y-1/2 z-10 w-11 h-11 rounded-full bg-white dark:bg-zinc-800 border border-border shadow-md flex items-center justify-center text-violet-500 dark:text-violet-400 disabled:opacity-25 disabled:cursor-not-allowed"
-      >
-        <ChevronLeft size={20} strokeWidth={2.5} />
-      </motion.button>
-      {/* Next button — right side. Becomes "Test Yourself" CTA on the last card of a set. */}
-      {showTestCta ? (
-        <motion.button
-          onClick={onTest}
-          whileHover={{ scale: 1.04 }}
-          whileTap={{ scale: 0.96 }}
-          transition={{ type: "spring", stiffness: 400, damping: 17 }}
-          className="absolute right-0 top-1/2 -translate-y-1/2 z-10 h-11 px-4 rounded-full bg-gradient-to-r from-violet-500 to-violet-600 hover:from-violet-600 hover:to-violet-700 shadow-md flex items-center gap-2 text-white text-sm font-bold whitespace-nowrap"
-          data-testid="button-test-yourself"
-          title="Take the set test"
-        >
-          <Sparkles size={16} strokeWidth={2.5} />
-          {testCtaLabel}
-          <ChevronRight size={16} strokeWidth={2.5} />
-        </motion.button>
-      ) : (
-        <motion.button
-          onClick={handleNext}
-          disabled={!hasNext}
-          whileHover={{ scale: 1.1 }}
-          whileTap={{ scale: 0.85 }}
-          transition={{ type: "spring", stiffness: 400, damping: 17 }}
-          className="absolute right-0 top-1/2 -translate-y-1/2 z-10 w-11 h-11 rounded-full bg-violet-500 hover:bg-violet-600 shadow-md flex items-center justify-center text-white disabled:opacity-25 disabled:cursor-not-allowed"
-        >
-          <ChevronRight size={20} strokeWidth={2.5} />
-        </motion.button>
+    <div className={`w-full max-w-7xl mx-auto relative ${hideNav ? "" : "px-14"}`}>
+      {!hideNav && (
+        <>
+          {/* Prev button — left side */}
+          <motion.button
+            onClick={onPrev}
+            disabled={!hasPrev}
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.85 }}
+            transition={{ type: "spring", stiffness: 400, damping: 17 }}
+            className="absolute left-0 top-1/2 -translate-y-1/2 z-10 w-11 h-11 rounded-full bg-white dark:bg-zinc-800 border border-border shadow-md flex items-center justify-center text-violet-500 dark:text-violet-400 disabled:opacity-25 disabled:cursor-not-allowed"
+          >
+            <ChevronLeft size={20} strokeWidth={2.5} />
+          </motion.button>
+          {/* Next button — right side. Becomes "Test Yourself" CTA on the last card of a set. */}
+          {showTestCta ? (
+            <motion.button
+              onClick={onTest}
+              whileHover={{ scale: 1.04 }}
+              whileTap={{ scale: 0.96 }}
+              transition={{ type: "spring", stiffness: 400, damping: 17 }}
+              className="absolute right-0 top-1/2 -translate-y-1/2 z-10 h-11 px-4 rounded-full bg-gradient-to-r from-violet-500 to-violet-600 hover:from-violet-600 hover:to-violet-700 shadow-md flex items-center gap-2 text-white text-sm font-bold whitespace-nowrap"
+              data-testid="button-test-yourself"
+              title="Take the set test"
+            >
+              <Sparkles size={16} strokeWidth={2.5} />
+              {testCtaLabel}
+              <ChevronRight size={16} strokeWidth={2.5} />
+            </motion.button>
+          ) : (
+            <motion.button
+              onClick={handleNext}
+              disabled={!hasNext}
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.85 }}
+              transition={{ type: "spring", stiffness: 400, damping: 17 }}
+              className="absolute right-0 top-1/2 -translate-y-1/2 z-10 w-11 h-11 rounded-full bg-violet-500 hover:bg-violet-600 shadow-md flex items-center justify-center text-white disabled:opacity-25 disabled:cursor-not-allowed"
+            >
+              <ChevronRight size={20} strokeWidth={2.5} />
+            </motion.button>
+          )}
+        </>
       )}
       <div className="bg-card border border-card-border rounded-3xl shadow-sm p-8 lg:p-12">
         {/* Status pill (full width) */}

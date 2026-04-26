@@ -694,60 +694,127 @@ export default function StudyMode({ onBack, onNavigate, initialDay, initialWordI
   }).filter(Boolean).length;
 
   if (isRich) {
+    const isLastCard = cardIndex === studyWords.length - 1;
+    const statusLabel =
+      currentWord.status === "mastered"
+        ? "Mastered"
+        : currentWord.status === "review"
+          ? "Review"
+          : currentWord.status === "learning"
+            ? "Learning"
+            : "New";
+    const statusDotCls =
+      currentWord.status === "mastered"
+        ? "bg-emerald-500"
+        : currentWord.status === "review"
+          ? "bg-amber-500"
+          : currentWord.status === "learning"
+            ? "bg-blue-500"
+            : "bg-rose-500";
+    const statusTextCls =
+      currentWord.status === "mastered"
+        ? "text-emerald-600 dark:text-emerald-400"
+        : currentWord.status === "review"
+          ? "text-amber-600 dark:text-amber-400"
+          : currentWord.status === "learning"
+            ? "text-blue-600 dark:text-blue-400"
+            : "text-rose-500 dark:text-rose-400";
+
     return (
       <div
-        className={`min-h-[calc(100vh-3.5rem)] lg:min-h-screen px-4 lg:px-8 py-5 flex flex-col gap-5 ${themeClass(globalThemeId)}`}
+        className={`min-h-[calc(100vh-3.5rem)] lg:min-h-screen px-4 lg:px-8 py-5 flex flex-col gap-4 ${themeClass(globalThemeId)}`}
         tabIndex={0}
         onKeyDown={handleArrowKeys}
         style={{ outline: "none" }}
       >
-        {/* Breadcrumb + stats bar — hidden in focus mode */}
+        {/* Breadcrumb — hidden in focus mode */}
         {!focusMode && (
-          <div className="flex items-stretch gap-3">
-            <div className="flex items-center gap-3 px-4 py-3 rounded-2xl bg-card border border-card-border flex-1 min-w-0">
+          <div className="flex items-center gap-2 text-sm">
+            <button
+              onClick={() =>
+                onNavigate
+                  ? onNavigate("mission-detail", { missionDay: selectedDay })
+                  : setView("group-select")
+              }
+              className="p-1.5 rounded-lg hover:bg-muted transition-colors shrink-0"
+              aria-label="Back to mission"
+            >
+              <ArrowLeft size={18} />
+            </button>
+            <span className="font-semibold text-foreground">Mission {selectedDay}</span>
+            <span className="text-muted-foreground/60">/</span>
+            <span className="font-semibold text-foreground">Set {selectedGroup ?? "All"}</span>
+            <span className="text-muted-foreground/60">/</span>
+            <span className="font-semibold text-orange-500">Learn</span>
+          </div>
+        )}
+
+        {/* Header card with word counter, subtitle, and nav controls */}
+        {!focusMode && (
+          <div className="rounded-2xl bg-orange-50/70 dark:bg-orange-950/20 border border-orange-100 dark:border-orange-900/40 p-3 sm:p-4 flex items-center gap-3 sm:gap-4 flex-wrap lg:flex-nowrap">
+            <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-white dark:bg-zinc-900 border border-orange-100 dark:border-orange-900/40 flex items-center justify-center shrink-0">
+              <BookOpen size={22} className="text-orange-500" />
+            </div>
+            <div className="flex-1 min-w-0">
+              <div className="flex items-center gap-2 flex-wrap">
+                <span className="text-base sm:text-lg font-bold text-foreground">
+                  Word {cardIndex + 1} of {studyWords.length}
+                </span>
+                <span className={`inline-flex items-center gap-1.5 text-xs font-semibold ${statusTextCls}`}>
+                  <span className={`w-1.5 h-1.5 rounded-full ${statusDotCls}`} />
+                  {statusLabel}
+                </span>
+              </div>
+              <p className="text-xs sm:text-sm text-muted-foreground mt-0.5">
+                Learn the word in depth before you move on.
+              </p>
+            </div>
+            <div className="flex items-start gap-2 shrink-0 ml-auto">
               <button
-                onClick={() =>
-                  onNavigate
-                    ? onNavigate("mission-detail", { missionDay: selectedDay })
-                    : setView("group-select")
-                }
-                className="p-1.5 rounded-lg hover:bg-muted transition-colors shrink-0"
-                aria-label="Back to mission"
+                onClick={handlePrev}
+                disabled={cardIndex === 0}
+                className="h-11 px-3 sm:px-4 rounded-xl bg-white dark:bg-zinc-900 border border-border hover:bg-muted text-sm font-semibold flex items-center gap-2 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
               >
-                <ArrowLeft size={18} />
+                <ArrowLeft size={16} />
+                <span className="hidden sm:inline">Previous Word</span>
               </button>
-              <div className="text-sm font-semibold flex items-center gap-1.5 min-w-0">
-                <span className="text-violet-600 dark:text-violet-400">Mission {selectedDay}</span>
-                <ChevronRight size={14} className="text-muted-foreground shrink-0" />
-                <span className="text-foreground">Set {selectedGroup ?? "All"}</span>
+              <div className="flex flex-col gap-2">
+                {isLastCard && selectedGroup !== null ? (
+                  <button
+                    onClick={() => onNavigate?.("set-test", { missionDay: selectedDay, group: selectedGroup })}
+                    className="h-11 px-4 sm:px-5 rounded-xl bg-gradient-to-r from-orange-400 to-orange-600 hover:from-orange-500 hover:to-orange-700 text-white text-sm font-bold flex items-center justify-center gap-2 shadow-sm transition-all"
+                    data-testid="button-test-yourself"
+                  >
+                    <Sparkles size={16} />
+                    Test Yourself
+                  </button>
+                ) : (
+                  <button
+                    onClick={() => {
+                      markWordReviewed(currentWord.id, 3);
+                      handleNext();
+                    }}
+                    disabled={isLastCard}
+                    className="h-11 px-4 sm:px-5 rounded-xl bg-gradient-to-r from-orange-400 to-orange-600 hover:from-orange-500 hover:to-orange-700 text-white text-sm font-bold flex items-center justify-between gap-3 shadow-sm disabled:opacity-50 disabled:cursor-not-allowed transition-all"
+                  >
+                    <span>Next Word</span>
+                    <ChevronRight size={16} />
+                  </button>
+                )}
+                <button
+                  onClick={() => setFocusMode(true)}
+                  className="h-9 px-4 rounded-xl bg-white dark:bg-zinc-900 border border-border hover:bg-muted text-xs font-semibold flex items-center justify-center gap-2 transition-colors"
+                >
+                  <Crosshair size={14} />
+                  Focus Mode
+                </button>
               </div>
             </div>
-            <div className="hidden md:flex items-stretch gap-2 px-4 py-2.5 rounded-2xl bg-card border border-card-border">
-              <StatChip icon={<BookOpen size={16} />} color="violet" label="Words Learned" value={totalMasteredWords} />
-              <Divider />
-              <StatChip icon={<Flame size={16} />} color="rose" label="Missions Done" value={`${missionsDone} / ${TOTAL_DAYS}`} />
-              <Divider />
-              <StatChip icon={<Sparkles size={16} />} color="indigo" label="Sets Completed" value={`${setsDone} / ${totalSets}`} />
-              <Divider />
-              <StatChip icon={<Trophy size={16} />} color="violet-solid" label={`XP Earned · Lv ${lvl.level} (${Math.round(lvl.progress * 100)}%)`} value={gamification.totalXp.toLocaleString()} />
-              <Divider />
-              <StatChip icon={<Flame size={16} />} color="orange" label="Day Streak" value={streak.currentStreak} />
-            </div>
-            <button
-              onClick={() => setFocusMode(true)}
-              title="Enter focus mode"
-              className="flex items-center justify-center w-12 rounded-2xl bg-card border border-card-border text-muted-foreground hover:text-violet-600 hover:border-violet-300 dark:hover:border-violet-700 transition-colors shrink-0"
-            >
-              <Crosshair size={18} />
-            </button>
           </div>
         )}
 
         {/* Numbered progress dots */}
         <div className="flex items-center gap-3 px-5 py-3 rounded-2xl bg-card border border-card-border">
-          <div className="flex items-center gap-1.5 text-sm font-semibold text-muted-foreground shrink-0">
-            <BarChart3 size={15} /> Progress
-          </div>
           <div className="flex-1 flex items-center min-w-0 overflow-hidden">
             {studyWords.map((_, i) => {
               const active = i === cardIndex;
@@ -756,31 +823,31 @@ export default function StudyMode({ onBack, onNavigate, initialDay, initialWordI
                 <div key={i} className="flex items-center flex-1 last:flex-none">
                   <button
                     onClick={() => setCardIndex(i)}
-                    className={`shrink-0 w-7 h-7 rounded-full text-xs font-bold flex items-center justify-center transition-all ${
+                    className={`shrink-0 w-8 h-8 rounded-full text-xs font-bold flex items-center justify-center transition-all ${
                       active
-                        ? "bg-violet-500 text-white shadow-md scale-110"
+                        ? "bg-gradient-to-br from-orange-400 to-orange-600 text-white shadow-md scale-110"
                         : done
-                          ? "bg-violet-100 dark:bg-violet-900/40 text-violet-700 dark:text-violet-300 border border-violet-300 dark:border-violet-700"
-                          : "bg-transparent text-muted-foreground border border-border hover:border-violet-300"
+                          ? "bg-orange-100 dark:bg-orange-900/40 text-orange-700 dark:text-orange-300 border border-orange-300 dark:border-orange-700"
+                          : "bg-transparent text-muted-foreground border border-border hover:border-orange-300"
                     }`}
                   >
                     {i + 1}
                   </button>
                   {i < studyWords.length - 1 && (
-                    <div className={`flex-1 h-px ${i < cardIndex ? "bg-violet-300 dark:bg-violet-700" : "bg-border"}`} />
+                    <div className={`flex-1 h-px ${i < cardIndex ? "bg-orange-300 dark:bg-orange-700" : "bg-border"}`} />
                   )}
                 </div>
               );
             })}
           </div>
-          <div className="px-3 py-1 rounded-full bg-violet-50 dark:bg-violet-900/20 text-violet-700 dark:text-violet-300 text-xs font-bold shrink-0">
+          <div className="text-orange-600 dark:text-orange-400 text-xs font-bold shrink-0 tabular-nums">
             {cardIndex + 1} / {studyWords.length}
           </div>
           {focusMode && (
             <button
               onClick={() => setFocusMode(false)}
               title="Exit focus mode"
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-violet-100 dark:bg-violet-900/30 text-violet-600 dark:text-violet-400 hover:bg-violet-200 dark:hover:bg-violet-900/50 transition-colors text-xs font-semibold shrink-0"
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-orange-100 dark:bg-orange-900/30 text-orange-600 dark:text-orange-400 hover:bg-orange-200 dark:hover:bg-orange-900/50 transition-colors text-xs font-semibold shrink-0"
             >
               <X size={13} />
               Exit Focus
@@ -804,11 +871,7 @@ export default function StudyMode({ onBack, onNavigate, initialDay, initialWordI
               onPrev={handlePrev}
               onNext={handleNext}
               onRate={(quality) => markWordReviewed(currentWord.id, quality)}
-              onTest={
-                selectedGroup !== null && cardIndex === studyWords.length - 1
-                  ? () => onNavigate?.("set-test", { missionDay: selectedDay, group: selectedGroup })
-                  : undefined
-              }
+              hideNav
             />
           </motion.div>
         </AnimatePresence>
@@ -879,8 +942,6 @@ export default function StudyMode({ onBack, onNavigate, initialDay, initialWordI
             {getEnrichment(currentWord.word) ? (
               <RichFlashcard
                 word={currentWord}
-                index={cardIndex}
-                total={studyWords.length}
                 onRate={(quality) => {
                   markWordReviewed(currentWord.id, quality);
                   if (cardIndex < studyWords.length - 1) handleNext();
