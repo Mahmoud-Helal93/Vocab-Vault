@@ -111,7 +111,6 @@ export default function SetReading({
   const [answers, setAnswers] = useState<Record<number, number | null>>({});
   const [submitted, setSubmitted] = useState(false);
   const [currentQ, setCurrentQ] = useState(0);
-  const [focusMode, setFocusMode] = useState(false);
   const [highlightWord, setHighlightWord] = useState<string | null>(null);
   const [previewWord, setPreviewWord] = useState<string | null>(null);
   const [passageSize, setPassageSize] = useState<PassageSize>("md");
@@ -418,23 +417,6 @@ export default function SetReading({
                       );
                     })}
                   </div>
-                  <label className="inline-flex items-center gap-2 cursor-pointer select-none text-xs font-semibold text-muted-foreground">
-                    <span>Focus Mode</span>
-                    <span
-                      onClick={() => setFocusMode((v) => !v)}
-                      className={`relative w-10 h-5 rounded-full transition-colors ${
-                        focusMode
-                          ? "bg-orange-500"
-                          : "bg-muted border border-border"
-                      }`}
-                    >
-                      <span
-                        className={`absolute top-0.5 left-0.5 w-4 h-4 rounded-full bg-white shadow transition-transform ${
-                          focusMode ? "translate-x-5" : "translate-x-0"
-                        }`}
-                      />
-                    </span>
-                  </label>
                 </div>
               </div>
               <div className="prose-reading">
@@ -450,8 +432,7 @@ export default function SetReading({
           </div>
 
         {/* ── Comprehension Check (full width, below the story) ── */}
-        {!focusMode && (
-          <div className="rounded-2xl border border-border bg-card p-5 shadow-sm">
+        <div className="rounded-2xl border border-border bg-card p-5 shadow-sm">
             <div className="flex items-center justify-between mb-4 flex-wrap gap-2">
               <h3 className="text-sm font-bold text-foreground">
                 Comprehension Check
@@ -653,23 +634,6 @@ export default function SetReading({
                   </div>
                 )}
           </div>
-        )}
-
-        {/* When focus mode is on, surface a slim CTA at the bottom */}
-        {focusMode && (
-          <div className="rounded-2xl border border-border bg-card p-4 shadow-sm flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
-            <div className="text-sm text-muted-foreground">
-              Focus mode is on — comprehension and CTA are hidden. Toggle off
-              to see them.
-            </div>
-            <button
-              onClick={() => setFocusMode(false)}
-              className="btn-brand inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl font-bold text-sm"
-            >
-              Exit focus mode
-            </button>
-          </div>
-        )}
       </div>
     </div>
   );
