@@ -15,6 +15,7 @@ import {
 } from "lucide-react";
 import { getSetReading, type ReadingQuestion } from "@/data/setReadings";
 import { useApp } from "@/context/AppContext";
+import ReadingArt from "@/components/ReadingArt";
 
 interface SetReadingProps {
   onBack: () => void;
@@ -88,75 +89,6 @@ function renderPassage(
       </p>
     );
   });
-}
-
-function ExplorerArt() {
-  return (
-    <svg
-      viewBox="0 0 320 220"
-      className="w-full h-full pointer-events-none"
-      aria-hidden="true"
-    >
-      <defs>
-        <linearGradient id="skyGrad" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stopColor="#FED7AA" />
-          <stop offset="100%" stopColor="#FECACA" />
-        </linearGradient>
-        <linearGradient id="mtnFar" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stopColor="#C4B5FD" />
-          <stop offset="100%" stopColor="#A78BFA" />
-        </linearGradient>
-        <linearGradient id="mtnNear" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stopColor="#FB923C" />
-          <stop offset="100%" stopColor="#EA580C" />
-        </linearGradient>
-        <linearGradient id="cliff" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stopColor="#9A3412" />
-          <stop offset="100%" stopColor="#7C2D12" />
-        </linearGradient>
-      </defs>
-
-      {/* Sun */}
-      <circle cx="240" cy="70" r="26" fill="#FEF3C7" opacity="0.9" />
-      <circle cx="240" cy="70" r="18" fill="#FDE68A" />
-
-      {/* Far mountains */}
-      <path
-        d="M0,160 L40,110 L80,140 L130,80 L180,130 L230,90 L280,135 L320,105 L320,220 L0,220 Z"
-        fill="url(#mtnFar)"
-        opacity="0.85"
-      />
-      {/* Near mountains */}
-      <path
-        d="M0,180 L60,130 L120,165 L170,120 L230,160 L290,130 L320,150 L320,220 L0,220 Z"
-        fill="url(#mtnNear)"
-        opacity="0.95"
-      />
-
-      {/* Birds */}
-      <path d="M160 60 q5 -4 10 0 q5 -4 10 0" stroke="#7C2D12" strokeWidth="1.4" fill="none" />
-      <path d="M195 50 q4 -3 8 0 q4 -3 8 0" stroke="#7C2D12" strokeWidth="1.2" fill="none" />
-
-      {/* Cliff (foreground) */}
-      <path d="M50,220 L50,170 Q60,160 80,162 L120,168 L120,220 Z" fill="url(#cliff)" />
-      <ellipse cx="85" cy="167" rx="38" ry="5" fill="#451A03" opacity="0.4" />
-
-      {/* Explorer figure on cliff */}
-      {/* Backpack */}
-      <rect x="78" y="132" width="14" height="20" rx="4" fill="#7C2D12" />
-      {/* Body */}
-      <rect x="82" y="138" width="10" height="22" rx="3" fill="#1E293B" />
-      {/* Head */}
-      <circle cx="87" cy="130" r="6" fill="#FED7AA" />
-      {/* Hat */}
-      <path d="M80,128 Q87,121 94,128 L94,131 L80,131 Z" fill="#7C2D12" />
-      {/* Walking stick */}
-      <line x1="98" y1="135" x2="104" y2="166" stroke="#78350F" strokeWidth="1.6" strokeLinecap="round" />
-      {/* Legs */}
-      <line x1="84" y1="160" x2="84" y2="168" stroke="#1E293B" strokeWidth="3" strokeLinecap="round" />
-      <line x1="90" y1="160" x2="90" y2="168" stroke="#1E293B" strokeWidth="3" strokeLinecap="round" />
-    </svg>
-  );
 }
 
 export default function SetReading({
@@ -356,9 +288,12 @@ export default function SetReading({
                 </div>
               </div>
 
-              {/* Center: art */}
+              {/* Center: art (scene-matched per story) */}
               <div className="hidden md:block h-36 w-full max-w-[200px] mx-auto">
-                <ExplorerArt />
+                <ReadingArt
+                  reading={reading}
+                  readingKey={`${missionDay}-${group}`}
+                />
               </div>
 
               {/* Right: CTAs */}
