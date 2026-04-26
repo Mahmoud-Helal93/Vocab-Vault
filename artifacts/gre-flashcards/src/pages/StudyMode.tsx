@@ -731,21 +731,39 @@ export default function StudyMode({ onBack, onNavigate, initialDay, initialWordI
         {!focusMode && (
           <div className="flex items-center gap-2 text-sm">
             <button
+              onClick={() => onBack?.()}
+              className="p-1.5 rounded-lg hover:bg-muted transition-colors shrink-0"
+              aria-label="Back"
+            >
+              <ArrowLeft size={18} />
+            </button>
+            <button
+              type="button"
               onClick={() =>
                 onNavigate
                   ? onNavigate("mission-detail", { missionDay: selectedDay })
                   : setView("group-select")
               }
-              className="p-1.5 rounded-lg hover:bg-muted transition-colors shrink-0"
-              aria-label="Back to mission"
+              className="font-semibold text-foreground hover:underline hover:text-foreground/80 transition-colors"
             >
-              <ArrowLeft size={18} />
+              Mission {selectedDay}
             </button>
-            <span className="font-semibold text-foreground">Mission {selectedDay}</span>
             <span className="text-muted-foreground/60">/</span>
-            <span className="font-semibold text-foreground">Set {selectedGroup ?? "All"}</span>
+            <button
+              type="button"
+              onClick={() =>
+                selectedGroup != null && onNavigate
+                  ? onNavigate("set-reading", { missionDay: selectedDay, group: selectedGroup })
+                  : onNavigate
+                  ? onNavigate("mission-detail", { missionDay: selectedDay })
+                  : setView("group-select")
+              }
+              className="font-semibold text-foreground hover:underline hover:text-foreground/80 transition-colors"
+            >
+              Set {selectedGroup ?? "All"}
+            </button>
             <span className="text-muted-foreground/60">/</span>
-            <span className="font-semibold text-orange-500">Learn</span>
+            <span className="font-semibold text-orange-500" aria-current="page">Learn</span>
           </div>
         )}
 

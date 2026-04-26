@@ -28,6 +28,7 @@ function SectionIcon({ q, size = 14 }: { q: Question; size?: number }) {
 
 interface MissionTestProps {
   onBack: () => void;
+  onNavigate?: (page: string, params?: Record<string, unknown>) => void;
   missionDay?: number;
 }
 
@@ -112,7 +113,7 @@ function getSectionIcon(q: Question): string {
 
 type AnswerMap = Record<number, string | boolean | null>;
 
-function MissionTestInner({ onBack, missionDay = 1 }: MissionTestProps) {
+function MissionTestInner({ onBack, onNavigate, missionDay = 1 }: MissionTestProps) {
   const { words, streak, gamification, isBookmarked, toggleBookmark } = useApp();
   const [isShuffled, setIsShuffled] = useState(false);
   const [currentIdx, setCurrentIdx] = useState(0);
@@ -238,9 +239,17 @@ function MissionTestInner({ onBack, missionDay = 1 }: MissionTestProps) {
             </button>
             <nav aria-label="Breadcrumb" className="flex-1 min-w-0">
               <ol className="flex items-center gap-1 text-sm text-muted-foreground truncate">
-                <li className="truncate">Mission {missionDay}</li>
+                <li className="truncate">
+                  <button
+                    type="button"
+                    onClick={() => onNavigate?.("mission-detail", { missionDay })}
+                    className="hover:underline hover:text-foreground transition-colors"
+                  >
+                    Mission {missionDay}
+                  </button>
+                </li>
                 <li className="text-muted-foreground/50">›</li>
-                <li className="truncate text-orange-600 dark:text-orange-400 font-semibold">Results</li>
+                <li className="truncate text-orange-600 dark:text-orange-400 font-semibold" aria-current="page">Results</li>
               </ol>
             </nav>
             <button
@@ -753,9 +762,17 @@ function MissionTestInner({ onBack, missionDay = 1 }: MissionTestProps) {
             </button>
             <nav aria-label="Breadcrumb" className="min-w-0">
               <ol className="flex items-center gap-1 text-sm text-muted-foreground truncate">
-                <li className="truncate">Mission {missionDay}</li>
+                <li className="truncate">
+                  <button
+                    type="button"
+                    onClick={() => onNavigate?.("mission-detail", { missionDay })}
+                    className="hover:underline hover:text-foreground transition-colors"
+                  >
+                    Mission {missionDay}
+                  </button>
+                </li>
                 <li className="text-muted-foreground/50">›</li>
-                <li className="truncate text-orange-600 dark:text-orange-400 font-medium">Test</li>
+                <li className="truncate text-orange-600 dark:text-orange-400 font-medium" aria-current="page">Test</li>
               </ol>
             </nav>
           </div>

@@ -40,17 +40,38 @@ const NAV_ITEMS: Array<{ id: Page; icon: React.ReactNode; label: string }> = [
   { id: "settings",    icon: <Settings size={18} />,        label: "Settings" },
 ];
 
+type HistoryEntry = { page: Page; params: Record<string, unknown> };
+
 function MainApp() {
   const { settings, updateSettings, crunch } = useApp();
   const [page, setPage] = useState<Page>("dashboard");
   const [pageParams, setPageParams] = useState<Record<string, unknown>>({});
+  const [history, setHistory] = useState<HistoryEntry[]>([]);
   const [quickTenOpen, setQuickTenOpen] = useState(false);
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
 
   const navigate = (p: string, params?: Record<string, unknown>) => {
+    setHistory((h) => [...h, { page, params: pageParams }]);
     setPage(p as Page);
     setPageParams(params ?? {});
+  };
+
+  const goBack = (fallback?: () => void) => {
+    setHistory((h) => {
+      if (h.length === 0) {
+        if (fallback) fallback();
+        else {
+          setPage("dashboard");
+          setPageParams({});
+        }
+        return h;
+      }
+      const prev = h[h.length - 1];
+      setPage(prev.page);
+      setPageParams(prev.params);
+      return h.slice(0, -1);
+    });
   };
 
   const renderPage = () => {
@@ -58,37 +79,44 @@ function MainApp() {
       case "dashboard":
         return <Dashboard onNavigate={navigate} />;
       case "study":
-        return <StudyMode onBack={() => setPage("dashboard")} onNavigate={navigate} initialDay={pageParams.day as number | undefined} initialWordId={pageParams.wordId as string | undefined} />;
+        return <StudyMode onBack={() => goBack(() => setPage("dashboard"))} onNavigate={navigate} initialDay={pageParams.day as number | undefined} initialWordId={pageParams.wordId as string | undefined} />;
       case "practice":
-        return <PracticeMode onBack={() => setPage("dashboard")} initialSource={pageParams.source as string | undefined} />;
+        return <PracticeMode onBack={() => goBack(() => setPage("dashboard"))} initialSource={pageParams.source as string | undefined} />;
       case "review":
-        return <ReviewMode onBack={() => setPage("dashboard")} />;
+        return <ReviewMode onBack={() => goBack(() => setPage("dashboard"))} />;
       case "plan":
-        return <PlanMode onBack={() => setPage("dashboard")} onStartSession={() => setPage("review")} />;
+        return <PlanMode onBack={() => goBack(() => setPage("dashboard"))} onStartSession={() => setPage("review")} />;
       case "confusables":
-        return <Confusables onBack={() => setPage("dashboard")} />;
+        return <Confusables onBack={() => goBack(() => setPage("dashboard"))} />;
       case "analytics":
-        return <Analytics onBack={() => setPage("dashboard")} onStudyWord={(id) => { setPageParams({ wordId: id }); setPage("study"); }} />;
+        return <Analytics onBack={() => goBack(() => setPage("dashboard"))} onStudyWord={(id) => navigate("study", { wordId: id })} />;
       case "progress":
-        return <Progress onBack={() => setPage("dashboard")} />;
+        return <Progress onBack={() => goBack(() => setPage("dashboard"))} />;
       case "achievements":
-        return <Achievements onBack={() => setPage("dashboard")} />;
+        return <Achievements onBack={() => goBack(() => setPage("dashboard"))} />;
       case "mission-test":
-        return <MissionTest onBack={() => setPage("study")} missionDay={(pageParams.missionDay as number) ?? 1} />;
+        return (
+          <MissionTest
+            onBack={() => goBack(() => setPage("study"))}
+            onNavigate={navigate}
+            missionDay={(pageParams.missionDay as number) ?? 1}
+          />
+        );
       case "set-test":
         return (
           <SetTest
-            onBack={() => setPage("study")}
+            onBack={() => goBack(() => setPage("study"))}
+            onNavigate={navigate}
             missionDay={(pageParams.missionDay as number) ?? 1}
             group={(pageParams.group as number) ?? 1}
           />
         );
       case "bookmarks":
-        return <Bookmarks onBack={() => setPage("dashboard")} onNavigate={navigate} />;
+        return <Bookmarks onBack={() => goBack(() => setPage("dashboard"))} onNavigate={navigate} />;
       case "mission-detail":
         return (
           <MissionDetail
-            onBack={() => setPage("study")}
+            onBack={() => goBack(() => setPage("study"))}
             onNavigate={navigate}
             missionDay={(pageParams.missionDay as number) ?? 1}
           />
@@ -96,7 +124,8 @@ function MainApp() {
       case "set-reading":
         return (
           <SetReading
-            onBack={() => setPage("mission-detail")}
+            onBack={() => goBack(() => setPage("mission-detail"))}
+            onNavigate={navigate}
             onContinue={(firstWordId) => {
               if (firstWordId) navigate("study", { wordId: firstWordId });
               else
@@ -109,7 +138,7 @@ function MainApp() {
           />
         );
       case "settings":
-        return <SettingsPage onBack={() => setPage("dashboard")} />;
+        return <SettingsPage onBack={() => goBack(() => setPage("dashboard"))} />;
       default:
         return <Dashboard onNavigate={navigate} />;
     }

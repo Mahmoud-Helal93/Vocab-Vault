@@ -19,6 +19,7 @@ import { useApp } from "@/context/AppContext";
 interface SetReadingProps {
   onBack: () => void;
   onContinue: (firstWordId: string | null) => void;
+  onNavigate?: (page: string, params?: Record<string, unknown>) => void;
   missionDay: number;
   group: number;
 }
@@ -93,6 +94,7 @@ function renderPassage(
 export default function SetReading({
   onBack,
   onContinue,
+  onNavigate,
   missionDay,
   group,
 }: SetReadingProps) {
@@ -237,13 +239,17 @@ export default function SetReading({
             <ArrowLeft size={16} />
           </button>
           <nav className="flex items-center gap-1.5 text-muted-foreground font-medium flex-wrap">
-            <span className="text-foreground font-semibold">
+            <button
+              type="button"
+              onClick={() => onNavigate?.("mission-detail", { missionDay })}
+              className="text-foreground font-semibold hover:underline hover:text-foreground/80 transition-colors"
+            >
               Mission {missionDay}
-            </span>
+            </button>
             <span className="text-muted-foreground/60">/</span>
-            <span className="text-foreground font-semibold">Set {group}</span>
+            <span className="text-foreground font-semibold" aria-current="page">Set {group}</span>
             <span className="text-muted-foreground/60">/</span>
-            <span className="text-orange-600 dark:text-orange-400 font-semibold">
+            <span className="text-orange-600 dark:text-orange-400 font-semibold" aria-current="page">
               Pre-Read
             </span>
           </nav>

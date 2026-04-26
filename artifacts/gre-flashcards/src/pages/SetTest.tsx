@@ -16,6 +16,7 @@ type Difficulty = "easy" | "medium" | "hard";
 
 interface SetTestProps {
   onBack: () => void;
+  onNavigate?: (page: string, params?: Record<string, unknown>) => void;
   missionDay: number;
   group: number;
 }
@@ -91,7 +92,7 @@ function SectionIcon({ q, size = 14 }: { q: Question; size?: number }) {
     : <Pencil size={size} />;
 }
 
-function SetTestInner({ onBack, missionDay, group }: SetTestProps) {
+function SetTestInner({ onBack, onNavigate, missionDay, group }: SetTestProps) {
   const { words, streak, isBookmarked, toggleBookmark, globalThemeId: themeId } = useApp();
 
   const setWords = useMemo(
@@ -215,11 +216,27 @@ function SetTestInner({ onBack, missionDay, group }: SetTestProps) {
             </button>
             <nav aria-label="Breadcrumb" className="flex-1 min-w-0">
               <ol className="flex items-center gap-1 text-sm text-muted-foreground truncate">
-                <li className="truncate">Mission {missionDay}</li>
+                <li className="truncate">
+                  <button
+                    type="button"
+                    onClick={() => onNavigate?.("mission-detail", { missionDay })}
+                    className="hover:underline hover:text-foreground transition-colors"
+                  >
+                    Mission {missionDay}
+                  </button>
+                </li>
                 <li className="text-muted-foreground/50">›</li>
-                <li className="truncate">Set {group}</li>
+                <li className="truncate">
+                  <button
+                    type="button"
+                    onClick={() => onNavigate?.("set-reading", { missionDay, group })}
+                    className="hover:underline hover:text-foreground transition-colors"
+                  >
+                    Set {group}
+                  </button>
+                </li>
                 <li className="text-muted-foreground/50">›</li>
-                <li className="truncate text-violet-600 dark:text-violet-400 font-semibold">Results</li>
+                <li className="truncate text-violet-600 dark:text-violet-400 font-semibold" aria-current="page">Results</li>
               </ol>
             </nav>
             <button
@@ -714,11 +731,27 @@ function SetTestInner({ onBack, missionDay, group }: SetTestProps) {
         </button>
         <nav aria-label="Breadcrumb" className="min-w-0">
           <ol className="flex items-center gap-1.5 text-sm text-muted-foreground truncate">
-            <li className="truncate">Mission {missionDay}</li>
+            <li className="truncate">
+              <button
+                type="button"
+                onClick={() => onNavigate?.("mission-detail", { missionDay })}
+                className="hover:underline hover:text-foreground transition-colors"
+              >
+                Mission {missionDay}
+              </button>
+            </li>
             <li className="text-muted-foreground/50">/</li>
-            <li className="truncate">Set {group}</li>
+            <li className="truncate">
+              <button
+                type="button"
+                onClick={() => onNavigate?.("set-reading", { missionDay, group })}
+                className="hover:underline hover:text-foreground transition-colors"
+              >
+                Set {group}
+              </button>
+            </li>
             <li className="text-muted-foreground/50">/</li>
-            <li className="truncate text-orange-500 font-semibold">Test</li>
+            <li className="truncate text-orange-500 font-semibold" aria-current="page">Test</li>
           </ol>
         </nav>
       </div>
