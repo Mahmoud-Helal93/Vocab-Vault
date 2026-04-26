@@ -11239,6 +11239,842 @@ Judge Krost retired on the date he had announced. His final docket carried, in i
   ],
 };
 
+const MISSION_29_SET_1: SetReading = {
+  title: "The Festival Manager and the Missing Lead",
+  subtitle:
+    "A short story about a small theater company at a regional festival, a contretemps that nearly became a conflagration, and the conviction it took not to cast aspersions on a missing actor.",
+  format: "Short Story",
+  readingMinutes: 4,
+  words: [
+    "abscond",
+    "apogee",
+    "aspersion",
+    "bawdy",
+    "chagrin",
+    "collude",
+    "commiserate",
+    "conflagration",
+    "contretemps",
+    "conviction",
+  ],
+  passage: `The Eaton Players were, by every measurable standard, at the **apogee** of their nine-year run as a small repertory company on the Wednesday evening of the regional festival in Marston. They had been invited as one of four featured companies. Their slot was the closing night. Their company manager, a careful woman named Petra Hild, had spent four months on the logistics of a forty-minute one-act she had directed for the festival — a slightly **bawdy** Restoration comedy that she had cut, with some regret, from sixty minutes to fit the festival\'s closing-night program.
+
+At 5:14 p.m. on Wednesday, ninety-six minutes before curtain, the lead actor — a man named Anders Roop who had played the role for eleven performances in Eaton — did not arrive at the festival\'s green room.
+
+Petra was, in her own honest description in her notes the following Saturday, in the early stages of what could have become a backstage **conflagration**. She had, in nine years of company management, seen exactly two evenings on which the loss of a lead within ninety minutes of curtain had resulted in a cancellation. She had, in those nine years, also seen four evenings on which the same loss had been absorbed by an understudy and the audience had not, by any reading of the lobby afterward, noticed.
+
+The **contretemps**, as the festival\'s artistic director would later describe it in a sympathetic email, was already known to two of the festival\'s other company managers by 5:30 p.m. — not because Petra had told them, but because backstage gossip in a small festival traveled at the speed any small festival\'s gossip traveled.
+
+By 5:35 p.m., one of those other managers — a man named Klent who had taken Petra to dinner three months earlier and who had, since, asked her on two further occasions she had declined — appeared at the door of Petra\'s dressing room with a bottle of wine and an offer to "**commiserate**." Petra thanked him, declined the wine, and asked him politely to leave. She did not, in any subsequent recounting of the evening, **collude** with him on what should be said publicly about Anders\'s absence.
+
+The understudy, a young actress named Vey who had learned the role in three weeks and who had, in dress rehearsal the previous Sunday, been very nearly the equal of Anders in two of the four key scenes, was already in the green room by 5:45 p.m. Petra spoke with her for six minutes. She did not, in those six minutes, communicate any of her own private **chagrin** about the situation. She told Vey what she actually believed: that Vey was ready, that the cuts she had made for the festival happened to suit Vey\'s comic register slightly better than Anders\'s, and that Petra would, from the wings, make any small in-the-moment cue Vey wanted.
+
+Anders did not, in fact, **abscond**. He arrived at 6:14 p.m., thirty-six minutes before curtain, having been delayed by a four-vehicle traffic incident on the highway between Eaton and Marston that had, for fifty minutes, held him in stationary traffic with no cellular signal. He was apologetic. He was also visibly shaken. He asked, in the corridor, whether he was still on.
+
+Petra had, by then, been managing the wing for eight minutes with Vey on the boards in his costume.
+
+She made the decision in approximately fifteen seconds. She told Anders, with the same evenness she had used with Vey, that Vey would play the festival performance; that Anders would walk on for the curtain call as part of the company; that the choice was not a judgment of Anders but a recognition of a transition that was, by 6:14 p.m., already eight minutes deep.
+
+Anders did not protest. He did, in his own honest description three days later, struggle for the rest of the evening. He did, however, walk on for the curtain call. He embraced Vey. The audience\'s reaction, by the company\'s reckoning the following Monday, made no distinction between the two.
+
+The festival\'s reviewer, in the Saturday write-up, praised Vey\'s performance without knowing she was the understudy.
+
+In the company\'s post-festival meeting the following Tuesday, Petra did not, in any sentence, cast an **aspersion** on Anders for the timing of the highway incident. She also did not, in any sentence, defend Vey on the strength of the substitution, since Vey did not, by anyone\'s reading of the festival, need defending. She summarized the evening in a single sentence: that the company had, with **conviction**, done the show the festival\'s closing slot required, and that the show had been done.`,
+  questions: [
+    {
+      id: 1,
+      kind: "vocab-context",
+      prompt: 'In this sentence, the word "apogee" most nearly means:',
+      quote:
+        '"The Eaton Players were, by every measurable standard, at the apogee of their nine-year run as a small repertory company..."',
+      options: [
+        "The lowest, weakest point of a trajectory.",
+        "The highest or peak point of a trajectory or career.",
+        "The starting point of a new venture.",
+        "The midpoint of an artistic run.",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Apogee" describes the peak or highest point — exactly the company\'s standing on the evening in question.',
+    },
+    {
+      id: 2,
+      kind: "vocab-context",
+      prompt: 'In this sentence, the word "contretemps" most nearly means:',
+      quote:
+        '"The contretemps, as the festival\'s artistic director would later describe it in a sympathetic email, was already known to two of the festival\'s other company managers by 5:30 p.m...."',
+      options: [
+        "A planned celebratory moment.",
+        "An inopportune, awkward mishap or unforeseen incident.",
+        "A formal stage rehearsal.",
+        "A backstage musical performance.",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Contretemps" describes an inopportune, awkward incident — exactly Anders\'s absence ninety minutes before curtain.',
+    },
+    {
+      id: 3,
+      kind: "tone-purpose",
+      prompt:
+        'The narrator notes that Klent appeared with a bottle of wine and that Petra "did not, in any subsequent recounting of the evening, collude with him on what should be said publicly about Anders\'s absence." Why include this small backstage scene at all?',
+      options: [
+        'To suggest that Petra was distracted by a personal romance during the crisis.',
+        'The scene names a specific small temptation — to convert a private contretemps into a shared public narrative coordinated with a sympathetic outsider — and shows Petra refusing it. Her composure later in the evening is set up by these small refusals, not just by the casting decision itself.',
+        'To indicate that backstage wine was a standard part of festival hospitality.',
+        'To imply that Klent was responsible for Anders\'s late arrival.',
+      ],
+      correctIndex: 1,
+      explanation:
+        'The wine scene is a small temptation refused — and the refusal foreshadows the larger composure Petra brings to the casting decision and the post-festival meeting.',
+    },
+    {
+      id: 4,
+      kind: "inference",
+      prompt:
+        "Based on the passage, what can the reader most reasonably infer about why Petra decided in fifteen seconds to keep Vey on the boards rather than swap Anders back in when he arrived thirty-six minutes before curtain?",
+      options: [
+        "She wanted to publicly punish Anders for the timing of the highway incident.",
+        "She judged that the transition was, by 6:14 p.m., already eight minutes deep — and that pulling Vey back at thirty-six minutes to curtain would have created a second contretemps within the company that the actual performance could not absorb, when the original transition had already been made and the actress was demonstrably ready.",
+        "Festival rules required understudies to perform once they had begun rehearsing in costume.",
+        "She had personally promised Vey the role months earlier and was honoring the promise.",
+      ],
+      correctIndex: 1,
+      explanation:
+        "The text frames the decision exactly that way — as a recognition of a transition already in motion, not a judgment of Anders.",
+    },
+    {
+      id: 5,
+      kind: "substitution",
+      prompt:
+        'Which single word could replace "abscond" in the sentence below without changing its meaning?',
+      quote:
+        '"Anders did not, in fact, abscond."',
+      options: [
+        "Arrive",
+        "Flee",
+        "Rehearse",
+        "Photograph",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Flee" matches "abscond" — both describe a departure (typically secret or improper) to escape a situation.',
+    },
+    {
+      id: 6,
+      kind: "main-idea",
+      prompt:
+        "Which sentence best summarizes the central idea or arc of the passage?",
+      options: [
+        "A theater company manager publicly accuses a missing lead actor of fabricating a traffic incident.",
+        "A repertory company\'s closing-night contretemps — a lead actor missing ninety minutes before curtain — is absorbed by a company manager who refuses to commiserate publicly with a sympathetic rival, prepares an understudy with conviction, and, when the lead arrives thirty-six minutes before curtain, recognizes that a transition already eight minutes deep cannot be undone without a second contretemps.",
+        "A regional festival cancels its closing-night performance after a lead actor is delayed in highway traffic.",
+        "A theater company\'s understudy resigns from the cast after performing a single festival show.",
+      ],
+      correctIndex: 1,
+      explanation:
+        "The arc traces precisely Anders\'s absence, the refused commiseration, the ready understudy, and the fifteen-second decision to honor a transition already in motion.",
+    },
+  ],
+};
+
+const MISSION_29_SET_2: SetReading = {
+  title: "The Attaché at the Echelon Reception",
+  subtitle:
+    "A short story about a junior diplomat, a fraught small reception, and the détente that hinges on a single fulcrum sentence — not on the imbroglio everyone arrived expecting.",
+  format: "Short Story",
+  readingMinutes: 4,
+  words: [
+    "croon",
+    "depose",
+    "detente",
+    "dowdy",
+    "echelon",
+    "ennui",
+    "expatiate",
+    "fraught",
+    "fulcrum",
+    "imbroglio",
+  ],
+  passage: `Talia Onek had been the second-ranking attaché at the small Eaton mission for fourteen months on the Thursday evening of the reception in question. The Eaton mission was, by every standard the diplomatic corps used, a third-tier posting; her own first ambassador, on her arrival, had described it in a single private sentence as "the kind of capital where the most important meetings happen at the wrong end of the table." She had taken the description in the spirit it was offered. She had also, in fourteen months, learned that the description was not entirely accurate.
+
+The reception that Thursday was hosted by the Eaton ministry of trade. The guest list was small — perhaps thirty people. Two senior delegations were present from the neighboring states of Halmar and Drest, whose long-running tariff dispute had been the subject, for nine months, of a quiet shuttle mediation that the Eaton mission had been hosting. The shuttle mediation was, by Thursday evening, in a state Talia\'s ambassador had described, in a closed cable two weeks earlier, as "**fraught** but not yet collapsed."
+
+Talia\'s ambassador was not at the reception. He had been called, the previous afternoon, to a regional summit and would not return until Saturday. Talia had been instructed, in his absence, to attend the reception and to "be present without being a presence" — a phrase she had received with the small private **ennui** of a fourteen-month attaché who had been given that instruction on at least nine prior occasions.
+
+The reception\'s **echelon** was, on its surface, modest. The senior figures from Halmar and Drest were not the principal negotiators of the dispute; they were the deputies. The Eaton trade minister was present but was, by long habit, more inclined to **croon** through a long welcome speech than to broker any substantive moment in the room. The reception was, by every standard Talia could apply on first walking in, the kind of evening at which any actual movement on the dispute would happen, if at all, in the corner — at the wrong end of the table — and not in any of the prepared remarks.
+
+She was wearing a navy suit she had, in her own private description, described to her sister as "**dowdy** by Eaton standards" — meaning slightly under-dressed for the room. She had chosen it deliberately. She had observed, over fourteen months, that her own visibility in any room was inversely proportional to the formality of her dress, and that the corner conversations she was meant to overhear were easier to overhear when she was, by the room\'s reading, a junior figure whose presence did not require accommodation.
+
+She did not, in the first hour, **expatiate** on any topic with any guest. She made small talk. She accepted one glass of mineral water. She listened.
+
+At 8:42 p.m., the deputy from Halmar — a woman named Dr. Finel, whom Talia had met three times in the previous nine months — moved to a corner of the room with the deputy from Drest. The two of them spoke for nearly twenty minutes. Talia, in the small accident of geography, was standing approximately three meters away from them, in conversation with the head of an Eaton agricultural NGO whose hearing was, by her own admission, slightly impaired. Talia caught most of the corner conversation.
+
+She did not, in the moment, intervene. She also did not, in the moment, leave. She listened.
+
+The corner conversation reached, at approximately 8:57 p.m., a single **fulcrum** sentence — a casual offer from the Drest deputy to consider a six-month suspension of one specific category of disputed tariffs in exchange for a parallel suspension of a specific Halmar inspection regime that had, for two years, been the principal Drest grievance. The offer was not, in the room\'s standing reading, a proposal that any senior figure had pre-cleared. It was, by Talia\'s honest read, the beginning of a **detente**.
+
+Talia did not, in her cable to her ambassador the following morning, claim that the reception had produced an **imbroglio**. It had not. The cable, in its three paragraphs, recorded the corner conversation, the fulcrum sentence, and the names of the two deputies. It did not speculate beyond what she had heard. The ambassador, on his return Saturday afternoon, read the cable, called Talia into his office for nine minutes, and authorized a quiet follow-up meeting for the following Tuesday.
+
+The Tuesday meeting was held at the wrong end of a different table. Talia was, by every standard the Eaton mission used, present without being a presence. The fulcrum sentence held. By the end of the calendar year, the suspension framework that Dr. Finel and the Drest deputy had described in the corner had been signed, in modified form, by both governments.
+
+Talia\'s ambassador did not, in any subsequent conversation, **depose** her account of the reception. He did, however, mention to the regional director the following spring that his second-ranking attaché was the kind of officer whose dowdy navy suit was, in his honest assessment, the most useful garment in the mission\'s wardrobe.`,
+  questions: [
+    {
+      id: 1,
+      kind: "vocab-context",
+      prompt: 'In this sentence, the word "fraught" most nearly means:',
+      quote:
+        '"...had been the subject, for nine months, of a quiet shuttle mediation... in a state Talia\'s ambassador had described, in a closed cable two weeks earlier, as \'fraught but not yet collapsed.\'"',
+      options: [
+        "Calm and free of any tension.",
+        "Filled with or accompanied by tension, anxiety, or difficulty.",
+        "Concluded by formal treaty.",
+        "Conducted in a single language.",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Fraught" describes a state laden with tension and difficulty — exactly the mediation\'s standing two weeks before the reception.',
+    },
+    {
+      id: 2,
+      kind: "vocab-context",
+      prompt: 'In this sentence, the word "fulcrum" most nearly means:',
+      quote:
+        '"The corner conversation reached, at approximately 8:57 p.m., a single fulcrum sentence — a casual offer from the Drest deputy to consider a six-month suspension..."',
+      options: [
+        "A sentence that ends a conversation without consequence.",
+        "A pivotal point on which something else turns or balances.",
+        "A formal opening declaration.",
+        "A speech of welcome.",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Fulcrum" describes a pivot point on which a larger movement turns — the casual offer becomes the hinge of the eventual détente.',
+    },
+    {
+      id: 3,
+      kind: "tone-purpose",
+      prompt:
+        'The narrator dwells on Talia\'s "dowdy" navy suit and her observation that her visibility is "inversely proportional to the formality of her dress." Why give a clothing detail this much weight?',
+      options: [
+        'The detail is incidental and has no relation to the diplomatic events.',
+        'The clothing choice is the operational basis for the entire evening: a deputy-level corner conversation will not happen in front of a figure the room has to formally acknowledge. The suit converts Talia from a presence the room must accommodate into a junior bystander whose proximity to the corner is a small accident of geography. Without that choice, there is no fulcrum sentence to overhear.',
+        'To suggest that diplomatic dress codes have become unimportant.',
+        'To imply that Talia\'s ambassador disapproved of her wardrobe.',
+      ],
+      correctIndex: 1,
+      explanation:
+        'The suit is the operational instrument — it produces the deniability that makes the corner conversation overhearable, which is the entire mechanism of the evening.',
+    },
+    {
+      id: 4,
+      kind: "inference",
+      prompt:
+        "Based on the passage, what can the reader most reasonably infer about why Talia\'s cable the following morning explicitly did not describe the reception as an imbroglio and did not speculate beyond what she had heard?",
+      options: [
+        "She was protecting Dr. Finel from professional consequences.",
+        "She judged that the corner conversation\'s value depended on its being reported accurately and modestly — overstating it as an imbroglio or speculating beyond the heard text would have invited the kind of senior-level intervention that would have collapsed the very deniability that allowed the fulcrum sentence to be offered in the first place.",
+        "Mission rules required all cables to be limited to three paragraphs.",
+        "She did not believe the conversation had any practical importance.",
+      ],
+      correctIndex: 1,
+      explanation:
+        "The text emphasizes the cable\'s restraint — recording what was heard, naming the parties, and not speculating — which is exactly the report-style that preserves the conditions under which the détente can develop.",
+    },
+    {
+      id: 5,
+      kind: "substitution",
+      prompt:
+        'Which single word could replace "expatiate" in the sentence below without changing its meaning?',
+      quote:
+        '"She did not, in the first hour, expatiate on any topic with any guest."',
+      options: [
+        "Discourse",
+        "Photograph",
+        "Translate",
+        "Apologize",
+      ],
+      correctIndex: 0,
+      explanation:
+        '"Discourse" matches "expatiate" — both describe speaking at length and in detail on a subject.',
+    },
+    {
+      id: 6,
+      kind: "main-idea",
+      prompt:
+        "Which sentence best summarizes the central idea or arc of the passage?",
+      options: [
+        "A junior attaché publicly brokers a tariff agreement at a small evening reception.",
+        "A second-ranking attaché, instructed to be present without being a presence at a fraught reception, deliberately dresses dowdy enough to remain unaccommodated, overhears a single fulcrum sentence in a corner conversation between two deputies, reports it modestly without claiming any imbroglio, and watches a quiet détente develop over the following months on terms her ambassador could authorize.",
+        "An ambassador returns from a regional summit to find that his attaché has caused a diplomatic incident at a reception.",
+        "A small mission cancels a long-running shuttle mediation after a single corner conversation.",
+      ],
+      correctIndex: 1,
+      explanation:
+        "The arc traces precisely the dowdy suit, the corner conversation, the fulcrum sentence, the modest cable, and the détente that follows.",
+    },
+  ],
+};
+
+const MISSION_29_SET_3: SetReading = {
+  title: "The Sailing Instructor at the Nadir Tide",
+  subtitle:
+    "A short story about a coastal sailing camp, an outlandish weather forecast, and the nimble propitious choice between waiting at the zenith of the morning and sailing through an ominous afternoon.",
+  format: "Short Story",
+  readingMinutes: 4,
+  words: [
+    "jocund",
+    "languish",
+    "nadir",
+    "nimble",
+    "ominous",
+    "outlandish",
+    "propitious",
+    "prurient",
+    "sadistic",
+    "zenith",
+  ],
+  passage: `Mara Fenn had been the head sailing instructor at the Halmar Bay Youth Camp for nine summers, and she had developed, over those nine summers, a working knowledge of the bay\'s afternoon weather pattern that the camp\'s adult administrators sometimes treated as if it were a small piece of folklore. The pattern was not folklore. It was a measurable phenomenon — a daily wind reversal that made the bay, for most days of July and early August, a slightly easier place to teach beginning sailors at 11:00 a.m. than at 3:00 p.m.
+
+The Tuesday morning in question was the third day of a five-day intermediate clinic for twelve campers between the ages of thirteen and sixteen. The clinic\'s schedule called for a long midday session — 11:00 a.m. to 4:00 p.m. — that included a small open-water exercise the campers had been preparing for since Sunday.
+
+The marine forecast at 6:00 a.m., posted to the camp\'s wall, was — by Mara\'s honest read — slightly **outlandish**. It called for a calm morning with steady five-knot winds, an afternoon **zenith** of fifteen knots between 1:00 and 2:00 p.m., and then, beginning at approximately 2:30 p.m., a frontal system the forecaster described in two sentences that Mara read three times. The frontal system, by the forecaster\'s estimate, would bring sustained twenty-five-knot winds with gusts to forty, beginning between 2:30 and 3:00 p.m. and lasting until early evening.
+
+The forecast was, on its face, **ominous** for an open-water clinic at 3:00 p.m.
+
+It was also, by 6:14 a.m., the kind of forecast a head instructor had to take a position on before the campers arrived at the dock at 9:30 a.m. for the morning briefing.
+
+Mara made the call at 6:30 a.m. She was, by long camp standards, **nimble** with schedule changes — the kind of instructor who did not, when conditions required it, **languish** at the morning\'s **nadir** of low wind and weak light waiting for the formally-scheduled session to begin. She moved the open-water exercise from 1:00 p.m. to 11:00 a.m. She moved the lunch hour to 1:30. She moved the afternoon\'s scheduled boat-handling drills onto the dock — dry-land drills that did not require open water — and she set the on-water portion of the afternoon session to end, by hard cap, at 2:15 p.m.
+
+She did not, in her morning briefing to the campers, present the change as a **jocund** improvisation. She also did not present it in the slightly **sadistic** key — long lectures about the seriousness of weather — that one of the camp\'s adult administrators favored on similar mornings. She described, in three sentences, what the forecast said, what it meant for the bay, and what the revised schedule was. She answered four questions. She did not, in any of the answers, indulge what she had over nine summers learned to recognize as the slightly **prurient** interest some of the older campers took in the prospect of an actual storm.
+
+The morning open-water exercise ran from 11:00 a.m. to 12:45 p.m. The conditions were, by every measure Mara recorded in her log, **propitious** — light, steady, and forgiving in exactly the way the bay\'s 11:00 a.m. window almost always was. The campers, including two who had been struggling on Monday, completed the exercise at the upper end of Mara\'s expectations.
+
+The afternoon dry-land session ran from 2:00 to 4:00. The frontal system arrived at 2:48 p.m. By 3:10 p.m., the bay carried sustained winds of twenty-six knots with gusts at thirty-four. The dock was empty of camp boats. No camper was on the water. The dry-land drills, conducted in the lee of the boathouse, lost only the last forty minutes of their schedule to the rain itself.
+
+The camp\'s director, in her note to Mara that evening, did not — for once — **languish** in the language of administrative process. She wrote a single sentence: that the clinic\'s third day had been, in her honest reading, the most useful afternoon the camp had run all summer.`,
+  questions: [
+    {
+      id: 1,
+      kind: "vocab-context",
+      prompt: 'In this sentence, the word "propitious" most nearly means:',
+      quote:
+        '"The conditions were, by every measure Mara recorded in her log, propitious — light, steady, and forgiving..."',
+      options: [
+        "Hazardous and unpredictable.",
+        "Favorable; offering a likelihood of success.",
+        "Unusually severe.",
+        "Slow and uneventful in a damaging way.",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Propitious" describes favorable conditions that offer a likelihood of success — exactly the bay\'s 11:00 a.m. window.',
+    },
+    {
+      id: 2,
+      kind: "vocab-context",
+      prompt: 'In this sentence, the word "nadir" most nearly means:',
+      quote:
+        '"...the kind of instructor who did not, when conditions required it, languish at the morning\'s nadir of low wind and weak light waiting for the formally-scheduled session to begin."',
+      options: [
+        "The peak or highest point of a daily cycle.",
+        "The lowest point of a cycle or trajectory.",
+        "The exact midpoint of a planned schedule.",
+        "A long calm spell of pleasant weather.",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Nadir" describes the lowest point — the opposite of "zenith." The morning\'s nadir of low wind and weak light is the daily low.',
+    },
+    {
+      id: 3,
+      kind: "tone-purpose",
+      prompt:
+        'The narrator says Mara did not present the schedule change as a "jocund improvisation" or in a "sadistic key." Why frame the contrast as a refusal of two opposite tones rather than just describing the briefing she gave?',
+      options: [
+        '"Jocund" and "sadistic" mean the same thing in this context.',
+        'The pair names two specific failure modes — false cheerfulness on one side and weather-as-warning sermonizing on the other — that an instructor in the same situation could easily slip into. By refusing both, Mara establishes the tone that actually serves the campers: a flat factual description that does not invite either spectacle or anxiety.',
+        'To indicate that the camp had a strict policy on briefing language.',
+        'To imply that the adult administrator was personally cruel to the campers.',
+      ],
+      correctIndex: 1,
+      explanation:
+        'The two refused tones name the failure modes; Mara\'s actual tone — a flat factual three-sentence description — is established by the contrast.',
+    },
+    {
+      id: 4,
+      kind: "inference",
+      prompt:
+        "Based on the passage, what can the reader most reasonably infer about why Mara made the schedule change at 6:30 a.m. — three hours before the campers arrived — rather than waiting to see whether the forecast would update?",
+      options: [
+        "She wanted to limit the camp director\'s ability to overrule her decision.",
+        "Operationally, the change had to be made before the morning briefing in order for the open-water exercise to run in the propitious 11:00 a.m. window; waiting for forecast updates would have collapsed the very window she was trying to use, since shifting the schedule at 10:00 a.m. would have left no time for the briefing, the rigging, and the safety check.",
+        "Camp regulations required all schedule changes to be posted by 7:00 a.m.",
+        "She had been instructed by her supervisor to make the change at that time.",
+      ],
+      correctIndex: 1,
+      explanation:
+        "The schedule mechanics require the early call: the propitious window cannot be used unless the briefing, rigging, and safety check have already been done by 11:00 a.m.",
+    },
+    {
+      id: 5,
+      kind: "substitution",
+      prompt:
+        'Which single word could replace "ominous" in the sentence below without changing its meaning?',
+      quote:
+        '"The forecast was, on its face, ominous for an open-water clinic at 3:00 p.m."',
+      options: [
+        "Reassuring",
+        "Threatening",
+        "Anonymous",
+        "Forgettable",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Threatening" matches "ominous" — both describe the quality of giving the impression that something bad is about to happen.',
+    },
+    {
+      id: 6,
+      kind: "main-idea",
+      prompt:
+        "Which sentence best summarizes the central idea or arc of the passage?",
+      options: [
+        "A sailing instructor cancels a clinic after an outlandish forecast and the campers spend the day inside.",
+        "A nimble head instructor reads an outlandish-but-credible forecast at 6:30 a.m., shifts a clinic\'s open-water exercise from a hazardous afternoon to a propitious 11:00 a.m. window, briefs the campers in a flat factual register that refuses both jocund improvisation and sadistic warning, and runs the third clinic day so successfully that the camp director writes a one-sentence note.",
+        "A coastal storm cancels a youth sailing camp\'s most important exercise of the summer.",
+        "A junior camper persuades a sailing instructor to ignore a marine weather forecast.",
+      ],
+      correctIndex: 1,
+      explanation:
+        "The arc traces precisely the early forecast, the nimble schedule shift, the calibrated briefing, and the propitious morning window.",
+    },
+  ],
+};
+
+const MISSION_30_SET_1: SetReading = {
+  title: "The Debate Coach in the Fallow Year",
+  subtitle:
+    "A personal essay by a high school debate coach on the difference between bravado and conviction, and on what a callow squad needs from a fallow season — not capitulation, but the time to cogitate.",
+  format: "Personal Essay",
+  readingMinutes: 4,
+  words: [
+    "aberrant",
+    "abide",
+    "bravado",
+    "callow",
+    "capitulate",
+    "cogitate",
+    "deportment",
+    "extemporize",
+    "factious",
+    "fallow",
+  ],
+  passage: `I have coached the Marston East debate squad for sixteen years, and I am writing this in the third week of what is, by every measure my program tracks, a **fallow** season. We are seven tournaments into a sixteen-tournament year. We have, in those seven tournaments, advanced to elimination rounds in three. We have won, across all rounds, fifty-eight percent of our matches. The corresponding numbers from last year — the year that ended with three of my seniors at the national tournament — were, at the same point in the calendar, considerably higher.
+
+I am writing this because three of my parents have, in the past two weeks, asked me what I plan to do about it.
+
+The honest answer is that I plan to do, this year, what I have done in the previous two fallow seasons of the sixteen, which is mostly to **abide** the season and to use it. I am writing the essay because the honest answer, in person, has not been satisfying to the three parents. I am hoping that having the long version on the program\'s website will let me, in the next conversation, hand the parents a link.
+
+A debate squad in a fallow year does not, in my experience, need most of the things that the parents who have asked me about it have proposed. It does not need a more **factious** practice schedule, with the strongest debaters separated from the weaker ones into a permanent A-squad and B-squad split that will, in my honest reading, only harden the gap. It does not need the coach to **capitulate** to the parents who have, in two of the three conversations, suggested specific tournament withdrawals to "preserve the squad\'s record." It does not, above all, need a public reset of the squad\'s standards in the form of a new emphasis on **bravado** in the round — louder cross-examinations, more theatrical closing speeches, a posture of confidence that the squad has not, this year, earned.
+
+What a fallow squad actually needs, in my sixteenth year of coaching, is time to **cogitate**.
+
+The squad I have this year is, in its top six, a **callow** squad. Four of the six are sophomores. The two juniors are, in their own honest description, returning from a year in which they sat second-chair behind seniors who carried the room. None of the six has ever advanced to a national-circuit elimination round on their own evidence. They are, in person, intelligent. They are, in their preparation, diligent. They are not, on the merits, ready to **extemporize** the kind of cross-examination that wins close rounds against well-prepared opponents in the final twenty seconds.
+
+The temptation in a fallow year is to drill against that exact weakness. The temptation, that is, is to spend three weeks on extemporaneous cross-examination drills until the squad can, in practice, perform the kind of fast confident exchange that wins the close rounds.
+
+I have, twice, made that decision. Both times, I produced squads that looked stronger in the eight tournament-day rounds in November and that **capitulated**, in the seven elimination rounds I watched in March, to opponents who had spent November doing something else.
+
+The something else is what I am doing this year. We are, on Tuesday and Thursday afternoons, working on the case files. The work is not glamorous. We are reading the source documents the squad\'s arguments depend on. We are, in the program\'s slightly archaic language, refining their **deportment** in cross-examination not by drilling speed but by drilling familiarity with the underlying material. The conviction that wins the close round in March is not, in my experience, manufactured by November bravado. It is the slow accumulation of having read the source.
+
+Three of the parents have asked me whether the squad\'s November record is, in itself, an **aberrant** signal that requires immediate correction. I have answered, in each conversation, that the November record of a squad halfway through a fallow season is, in my sixteen years, the worst possible time to read the squad\'s actual ceiling.
+
+I have one further request for the parents. I would like them, on the Saturday in March when our squad either advances or does not advance to its first elimination round of the spring, to send me a single email. I would like the email to acknowledge — whichever way the round goes — that I told them, in November, what I was doing.
+
+I will, on receipt, be happy to discuss whether next year\'s practice schedule should be more factious.`,
+  questions: [
+    {
+      id: 1,
+      kind: "vocab-context",
+      prompt: 'In this sentence, the word "callow" most nearly means:',
+      quote:
+        '"The squad I have this year is, in its top six, a callow squad. Four of the six are sophomores."',
+      options: [
+        "Highly experienced and battle-tested.",
+        "Inexperienced and immature; lacking the seasoning that comes from practice.",
+        "Predominantly composed of seniors.",
+        "Politically divided into factions.",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Callow" describes inexperienced, unseasoned youth — exactly the four-sophomore composition the next sentence describes.',
+    },
+    {
+      id: 2,
+      kind: "vocab-context",
+      prompt: 'In this sentence, the word "fallow" most nearly means:',
+      quote:
+        '"I have coached the Marston East debate squad for sixteen years, and I am writing this in the third week of what is, by every measure my program tracks, a fallow season."',
+      options: [
+        "A season of extraordinary competitive success.",
+        "A period of low productivity or dormancy, especially one used for restoration or preparation.",
+        "A formal championship round at the end of the year.",
+        "A season interrupted by external scheduling problems.",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Fallow" describes a period of dormancy, drawn from agriculture (a field left unplanted to restore). The metaphor — restoring through rest and groundwork — is exactly the essay\'s argument.',
+    },
+    {
+      id: 3,
+      kind: "tone-purpose",
+      prompt:
+        'The narrator says, "I have, twice, made that decision. Both times, I produced squads that looked stronger in the eight tournament-day rounds in November and that capitulated, in the seven elimination rounds I watched in March, to opponents who had spent November doing something else." Why offer the personal track record at this point in the essay?',
+      options: [
+        'To brag about sixteen years of coaching success.',
+        'The personal failure record is the essay\'s strongest move: it converts an opinion (drilling fast cross-examination is the wrong fallow-year move) into a recorded judgment from twice having made the opposite call. The parents are not being asked to trust the coach\'s theory; they are being asked to trust her account of the two seasons in which she did exactly what they are now proposing.',
+        'To suggest that the coach is no longer interested in winning tournaments.',
+        'To imply that the coach intends to resign at the end of the season.',
+      ],
+      correctIndex: 1,
+      explanation:
+        'The personal record converts the argument from theoretical to recorded — the coach is testifying about the same decision she has made before, with the same downstream cost.',
+    },
+    {
+      id: 4,
+      kind: "inference",
+      prompt:
+        "Based on the passage, what can the reader most reasonably infer about why the coach asks the parents, on the March Saturday after the first elimination round, to send a one-line email acknowledging that she told them in November what she was doing?",
+      options: [
+        "She wants to embarrass the parents publicly if her March record is strong.",
+        "The request creates a small accountability mechanism that survives the season\'s actual outcome — protecting the coach\'s ability to make the same fallow-year choice in future years from the recurring pressure of November record-driven parent conversations, regardless of whether March vindicates her this time.",
+        "She intends to share the emails with the school administration as part of an evaluation.",
+        "The request is purely sentimental and has no operational purpose.",
+      ],
+      correctIndex: 1,
+      explanation:
+        "The request builds an accountability mechanism that protects the long-term coaching judgment from the short-term pressure of one season\'s November record.",
+    },
+    {
+      id: 5,
+      kind: "substitution",
+      prompt:
+        'Which single word could replace "abide" in the sentence below without changing its meaning?',
+      quote:
+        '"...I plan to do, this year, what I have done in the previous two fallow seasons of the sixteen, which is mostly to abide the season and to use it."',
+      options: [
+        "Photograph",
+        "Endure",
+        "Cancel",
+        "Translate",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Endure" matches "abide" in this sense — both describe accepting and patiently bearing a situation rather than fleeing or fighting it.',
+    },
+    {
+      id: 6,
+      kind: "main-idea",
+      prompt:
+        "Which sentence best summarizes the central idea or arc of the essay?",
+      options: [
+        "A debate coach announces that she will withdraw her callow squad from the rest of the season\'s tournaments.",
+        "A sixteen-year debate coach defends her decision to use a fallow season for slow case-file work and source reading rather than for the bravado-and-extemporaneous drills three parents have proposed — citing two prior fallow years in which she made the opposite call and produced squads that capitulated in the spring.",
+        "A debate coach restructures her squad into a permanent A-squad and B-squad split to address a fallow season.",
+        "A debate program publishes its November record on its website to defend the coach against parental criticism.",
+      ],
+      correctIndex: 1,
+      explanation:
+        "The essay\'s spine is exactly the defense of fallow-year cogitation against the parents\' proposed bravado-and-drill remedies, anchored in the coach\'s own twice-tested track record.",
+    },
+  ],
+};
+
+const MISSION_30_SET_2: SetReading = {
+  title: "The Fencing Master and the Indecorous Bout",
+  subtitle:
+    "A short story about a club tournament, a flagrant feint, and the obdurate refusal to grovel before an obstreperous coach whose intrigue had already cost the club one season.",
+  format: "Short Story",
+  readingMinutes: 4,
+  words: [
+    "feint",
+    "flagrant",
+    "gratuitous",
+    "grovel",
+    "indecorous",
+    "intrigue",
+    "nominal",
+    "obdurate",
+    "obstreperous",
+    "odious",
+  ],
+  passage: `Maître Inez Carrol had been the head coach of the Halmar Fencing Club for twenty-two years, and she had developed, over those twenty-two years, a particular and well-earned reputation for being **obdurate** in the small set of decisions a fencing coach was required, in any given tournament season, to make alone.
+
+The Saturday in question was the regional A-rated foil event, held in the high-ceilinged gymnasium of a private school three towns over. The Halmar club had entered six fencers. Five of the six were her own students. The sixth was a fencer she had inherited from a smaller club that had folded the previous spring — a young woman named Pell who had, by Inez\'s honest read after four months of practice, the technical foundation of a high-finishing junior and the temperament of a fencer who had been, in her previous club, allowed to weaponize a particular kind of **indecorous** stage business in the strip.
+
+The stage business in question was a **flagrant** double-tempo **feint** that, executed clean, was an entirely legal and even elegant attack. Executed dirty — which Pell\'s previous coach had, by every standard the regional referees applied, encouraged her to do — it was an attack that began with a small **gratuitous** glance toward the opponent\'s feet and ended with a blade movement so abrupt that the referee\'s call, in any close exchange, was almost always slow.
+
+Pell had, in the four months since joining the Halmar club, agreed in practice to retire the dirty version of the feint. She had not, in three subsequent regional events, retired it.
+
+The Saturday\'s relevant moment came in the round-of-thirty-two. Pell\'s opponent was a strong junior from the Drest club. The bout was even at twelve points each, with a four-point margin to win. Pell, on her own initiative, executed the feint in its dirty version on the next exchange. The referee\'s call was, predictably, slow. The light went to Pell.
+
+The Drest coach, a man named Maître Roop, was, by every measure the room used, **obstreperous**. He had been ejected from two regional events in the previous five years for sustained protest of referee calls. He approached the strip at the next break and, in a long sequence of sentences, accused Pell of a deliberate violation of the federation\'s sportsmanship code and accused Inez, by **nominal** but unmistakable extension, of having coached the violation.
+
+The accusation was, in Inez\'s honest read, the kind of public **intrigue** Maître Roop had been known to produce at A-rated events for years — a sustained piece of corridor pressure that, in his previous form, had on at least two occasions resulted in opposing fencers receiving warnings the actual referees had not seen fit to issue.
+
+Inez did not, in the corridor, **grovel**. She did not apologize for the call. She did not, however, defend the feint either. She told Maître Roop, in three sentences, that the federation\'s sportsmanship code applied to all fencers; that the referee\'s call was the referee\'s; and that the Halmar club would, in the standing post-event protocol, file its own internal review of the bout regardless of the day\'s outcome.
+
+She walked away from Maître Roop. She did not, in any subsequent corridor conversation that morning, mention his name.
+
+She then did the harder thing.
+
+She walked back to her own strip, called Pell aside between bouts, and told her, in two sentences delivered at the volume the corridor required and not louder, that the dirty feint would not be executed again that day; that any further use of it would result in Pell being withdrawn by her own coach from the remainder of the event; and that the conversation about whether Pell would represent the Halmar club at the next A-rated event would be held the following Tuesday in Inez\'s office.
+
+Pell did not protest. She finished the day in the round of sixteen on a clean attack she had drilled in practice for three weeks. The Halmar club did not advance any of its six fencers to the final eight, but it did, by Inez\'s reading of the day, end the season\'s **odious** dependency on the dirty version of the feint.
+
+Maître Roop, in the parking lot afterward, attempted one further conversation. Inez listened for thirty seconds. She then said, in a single sentence, that the Halmar club\'s internal review would be filed by Wednesday and that he was welcome to request it through federation channels.
+
+The internal review was filed. The dirty feint did not appear in any subsequent Halmar-club bout. The Tuesday conversation in Inez\'s office lasted forty minutes. Pell remained on the squad.`,
+  questions: [
+    {
+      id: 1,
+      kind: "vocab-context",
+      prompt: 'In this sentence, the word "obdurate" most nearly means:',
+      quote:
+        '"...she had developed, over those twenty-two years, a particular and well-earned reputation for being obdurate in the small set of decisions a fencing coach was required, in any given tournament season, to make alone."',
+      options: [
+        "Easily persuaded to change a decision under pressure.",
+        "Stubbornly resolved; firmly unyielding once a decision is made.",
+        "Reluctant to make any decision at all.",
+        "Open to revising any call after the bout is over.",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Obdurate" describes a stubborn, firm refusal to be moved — exactly the reputation a coach who has to make solo calls under pressure earns over twenty-two years.',
+    },
+    {
+      id: 2,
+      kind: "vocab-context",
+      prompt: 'In this sentence, the word "obstreperous" most nearly means:',
+      quote:
+        '"The Drest coach, a man named Maître Roop, was, by every measure the room used, obstreperous. He had been ejected from two regional events in the previous five years for sustained protest of referee calls."',
+      options: [
+        "Quietly cooperative with referees.",
+        "Noisily and aggressively unruly; resistant to control.",
+        "Politely deferential in public settings.",
+        "Reluctant to attend regional events.",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Obstreperous" describes noisy, aggressive resistance to control — exactly the pattern of sustained protest that has earned Maître Roop two ejections.',
+    },
+    {
+      id: 3,
+      kind: "tone-purpose",
+      prompt:
+        'The narrator says Inez did "the harder thing" by calling Pell aside between bouts and threatening withdrawal. Why frame the in-house intervention as harder than the corridor confrontation with an obstreperous opposing coach?',
+      options: [
+        '"Harder" simply means "louder" in this context.',
+        'The corridor confrontation costs Inez nothing — Maître Roop\'s reputation does the work for her, and she pays no relational price for refusing to grovel. The in-house intervention costs her her relationship with her own fencer in the middle of a tournament day. The framing tells the reader that Inez\'s coaching judgment is not measured by her handling of an outside antagonist but by her willingness to discipline her own squad on the same standard she has just defended.',
+        'It implies that Pell is more dangerous than Maître Roop.',
+        'It suggests Inez was reluctant to make any decision that day.',
+      ],
+      correctIndex: 1,
+      explanation:
+        'The framing distinguishes the cheap public posture (refusing to grovel before an opposing coach) from the expensive private one (disciplining your own fencer mid-tournament on the same standard).',
+    },
+    {
+      id: 4,
+      kind: "inference",
+      prompt:
+        "Based on the passage, what can the reader most reasonably infer about why Inez told Maître Roop the Halmar club would file its own internal review of the bout regardless of the day\'s outcome?",
+      options: [
+        "She wanted to undercut Maître Roop\'s public credibility by admitting Pell\'s violation in writing.",
+        "Pre-committing to an internal review removes any incentive Maître Roop had to escalate the corridor pressure further: he could not extract through intrigue what was already going to happen through standing protocol, and the review\'s existence became a fact the corridor confrontation could no longer add to.",
+        "Federation rules required all bouts to be reviewed by the losing club.",
+        "She intended to use the review to file a counter-protest against Maître Roop.",
+      ],
+      correctIndex: 1,
+      explanation:
+        "The pre-commitment to internal review is exactly the move that removes the corridor pressure\'s leverage — what is already going to happen cannot be coerced.",
+    },
+    {
+      id: 5,
+      kind: "substitution",
+      prompt:
+        'Which single word could replace "flagrant" in the sentence below without changing its meaning?',
+      quote:
+        '"The stage business in question was a flagrant double-tempo feint..."',
+      options: [
+        "Subtle",
+        "Blatant",
+        "Anonymous",
+        "Forgettable",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Blatant" matches "flagrant" — both describe something obvious or conspicuous, often in a way that draws attention to its excess.',
+    },
+    {
+      id: 6,
+      kind: "main-idea",
+      prompt:
+        "Which sentence best summarizes the central idea or arc of the passage?",
+      options: [
+        "A fencing coach publicly apologizes for her fencer\'s violation of the federation sportsmanship code.",
+        "An obdurate fencing master refuses to grovel before an obstreperous opposing coach\'s corridor intrigue, pre-commits to an internal review that defangs the pressure, and then does the harder thing — disciplining her own fencer mid-tournament on the same standard she has just defended in the corridor.",
+        "A regional fencing tournament is suspended after a sustained corridor protest by an opposing coach.",
+        "A fencer is ejected from her own club for executing a legal but elegant feint.",
+      ],
+      correctIndex: 1,
+      explanation:
+        "The arc moves precisely through the dirty feint, the corridor refusal to grovel, the pre-committed review, and the in-house mid-tournament discipline.",
+    },
+  ],
+};
+
+const MISSION_30_SET_3: SetReading = {
+  title: "The Drama Teacher and the Plucky Soliloquy",
+  subtitle:
+    "A short story about a high school theater audition, a precocious student\'s tenuous reading, and the stolid temerity it took to neither spurn the audition nor reward it with a verve it had not earned.",
+  format: "Short Story",
+  readingMinutes: 4,
+  words: [
+    "plucky",
+    "precocious",
+    "remuneration",
+    "slovenly",
+    "soliloquy",
+    "spurn",
+    "stolid",
+    "temerity",
+    "tenuous",
+    "verve",
+  ],
+  passage: `Mr. Halden Cur had taught the senior drama elective at Marston Regional High School for nineteen years on the Tuesday afternoon of the spring auditions in question. He had directed the school\'s spring play in eighteen of those nineteen years, on a small per-production stipend that the district\'s human-resources office referred to, with bureaucratic earnestness, as "supplementary **remuneration**." The stipend, divided by the hours, was approximately one-eighth of his hourly classroom rate.
+
+The audition piece for the spring production — a small contemporary play with two leads — required each auditioning student to perform a three-minute **soliloquy** of his or her own choosing.
+
+The student in question, a sophomore named Iris Vell, had signed up for the 3:40 p.m. slot. Iris had appeared in two prior school productions in supporting roles, in both of which she had been, by Mr. Cur\'s honest read, the most **precocious** acting talent in her year — a young actress whose timing in scene work was, even in two-minute classroom exercises, already several years ahead of her classmates\'.
+
+Iris arrived at 3:38 p.m. wearing what Mr. Cur would later describe in his audition notes, with characteristic care, as a "**slovenly** but not undeliberately slovenly" outfit — an oversized cardigan over a stained T-shirt and jeans that had, in his read, been chosen with exactly enough attention to look as if no attention had been paid. The choice was, he understood within the first thirty seconds, a stylistic statement intended to telegraph a certain kind of casual, contemporary, indie-film register that Iris had clearly been studying.
+
+She performed the soliloquy with remarkable, **plucky** conviction. The soliloquy was a piece from a contemporary playwright Mr. Cur knew well. The reading was inventive — three or four small line readings he had not heard before in twelve previous student attempts at the same piece. The reading was also, in his honest professional assessment, **tenuous** in its connection to the actual emotional arc of the speech. Iris had committed, in her interpretive choices, to a posture of detached ironic amusement that the speech would not, in his reading of it across nineteen years, support beyond the third minute.
+
+The audition ran two minutes and fifty-eight seconds. It was, in its public **verve**, the most performed audition of the day. It was not, in his honest professional read, the audition of a young actress prepared to carry a lead in a contemporary play whose second-act scene work required emotional access she had, in the soliloquy, deliberately not shown.
+
+Mr. Cur did not, in his post-audition feedback to Iris in the empty rehearsal room, **spurn** the audition. He did not, however, reward it. He sat with her for nine minutes. He thanked her for the inventive line readings, two of which he named specifically. He then asked her, in the calm manner he had developed over nineteen years for exactly this kind of conversation, what she would have done with the third minute of the soliloquy if she had been required to access the emotional shift the speech actually contained.
+
+Iris, to her credit, did not respond with any of the deflections a fifteen-year-old of less ability might have produced. She said, after a pause of seven seconds, that she had not, in her preparation, worked on the third minute. She said she had committed to the ironic-detachment register because she knew it would, on a single audition, look more original than an honest reading. She said she had, with the small **temerity** of a sophomore who had read more about acting than she had practiced, decided that the audition was where one displayed range rather than where one demonstrated craft.
+
+Mr. Cur was, in his own private description of the conversation in his audition notes that evening, **stolid** through Iris\'s answer. He did not, by face or voice, register either approval or disappointment.
+
+He then offered her one of the two leads.
+
+He told her, in three sentences, that the role was hers; that the third minute of the soliloquy — and the entire second act of the play — would be the rehearsal-room work the audition had not been; and that she would, by his estimation, either grow into the role over the eight-week rehearsal period or be replaced, by him, in the fifth week, on the strength of the same honest professional standard that had just informed his offer.
+
+Iris accepted. The production opened in May. Iris, in his honest read of opening night, made it through the second act on the strength of seven weeks of rehearsal-room work that the audition had not predicted. The Marston Regional reviewer described her performance, in three sentences in the local paper, as "the most fully inhabited sophomore lead the school has cast in five years."
+
+Mr. Cur did not, in any subsequent conversation, take credit for the performance. He did, however, in the program for the spring production the following year, list a quiet thank-you to Iris Vell, "for the audition that established the standard."`,
+  questions: [
+    {
+      id: 1,
+      kind: "vocab-context",
+      prompt: 'In this sentence, the word "tenuous" most nearly means:',
+      quote:
+        '"The reading was also, in his honest professional assessment, tenuous in its connection to the actual emotional arc of the speech."',
+      options: [
+        "Strong, well-grounded, and thoroughly developed.",
+        "Weak, slight, or having little substance; thinly supported.",
+        "Cheerful and energetic in tone.",
+        "Conducted in front of a large audience.",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Tenuous" describes a thin, weak, slightly-supported connection — exactly Iris\'s relationship to the speech\'s actual arc despite her plucky reading.',
+    },
+    {
+      id: 2,
+      kind: "vocab-context",
+      prompt: 'In this sentence, the word "temerity" most nearly means:',
+      quote:
+        '"...she had, with the small temerity of a sophomore who had read more about acting than she had practiced, decided that the audition was where one displayed range rather than where one demonstrated craft."',
+      options: [
+        "An excessive timidity that prevents action.",
+        "Excessive confidence or boldness, often beyond what is warranted by experience.",
+        "A reluctance to attend auditions at all.",
+        "A formal apology offered before performing.",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Temerity" describes an unwarranted, excessive boldness — exactly the kind of self-confident interpretive call a precocious sophomore might make on the strength of having read more than she has practiced.',
+    },
+    {
+      id: 3,
+      kind: "tone-purpose",
+      prompt:
+        'The narrator says Mr. Cur was "stolid through Iris\'s answer" and "did not, by face or voice, register either approval or disappointment." Why dwell on the absence of visible reaction?',
+      options: [
+        'To suggest that Mr. Cur was bored by the conversation.',
+        'The stolid response is the precise instrument of the scene\'s craft: a fifteen-year-old who has just admitted with unusual honesty that her audition was a stunt is in a moment of maximum vulnerability. Visible approval would have rewarded the stunt; visible disappointment would have shamed the honesty. The flat response makes both the offer and the conditions that follow legible as professional judgment rather than as personal reaction.',
+        'To imply that Mr. Cur had not been listening to her answer.',
+        'To indicate that the rehearsal room was poorly lit.',
+      ],
+      correctIndex: 1,
+      explanation:
+        'The stolid response carefully refuses to reward the stunt or shame the honesty — and frames the offer that follows as judgment rather than as reaction.',
+    },
+    {
+      id: 4,
+      kind: "inference",
+      prompt:
+        "Based on the passage, what can the reader most reasonably infer about why Mr. Cur attached an explicit replacement-by-week-five condition to the offer rather than simply casting Iris and trusting the rehearsal process?",
+      options: [
+        "He wanted to embarrass Iris publicly if she failed to improve.",
+        "The condition converted the casting from a reward for the audition\'s verve into a contract for the rehearsal-room work the audition had not done — protecting the production from a slow second-act collapse, signaling to Iris that the role was hers on the standard she had just confessed she had skipped, and making the eventual replacement, if needed, predictable rather than personal.",
+        "School policy required all sophomores to be cast on conditional terms.",
+        "He intended to replace Iris regardless of her rehearsal progress.",
+      ],
+      correctIndex: 1,
+      explanation:
+        "The condition is exactly the move that converts the offer from a reward for verve into a contract for craft — and depersonalizes the contingency.",
+    },
+    {
+      id: 5,
+      kind: "substitution",
+      prompt:
+        'Which single word could replace "spurn" in the sentence below without changing its meaning?',
+      quote:
+        '"Mr. Cur did not, in his post-audition feedback to Iris in the empty rehearsal room, spurn the audition."',
+      options: [
+        "Embrace",
+        "Reject",
+        "Photograph",
+        "Translate",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Reject" matches "spurn" — both describe a refusal to accept, often with disdain.',
+    },
+    {
+      id: 6,
+      kind: "main-idea",
+      prompt:
+        "Which sentence best summarizes the central idea or arc of the passage?",
+      options: [
+        "A drama teacher rejects a precocious sophomore\'s audition for being insufficiently polished.",
+        "A drama teacher with nineteen years of practice handles a precocious sophomore\'s plucky-but-tenuous audition by neither spurning nor rewarding it, draws an unusually honest admission of the audition\'s strategy out of her, and then offers the lead under an explicit replacement-by-week-five condition that converts the casting from a reward for verve into a contract for the craft she had skipped.",
+        "A high school production is canceled after a sophomore admits her audition was a stylistic stunt.",
+        "A drama teacher resigns from his after-school directing role over a single contested casting decision.",
+      ],
+      correctIndex: 1,
+      explanation:
+        "The arc traces precisely the audition, the honest post-audition exchange, the stolid response, and the conditional offer that converts the casting into a contract for the craft.",
+    },
+  ],
+};
+
 export const SET_READINGS: Record<string, SetReading> = {
   "1-1": MISSION_1_SET_1,
   "1-2": MISSION_1_SET_2,
@@ -11324,6 +12160,12 @@ export const SET_READINGS: Record<string, SetReading> = {
   "28-1": MISSION_28_SET_1,
   "28-2": MISSION_28_SET_2,
   "28-3": MISSION_28_SET_3,
+  "29-1": MISSION_29_SET_1,
+  "29-2": MISSION_29_SET_2,
+  "29-3": MISSION_29_SET_3,
+  "30-1": MISSION_30_SET_1,
+  "30-2": MISSION_30_SET_2,
+  "30-3": MISSION_30_SET_3,
 };
 
 export function getSetReading(day: number, group: number): SetReading | null {
