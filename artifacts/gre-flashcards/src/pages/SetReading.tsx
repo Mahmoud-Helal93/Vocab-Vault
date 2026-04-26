@@ -201,6 +201,7 @@ export default function SetReading({
 
   const storyRef = useRef<HTMLElement | null>(null);
   const chipsContainerRef = useRef<HTMLDivElement | null>(null);
+  const readyCtaRef = useRef<HTMLDivElement | null>(null);
 
   const wordInfoMap = useMemo(() => {
     const map: Record<string, { pos: string; definition: string }> = {};
@@ -281,6 +282,12 @@ export default function SetReading({
   const submit = () => {
     if (!allAnswered) return;
     setSubmitted(true);
+    requestAnimationFrame(() => {
+      readyCtaRef.current?.scrollIntoView({
+        behavior: "smooth",
+        block: "center",
+      });
+    });
   };
 
   const reset = () => {
@@ -500,7 +507,10 @@ export default function SetReading({
           {!focusMode && (
             <aside className="space-y-5 lg:sticky lg:top-4 lg:self-start min-w-0">
               {/* Ready CTA card (moved up to replace the Learning Journey) */}
-              <div className="rounded-2xl border border-border bg-card p-5 shadow-sm">
+              <div
+                ref={readyCtaRef}
+                className="rounded-2xl border border-border bg-card p-5 shadow-sm scroll-mt-6"
+              >
                 <div className="grid grid-cols-[1fr_84px] gap-3 items-center">
                   <div>
                     <h3 className="text-sm font-extrabold text-foreground leading-tight">
