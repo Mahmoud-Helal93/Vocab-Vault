@@ -15,7 +15,6 @@ import {
 } from "lucide-react";
 import { getSetReading, type ReadingQuestion } from "@/data/setReadings";
 import { useApp } from "@/context/AppContext";
-import ReadingArt from "@/components/ReadingArt";
 
 interface SetReadingProps {
   onBack: () => void;
@@ -260,7 +259,7 @@ export default function SetReading({
             animate={{ opacity: 1, y: 0 }}
             className="relative overflow-hidden rounded-3xl border border-orange-200/70 dark:border-orange-500/20 bg-orange-50/70 dark:bg-orange-500/5 shadow-sm scroll-mt-6"
           >
-            <div className="grid grid-cols-1 md:grid-cols-[1fr_200px_minmax(240px,280px)] gap-5 md:gap-6 p-6 sm:p-7 items-center">
+            <div className="grid grid-cols-1 md:grid-cols-[1fr_minmax(240px,280px)] gap-5 md:gap-6 p-6 sm:p-7 items-center">
               {/* Left: title + meta */}
               <div className="space-y-3 min-w-0">
                 <div className="w-11 h-11 rounded-xl bg-white dark:bg-card flex items-center justify-center shadow-sm border border-orange-100 dark:border-orange-500/20">
@@ -286,14 +285,6 @@ export default function SetReading({
                     Step 1 of 3 · Pre-Read
                   </span>
                 </div>
-              </div>
-
-              {/* Center: art (scene-matched per story) */}
-              <div className="hidden md:block h-36 w-full max-w-[200px] mx-auto">
-                <ReadingArt
-                  reading={reading}
-                  readingKey={`${missionDay}-${group}`}
-                />
               </div>
 
               {/* Right: CTAs */}

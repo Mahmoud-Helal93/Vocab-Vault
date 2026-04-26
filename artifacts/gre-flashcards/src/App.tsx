@@ -42,10 +42,7 @@ const NAV_ITEMS: Array<{ id: Page; icon: React.ReactNode; label: string }> = [
 
 function MainApp() {
   const { settings, updateSettings, crunch } = useApp();
-  const [page, setPage] = useState<Page>(() => {
-    const p = new URLSearchParams(window.location.search).get("page");
-    return (p as Page) || "dashboard";
-  });
+  const [page, setPage] = useState<Page>("dashboard");
   const [pageParams, setPageParams] = useState<Record<string, unknown>>({});
   const [quickTenOpen, setQuickTenOpen] = useState(false);
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
