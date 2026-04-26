@@ -782,42 +782,6 @@ export default function StudyMode({ onBack, onNavigate, initialDay, initialWordI
           </div>
         )}
 
-        {/* Previous / Next word controls — sit above the word section */}
-        {!focusMode && (
-          <div className="flex items-center justify-end gap-2">
-            <button
-              onClick={handlePrev}
-              disabled={cardIndex === 0}
-              className="h-11 px-4 rounded-xl bg-white dark:bg-zinc-900 border border-border hover:bg-muted text-sm font-semibold flex items-center gap-2 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
-            >
-              <ArrowLeft size={16} />
-              <span className="hidden sm:inline">Previous Word</span>
-            </button>
-            {isLastCard && selectedGroup !== null ? (
-              <button
-                onClick={() => onNavigate?.("set-test", { missionDay: selectedDay, group: selectedGroup })}
-                className="h-11 px-5 rounded-xl bg-gradient-to-r from-orange-400 to-orange-600 hover:from-orange-500 hover:to-orange-700 text-white text-sm font-bold flex items-center justify-center gap-2 shadow-sm transition-all"
-                data-testid="button-test-yourself"
-              >
-                <Sparkles size={16} />
-                Test Yourself
-              </button>
-            ) : (
-              <button
-                onClick={() => {
-                  markWordReviewed(currentWord.id, 3);
-                  handleNext();
-                }}
-                disabled={isLastCard}
-                className="h-11 px-5 rounded-xl bg-gradient-to-r from-orange-400 to-orange-600 hover:from-orange-500 hover:to-orange-700 text-white text-sm font-bold flex items-center justify-between gap-3 shadow-sm disabled:opacity-50 disabled:cursor-not-allowed transition-all"
-              >
-                <span>Next Word</span>
-                <ChevronRight size={16} />
-              </button>
-            )}
-          </div>
-        )}
-
         {/* Numbered progress dots */}
         <div className="flex items-center gap-3 px-5 py-3 rounded-2xl bg-card border border-card-border">
           <div className="flex-1 flex items-center min-w-0 overflow-hidden">
@@ -859,6 +823,42 @@ export default function StudyMode({ onBack, onNavigate, initialDay, initialWordI
             </button>
           )}
         </div>
+
+        {/* Previous / Next word controls — sit below the progress bar */}
+        {!focusMode && (
+          <div className="flex items-center justify-end gap-2">
+            <button
+              onClick={handlePrev}
+              disabled={cardIndex === 0}
+              className="h-11 px-4 rounded-xl bg-white dark:bg-zinc-900 border border-border hover:bg-muted text-sm font-semibold flex items-center gap-2 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+            >
+              <ArrowLeft size={16} />
+              <span className="hidden sm:inline">Previous Word</span>
+            </button>
+            {isLastCard && selectedGroup !== null ? (
+              <button
+                onClick={() => onNavigate?.("set-test", { missionDay: selectedDay, group: selectedGroup })}
+                className="h-11 px-5 rounded-xl bg-gradient-to-r from-orange-400 to-orange-600 hover:from-orange-500 hover:to-orange-700 text-white text-sm font-bold flex items-center justify-center gap-2 shadow-sm transition-all"
+                data-testid="button-test-yourself"
+              >
+                <Sparkles size={16} />
+                Test Yourself
+              </button>
+            ) : (
+              <button
+                onClick={() => {
+                  markWordReviewed(currentWord.id, 3);
+                  handleNext();
+                }}
+                disabled={isLastCard}
+                className="h-11 px-5 rounded-xl bg-gradient-to-r from-orange-400 to-orange-600 hover:from-orange-500 hover:to-orange-700 text-white text-sm font-bold flex items-center justify-between gap-3 shadow-sm disabled:opacity-50 disabled:cursor-not-allowed transition-all"
+              >
+                <span>Next Word</span>
+                <ChevronRight size={16} />
+              </button>
+            )}
+          </div>
+        )}
 
         {/* Rich card */}
         <AnimatePresence mode="wait">
