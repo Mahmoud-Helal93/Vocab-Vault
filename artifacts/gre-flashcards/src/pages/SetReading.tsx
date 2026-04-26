@@ -321,7 +321,7 @@ export default function SetReading({
                   )}
                   <span className="text-orange-600 dark:text-orange-400 font-bold">
                     {libraryMode
-                      ? "Library · Re-read mode"
+                      ? "Library · Re-read & Practice"
                       : "Step 1 of 3 · Pre-Read"}
                   </span>
                 </div>
@@ -492,7 +492,6 @@ export default function SetReading({
           </div>
 
         {/* ── Comprehension Check (full width, below the story) ── */}
-        {!libraryMode && (
         <div className="rounded-2xl border border-border bg-card p-5 shadow-sm">
             <div className="flex items-center justify-between mb-4 flex-wrap gap-2">
               <h3 className="text-sm font-bold text-foreground">
@@ -695,7 +694,6 @@ export default function SetReading({
                   </div>
                 )}
           </div>
-        )}
       </div>
     </div>
   );
