@@ -7199,6 +7199,2827 @@ Edda did not announce the result. She did, however, make a single, characteristi
   ],
 };
 
+const MISSION_19_SET_1: SetReading = {
+  title: "The Apprentice at the Copper Sentinel",
+  subtitle:
+    "A short story about an editor who refused to bless his own apprentice — and the soft tip that taught her why.",
+  format: "Short Story",
+  readingMinutes: 4,
+  words: [
+    "acolyte",
+    "anoint",
+    "base",
+    "coercion",
+    "coin",
+    "cunning",
+    "discomfit",
+    "dissent",
+    "distill",
+    "dubious",
+  ],
+  passage: `The Copper Sentinel was a weekly newspaper in a town of nine thousand readers, and its founding editor, Rolf Mannering, ran it as if it were the editorial board of a much larger paper that had merely been relocated, by some clerical error, to a county fair. Adelaide had been hired in March as the only reporter under thirty, and within a week she understood that her real job was to be the editor's **acolyte** — to absorb his methods, to take down his opinions in the small black notebook he insisted she carry, and to learn, by extended proximity, what he could not be persuaded to teach in any seminar.
+
+He did not, however, **anoint** her. Mannering disapproved of formal apprenticeships. He had been heard, more than once, to observe that a young reporter who had been ceremonially blessed by a senior was usually a young reporter who had stopped reading. Adelaide was not blessed. She was given assignments and, three weeks in, a single piece of advice: that any story whose **base** rested on a single source was not a story at all, but a rumor that had located a willing transcriber.
+
+She had taken the advice seriously, which was why, when the county clerk's office called her with a tip about the highway commissioner, she had felt no temptation to publish the call itself. The clerk's voice had been low, almost performatively cautious, in a way that struck her even at the time as **dubious**. He had named no documents. He had offered no records. He had asked, twice, what the paper would be willing to print, and twice she had declined to answer — a small but deliberate refusal of what would later, in her notes, be filed under **coercion**, of the soft, suggestive variety that journalists encountered more often than the hard kind.
+
+She brought the call to Mannering. He listened without interrupting. When she finished, he asked her what she thought the clerk wanted from the *Sentinel*, and she said, after a pause, that she thought the clerk wanted the paper to **coin** a phrase the clerk himself was unwilling to say under his own name.
+
+Mannering nodded once. He said that the most **cunning** sources were the ones who never asked for anything directly, who arranged the conversation so that the reporter, by the end of it, believed the story had been her idea. He told her to call back, to ask for documents, and to publish nothing — nothing — until she had read them with her own eyes and could trace each claim to a record.
+
+She did. The clerk produced no records. He grew, over a second call and then a third, increasingly **discomfited** — discomfort being, in Mannering's view, the most reliable signal that a source had hoped for credulity and encountered, instead, an editor's training cascading down through an apprentice he had refused to ceremonially crown. The clerk eventually stopped returning her calls.
+
+Two weeks later, in the *Sentinel*'s editorial meeting, Adelaide raised what she carefully called a quiet **dissent**: she suggested that the paper should publish a brief column on the practice itself — on the soft tip, the unrecorded suggestion, the source who wanted the headline to bear someone else's byline. Mannering listened. He did not approve the column. He did, however, make her write it, and then he kept the draft in his desk for a month, asking her, in the meantime, to **distill** every story she filed down to the single defensible sentence that any reasonable reader could verify.
+
+When the column finally ran, it carried her byline alone. Mannering, asked later why he had not signed it, said only that the apprentice had earned the page.`,
+  questions: [
+    {
+      id: 1,
+      kind: "vocab-context",
+      prompt: 'In this sentence, the word "acolyte" most nearly means:',
+      quote:
+        '"...her real job was to be the editor\'s acolyte — to absorb his methods, to take down his opinions...and to learn, by extended proximity, what he could not be persuaded to teach in any seminar."',
+      options: [
+        "An equal partner sharing executive authority.",
+        "A devoted attendant or junior follower learning from a senior figure.",
+        "A skeptical rival who watches in order to undermine.",
+        "A formally licensed professional in the same field.",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Acolyte" carries the sense of a devoted junior attendant — exactly Adelaide\'s position relative to Mannering: present, learning by proximity, but not yet a peer.',
+    },
+    {
+      id: 2,
+      kind: "vocab-context",
+      prompt: 'In this sentence, the word "cunning" most nearly means:',
+      quote:
+        '"He said that the most cunning sources were the ones who never asked for anything directly, who arranged the conversation so that the reporter, by the end of it, believed the story had been her idea."',
+      options: [
+        "Skilled in clever, often crafty deception or maneuvering.",
+        "Outwardly aggressive and confrontational.",
+        "Unusually generous with hard evidence.",
+        "Inexperienced and easily flustered.",
+      ],
+      correctIndex: 0,
+      explanation:
+        '"Cunning" describes a clever, indirect kind of craftiness — the source maneuvers the reporter into ownership of the story without ever issuing a direct request.',
+    },
+    {
+      id: 3,
+      kind: "tone-purpose",
+      prompt:
+        'The narrator says Mannering "did not, however, anoint her." Why use "anoint" rather than simply "promote" or "approve"?',
+      options: [
+        '"Anoint" is just a longer synonym of "approve" with no different meaning.',
+        '"Anoint" suggests Mannering literally performed a religious ceremony on Adelaide.',
+        '"Anoint" carries the texture of a ceremonial blessing — an almost ritual transfer of status — which sharpens Mannering\'s objection: he refuses to sanctify her as a successor, because in his view that ceremony tends to end an apprentice\'s real reading.',
+        '"Anoint" implies Mannering disliked Adelaide and wanted to drive her away.',
+      ],
+      correctIndex: 2,
+      explanation:
+        '"Anoint" foregrounds the ceremonial, almost sacred quality of a senior\'s blessing. Using it makes Mannering\'s refusal pointed — he objects to the ritual itself, not to Adelaide.',
+    },
+    {
+      id: 4,
+      kind: "inference",
+      prompt:
+        "Based on the passage, what can the reader most reasonably infer about Mannering's reason for keeping Adelaide's column in his desk for a month before publishing it?",
+      options: [
+        "He had lost interest in the column and forgot it was there.",
+        "He was waiting for the highway commissioner to leave office before risking publication.",
+        "He used the delay as a final piece of training — making her distill every other story she filed down to a single defensible sentence in the meantime, so that her column on soft tips would be earned by demonstrated practice rather than merely written.",
+        "He intended to rewrite the column under his own byline and only changed his mind at the last moment.",
+      ],
+      correctIndex: 2,
+      explanation:
+        "The text pairs the delay with an explicit instruction: distill every story to a single defensible sentence. The month is part of the apprenticeship, not procrastination.",
+    },
+    {
+      id: 5,
+      kind: "substitution",
+      prompt:
+        'Which single word could replace "dubious" in the sentence below without changing its meaning?',
+      quote:
+        '"The clerk\'s voice had been low, almost performatively cautious, in a way that struck her even at the time as dubious."',
+      options: [
+        "Trustworthy",
+        "Suspicious",
+        "Cheerful",
+        "Inaudible",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Suspicious" matches "dubious" — both describe something that arouses doubt about its honesty or motives. "Trustworthy" is the opposite.',
+    },
+    {
+      id: 6,
+      kind: "main-idea",
+      prompt:
+        "Which sentence best summarizes the central idea or arc of the passage?",
+      options: [
+        "A young reporter publishes a sensational tip without verification and is fired by her editor.",
+        "An editor refuses to ceremonially bless his apprentice but transmits his craft through assignments, refusals, and a delayed column — turning a soft, undocumented tip into the occasion for an earned byline on the practice itself.",
+        "A county clerk successfully manipulates a small-town newspaper into publishing his preferred version of events.",
+        "A weekly newspaper closes after losing the trust of its readers over a botched investigation.",
+      ],
+      correctIndex: 1,
+      explanation:
+        "The arc moves from Mannering's refusal to anoint, through Adelaide's handling of the soft tip, to the column he holds for a month and finally publishes under her name alone — every beat a piece of training.",
+    },
+  ],
+};
+
+const MISSION_19_SET_2: SetReading = {
+  title: "The Founder Who Wanted to Be Loved",
+  subtitle:
+    "A personal essay on a first job at a startup whose ebullient founder had not quite worked out the difference between charm and truth.",
+  format: "Personal Essay",
+  readingMinutes: 4,
+  words: [
+    "ebullient",
+    "facetious",
+    "fallible",
+    "florid",
+    "gawky",
+    "inveigle",
+    "jettison",
+    "mendacity",
+    "munificent",
+    "naive",
+  ],
+  passage: `My first job out of college was at a software startup of nineteen people, and on my first afternoon the founder, Calder, walked the length of the open office to introduce himself, threw an arm around my shoulders, and announced to the room that he had just hired the most promising engineer of my graduating class. I was twenty-two. I had not been promising. I had been available.
+
+Calder was, in those first weeks, the most **ebullient** human being I had ever stood next to — a man who appeared to draw genuine joy from other people's good news and who could, at the close of any meeting, summon a sentence so warm that even the engineers who disagreed with him left the room slightly in love with him. I was, I admit, **naive** about what I was watching. I thought I was watching a leader. I was, in fact, watching a salesman who had hired engineers because his investors had told him he had to.
+
+The signals arrived gradually. In our second week, Calder announced, in a **florid** all-hands speech, that the company had "secured" a partnership with a household-name retailer. The partnership had not been secured. It had been, I learned a month later, the subject of a single exploratory call. When I asked, in a private moment, whether the announcement had been an exaggeration, Calder smiled and said he had been **facetious** — that everyone in the room had understood it as aspirational. No one in the room had understood it that way. We had taken him at his word, because he was the founder, and because he had spoken it with the same warm sentence he used for everything else.
+
+I learned, slowly, that the warmth was the instrument. Calder used it to **inveigle** — to coax, by sheer charm, concessions out of investors, hours out of engineers, and silence out of anyone who had begun to suspect that the company's metrics were being presented in their best possible light, and then in a slightly better light than that. The first time I heard him present a chart that I knew, from having built the underlying query, was off by a factor of three, I felt a kind of **gawky**, full-body discomfort — a long-limbed embarrassment for a man who did not seem to feel embarrassed for himself.
+
+The pattern, I now think, was not exactly **mendacity** in the cold sense — Calder was not a planner of lies. He was a man who badly wanted each room he stood in to like him, and who would adjust the truth, in small **minute** increments, until each room did. The cumulative effect, however, was the same as the cold version: by the end of my first year, the company's external story and its internal story were two entirely different documents.
+
+I wrestled, that spring, with whether to **jettison** the job. The pay was generous; the equity was, on paper, **munificent**; the room was, when Calder was not in it, full of people I was learning a great deal from. But I had begun to feel that I was a participant — by silence — in a presentation of the company that I would not, asked under oath, have signed.
+
+I left, eventually, with a quiet two-week notice and no speech. Calder hugged me at the door. He told the room I was the most promising engineer of my graduating class.
+
+I am not. I am ordinary, and I am **fallible**, and I have learned that the most important question to ask of a charismatic leader is not whether he is lying but whether he can tell, from one room to the next, what the truth is.`,
+  questions: [
+    {
+      id: 1,
+      kind: "vocab-context",
+      prompt: 'In this sentence, the word "ebullient" most nearly means:',
+      quote:
+        '"Calder was, in those first weeks, the most ebullient human being I had ever stood next to — a man who appeared to draw genuine joy from other people\'s good news..."',
+      options: [
+        "Quietly withdrawn and slow to speak.",
+        "Cheerfully overflowing with enthusiasm and warmth.",
+        "Coldly analytical in personal conversation.",
+        "Physically large but emotionally distant.",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Ebullient" describes a bubbling-over, overflowing kind of cheerfulness — exactly the warmth the narrator finds magnetic at first.',
+    },
+    {
+      id: 2,
+      kind: "vocab-context",
+      prompt: 'In this sentence, the word "inveigle" most nearly means:',
+      quote:
+        '"Calder used it to inveigle — to coax, by sheer charm, concessions out of investors, hours out of engineers, and silence out of anyone..."',
+      options: [
+        "To threaten openly with consequences.",
+        "To win something from someone by clever, persuasive coaxing.",
+        "To audit a financial statement.",
+        "To resign from a position of authority.",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Inveigle" is to coax or wheedle by clever persuasion. The sentence then defines it directly: "to coax, by sheer charm."',
+    },
+    {
+      id: 3,
+      kind: "tone-purpose",
+      prompt:
+        'The narrator describes Calder\'s all-hands speech as "florid." Why does that word do work that "long" or "elaborate" would not?',
+      options: [
+        '"Florid" simply means "long-winded" with no other meaning.',
+        '"Florid" carries the texture of ornate, flowery rhetoric — language too richly decorated for what it actually delivers — which sets up the reader to discover that the substance behind the speech (a "secured" partnership) was equally inflated.',
+        '"Florid" implies Calder spoke in a foreign language.',
+        '"Florid" suggests Calder gave the speech in writing rather than aloud.',
+      ],
+      correctIndex: 1,
+      explanation:
+        'The decorated, overripe quality of "florid" prepares the reader for the gap between elaborate language and thin substance.',
+    },
+    {
+      id: 4,
+      kind: "inference",
+      prompt:
+        "Based on the passage, what can the reader most reasonably infer about why the narrator finally chooses to leave the company?",
+      options: [
+        "She is offered a higher-paying position elsewhere.",
+        "She is fired by Calder for confronting him about the partnership.",
+        "She has come to feel that her continued silence makes her a participant in a presentation of the company that she could not, under honest scrutiny, defend — and the pay and equity are not enough to outweigh that.",
+        "Her engineering team disbands and there is no work left to do.",
+      ],
+      correctIndex: 2,
+      explanation:
+        'The narrator names the discomfort directly: "I had begun to feel that I was a participant — by silence — in a presentation of the company that I would not, asked under oath, have signed."',
+    },
+    {
+      id: 5,
+      kind: "substitution",
+      prompt:
+        'Which single word could replace "munificent" in the sentence below without changing its meaning?',
+      quote:
+        '"...the equity was, on paper, munificent..."',
+      options: [
+        "Stingy",
+        "Lavish",
+        "Confidential",
+        "Worthless",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Lavish" matches "munificent" — both describe extraordinary generosity. "Stingy" is the opposite.',
+    },
+    {
+      id: 6,
+      kind: "main-idea",
+      prompt:
+        "Which sentence best summarizes the central idea or arc of the passage?",
+      options: [
+        "A young engineer joins a fraud and is prosecuted alongside the founder.",
+        "A young engineer learns to distinguish a charismatic leader\'s warmth from his reliability — discovers that the distortion is not cold lying but a serial adjustment of the truth to whatever room is listening — and quietly leaves.",
+        "A startup successfully raises a large funding round on the strength of its founder\'s charisma.",
+        "A founder fires his engineering team after they refuse to support a public announcement.",
+      ],
+      correctIndex: 1,
+      explanation:
+        "The essay\'s arc is exactly this gradual disillusionment: from being charmed, to noticing the gap, to naming the pattern, to a quiet exit.",
+    },
+  ],
+};
+
+const MISSION_19_SET_3: SetReading = {
+  title: "The Historian and the Vanished Commune",
+  subtitle:
+    "A short story about a town historian, a defunct utopian settlement on the river, and the difference between a noble idea and a viable one.",
+  format: "Short Story",
+  readingMinutes: 4,
+  words: [
+    "noble",
+    "parochial",
+    "pedestrian",
+    "prevaricate",
+    "prime",
+    "radical",
+    "recrudescent",
+    "temporal",
+    "transitory",
+    "viable",
+  ],
+  passage: `Florence had been the town historian of Eddington for nineteen years, and in that time she had developed a settled view of her job: that the historian's first duty was to refuse, politely and without theater, to flatter the town. Eddington had a habit of remembering itself as larger, older, and more interesting than the documents allowed, and Florence's regular task — at the council meetings, at the schools, in the small monthly column she wrote for the *Eddington Register* — was to keep the record honest without becoming, in the process, the town's scold.
+
+The Bellweather Commune was the case she had been asked about most often. Founded in 1873 on a flat of land above the river, the commune had attracted, for nine years, a steady current of newcomers from as far as Boston and Philadelphia. Its founders had held what the local clergy at the time called **radical** views — common ownership of land, women on the governing council, the abolition of inherited rank — and the commune had run, on the strength of those views and a pair of unusually competent administrators, until 1882, when one administrator died and the other left for California, and the experiment quietly closed.
+
+A century and a half later, the commune was, for many of Eddington's older residents, a source of muted pride. Florence was regularly asked to **prime** the audience at one event or another — to set up a lecture or a panel — by offering what was always described as a "noble" introduction. She did not refuse. She did, however, decline to **prevaricate**: when asked the question that always followed — "And do you think it could have lasted?" — she answered honestly that, in her professional judgment as a historian, the commune had not been **viable** as a long-term economic enterprise on the land it had chosen, and that the deaths and departures of 1882 had merely made formal what the ledgers had been describing for at least four years.
+
+This honesty had earned her, over the decades, a small but **recrudescent** opposition — a faction of residents whose objections to her column would die down for a year or two and then flare up again, often timed to anniversaries of the commune's founding. They accused her, in letters to the *Register*, of being too **parochial** in her judgment, of treating Eddington's most ambitious chapter as if it were merely a **pedestrian** business that had failed for ordinary reasons.
+
+Florence did not, in her replies, dispute the **noble** quality of what the founders had attempted. She wrote, in a 2014 column that had become locally famous, that there was no contradiction between admiring the moral vision of the Bellweather founders and reporting, accurately, that the soil above the river was thin, that the communal kitchens had run a structural deficit from year three onward, and that the experiment had been, in the historian's specific sense, **transitory** — held together by two unusually capable people whose departures were always going to end it.
+
+She also wrote, more quietly, that the **temporal** life of any institution was the only life a historian could responsibly describe. She had, she said, no professional access to the eternal. She could only describe what had lasted, what had not, and for what reason — and the duty of an honest record was to do that without inflating the subject and without, at the same time, sneering at it.
+
+The opposition flared, that month, and then, as it always did, settled. Florence kept writing the column. The river kept narrowing.`,
+  questions: [
+    {
+      id: 1,
+      kind: "vocab-context",
+      prompt: 'In this sentence, the word "viable" most nearly means:',
+      quote:
+        '"...the commune had not been viable as a long-term economic enterprise on the land it had chosen..."',
+      options: [
+        "Visually attractive to outside observers.",
+        "Capable of working successfully and sustaining itself over time.",
+        "Recognized officially by the state government.",
+        "Hidden from public view.",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Viable" describes something capable of surviving and functioning on its own — exactly the long-term sustainability Florence judges the commune to have lacked.',
+    },
+    {
+      id: 2,
+      kind: "vocab-context",
+      prompt: 'In this sentence, the word "recrudescent" most nearly means:',
+      quote:
+        '"This honesty had earned her, over the decades, a small but recrudescent opposition — a faction of residents whose objections to her column would die down for a year or two and then flare up again..."',
+      options: [
+        "Constant and unwavering.",
+        "Breaking out anew after a period of inactivity; recurring.",
+        "Uniformly hostile from the very beginning.",
+        "Restricted to a single anonymous letter-writer.",
+      ],
+      correctIndex: 1,
+      explanation:
+        'The sentence itself defines "recrudescent" by describing the opposition\'s pattern: dying down, then flaring up again — exactly the meaning of recrudescence.',
+    },
+    {
+      id: 3,
+      kind: "tone-purpose",
+      prompt:
+        'The narrator says Florence refused to "prevaricate" when asked whether the commune could have lasted. Why use "prevaricate" rather than simply "lie"?',
+      options: [
+        '"Prevaricate" carries the precise sense of evading or speaking misleadingly to dodge a direct answer — which is the temptation a town historian actually faces. The audience is not asking her to lie outright; it is asking her to soften her answer, and "prevaricate" names exactly that softer evasion.',
+        '"Prevaricate" and "lie" mean exactly the same thing in every context.',
+        '"Prevaricate" implies Florence had been hired to mislead the public.',
+        '"Prevaricate" suggests Florence was speaking in a foreign language.',
+      ],
+      correctIndex: 0,
+      explanation:
+        'The verb "prevaricate" specifically captures the evasion of a direct answer — the historian\'s real temptation in this kind of audience question.',
+    },
+    {
+      id: 4,
+      kind: "inference",
+      prompt:
+        "Based on the passage, what can the reader most reasonably infer about Florence\'s view of her professional duty as a historian?",
+      options: [
+        "She believes a town historian should always defer to the preferences of the loudest residents.",
+        "She believes the historian\'s duty is to give an honest account of what lasted, what did not, and for what reason — neither inflating the subject to flatter the town nor sneering at it.",
+        "She believes historians should refuse all public-facing speaking roles.",
+        "She believes the moral vision of historical movements should be excluded from any honest record.",
+      ],
+      correctIndex: 1,
+      explanation:
+        "Her column and the closing paragraphs frame the duty exactly that way: report accurately without inflating, and without sneering.",
+    },
+    {
+      id: 5,
+      kind: "substitution",
+      prompt:
+        'Which single word could replace "pedestrian" in the sentence below without changing its meaning?',
+      quote:
+        '"...accused her of treating Eddington\'s most ambitious chapter as if it were merely a pedestrian business that had failed for ordinary reasons."',
+      options: [
+        "Spectacular",
+        "Ordinary",
+        "Dangerous",
+        "Forgotten",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Ordinary" matches "pedestrian" in this sense — commonplace, unremarkable. The complaint is exactly that Florence treated the commune as commonplace.',
+    },
+    {
+      id: 6,
+      kind: "main-idea",
+      prompt:
+        "Which sentence best summarizes the central idea or arc of the passage?",
+      options: [
+        "A town historian is forced to retract her published account of a 19th-century commune after public protests.",
+        "A town historian holds, against a recurring local opposition, that one can admire the noble vision of a defunct utopian commune while reporting honestly that, on the soil and ledgers it had, it was not a viable long-term enterprise — because the historian\'s only access is to the temporal record.",
+        "A town historian discovers new documents that prove the Bellweather Commune was secretly profitable for its entire run.",
+        "A town historian resigns from her column after losing public support for her views.",
+      ],
+      correctIndex: 1,
+      explanation:
+        "The passage\'s central thread is precisely the distinction Florence holds open: admiration for moral vision plus honesty about what the temporal record actually shows.",
+    },
+  ],
+};
+
+const MISSION_20_SET_1: SetReading = {
+  title: "The Quiet Discrepancy on Page Forty-One",
+  subtitle:
+    "A short story about a junior auditor who stayed half an hour late, a single line that did not reconcile, and the harbinger of a much larger problem.",
+  format: "Short Story",
+  readingMinutes: 4,
+  words: [
+    "abreast",
+    "confound",
+    "digression",
+    "discrepancy",
+    "duplicitous",
+    "expedient",
+    "fabricate",
+    "glum",
+    "harbinger",
+    "intrinsic",
+  ],
+  passage: `Devon had been working at the firm for fourteen months, which was, by his manager's reckoning, just long enough to be left alone with a client's quarterly file for an afternoon. The file in question belonged to Halberd Industrial — an unglamorous mid-cap manufacturer whose books were, on the surface, almost soothingly dull. It was the kind of engagement that earned a junior auditor neither praise nor blame, which made it the perfect file to be handed at four o'clock on a Friday.
+
+His task was to keep **abreast** of the reconciliation work the senior staff had already begun and to flag, in a short memo, anything that did not tie out. He had read the previous quarter's memo, the one before that, and the engagement letter, and had walked into the room expecting to spend ninety minutes confirming that nothing was wrong.
+
+The **discrepancy** was on page forty-one. It was small — small enough that, on a quick read, his eye had glided past it. The intercompany receivable line for the European subsidiary, which had been $4.2 million in the prior quarter, was now $4.7 million. The corresponding payable line on the European subsidiary's own ledger, which any sensible auditor would expect to mirror it within rounding, was still $4.2 million. The two ledgers, in other words, did not agree.
+
+His first instinct was a **glum** sort of resignation: the kind of mismatch that, in his experience, almost always turned out to be a routing error or a timing difference and that absorbed two days of his life to document as innocent. He almost closed the file. He almost decided, on the **expedient** ground that it was Friday afternoon and that the senior on the engagement would catch it in the second pass, to let the matter wait until Monday.
+
+He did not. He stayed forty minutes late and pulled the wire transfer log.
+
+The wire log did not **confound** him. It clarified, with a coldness he had not expected from a stack of bank confirmations, that the $500,000 difference had been booked as an intercompany receivable on the parent's ledger but had never been transmitted as cash to or from the European subsidiary. There was no offsetting timing difference. There was no routing error. There was simply a number on one side and no number on the other.
+
+Devon wrote his memo carefully. He did not, at any point in the memo, accuse anyone of anything. He described the discrepancy. He attached the wire log. He noted, in a single sentence, that the pattern was an **intrinsic** mismatch rather than a timing one — a difference that did not resolve itself by waiting another quarter — and he declined, twice, to draft any sentence that would speculate about how the entry had come to exist.
+
+The senior on the engagement read the memo on Monday morning. He did not, at first, react. He did, however, ask Devon a single question, which was whether Devon had checked the prior three quarters for the same pattern. Devon had not. He spent the rest of the day doing so and discovered, in three of the previous four quarters, smaller versions of the same shape — none individually large enough to draw attention, all together a clear **harbinger** of an entry being **fabricated** at quarter-end and reversed, partially, in the following month.
+
+It would be another eleven months before the full picture emerged, and by then the firm would understand that one of Halberd's controllers had been quietly, **duplicitously** smoothing the European numbers for years. None of that, however, was Devon's to determine. His job, that Friday afternoon, had been to refuse the small but tempting **digression** of letting the discrepancy wait.
+
+He had refused it. The rest had followed.`,
+  questions: [
+    {
+      id: 1,
+      kind: "vocab-context",
+      prompt: 'In this sentence, the word "harbinger" most nearly means:',
+      quote:
+        '"...all together a clear harbinger of an entry being fabricated at quarter-end and reversed, partially, in the following month."',
+      options: [
+        "A final consequence that closes a matter.",
+        "A sign or warning that signals something larger to come.",
+        "A formal legal accusation.",
+        "An unrelated coincidence.",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Harbinger" describes a foreshadowing sign — exactly the early warning Devon\'s pattern of small mismatches turns out to be.',
+    },
+    {
+      id: 2,
+      kind: "vocab-context",
+      prompt: 'In this sentence, the word "expedient" most nearly means:',
+      quote:
+        '"He almost decided, on the expedient ground that it was Friday afternoon and that the senior on the engagement would catch it in the second pass, to let the matter wait until Monday."',
+      options: [
+        "Morally principled and rigorously argued.",
+        "Convenient and self-serving in the moment, regardless of strict rightness.",
+        "Time-consuming and cautious.",
+        "Legally required.",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Expedient" here carries the sense of a convenient, self-serving justification — the easy reason, not the right one. The sentence frames it precisely as a Friday-afternoon shortcut.',
+    },
+    {
+      id: 3,
+      kind: "tone-purpose",
+      prompt:
+        'The narrator emphasizes that Devon described an "intrinsic" mismatch rather than a timing one. Why does that word matter to the memo?',
+      options: [
+        '"Intrinsic" is a fancier synonym for "interesting" with no technical content.',
+        '"Intrinsic" identifies the mismatch as belonging to the books themselves — built into the underlying entries — rather than a transient artifact that would resolve in the next period. That distinction is what tells the senior reader the discrepancy cannot be safely waited out.',
+        '"Intrinsic" suggests Devon was making a personal accusation against the controller.',
+        '"Intrinsic" means the mismatch was insignificant.',
+      ],
+      correctIndex: 1,
+      explanation:
+        'Calling the mismatch intrinsic precisely separates it from a timing artifact and signals that no further quarter will dissolve it.',
+    },
+    {
+      id: 4,
+      kind: "inference",
+      prompt:
+        "Based on the passage, what can the reader most reasonably infer about why the senior\'s only follow-up question is whether Devon checked the prior three quarters?",
+      options: [
+        "The senior wants to delay the investigation as long as possible.",
+        "A single isolated mismatch could be a one-time error; recurring small mismatches across multiple quarters would establish a pattern, which is what would justify treating the matter as something other than an innocent rounding issue.",
+        "The senior is trying to test whether Devon understands accounting at all.",
+        "The senior is hoping the prior quarters will exonerate the controller.",
+      ],
+      correctIndex: 1,
+      explanation:
+        "The single follow-up question is the senior\'s way of distinguishing a one-off from a pattern — and the passage confirms that the pattern is exactly what the prior quarters revealed.",
+    },
+    {
+      id: 5,
+      kind: "substitution",
+      prompt:
+        'Which single word could replace "duplicitous" in the sentence below without changing its meaning?',
+      quote:
+        '"...one of Halberd\'s controllers had been quietly, duplicitously smoothing the European numbers for years."',
+      options: [
+        "Honestly",
+        "Deceitfully",
+        "Publicly",
+        "Reluctantly",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Deceitfully" matches "duplicitously" — both describe intentionally two-faced or dishonest behavior. "Honestly" is the opposite.',
+    },
+    {
+      id: 6,
+      kind: "main-idea",
+      prompt:
+        "Which sentence best summarizes the central idea or arc of the passage?",
+      options: [
+        "A junior auditor uncovers a major fraud single-handedly and is promoted to partner the same week.",
+        "A junior auditor refuses the small, expedient temptation to let an unexplained discrepancy wait — writes a careful, narrowly factual memo, and unwittingly produces the first harbinger of a multi-year smoothing scheme that will take eleven months for the firm to fully unwind.",
+        "A junior auditor mistakenly accuses a controller of fraud and is reprimanded by his manager.",
+        "An auditing firm decides to drop a client after a routine reconciliation reveals minor errors.",
+      ],
+      correctIndex: 1,
+      explanation:
+        "The arc is exactly this: the small refusal of expedience, the disciplined memo, and the slow surfacing of a much larger pattern over the following year.",
+    },
+  ],
+};
+
+const MISSION_20_SET_2: SetReading = {
+  title: "The Gala and the Anonymous Bequest",
+  subtitle:
+    "A short story about a charity director, a perennial benefactor, and a single anonymous gift that arrived providentially the week the audit began.",
+  format: "Short Story",
+  readingMinutes: 4,
+  words: [
+    "largesse",
+    "libertine",
+    "malfeasance",
+    "manifest",
+    "minute",
+    "modish",
+    "nascent",
+    "perennial",
+    "pious",
+    "providential",
+  ],
+  passage: `The Wexford Children's Trust had been, for thirty-one years, the kind of small charity whose annual gala was attended by exactly the same hundred and forty people. Its director, Dr. Helena Brock, did not chase **modish** causes. She did not, in her grant-writing, dress up the Trust's work in the language of whatever cause was currently fashionable. She kept a ledger that any donor could ask to read on a Tuesday afternoon, and she had survived in her position for nineteen years on the strength of the fact that no donor ever had to.
+
+The Trust's largest **perennial** benefactor was a foundation associated with the late industrialist Edmund Cray, whose annual contribution covered the Trust's after-school literacy program in three counties. The Cray Foundation had given to the Trust every year since 1994, in a gift that had begun at $40,000 and had grown, with quiet regularity, to $185,000 by the year in question. The grant officer at Cray, a careful and slightly **pious** woman named Edith Lin, was a creature of process: she required the Trust to file an annual budget, an annual narrative report, and an annual audit, and she did not extend the giving cycle by a single day for any reason short of a documented natural disaster.
+
+It was therefore unusual when, in the third week of September — five days into the Trust's annual audit and two weeks before the gala — an anonymous gift of $90,000 arrived by wire from a foreign account. The wire memo was blank. The originating bank had been instructed to disclose the donor only if asked under subpoena. The gift was, in the language of the Trust's bylaws, "unrestricted" — meaning Helena could spend it on anything within the charity's mission.
+
+The arrival of the wire was, by the most generous reading, **providential**: the Trust's reserve fund had dipped, that summer, below the threshold its bylaws required. The wire restored the reserve to compliance with a margin of $2,000.
+
+Helena did not, at first, do anything with the gift. She did not spend it. She did not announce it at the gala. She did, however, on the same afternoon the wire cleared, sit in her office for forty **minute** silent minutes — the kind of motionless concentration in which a director who has run a small charity for nineteen years works through the precise set of questions that any auditor will, in the next ten days, ask her to answer in writing.
+
+The questions were not difficult. They were, in fact, **manifest** to anyone who had read a single article on charitable governance: who was the donor, what was the donor's relationship to any board member, what conditions if any had attached to the gift, and why had the gift arrived in the precise week that it had.
+
+Helena had no answer to the first question. The originating bank would not tell her. She could, plausibly, accept the gift on the cover of "anonymous **largesse**" and move on. She had seen other small charities do exactly that. She had also seen, twice in her career, a similar gift turn out to have been a quiet attempt by a donor with a complicated personal life — in one case a known **libertine** under indictment in another state, in another case a board member's brother — to launder reputation through a charity that would, for a tax year, accept his name as silence.
+
+She wrote, that evening, a one-page memo to her board chair. She declined the gift. She returned the wire to its originating account, with a brief, polite note explaining that the Trust's policy did not allow it to accept anonymous gifts above a stated threshold without disclosure of the donor.
+
+The reserve, the following month, dipped again. Edith Lin, asked to consider an emergency advance from the Cray Foundation, agreed within a week. There was no **malfeasance** to investigate. There was no investigation. The Trust was, that fall, audited by the same firm it had used for nineteen years, and its audit closed without a single finding.
+
+The gala was attended, as ever, by exactly the same hundred and forty people. The **nascent** rumor about a refused anonymous gift surfaced once, at the bar, and died there. Helena, asked about it, said only that the Trust had a policy and that the policy had been observed.`,
+  questions: [
+    {
+      id: 1,
+      kind: "vocab-context",
+      prompt: 'In this sentence, the word "providential" most nearly means:',
+      quote:
+        '"The arrival of the wire was, by the most generous reading, providential: the Trust\'s reserve fund had dipped, that summer, below the threshold its bylaws required."',
+      options: [
+        "Carefully planned in advance and openly announced.",
+        "Occurring at exactly the right moment, as if by lucky design.",
+        "Imposed unwillingly by a regulator.",
+        "Deferred to a later date for accounting reasons.",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Providential" describes timing so apt it seems guided by providence — and that is precisely what the wire\'s timing looks like, given the reserve shortfall.',
+    },
+    {
+      id: 2,
+      kind: "vocab-context",
+      prompt: 'In this sentence, the word "manifest" most nearly means:',
+      quote:
+        '"They were, in fact, manifest to anyone who had read a single article on charitable governance..."',
+      options: [
+        "Concealed beneath a complicated technical surface.",
+        "Easily and clearly perceived; obvious.",
+        "Argued at length in academic literature.",
+        "Settled by a single court ruling.",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Manifest" here means plainly visible or obvious — anyone with basic familiarity would see those questions immediately.',
+    },
+    {
+      id: 3,
+      kind: "tone-purpose",
+      prompt:
+        'The narrator describes Edith Lin as "slightly pious." Why use "pious" rather than simply "strict"?',
+      options: [
+        '"Pious" implies Edith Lin attended religious services regularly.',
+        '"Pious" carries a sense of devout, almost moral seriousness about her duties — she treats grant procedure with a reverence beyond mere strictness — which sets up the steadiness of the Cray relationship and explains why she will, when asked, advance funds within a week to a charity she trusts.',
+        '"Pious" suggests Edith Lin disapproved of the Trust\'s mission.',
+        '"Pious" and "strict" are exact synonyms with no different meaning.',
+      ],
+      correctIndex: 1,
+      explanation:
+        'The hint of moral seriousness in "pious" frames Edith\'s reliability as principled rather than merely procedural — and prepares the later emergency advance.',
+    },
+    {
+      id: 4,
+      kind: "inference",
+      prompt:
+        "Based on the passage, what can the reader most reasonably infer about Helena\'s motive for refusing the anonymous wire?",
+      options: [
+        "She personally disliked the donor and wished to embarrass them publicly.",
+        "She judged that accepting an anonymous gift large enough to restore the reserve — in the precise week of the audit — would expose the Trust to questions she could not later answer in writing, and the long-term cost of that exposure would outweigh the short-term relief.",
+        "She believed the wire was counterfeit and would not actually clear.",
+        "She was acting under direct legal compulsion from her auditor.",
+      ],
+      correctIndex: 1,
+      explanation:
+        "The text shows Helena working through exactly the questions an auditor would ask, recognizing she could answer none of them, and choosing the long-term position over the short-term relief.",
+    },
+    {
+      id: 5,
+      kind: "substitution",
+      prompt:
+        'Which single word could replace "largesse" in the sentence below without changing its meaning?',
+      quote:
+        '"She could, plausibly, accept the gift on the cover of \'anonymous largesse\' and move on."',
+      options: [
+        "Generosity",
+        "Stinginess",
+        "Hostility",
+        "Indifference",
+      ],
+      correctIndex: 0,
+      explanation:
+        '"Generosity" matches "largesse" — both describe a generous bestowal of money or favor.',
+    },
+    {
+      id: 6,
+      kind: "main-idea",
+      prompt:
+        "Which sentence best summarizes the central idea or arc of the passage?",
+      options: [
+        "A charity director secretly accepts an anonymous wire to cover up a budget shortfall and is later caught by the auditor.",
+        "A charity director refuses a perfectly timed anonymous gift — even though it would restore the reserve to compliance — because the questions an auditor would later ask about an undisclosed donor were ones she could not answer, and a long-relied-on perennial benefactor proves willing to advance an emergency grant instead.",
+        "A foundation grant officer is forced to resign after extending an emergency grant against her own foundation\'s rules.",
+        "A small charity is closed after losing donors over its refusal to disclose its annual budget.",
+      ],
+      correctIndex: 1,
+      explanation:
+        "The story\'s spine is the refusal of the providential anonymous gift in favor of disciplined disclosure and the steady, principled relationship that catches the Trust when it falls.",
+    },
+  ],
+};
+
+const MISSION_20_SET_3: SetReading = {
+  title: "The Schism at the Linden Chess Club",
+  subtitle:
+    "A short story about a small club, a contested rule, and a stalwart secretary who refused to issue a tirade.",
+  format: "Short Story",
+  readingMinutes: 4,
+  words: [
+    "prowess",
+    "schism",
+    "slander",
+    "stalwart",
+    "supplicate",
+    "terse",
+    "tirade",
+    "universal",
+    "vanquish",
+    "woeful",
+  ],
+  passage: `The Linden Chess Club had eighty-four members, and for most of its forty-year history its internal politics had been, by the sober standard of community organizations, almost embarrassingly placid. The Tuesday-night ladder ran on a single page of rules. The annual championship was decided over four weekends in March. The club\'s **stalwart** secretary, Margaret Holm, had been re-elected, unopposed, for fourteen consecutive years.
+
+The trouble began with a single line in the bylaws governing playoff tiebreaks. The line had been written in 1989 and had been, for thirty-five years, treated as **universal** by every officer who had read it: in the case of a final tiebreak, the player with the better head-to-head record across the season won the seat. In the spring of the year in question, two players — Yulia Berman, the club\'s reigning champion of unmistakable **prowess**, and Hugo Petrov, a younger and rapidly improving challenger — finished the regular season tied on points, with no head-to-head games played between them at all.
+
+The bylaw, in other words, did not cover the case. The board met to interpret it.
+
+What should have been a single Wednesday evening became, over the next six weeks, the most sustained internal **schism** in the club\'s history. One faction held that, in the absence of head-to-head games, the seat should be decided by a single playoff match. The other faction held that the bylaw\'s silence implied that the higher-rated player automatically advanced — which would have given the seat to Yulia by default.
+
+The argument was, in cooler hindsight, about three sentences of procedure. It did not feel that way at the time. Letters circulated. A long, **woeful** email from a former vice president described the club as "a place where competitive integrity has been quietly **vanquished** by personal alliances," and named, by initials transparent enough to be read by anyone, three current officers he believed to be partisans of one camp or the other.
+
+Margaret Holm was named in the email. She was accused, in language that more than one member privately judged to be **slander**, of having predetermined the outcome and of intending to use her secretarial procedure to engineer the result.
+
+She did not, in reply, issue a **tirade**. She had served the club for fourteen years and had, in that time, developed a settled view of what the secretary\'s position was for. She wrote, instead, a single page. The page restated the bylaw, restated the absence of head-to-head games, and proposed three procedural options — a single playoff match, a best-of-three, or a board vote conducted in writing. The page closed with two **terse** sentences: that she would administer whichever option the board chose, and that she would, on the same evening the option was chosen, also tender her own resignation as secretary so that no future controversy could turn on her interpretation.
+
+The board met on a Wednesday. It chose the best-of-three. It also, by a vote of seven to one, declined to accept Margaret\'s resignation. The one dissenting vote was hers.
+
+Yulia and Hugo played their best-of-three over the following ten days. Hugo won, two games to one. Yulia, who had been champion for six years, did not contest the result. She did not, in any later forum, **supplicate** for a re-vote. She wrote Hugo a one-line email of congratulations, and the two of them played, the following Tuesday, a friendly game at the same board where the third decisive game had been finished. Margaret recorded the result in the ladder.
+
+The schism, by July, had subsided. The club still had eighty-four members. The bylaw, at the September meeting, was rewritten in two sentences to cover, prospectively, the case the original line had not.`,
+  questions: [
+    {
+      id: 1,
+      kind: "vocab-context",
+      prompt: 'In this sentence, the word "schism" most nearly means:',
+      quote:
+        '"What should have been a single Wednesday evening became, over the next six weeks, the most sustained internal schism in the club\'s history."',
+      options: [
+        "A minor scheduling conflict between two committees.",
+        "A formal split or division within a group, often passionately argued.",
+        "A unanimous agreement reached after long debate.",
+        "A new wave of membership applications.",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Schism" describes a serious internal split — exactly the six-week division the bylaw dispute produces inside the club.',
+    },
+    {
+      id: 2,
+      kind: "vocab-context",
+      prompt: 'In this sentence, the word "tirade" most nearly means:',
+      quote:
+        '"She did not, in reply, issue a tirade."',
+      options: [
+        "A brief, factual procedural notice.",
+        "A long, angry, denunciatory speech or piece of writing.",
+        "A formal vote of no confidence.",
+        "A request for a second opinion.",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Tirade" specifically denotes a long, angry, denunciatory outburst — exactly the response Margaret refuses to issue.',
+    },
+    {
+      id: 3,
+      kind: "tone-purpose",
+      prompt:
+        'The narrator describes Margaret as a "stalwart" secretary. Why use "stalwart" rather than simply "experienced"?',
+      options: [
+        '"Stalwart" carries the texture of steady, dependable, almost stubborn loyalty — which is exactly the quality the story will go on to dramatize: she absorbs the slander, declines the tirade, restates the bylaw, and offers her own resignation rather than damaging the office she holds. "Experienced" would have named only her tenure.',
+        '"Stalwart" implies that Margaret was physically very large.',
+        '"Stalwart" suggests that Margaret had been newly appointed.',
+        '"Stalwart" and "experienced" are exact synonyms with no different meaning.',
+      ],
+      correctIndex: 0,
+      explanation:
+        '"Stalwart" supplies the quality of dependable steadfastness that the rest of the story confirms — well beyond mere experience.',
+    },
+    {
+      id: 4,
+      kind: "inference",
+      prompt:
+        "Based on the passage, what can the reader most reasonably infer about why Margaret offered her resignation in the same memo that proposed the three procedural options?",
+      options: [
+        "She was personally angry at the board and intended to leave the club entirely.",
+        "She wanted to ensure that whichever procedural option the board chose, the choice itself could not be attributed to her preferences — by tying her own departure to the same evening, she removed her ongoing role as a possible reason for the board to favor any one option.",
+        "She had been formally charged with a violation of the bylaws.",
+        "She had already accepted a paid position at another club.",
+      ],
+      correctIndex: 1,
+      explanation:
+        "The structural point of pairing the resignation with the proposal is exactly to remove her continued tenure as a variable in the board\'s decision.",
+    },
+    {
+      id: 5,
+      kind: "substitution",
+      prompt:
+        'Which single word could replace "supplicate" in the sentence below without changing its meaning?',
+      quote:
+        '"She did not, in any later forum, supplicate for a re-vote."',
+      options: [
+        "Demand",
+        "Refuse",
+        "Beg",
+        "Forget",
+      ],
+      correctIndex: 2,
+      explanation:
+        '"Beg" matches "supplicate" — both describe humble, earnest petitioning. "Demand" is a different posture entirely.',
+    },
+    {
+      id: 6,
+      kind: "main-idea",
+      prompt:
+        "Which sentence best summarizes the central idea or arc of the passage?",
+      options: [
+        "A small chess club dissolves after a procedural dispute and never recovers its membership.",
+        "A small chess club is briefly torn by a schism over a bylaw the original drafters had not anticipated, and a stalwart secretary defuses the dispute by refusing to retaliate, restating the rule, proposing three options, and offering her own resignation alongside — preserving both the club and the office she held.",
+        "A reigning champion forces the club to install her permanently as secretary after winning a contested playoff.",
+        "A board member writes a denunciatory email that successfully removes the secretary from her post.",
+      ],
+      correctIndex: 1,
+      explanation:
+        "The arc traces precisely Margaret\'s steady, refusal-to-retaliate handling of the schism, ending with the playoff result, the rewritten bylaw, and the club intact.",
+    },
+  ],
+};
+
+const MISSION_21_SET_1: SetReading = {
+  title: "The Mediator's Tuesday Calendar",
+  subtitle:
+    "A personal essay by a divorce mediator on the slow work of dispensing fairness without dispensing pity, and on what an eloquent client can hide.",
+  format: "Personal Essay",
+  readingMinutes: 4,
+  words: [
+    "abject",
+    "amicable",
+    "animosity",
+    "aver",
+    "barrage",
+    "cathartic",
+    "decipher",
+    "delusion",
+    "dispense",
+    "eloquent",
+  ],
+  passage: `I have been a divorce mediator for nineteen years. My office has two chairs facing one chair, a window onto a parking lot, and a small ceramic kettle that I am told, by clients, contributes more to the eventual settlement than I do. They may be right. The kettle has never said anything I had to take back.
+
+People come into my office in three broad postures. The first is the **amicable** couple, who have already, between themselves, decided most of what they want, and who need from me only the procedural choreography that will turn their decisions into a document a judge will sign. They are not common. When they appear, my job is small. I draft. I clarify a tax point. I do not, in their case, **dispense** wisdom — they have not asked for any, and the temptation to volunteer it would only complicate what they already understand.
+
+The second posture is what I have come to think of as the open **animosity** couple, who arrive ready for a fight and, in their first ten minutes, deliver a **barrage** of grievances long enough to fill the entire session. This is, surprisingly, often the easier of the two difficult cases. The animosity is on the table. We can name it. We can, over four sessions, separate the grievances that belong to the divorce — assets, custody, the lease — from the grievances that belong to the marriage and that no document will ever resolve. Many clients, weeks later, describe those sessions as **cathartic**. The word is not mine; I would not use it. But I have learned not to argue with a client who has chosen a word that is helping her.
+
+The third posture is the difficult one. The third posture is the **eloquent** client.
+
+The eloquent client is, in my experience, almost always the one whose case I will most badly want to misread. He arrives with a clean shirt and a tone of careful regret. He **avers**, in the first session, that he wants only what is fair, that he holds no ill will, that he understands the legal landscape and would prefer to keep this out of court for the children's sake. Every sentence he offers is, on its face, the sentence I would most like to hear from a client. The trouble is that the sentences arrive in too perfect a sequence. They have been arranged. And the arrangement, when I am paying attention, is what I have to **decipher**.
+
+I learned, slowly, that the eloquent client is not always lying. Sometimes he is. More often he is operating under an organized **delusion** of his own evenhandedness — a story he has told himself, often in good faith, in which he is the patient one and his spouse is the unstable one and the asset division he is proposing is, by some private accounting, what is owed to him in compensation for his patience. When I cross-check his proposal against the documents, the proposal does not survive. The numbers are not what he averred them to be. The custody schedule he described as "what we already do" is a description of the previous summer, not of the current school year.
+
+I do not, in those moments, accuse him. I have learned that an accusation, in mediation, ends the session and accomplishes nothing. I lay out the documents. I read the dates aloud. I ask him to walk me through the arithmetic. He almost always, by the end of the page, retracts.
+
+I have come to think that the **abject** part of this work — and there is one — is not the animosity couple. It is the eloquent client, in the moment of the retraction. He is not pleased to have been corrected. He is not pleased that the mediator he had hoped to charm has, instead, read the documents. The look on his face is one of small, contained humiliation, and it is my job, in that moment, to give him no audience and no commentary, only the next page.
+
+The kettle, I have noticed, is excellent at this. It does not speak. It dispenses heat. The clients do the rest.`,
+  questions: [
+    {
+      id: 1,
+      kind: "vocab-context",
+      prompt: 'In this sentence, the word "aver" most nearly means:',
+      quote:
+        '"He avers, in the first session, that he wants only what is fair, that he holds no ill will, that he understands the legal landscape..."',
+      options: [
+        "To deny under oath.",
+        "To assert or declare with confidence.",
+        "To request an exemption.",
+        "To reluctantly admit a fault.",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Aver" means to assert positively, to declare as true. The eloquent client confidently states each polished sentence.',
+    },
+    {
+      id: 2,
+      kind: "vocab-context",
+      prompt: 'In this sentence, the word "abject" most nearly means:',
+      quote:
+        '"I have come to think that the abject part of this work — and there is one — is not the animosity couple. It is the eloquent client, in the moment of the retraction."',
+      options: [
+        "Joyful and uplifting.",
+        "Wretched, painfully low or humiliating in quality.",
+        "Strictly procedural and free of emotion.",
+        "Financially lucrative.",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Abject" describes something painfully low, miserable, or humiliating — exactly the quality the narrator names in the moment of the eloquent client\'s contained humiliation.',
+    },
+    {
+      id: 3,
+      kind: "tone-purpose",
+      prompt:
+        'The narrator says many clients describe the difficult sessions as "cathartic" and adds, "The word is not mine." Why include that aside?',
+      options: [
+        'To brag about the narrator\'s own vocabulary at the clients\' expense.',
+        'To distance the professional voice from a charged, almost therapeutic word — the narrator declines to claim that her work \"heals,\" but she also refuses to argue with a client who has reached for a word that is helping her, which sketches the mediator\'s careful neutrality.',
+        'To suggest that the clients are misusing the word entirely.',
+        'To indicate that the narrator does not speak the same language as her clients.',
+      ],
+      correctIndex: 1,
+      explanation:
+        'The aside marks the boundary the mediator draws around her own claims while still respecting the client\'s framing — a small but precise piece of professional restraint.',
+    },
+    {
+      id: 4,
+      kind: "inference",
+      prompt:
+        "Based on the passage, what can the reader most reasonably infer about why the narrator does not openly accuse the eloquent client when his numbers do not match the documents?",
+      options: [
+        "She fears the client will physically threaten her.",
+        "She is required by law to remain silent on factual disputes.",
+        "She has learned that an accusation ends the session and accomplishes nothing — laying out the documents and asking the client to walk through the arithmetic produces the retraction without forcing him into a defensive posture that would block any settlement.",
+        "She believes the client is fundamentally honest and that the discrepancy is hers.",
+      ],
+      correctIndex: 2,
+      explanation:
+        "The text states the principle directly: an accusation ends the session and accomplishes nothing, while the documents do the work themselves.",
+    },
+    {
+      id: 5,
+      kind: "substitution",
+      prompt:
+        'Which single word could replace "decipher" in the sentence below without changing its meaning?',
+      quote:
+        '"And the arrangement, when I am paying attention, is what I have to decipher."',
+      options: [
+        "Memorize",
+        "Decode",
+        "Dismiss",
+        "Translate into a foreign language",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Decode" matches "decipher" — both describe the work of figuring out a hidden meaning or pattern beneath a surface.',
+    },
+    {
+      id: 6,
+      kind: "main-idea",
+      prompt:
+        "Which sentence best summarizes the central idea or arc of the essay?",
+      options: [
+        "A divorce mediator argues that all clients are essentially dishonest and that mediation is therefore a waste of time.",
+        "A divorce mediator describes three postures her clients arrive in and explains that the most demanding is the eloquent client — whose polished, organized self-presentation she must quietly read against the documents, producing a retraction without an accusation, and dispensing fairness without dispensing pity.",
+        "A divorce mediator concludes that her ceramic kettle has done more for her clients than she has and announces her retirement.",
+        "A divorce mediator advocates that all contested divorces should be sent directly to court without mediation.",
+      ],
+      correctIndex: 1,
+      explanation:
+        "The essay\'s central thread is the typology of postures and, especially, the careful handling of the eloquent client through the documents.",
+    },
+  ],
+};
+
+const MISSION_21_SET_2: SetReading = {
+  title: "The Naturalist's Last Survey",
+  subtitle:
+    "A short story about an itinerant naturalist, a fledgling colony of orchids, and the imminent decision to make their location public.",
+  format: "Short Story",
+  readingMinutes: 4,
+  words: [
+    "enthrall",
+    "eradicate",
+    "fledgling",
+    "fortitude",
+    "fortuitous",
+    "goad",
+    "imminent",
+    "incontrovertible",
+    "itinerant",
+    "magnanimous",
+  ],
+  passage: `Owen Reese had been an **itinerant** naturalist for thirty-one years, which is to say that he had never held a position longer than three field seasons and had never owned a house. His work — the slow census of small flowering plants in temperate forests — required him to travel, and the small grants that funded him were always tied to a specific watershed for a specific year.
+
+In the autumn of his thirty-second year on the road, he made a discovery he had been quietly hoping for since he was twenty-three. On a north-facing slope above a tributary of the Otsego River, in a stand of old hemlock that had somehow escaped the logging operations of the 1920s, he found a **fledgling** colony of *Cypripedium kentuckiense* — the southern lady's slipper orchid — three hundred miles north of any previously documented occurrence.
+
+He did not, on the day of the discovery, tell anyone. He had been a naturalist long enough to understand that a colony of forty-six plants in its first decade above the latitudinal line was, in any honest description, fragile. He counted the plants. He photographed each one. He recorded the GPS coordinates twice and stored them in two devices, one of which he posted, in a sealed envelope, to a colleague at the state herbarium with instructions not to open it for a year.
+
+The discovery would, in due course, **enthrall** the small community of botanists who tracked the species. Owen knew this. He also knew that the same announcement, in the same season, would put the colony at substantial risk. The southern lady's slipper had been driven, in three of its previous range states, to near extinction by what botanists called, with rueful precision, "enthusiastic amateurs" — collectors who would, given the coordinates, drive eleven hours to dig up two plants for a backyard bog garden, and who, by repeated visits, would in the end **eradicate** the very colony they meant to celebrate.
+
+He had until the following March to file his annual grant report. The report required, in standard practice, the disclosure of any range-significant discovery. The disclosure was, by the funder's policy, **imminent**: he could no more delay it past March than he could change the latitude of the slope.
+
+He did not, in those four months, lack the **fortitude** to face the decision. He had faced harder ones. He did, however, want to make the right one, and the right one was not obvious.
+
+It was a chance encounter — **fortuitous** in the strict sense, neither sought nor planned — that made the path clear. In late November, at a small conference in Cleveland, Owen sat next to a state forester whose district included the Otsego tributary, and over coffee the forester mentioned, without prompting, that her office had recently acquired the authority to designate "limited-access botanical reserves" — three-acre parcels closed to the public on the strength of a single peer-reviewed report.
+
+Owen wrote the report over the winter. The peer review, which he had feared would **goad** him into premature disclosure, was instead conducted under a confidentiality protocol he had not known existed. The reviewers verified the find. The state designated the reserve in early March. The grant report, when filed, named the reserve and its protections in the same paragraph that named the species.
+
+The community of botanists was, as he had predicted, both **enthralled** and slightly aggrieved — aggrieved, that is, that the precise coordinates had not been published. Owen wrote, in a brief follow-up note in the journal, that he understood the irritation, that he believed the **incontrovertible** evidence of past collector damage in the species' previous range states justified the reserve, and that he would, on request, share the coordinates with any verified researcher under the same confidentiality the state had used with him.
+
+It was, his colleague at the herbarium would later say, the most **magnanimous** version of the announcement Owen could have made — generous to the species, generous to the science, and, in its own quiet way, generous even to the collectors who would now never find the slope.`,
+  questions: [
+    {
+      id: 1,
+      kind: "vocab-context",
+      prompt: 'In this sentence, the word "itinerant" most nearly means:',
+      quote:
+        '"Owen Reese had been an itinerant naturalist for thirty-one years, which is to say that he had never held a position longer than three field seasons and had never owned a house."',
+      options: [
+        "Permanently settled in one institutional position.",
+        "Traveling from place to place, without a fixed long-term post.",
+        "Recently retired from active fieldwork.",
+        "Trained as a forest ranger rather than a botanist.",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Itinerant" describes someone who travels from place to place without a permanent base — exactly the working life the sentence then defines.',
+    },
+    {
+      id: 2,
+      kind: "vocab-context",
+      prompt: 'In this sentence, the word "incontrovertible" most nearly means:',
+      quote:
+        '"...he believed the incontrovertible evidence of past collector damage in the species\' previous range states justified the reserve..."',
+      options: [
+        "Easily challenged or disputed.",
+        "Impossible to deny or argue against.",
+        "Recently published in a single newspaper article.",
+        "Restricted to the early 19th century.",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Incontrovertible" means impossible to controvert — beyond reasonable dispute. Owen invokes the strength of the evidence to justify withholding coordinates.',
+    },
+    {
+      id: 3,
+      kind: "tone-purpose",
+      prompt:
+        'The narrator says the colony of forty-six plants is "fledgling." Why use that word rather than "small"?',
+      options: [
+        '"Fledgling" is just a longer word for "small" with no other meaning.',
+        '"Fledgling" carries the texture of something newly established and not yet able to fend for itself — a young bird just out of the nest. That nuance frames the colony as fragile in time, not just in number, which is exactly the vulnerability that drives Owen\'s caution.',
+        '"Fledgling" implies the orchids were grown from eggs.',
+        '"Fledgling" suggests the colony was already in decline.',
+      ],
+      correctIndex: 1,
+      explanation:
+        'The "newly established, not yet self-sufficient" nuance of "fledgling" sharpens the case for protective handling of the colony.',
+    },
+    {
+      id: 4,
+      kind: "inference",
+      prompt:
+        "Based on the passage, what can the reader most reasonably infer about why Owen sealed the GPS coordinates in an envelope to a herbarium colleague before announcing the find?",
+      options: [
+        "He intended to publish the find anonymously and could not afford a journal submission fee.",
+        "He wanted a verifiable, independently held record of the discovery and its precise coordinates as of the day he found the colony — establishing priority and creating a trustworthy backup against his own death, theft, or device failure.",
+        "He had been told by the herbarium that any new find had to be physically delivered to them.",
+        "He no longer trusted his own memory of the slope.",
+      ],
+      correctIndex: 1,
+      explanation:
+        "The sealed envelope is a classic move to establish a tamper-evident, independently held priority record without exposing the coordinates publicly.",
+    },
+    {
+      id: 5,
+      kind: "substitution",
+      prompt:
+        'Which single word could replace "fortuitous" in the sentence below without changing its meaning?',
+      quote:
+        '"It was a chance encounter — fortuitous in the strict sense, neither sought nor planned — that made the path clear."',
+      options: [
+        "Premeditated",
+        "Lucky",
+        "Forbidden",
+        "Annual",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Lucky" matches "fortuitous" in this context — both describe an unplanned, happily timed occurrence. The sentence even glosses it: "neither sought nor planned."',
+    },
+    {
+      id: 6,
+      kind: "main-idea",
+      prompt:
+        "Which sentence best summarizes the central idea or arc of the passage?",
+      options: [
+        "A naturalist refuses to share his discovery and is permanently expelled from his professional community.",
+        "An itinerant naturalist makes a range-significant discovery, faces a deadline that would normally require public disclosure of coordinates, and — through a fortuitous encounter and a confidentiality protocol he had not known existed — secures the colony as a protected reserve before publishing the find, in a magnanimous version of the announcement.",
+        "A state forester takes credit for a botanical discovery that was actually made by a freelance naturalist.",
+        "A colony of orchids is destroyed by collectors within months of being discovered.",
+      ],
+      correctIndex: 1,
+      explanation:
+        "The arc is exactly the discovery, the disclosure problem, the fortuitous solution, and the protected, generous announcement.",
+    },
+  ],
+};
+
+const MISSION_21_SET_3: SetReading = {
+  title: "The Spring Season at the Linden Theater",
+  subtitle:
+    "A short story about a small repertory company, a paradoxical casting choice, and the resilient perseverance of an actor whose valor was almost invisible from the audience.",
+  format: "Short Story",
+  readingMinutes: 4,
+  words: [
+    "meritorious",
+    "mutiny",
+    "paradoxical",
+    "perseverance",
+    "render",
+    "repertoire",
+    "resilient",
+    "resolute",
+    "supple",
+    "valor",
+  ],
+  passage: `The Linden Theater had been run, for eleven seasons, on a model that no consultant would have recommended and that had, against every prediction, kept it solvent. Its repertory company of nine actors performed four plays a year on a single stage, and the company's artistic director, Idris Khan, made all his casting choices by hand and announced them in a single meeting in February.
+
+The fourth production of the season in the year in question was *King Lear*. Idris had been thinking about it since the previous summer. The actor everyone in the company had assumed would play Lear was Stefan, the company's longtime lead, who had carried two of the previous three seasons on the strength of his deep, almost gravitational stage presence. The expectation was so settled that the company's stage manager had been quietly drafting the rehearsal schedule with Stefan's name penciled in.
+
+Idris cast Mira instead.
+
+Mira was forty-six. She had been with the company for nine seasons. Her **repertoire**, in that time, had included exactly two leading roles, both in modern plays, and a long string of secondary parts in which she had been, by every reviewer's account, **meritorious** without being remarkable. She had never, in the ordinary sense, been Idris's first choice for anything large. The casting was, on its face, **paradoxical** — a director with one of the most respected leading actors in the regional circuit choosing, for the season's most demanding role, an actor whose career had been built almost entirely on quiet, supporting work.
+
+The company nearly mutinied. There was no formal **mutiny** — the Linden was not that kind of place — but in the week after the announcement, three private letters reached Idris's desk, each politely worded, each making the case that the season's reputation could not afford the gamble. Stefan himself, to his credit, wrote one of the letters; he asked only that Idris reconsider, and he closed by saying that he would, of course, accept whichever final decision Idris made.
+
+Idris reconsidered for two evenings. He did not change his mind.
+
+What followed, over the next eleven weeks of rehearsal, was the most quietly remarkable preparation any of the senior company members had ever watched. Mira arrived for every rehearsal with her lines fully memorized — not the day-of lines, the entire role — and with an interpretive choice for every scene that she was prepared to defend, alter, or abandon as Idris asked. She did not display, on any single afternoon, the kind of explosive talent that would have been visible to a casual observer; she displayed, instead, the **perseverance** of an actor who had been preparing to be invited into a role like this for fifteen years and who, having been invited, had no intention of arriving anything less than fully ready.
+
+The role demanded a vocal range she did not naturally have, and she worked with a coach for six weeks until her voice was **supple** enough to carry the storm scene without cracking. The role demanded a physical collapse in the fourth act that would have been **resilient** to require even of an actor twenty years younger; she rehearsed the fall, with a movement coach, until she could **render** it without injury and without theatrical excess.
+
+She opened on a Wednesday in late April. The reviews were, by the standards of the regional press, almost embarrassed in their reversal. The *Linden Reporter*'s critic, who had attended Linden openings for fourteen years, wrote that he had not understood, until that evening, what the company had been quietly cultivating in Mira through nine seasons of secondary parts, and that her performance possessed a quality he could only describe — at the risk of sounding old-fashioned — as a kind of **valor**: the unobtrusive courage of an actor who had taken the role seriously enough to be ready for it without ever announcing that she expected to be asked.
+
+Idris did not, after the opening, give a curtain speech. He had remained, through eleven seasons, **resolute** about not putting the director onstage. Stefan, for his part, attended the second performance and went backstage afterward to embrace Mira. The company, the following season, voted unanimously to renew her contract.`,
+  questions: [
+    {
+      id: 1,
+      kind: "vocab-context",
+      prompt: 'In this sentence, the word "paradoxical" most nearly means:',
+      quote:
+        '"The casting was, on its face, paradoxical — a director with one of the most respected leading actors in the regional circuit choosing, for the season\'s most demanding role, an actor whose career had been built almost entirely on quiet, supporting work."',
+      options: [
+        "Perfectly logical and obvious to all observers.",
+        "Seemingly contradictory or counterintuitive on its surface.",
+        "Restricted by union rules.",
+        "Officially condemned by the local critics\' association.",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Paradoxical" describes something that appears self-contradictory on its surface — exactly Idris\'s choice of a supporting actor over the obvious lead.',
+    },
+    {
+      id: 2,
+      kind: "vocab-context",
+      prompt: 'In this sentence, the word "supple" most nearly means:',
+      quote:
+        '"...she worked with a coach for six weeks until her voice was supple enough to carry the storm scene without cracking."',
+      options: [
+        "Stiff and resistant to change.",
+        "Flexible, capable of adjusting easily without breaking.",
+        "Dangerously loud and uncontrolled.",
+        "Permanently lowered in pitch.",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Supple," applied to a voice, means flexible and able to bend without cracking — exactly what the storm scene demands.',
+    },
+    {
+      id: 3,
+      kind: "tone-purpose",
+      prompt:
+        'The critic describes Mira\'s performance as possessing a kind of "valor." Why use a moral word like "valor" for an acting performance?',
+      options: [
+        '"Valor" is simply a longer synonym for "skill" with no different meaning.',
+        '"Valor" carries the sense of unobtrusive courage — the quiet kind of bravery that does not announce itself. The critic uses it deliberately to honor Mira\'s long, unshowy preparation: she was ready for a role like this without ever signaling that she expected to be asked, and "valor" names that quality more honestly than "talent" or "skill" would.',
+        '"Valor" implies Mira had served in the military.',
+        '"Valor" suggests the performance was reckless.',
+      ],
+      correctIndex: 1,
+      explanation:
+        'The moral weight of "valor" — quiet, unboasting courage — is exactly what the critic wants to credit in Mira\'s long, patient readiness.',
+    },
+    {
+      id: 4,
+      kind: "inference",
+      prompt:
+        'Based on the passage, what can the reader most reasonably infer about why Stefan\'s letter to Idris is described as being "to his credit"?',
+      options: [
+        "Stefan secretly believed Mira was the wrong choice and hoped to undermine her.",
+        "Stefan made his case politely, asked only that Idris reconsider, and explicitly committed to accepting whichever final decision Idris made — preserving company discipline and dignity even while disagreeing with the casting.",
+        "Stefan refused to attend any further rehearsals.",
+        "Stefan wrote his letter only after the play had opened.",
+      ],
+      correctIndex: 1,
+      explanation:
+        "The text emphasizes the manner: a polite request to reconsider, an explicit acceptance of whatever Idris decided. The credit attaches to the form of the disagreement.",
+    },
+    {
+      id: 5,
+      kind: "substitution",
+      prompt:
+        'Which single word could replace "render" in the sentence below without changing its meaning?',
+      quote:
+        '"...she rehearsed the fall, with a movement coach, until she could render it without injury and without theatrical excess."',
+      options: [
+        "Refuse",
+        "Perform",
+        "Forget",
+        "Translate",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Perform" matches "render" in this context — both describe carrying out or executing the action on stage.',
+    },
+    {
+      id: 6,
+      kind: "main-idea",
+      prompt:
+        "Which sentence best summarizes the central idea or arc of the passage?",
+      options: [
+        "A theater company is destroyed by an artistic director\'s reckless casting decision and dissolves at the end of the season.",
+        "An artistic director makes a paradoxical casting choice, faces a near-mutiny among his company, and is vindicated by an actor whose long, unshowy perseverance and supple preparation produce a performance the regional critics describe with the moral weight of valor.",
+        "A long-serving lead actor refuses to relinquish his expected role and forces the company to reverse the casting.",
+        "A repertory theater abandons classical productions in favor of modern plays.",
+      ],
+      correctIndex: 1,
+      explanation:
+        "The arc is precisely the casting, the resistance, the rehearsal preparation, and the critical recognition of valor.",
+    },
+  ],
+};
+
+const MISSION_22_SET_1: SetReading = {
+  title: "The Editor in the Cutting Room",
+  subtitle:
+    "A short story about a documentary editor who refused to embellish, the cumbersome footage she would not falter under, and the single arresting image that exonerated her subject.",
+  format: "Short Story",
+  readingMinutes: 4,
+  words: [
+    "arresting",
+    "chastise",
+    "cumbersome",
+    "economy",
+    "elementary",
+    "embellish",
+    "euphoric",
+    "exonerate",
+    "extrapolate",
+    "falter",
+  ],
+  passage: `Maeve Olin had been the lead editor on Iris Tan's documentary about the Hollis case for fourteen months by the time the rough cut was due. The footage was **cumbersome** — three hundred and forty hours, recorded across two countries, of interviews with everyone who had been in the courtroom and a great many people who had not — and Iris's instructions, on the day Maeve had been hired, had been precise: tell the story without embellishing it, and do not, under any circumstances, **embellish** the testimony of the one witness whose recantation had broken the case open.
+
+Maeve had taken the instruction seriously. She had taken it, in fact, more seriously than Iris had perhaps intended. Over fourteen months she had built a cut of the film whose central **economy** was almost monastic — each scene stripped to the single sentence that did the work, no music under the most charged interviews, the camera held on a face for two long beats after the answer rather than cutting away to commentary.
+
+Iris, when she watched the rough cut for the first time, did not **chastise** Maeve. She did, however, ask, three times in the same evening, whether the cut was too austere — whether the audience would understand the gravity of what they were watching without more aggressive scoring under the recantation, without a stronger orchestral lift over the verdict, without a longer montage at the end to **extrapolate** from Hollis's case to the broader pattern the film was meant to suggest.
+
+Maeve did not, in reply, **falter**. She had anticipated every one of Iris\'s questions and had, on her laptop, three alternate cuts of each contested scene — one with the music Iris was suggesting, one with a softer score, one bare. She played the bare cut last, every time. The bare cut, every time, was the cut Iris ended up agreeing with by the end of the evening.
+
+The decisive scene, the one the film would be remembered for, was a single ninety-second sequence in the final reel. It was not, on the page, a complicated piece of editing. The footage was a static medium shot of the recanting witness, Doris Vahn, looking off-camera while the prosecutor\'s deposition from twelve years earlier played as voice-over. The match between her present face and her past words was **arresting** — there was no other word for it — and Maeve had built the sequence on the **elementary** principle that an editor\'s most powerful tool, when the material is strong, is the willingness to leave it alone.
+
+The film opened in March. The reviews were not, in the first week, **euphoric**. They were measured, careful, almost wary — as if the critics were unwilling, on a single viewing, to commit to the praise the film clearly deserved. Within three weeks, however, a long essay in a national magazine identified the ninety-second sequence as the editorial choice of the year, and the reviews that followed adjusted accordingly.
+
+The film also produced, six months later, a result no one had quite anticipated. The state attorney\'s office, which had spent the previous decade declining to revisit the Hollis conviction, opened a formal review. The review, in its second year, would **exonerate** Hollis. Iris, asked in a later interview what had moved the attorney\'s office, replied that she did not know — but that her best guess was that the same ninety-second sequence that had moved the critics had moved a single deputy attorney to read the original deposition for himself.
+
+Maeve, asked about the same scene, said only that the footage had been doing the work and that her job had been to refuse, ninety seconds at a time, to get in its way.`,
+  questions: [
+    {
+      id: 1,
+      kind: "vocab-context",
+      prompt: 'In this sentence, the word "arresting" most nearly means:',
+      quote:
+        '"The match between her present face and her past words was arresting — there was no other word for it..."',
+      options: [
+        "Forgettable and easily skipped.",
+        "Striking enough to seize and hold the viewer\'s attention.",
+        "Officially confiscated by the police.",
+        "Quiet and difficult to perceive.",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Arresting" means strikingly enough to seize attention — exactly the visual effect the matched footage produces.',
+    },
+    {
+      id: 2,
+      kind: "vocab-context",
+      prompt: 'In this sentence, the word "extrapolate" most nearly means:',
+      quote:
+        '"...without a longer montage at the end to extrapolate from Hollis\'s case to the broader pattern the film was meant to suggest."',
+      options: [
+        "To extract evidence under hostile questioning.",
+        "To extend a known case or pattern outward to draw a broader conclusion.",
+        "To formally retract a published statement.",
+        "To restrict an argument to a single example.",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Extrapolate" means to extend known data or a known case outward to a wider claim — which is exactly what the proposed montage would do.',
+    },
+    {
+      id: 3,
+      kind: "tone-purpose",
+      prompt:
+        'The narrator describes the cut\'s "economy" as "almost monastic." Why use that word rather than "minimal"?',
+      options: [
+        '"Monastic" implies the editor was religiously observant.',
+        '"Monastic" carries the texture of disciplined, almost devotional restraint — a sparseness adopted on principle, not a sparseness imposed by a small budget. That nuance honors Maeve\'s editorial conviction; "minimal" would have only described the surface.',
+        '"Monastic" is just a longer way of saying "short" with no different meaning.',
+        '"Monastic" suggests Iris was unhappy with the cut.',
+      ],
+      correctIndex: 1,
+      explanation:
+        'The disciplined, devotional quality of "monastic" elevates a stylistic choice into a stance — exactly the editorial conviction the story honors.',
+    },
+    {
+      id: 4,
+      kind: "inference",
+      prompt:
+        "Based on the passage, what can the reader most reasonably infer about why Maeve always played the bare cut last when answering Iris\'s questions about scoring?",
+      options: [
+        "She wanted to bore Iris into agreement through repetition.",
+        "She had no time to prepare the alternate cuts properly.",
+        "Played last, after the more decorated alternatives, the bare cut would let Iris feel the difference for herself rather than being argued into it — turning the choice from a debate into a side-by-side experience whose result Iris could read in her own response.",
+        "Iris had explicitly required her to play cuts in that order.",
+      ],
+      correctIndex: 2,
+      explanation:
+        "The structural point is exactly that ordering: the bare cut last lets the contrast do the persuading rather than Maeve\'s argument.",
+    },
+    {
+      id: 5,
+      kind: "substitution",
+      prompt:
+        'Which single word could replace "exonerate" in the sentence below without changing its meaning?',
+      quote:
+        '"The review, in its second year, would exonerate Hollis."',
+      options: [
+        "Convict",
+        "Clear",
+        "Sentence",
+        "Investigate",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Clear" matches "exonerate" — both describe officially absolving someone of blame or guilt. "Convict" is the opposite.',
+    },
+    {
+      id: 6,
+      kind: "main-idea",
+      prompt:
+        "Which sentence best summarizes the central idea or arc of the passage?",
+      options: [
+        "A documentary editor inflates her subject\'s testimony to make a more dramatic film and is later sued for defamation.",
+        "A documentary editor refuses to embellish her cumbersome footage, holds an almost monastic economy through every contested scene, and produces a single arresting ninety-second sequence whose restraint moves both the critics and, eventually, the deputy attorney whose review will exonerate the film\'s subject.",
+        "A documentary director reshoots the entire film after the rough cut is rejected by the studio.",
+        "A wrongfully convicted man is exonerated by new DNA evidence unrelated to the documentary.",
+      ],
+      correctIndex: 1,
+      explanation:
+        "The arc moves precisely through Maeve\'s editorial restraint, the bare cut\'s vindication, and the eventual exoneration that the unembellished sequence helps to set in motion.",
+    },
+  ],
+};
+
+const MISSION_22_SET_2: SetReading = {
+  title: "The Heterodox Paper at the Williamstown Conference",
+  subtitle:
+    "A short story about a young economist, a fervent objection from the discussant, and the painstaking refusal to make a histrionic gaffe.",
+  format: "Short Story",
+  readingMinutes: 4,
+  words: [
+    "fervent",
+    "foment",
+    "gaffe",
+    "heterodox",
+    "histrionic",
+    "implicit",
+    "inviolate",
+    "liability",
+    "obstinate",
+    "painstaking",
+  ],
+  passage: `Selma Idris had been working on the paper for nineteen months by the time she submitted it to the Williamstown summer conference. The paper made a single, narrow, and — by the standards of her field — frankly **heterodox** claim: that a small but consistent share of the productivity gains attributed in the standard literature to a particular labor-market reform was, on closer inspection of the underlying state-level data, attributable instead to a coincident change in retail-sector reporting requirements that had not previously been controlled for.
+
+The claim was small. It was, by Selma's count, a four-percentage-point reattribution. It was also, given the citation footprint of the original paper, the kind of correction that almost no one who had built later work on top of the original result would be eager to see in print.
+
+Williamstown accepted the paper. The discussant assigned to it was Professor Rourke, a man whose reputation in the field rested in significant part on a 2009 paper that had relied, **implicitly**, on the very reattribution Selma was now contesting. Rourke had been heard, that spring, to call the working draft "a clever exercise in selective controls."
+
+Selma had three choices. She could withdraw the paper, which would leave its claim unaired. She could shorten the paper to its smallest possible form, hoping to slip it past Rourke's objections through brevity. Or she could deliver the paper she had written.
+
+She delivered the paper she had written.
+
+The presentation itself was almost **painstaking**. She walked through every robustness check. She showed the reattribution under each of the seven leading specifications in the prior literature. She named, openly, the limits of her data — three states whose retail-reporting changes were poorly documented and whose results she had therefore excluded from the headline finding and footnoted separately. The footnote was, by the standards of the conference, almost luxuriously honest.
+
+Rourke responded with what could only be called a **fervent** objection. His tone was sharp; his structure was unstructured. He accused the paper, in his opening five minutes, of "fomenting confusion in a literature that had reached settled agreement," and his use of the word **foment** was so deliberate that several senior economists in the back row visibly flinched at the choice. He did not, however, identify a specific specification he wished Selma to alter. He named no robustness check he wished her to add. He spoke, instead, in long, rolling sentences about the dangers of revising widely cited results on the strength of "marginal data."
+
+Selma did not, in reply, become **histrionic**. She had braced, for nineteen months, for exactly this kind of response, and she had decided in advance — on a long walk that previous spring — that any **gaffe** she committed in the moment of the rebuttal would do far more damage to the paper than the rebuttal itself.
+
+She thanked Rourke for the comment. She agreed that revising widely cited results required care. She offered, then, to walk the room through any single specification Rourke wanted to see, in any order he preferred, and asked him to name one. He did not name one. The senior economist chairing the session, whose own work had not depended on the disputed reattribution, suggested, gently, that they move to the floor.
+
+Two questions from the floor — both technical, both addressed in the paper's appendix — were quickly answered. A third question, from a junior economist Selma did not know, asked whether her appendix table on the three excluded states could be extended to a working-paper version. She agreed. The session ended on time.
+
+The paper, in its eventual published form, carried a footnote acknowledging Rourke's objection and explaining, in two sentences, why she did not believe it required a revision. The footnote was, in the small community that read these things carefully, regarded as **inviolate** — courteous to the discussant, committed to the result, and **obstinate** in the most professional sense of the word.
+
+The paper would, three years later, be cited in twelve subsequent papers as the corrective reference. Rourke's 2009 paper would not be retracted. It would, however, be cited from then on, by careful authors, with a small bracketed note pointing to Selma\'s correction.
+
+Selma considered the small bracketed note a perfectly adequate **liability** for a 2009 paper to bear.`,
+  questions: [
+    {
+      id: 1,
+      kind: "vocab-context",
+      prompt: 'In this sentence, the word "heterodox" most nearly means:',
+      quote:
+        '"The paper made a single, narrow, and — by the standards of her field — frankly heterodox claim..."',
+      options: [
+        "In strict agreement with the field\'s prevailing consensus.",
+        "Departing from accepted or orthodox views in the field.",
+        "Restricted to a single state\'s data.",
+        "Sponsored by a private foundation rather than a university.",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Heterodox" means departing from established or orthodox views — exactly Selma\'s position relative to the standard literature.',
+    },
+    {
+      id: 2,
+      kind: "vocab-context",
+      prompt: 'In this sentence, the word "histrionic" most nearly means:',
+      quote:
+        '"Selma did not, in reply, become histrionic."',
+      options: [
+        "Quietly resigned and uncommunicative.",
+        "Excessively dramatic or theatrical in emotional display.",
+        "Strictly mathematical in argumentation.",
+        "Hidden behind a colleague\'s presentation.",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Histrionic" describes excessively theatrical, overwrought emotional display — exactly the response Selma chooses not to give.',
+    },
+    {
+      id: 3,
+      kind: "tone-purpose",
+      prompt:
+        'The narrator says Rourke\'s use of the word "foment" was "so deliberate that several senior economists in the back row visibly flinched." Why does the choice of "foment" matter so much?',
+      options: [
+        '"Foment" simply means "to start" with no other meaning.',
+        '"Foment" carries the texture of stirring up agitation or trouble — usually used about unrest, sedition, or scandal — so applying it to a careful four-percentage-point reattribution is rhetorically out of proportion. The flinch acknowledges that Rourke has reached for a word whose freight far exceeds the technical claim it is being aimed at.',
+        '"Foment" implies Rourke had personal experience as a labor organizer.',
+        '"Foment" is a routine term in academic discussion.',
+      ],
+      correctIndex: 1,
+      explanation:
+        'The word\'s connotations of stirring up agitation are wildly disproportionate to a narrow technical correction — which is why the senior economists flinch at the choice.',
+    },
+    {
+      id: 4,
+      kind: "inference",
+      prompt:
+        "Based on the passage, what can the reader most reasonably infer about why Selma offered to walk Rourke through any specification he wanted to see, rather than directly rebutting his speech?",
+      options: [
+        "She did not actually understand Rourke\'s objection and was hoping he would explain it for her.",
+        "She had decided in advance that any in-the-moment gaffe would do more damage than the objection itself, and an open invitation to name a specification both stayed inside her painstaking technical posture and exposed the fact that Rourke had named none — without her ever having to say so.",
+        "Conference rules required all rebuttals to take the form of an invitation.",
+        "She intended to publicly humiliate Rourke in front of the senior economists.",
+      ],
+      correctIndex: 1,
+      explanation:
+        "The text frames her rebuttal as a deliberate refusal of histrionics. The invitation to name a specification quietly highlights Rourke\'s lack of one without any direct accusation.",
+    },
+    {
+      id: 5,
+      kind: "substitution",
+      prompt:
+        'Which single word could replace "obstinate" in the sentence below without changing its meaning?',
+      quote:
+        '"...obstinate in the most professional sense of the word."',
+      options: [
+        "Yielding",
+        "Stubborn",
+        "Forgetful",
+        "Anonymous",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Stubborn" matches "obstinate" — both describe a refusal to give way. The sentence specifies that this stubbornness is the professional, principled kind.',
+    },
+    {
+      id: 6,
+      kind: "main-idea",
+      prompt:
+        "Which sentence best summarizes the central idea or arc of the passage?",
+      options: [
+        "A young economist withdraws her paper after a senior discussant objects and abandons her career.",
+        "A young economist presents a heterodox correction at a major conference, absorbs a fervent and disproportionate objection from a discussant whose own earlier work is implicated, refuses to commit a histrionic gaffe in reply, and over time sees her painstaking footnote become the corrective reference cited by careful authors.",
+        "A senior economist successfully blocks the publication of a paper that contradicts his earlier work.",
+        "A conference dissolves into chaos after a discussant\'s objection prevents any further discussion of the paper.",
+      ],
+      correctIndex: 1,
+      explanation:
+        "The arc moves through the heterodox paper, the painstaking presentation, the disciplined rebuttal, and the slow vindication in the literature.",
+    },
+  ],
+};
+
+const MISSION_22_SET_3: SetReading = {
+  title: "The Casting Notice for the Spring Season",
+  subtitle:
+    "A short story about a phlegmatic ballet director, a prodigious young dancer, and a tentative casting choice no one wanted to renege on.",
+  format: "Short Story",
+  readingMinutes: 4,
+  words: [
+    "phlegmatic",
+    "prodigious",
+    "propensity",
+    "qualm",
+    "renege",
+    "stinting",
+    "temper",
+    "tentative",
+    "unprecedented",
+    "vivacious",
+  ],
+  passage: `Lev Petrov had been the artistic director of the Ardmore Ballet for twenty-three years, and his reputation in the company was, even by the famously even-keeled standards of senior choreographers, **phlegmatic**. He did not raise his voice. He did not, in the memory of the dancers currently in the company, deliver a passionate speech of any kind. He posted his casting decisions on a notice board on a Wednesday afternoon and considered the conversation closed.
+
+The notice for the spring season's principal role in *The Mariner's Daughter* — a new work choreographed by Lev himself — was, in the year in question, **unprecedented**. He had cast Tova Aldenfeldt, a nineteen-year-old who had joined the corps from the academy only fourteen months earlier. She had never danced a principal role at any company. The role had, in every previous season's production, been given to a senior dancer with at least eight years of company experience.
+
+The notice produced, almost immediately, the reaction Lev had quietly expected. Two of the senior dancers came to his office that evening, neither of them the dancer who would have been the conventional first choice, and asked, with care, whether he had considered the message the casting would send to the rest of the company. They did not, in their phrasing, ask him to **renege** on the decision. They asked, more gently, whether he was confident.
+
+Lev was confident. He was also, characteristically, willing to explain why.
+
+Tova was, he said, a **prodigious** dancer — not in the casual sense in which the word was sometimes used in a company press release, but in the older, more demanding sense of someone whose technical and interpretive range, at nineteen, had already exceeded what most dancers acquired by twenty-eight. He had been watching her since the academy. He had no **qualm** about her readiness for the choreography itself; he had built much of the choreography, in fact, with her physical phrasing in mind.
+
+The senior dancers nodded. They did not press further. They did, however, raise the company's longstanding concern about the **propensity** of young dancers in principal roles to be injured early — a concern Lev took seriously and had, in fact, addressed before the notice went up by extending the rehearsal calendar by three weeks and adding a movement coach to the production budget.
+
+The casting was, in the language Lev would use with the company manager the following morning, **tentative** in only one specific sense: the run included eight performances, and Tova would dance the first six, with the senior alternate, Maris, dancing the seventh and eighth. The alternation was, on its face, a courtesy to Maris and a precaution against fatigue; in private, Lev would also acknowledge that it preserved the company's ability to recover gracefully if the casting did not work.
+
+Tova opened on a Thursday in late March. She was, by every reviewer's account, **vivacious** in the technical demands of the first act and unexpectedly restrained in the emotional demands of the second — a combination the *Ardmore Reporter*'s critic singled out as "the rarest quality the company has presented in a debut in nineteen years." Lev did not, in any backstage conversation, claim credit for the casting. He did, however, refuse to **temper** his praise of the performance when asked about it. He had not been **stinting** in any element of the rehearsal preparation, and he saw no reason to be stinting, now, in his account of the result.
+
+Maris danced the seventh and eighth performances with a generosity that struck the company at the time and would be remembered later. She did not, in any private remark to her colleagues, suggest that the casting had been wrong. She said, when asked, that the choreography had been built for the dancer, that the dancer had been ready for it, and that her own role in the production had been to remind the audience, on two evenings out of eight, what a different set of forty-four years on the same stage could bring to the same steps.
+
+The casting was renewed for the following season. Tova and Maris alternated again, on the same six-and-two pattern, by joint request.`,
+  questions: [
+    {
+      id: 1,
+      kind: "vocab-context",
+      prompt: 'In this sentence, the word "phlegmatic" most nearly means:',
+      quote:
+        '"...his reputation in the company was, even by the famously even-keeled standards of senior choreographers, phlegmatic."',
+      options: [
+        "Quick to anger and emotionally volatile.",
+        "Calm, unexcitable, and steady in temperament.",
+        "Technically gifted as a young dancer.",
+        "Frequently absent from rehearsals.",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Phlegmatic" describes a calm, unexcitable temperament — exactly the steadiness the company knows Lev for.',
+    },
+    {
+      id: 2,
+      kind: "vocab-context",
+      prompt: 'In this sentence, the word "prodigious" most nearly means:',
+      quote:
+        '"Tova was, he said, a prodigious dancer — not in the casual sense in which the word was sometimes used in a company press release, but in the older, more demanding sense of someone whose technical and interpretive range, at nineteen, had already exceeded what most dancers acquired by twenty-eight."',
+      options: [
+        "Promising in only a small, narrow technical area.",
+        "Extraordinarily great in ability or amount, far beyond the usual.",
+        "Restricted to corps-level work for the foreseeable future.",
+        "Recently injured and unable to perform.",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Prodigious" describes a degree of ability far beyond the ordinary — and the sentence even contrasts the demanding older sense Lev means against the casual press-release sense.',
+    },
+    {
+      id: 3,
+      kind: "tone-purpose",
+      prompt:
+        'The narrator says Lev described the casting as "tentative in only one specific sense." Why is the limit in that phrase important?',
+      options: [
+        '"Tentative" is just a longer word for "permanent" with no different meaning.',
+        '"Tentative" implies the entire production might be canceled at any moment.',
+        'The word "tentative" naturally suggests broad uncertainty, but Lev is not uncertain about Tova\'s readiness — he is hedging only against fatigue and graceful recovery. The qualifier "in only one specific sense" preserves both his confidence in the casting and his prudence about the eight-performance run.',
+        'The narrator is signaling that Lev is privately about to renege.',
+      ],
+      correctIndex: 2,
+      explanation:
+        'The qualifier separates institutional caution from personal doubt. Lev is hedging operationally, not artistically.',
+    },
+    {
+      id: 4,
+      kind: "inference",
+      prompt:
+        "Based on the passage, what can the reader most reasonably infer about why Lev had already extended the rehearsal calendar and added a movement coach before the notice went up?",
+      options: [
+        "He intended to fail Tova\'s casting and document the failure for the company\'s records.",
+        "He had anticipated the senior dancers\' concern about the well-known propensity of young dancers in principal roles to be injured early, and had taken concrete preventive steps before the question was even raised — so that when it was raised, his answer was already in the rehearsal calendar.",
+        "He had been ordered to do so by the company\'s board.",
+        "He believed Tova was insufficiently prepared and needed remedial training.",
+      ],
+      correctIndex: 1,
+      explanation:
+        "The text presents the extended calendar and movement coach as an answer Lev had already prepared, so that the senior dancers\' concern, when it came, was met with practice rather than promise.",
+    },
+    {
+      id: 5,
+      kind: "substitution",
+      prompt:
+        'Which single word could replace "stinting" in the sentence below without changing its meaning?',
+      quote:
+        '"He had not been stinting in any element of the rehearsal preparation..."',
+      options: [
+        "Sparing",
+        "Generous",
+        "Forgetful",
+        "Public",
+      ],
+      correctIndex: 0,
+      explanation:
+        '"Sparing" matches "stinting" — both describe holding back, providing only a little. Lev is the opposite: he gave the rehearsal everything it needed.',
+    },
+    {
+      id: 6,
+      kind: "main-idea",
+      prompt:
+        "Which sentence best summarizes the central idea or arc of the passage?",
+      options: [
+        "A young dancer is forced into a principal role she is not ready for and is injured during the run.",
+        "A phlegmatic artistic director casts a prodigious nineteen-year-old in an unprecedented principal role, addresses the company\'s injury concerns through extended rehearsal and an alternate-performance schedule, and refuses to temper his praise when the casting succeeds and is generously honored by the senior alternate.",
+        "A senior dancer successfully petitions the company\'s board to remove a junior dancer from the principal role.",
+        "A ballet company cancels its spring production after disagreement over casting.",
+      ],
+      correctIndex: 1,
+      explanation:
+        "The arc traces precisely the casting, the senior dancers\' concern, the preventive measures already in place, the successful debut, and the generous alternation that follows.",
+    },
+  ],
+};
+
+const MISSION_23_SET_1: SetReading = {
+  title: "The Poet at the Convalescent House",
+  subtitle:
+    "A personal essay on returning to writing after a long illness — and on the difference between curbing one\'s ambition and conserving it.",
+  format: "Personal Essay",
+  readingMinutes: 4,
+  words: [
+    "allusive",
+    "astute",
+    "commence",
+    "convalescent",
+    "curb",
+    "decry",
+    "duress",
+    "evoke",
+    "fawn",
+    "fret",
+  ],
+  passage: `I arrived at the residency in October, three months after my discharge from the hospital, in the **convalescent** condition that one of my doctors had carefully described as "mostly recovered, please continue to behave as if you are not." I had not written a poem in fourteen months. I had brought, in a small notebook, the first lines of three poems I had abandoned in March and a single complete draft of a fourth that I no longer recognized as mine.
+
+The director of the residency was a poet I had admired for twenty years. She was, in person, exactly the **astute**, slightly amused presence her work had led me to expect — a woman who could read a draft once and identify, in three quiet sentences, what the poem had meant to be doing and where it had quietly given up. She did not, on my first afternoon, **fawn** over my published work. She did not, more importantly, **fret** over my health. She offered tea. She showed me my room. She said that the only schedule the residency enforced was that the dining hall opened at seven and closed at eight, and that the rest of the day was mine.
+
+I did not, in my first week, **commence** any of the abandoned poems. I sat at the desk. I read three books I had been carrying in my bag. I walked, slowly, on the gravel paths the previous residents had worn between the cottages. I noticed, with the kind of distant interest a long illness produces, that I was no longer in any rush.
+
+The temptation, in my second week, was to **curb** my ambition — to decide, on the strength of fourteen months without writing, that whatever I produced at the residency should be a small, modest, recovery-shaped thing. I noticed the temptation. I declined it. I had read enough poems by writers returning from illness to know that the small, modest, recovery-shaped poem was a genre the poet usually came to **decry** five years later, when she could see it had been a hedge against the larger poem she had been afraid to attempt.
+
+What I attempted, instead, was a long sequence I had been thinking about since before the illness — a sequence of seven poems that would **evoke**, without naming directly, a series of weeks I had spent in my grandmother\'s house at twelve. The mode I had been planning for it, even before the residency, was deliberately **allusive**: each poem would gesture at its scene through a single object — a window, a chair, a particular hymn — without ever describing the scene itself.
+
+I worked on the sequence for nine weeks. The director read each poem when I asked her to and not before. She made, across the nine weeks, perhaps eleven sentences of comment in total. The most useful of them, on the fourth poem, was that the chair I had chosen as the central object was working in the poem only because the reader did not need to be told what it had stood beside — and that as soon as I tried to clarify the scene, the chair would stop doing the work the allusion had been doing for me.
+
+I deleted four lines of clarification I had written that morning. The poem held.
+
+I left the residency in late December with six of the seven poems complete and the seventh in a draft I trusted. I had not written under any **duress**, internal or external. I had not written under the pressure of recovery, which is its own kind of duress, the most insidious kind. I had written under the conditions any writer should hope to write under: warm room, distant deadline, an astute reader who would not fawn, would not fret, and would say only the eleven sentences the poems actually needed.
+
+The sequence appeared the following autumn in a small magazine I had read, faithfully, since I was twenty-three. I have not, in the years since, decried it.`,
+  questions: [
+    {
+      id: 1,
+      kind: "vocab-context",
+      prompt: 'In this sentence, the word "convalescent" most nearly means:',
+      quote:
+        '"I arrived at the residency in October, three months after my discharge from the hospital, in the convalescent condition that one of my doctors had carefully described as \'mostly recovered, please continue to behave as if you are not.\'"',
+      options: [
+        "Fully restored to pre-illness health.",
+        "In the slow process of recovering from illness.",
+        "Permanently disabled and unable to continue writing.",
+        "Newly diagnosed with an unrelated condition.",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Convalescent" describes someone in the slow recovery phase after illness — exactly the doctor\'s "mostly recovered, please continue to behave as if you are not."',
+    },
+    {
+      id: 2,
+      kind: "vocab-context",
+      prompt: 'In this sentence, the word "allusive" most nearly means:',
+      quote:
+        '"The mode I had been planning for it, even before the residency, was deliberately allusive: each poem would gesture at its scene through a single object — a window, a chair, a particular hymn — without ever describing the scene itself."',
+      options: [
+        "Explicitly literal, with every detail spelled out for the reader.",
+        "Working through indirect reference and suggestion rather than direct statement.",
+        "Restricted to a single end rhyme throughout the sequence.",
+        "Composed entirely in a foreign language.",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Allusive" describes a style that gestures or hints at something rather than naming it directly — exactly the object-as-reference technique the narrator describes.',
+    },
+    {
+      id: 3,
+      kind: "tone-purpose",
+      prompt:
+        'The narrator says she noticed the temptation to "curb" her ambition and "declined it." Why frame the temptation as one of curbing, rather than of merely "writing less"?',
+      options: [
+        '"Curb" is just a synonym for "write less" with no different meaning.',
+        '"Curb" implies the narrator considered abandoning poetry entirely.',
+        '"Curb" carries the precise sense of restraining or reining in something that would otherwise run further. Naming the temptation that way clarifies that the issue was not energy but self-imposed limitation — a recovery-shaped hedge against the larger poem she was afraid to attempt.',
+        '"Curb" implies the narrator was forced by her doctors to write less.',
+      ],
+      correctIndex: 2,
+      explanation:
+        'The verb "curb" carries the texture of self-restraint on something otherwise capable of going further — exactly the recovery-shaped hedge the narrator names and refuses.',
+    },
+    {
+      id: 4,
+      kind: "inference",
+      prompt:
+        "Based on the passage, what can the reader most reasonably infer about why the director\'s comment that the chair worked because the reader did not need to be told what it had stood beside was so useful to the narrator?",
+      options: [
+        "The director was secretly rewriting the narrator\'s poems and merely pretending to comment on them.",
+        "The director\'s sentence diagnosed exactly the temptation the narrator had been about to indulge — to clarify the scene around the chair — and named the cost: clarification would dissolve the allusive work the chair was doing, turning the poem from a gesture into a description.",
+        "The director was suggesting the narrator should add four lines of clarification to the poem.",
+        "The director was unfamiliar with the structure of the sequence.",
+      ],
+      correctIndex: 1,
+      explanation:
+        "The text shows the narrator deleting four lines of clarification she had written that morning — the comment named the temptation precisely.",
+    },
+    {
+      id: 5,
+      kind: "substitution",
+      prompt:
+        'Which single word could replace "duress" in the sentence below without changing its meaning?',
+      quote:
+        '"I had not written under any duress, internal or external."',
+      options: [
+        "Pressure",
+        "Praise",
+        "Vacation",
+        "Encouragement",
+      ],
+      correctIndex: 0,
+      explanation:
+        '"Pressure" matches "duress" — both describe constraint or coercion that pushes one to act. The narrator emphasizes that the residency provided neither external nor internal pressure of that kind.',
+    },
+    {
+      id: 6,
+      kind: "main-idea",
+      prompt:
+        "Which sentence best summarizes the central idea or arc of the essay?",
+      options: [
+        "A poet returns from illness, shrinks her ambition into a small recovery-shaped poem, and is praised for her restraint.",
+        "A poet recovering from illness arrives at a residency, declines the temptation to curb her ambition into something merely recovery-shaped, attempts a longer allusive sequence under the spare, astute attention of a director who refuses to fawn or fret, and leaves with the work she had set out to do.",
+        "A poet quarrels with the director of a residency over the structure of an unfinished sequence and leaves early.",
+        "A poet decides during a residency that she will never write poetry again.",
+      ],
+      correctIndex: 1,
+      explanation:
+        "The essay\'s spine is exactly the refusal of the recovery-shaped hedge, the disciplined attempt at the larger sequence, and the spare guidance that lets it hold.",
+    },
+  ],
+};
+
+const MISSION_23_SET_2: SetReading = {
+  title: "The Captain and the Mettlesome First Mate",
+  subtitle:
+    "A short story about a long delivery sail, an intermittent storm, and a captain who chose to mollify rather than neutralize a headstrong officer.",
+  format: "Short Story",
+  readingMinutes: 4,
+  words: [
+    "glib",
+    "headstrong",
+    "intermittent",
+    "ire",
+    "languid",
+    "lull",
+    "mettlesome",
+    "mollify",
+    "neutralize",
+    "nonplussed",
+  ],
+  passage: `Captain Astrid Holm had been hired to deliver the *Sven Vasa* — a sixty-foot sloop newly built in Helsinki — across the North Atlantic to her owner in Newport. The voyage was scheduled for nineteen days. The crew was four people, including herself, and the first mate, a thirty-one-year-old former racing skipper named Per Linkov, was the only crew member Astrid had not personally chosen. The owner had recommended him.
+
+Per was, by every standard the racing world used, an extremely good sailor. He was also, by the same standards, **headstrong** — a quality that won races and lost crews. Astrid had not, before departure, regarded the recommendation as a problem. She had regarded it, more accurately, as a problem she would have to manage.
+
+The first three days were **languid**. The wind was light. The boat moved north and west under reduced sail, and the four of them learned, by repetition, the small differences between the *Sven Vasa* and the boats they had each sailed before. Per made one **glib** remark on the second afternoon — a quick, polished suggestion that the watch schedule Astrid had drawn up was "more conservative than the boat needs" — and Astrid, characteristically, did not respond to it at the time. She had decided, before the voyage, that she would not engage Per in the small social tests she expected him to run.
+
+The first storm arrived on the morning of the fifth day. It was not a severe storm. It was, however, **intermittent** — wind fifteen, then thirty, then back to twenty within an hour, a pattern that demanded constant adjustment of sail and that punished any captain who set a single configuration and walked away from it.
+
+It was during the second sail change that Per overruled, in front of the rest of the crew, a specific instruction Astrid had given to reef the main one notch deeper than he thought necessary. He did not phrase the overruling as a confrontation. He phrased it as a **mettlesome** correction — the kind of crisp, confident counter-call that, on a racing boat, would have been admired and acted on.
+
+On the *Sven Vasa*, on a delivery, with two crew members who had not sailed together before that week, the call landed differently. The crew, momentarily **nonplussed**, looked from Per to Astrid and visibly waited.
+
+Astrid did not, in that moment, choose to **neutralize** Per\'s call by reasserting hers. She had three reasons, all of them weighed in the half-second before she spoke. The crew needed, above all, a single command structure for the next ninety minutes; an open dispute on the foredeck would not produce that. The reef Per was suggesting was not, by her own honest assessment, dangerous — only less conservative than she preferred. And she would, in any case, have to keep sailing with Per for fourteen more days.
+
+She nodded once. She said, evenly, "Per\'s call." The crew executed the reef.
+
+The intermittent wind continued for another five hours. The boat handled. No one was hurt. In a quiet **lull** at the end of her watch, after the wind had settled and the sail plan had stabilized, Astrid sent the rest of the crew below and asked Per to remain on deck.
+
+She did not deliver her **ire**. She had been, in her career, sometimes prone to it; she had learned, slowly, that it produced no effect on a sailor of Per\'s temperament except to harden him into the next confrontation. She **mollified** her tone instead. She said, in three sentences, that she had supported his call on the foredeck because the crew had needed a single command structure in the moment, that she would do the same again if a similar call arose, and that she expected him, in any future case where he disagreed with one of her instructions, to bring the disagreement to her privately at the change of watch — and to execute her instruction in the meantime.
+
+Per did not, at first, respond. When he did, he said only that he understood. He kept the agreement for the remaining thirteen days. The *Sven Vasa* arrived in Newport on schedule, with a logbook that recorded one disputed sail change and no second.`,
+  questions: [
+    {
+      id: 1,
+      kind: "vocab-context",
+      prompt: 'In this sentence, the word "headstrong" most nearly means:',
+      quote:
+        '"Per was, by every standard the racing world used, an extremely good sailor. He was also, by the same standards, headstrong — a quality that won races and lost crews."',
+      options: [
+        "Cautiously deferential to senior officers in every situation.",
+        "Determined to have one\'s own way; willful and obstinately self-directed.",
+        "Highly skilled at navigation by stars.",
+        "Easily seasick under most conditions.",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Headstrong" describes a stubborn willfulness — exactly the quality that makes Per excellent on a racing boat and risky on a crew delivery.',
+    },
+    {
+      id: 2,
+      kind: "vocab-context",
+      prompt: 'In this sentence, the word "mollify" most nearly means:',
+      quote:
+        '"She mollified her tone instead. She said, in three sentences, that she had supported his call on the foredeck..."',
+      options: [
+        "To sharpen and intensify, especially in anger.",
+        "To soothe or soften the tone, reducing its harshness.",
+        "To translate into another language.",
+        "To formally rescind a previous order.",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Mollify" means to soften or appease — exactly Astrid\'s deliberate adjustment of tone to address Per without hardening him into the next confrontation.',
+    },
+    {
+      id: 3,
+      kind: "tone-purpose",
+      prompt:
+        'The narrator describes Per\'s overruling as a "mettlesome correction." Why use "mettlesome" rather than simply "rude" or "insubordinate"?',
+      options: [
+        '"Mettlesome" is a synonym for "rude" with no different meaning.',
+        '"Mettlesome" carries the texture of spirited, courageous self-confidence — the quality that makes a racing-boat call admirable. By using it, the narrator credits the genuine virtue inside Per\'s behavior even while showing that the same virtue lands badly in a different context.',
+        '"Mettlesome" implies Per made the call entirely silently.',
+        '"Mettlesome" suggests Per had no sailing experience.',
+      ],
+      correctIndex: 1,
+      explanation:
+        'The word names the genuine virtue (spirited confidence) at the heart of the same gesture that fails the delivery context — sharpening the story\'s nuance.',
+    },
+    {
+      id: 4,
+      kind: "inference",
+      prompt:
+        "Based on the passage, what can the reader most reasonably infer about why Astrid chose to support Per\'s call on the foredeck rather than reasserting her own?",
+      options: [
+        "She had secretly agreed with Per\'s call all along and only wanted to look conservative in front of the crew.",
+        "She judged that the crew\'s urgent need for a single command structure on a foredeck mid-storm — combined with the fact that Per\'s call was less conservative but not actually unsafe and that she would have to keep sailing with him for fourteen more days — outweighed the value of winning the public dispute in that moment.",
+        "She was physically too tired to climb forward and contest the call.",
+        "Maritime law required her to defer to her first mate during any storm.",
+      ],
+      correctIndex: 1,
+      explanation:
+        "The text walks through exactly these three considerations: command structure on the foredeck, the call\'s honest safety margin, and the duration of the voyage ahead.",
+    },
+    {
+      id: 5,
+      kind: "substitution",
+      prompt:
+        'Which single word could replace "ire" in the sentence below without changing its meaning?',
+      quote:
+        '"She did not deliver her ire."',
+      options: [
+        "Praise",
+        "Anger",
+        "Decision",
+        "Promotion",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Anger" matches "ire" — both describe strong displeasure or wrath. Astrid deliberately holds it back.',
+    },
+    {
+      id: 6,
+      kind: "main-idea",
+      prompt:
+        "Which sentence best summarizes the central idea or arc of the passage?",
+      options: [
+        "A captain humiliates her first mate in front of the crew during an intermittent storm and the boat is wrecked as a result.",
+        "A captain on a delivery sail manages a headstrong, mettlesome first mate by supporting his unsafe-but-not-dangerous call in the moment to preserve a single command structure, then privately mollifying her tone in a quiet lull to set a clear protocol for any future disagreement — and the protocol holds for the rest of the voyage.",
+        "A first mate mutinies against his captain and takes command of the boat for the remaining fourteen days.",
+        "A delivery sail across the North Atlantic is canceled after the captain refuses to leave port in light wind.",
+      ],
+      correctIndex: 1,
+      explanation:
+        "The arc is exactly Astrid\'s in-the-moment yielding, the private follow-up in the lull, and the quiet protocol that holds for the rest of the trip.",
+    },
+  ],
+};
+
+const MISSION_23_SET_3: SetReading = {
+  title: "The Watershed Report Nobody Wanted to Hear",
+  subtitle:
+    "A short story about a vigilant ecologist, a precipitous drop in baseflow, and the repercussions of a profound finding the council had hoped to refute.",
+  format: "Short Story",
+  readingMinutes: 4,
+  words: [
+    "precipitous",
+    "pretentious",
+    "profound",
+    "propagate",
+    "recourse",
+    "refute",
+    "regress",
+    "repercussion",
+    "replenish",
+    "vigilant",
+  ],
+  passage: `Dr. Iren Vasquez had been a watershed ecologist with the Mahonia Basin Authority for eleven years, and her annual reports were known among the council\'s twelve members for two qualities. The first was that they were short — Iren refused, on principle, to inflate her findings into the long, **pretentious** documents that sister agencies in adjacent basins routinely produced. The second was that they were almost compulsively **vigilant**: every measurement was footnoted, every methodology disclosed, every limitation acknowledged in the same sentence in which the finding was offered.
+
+The 2026 report was, by Iren\'s own account, the most uncomfortable document she had written in her career.
+
+It found that the Mahonia\'s late-summer baseflow — the steady underground contribution that kept the river running between rainstorms — had declined by 31 percent over the previous nine years. The decline was not gradual. It had been **precipitous** in the most recent three years, accelerating in a pattern that her models did not allow her to attribute to short-term drought alone. The most likely driver, on the evidence she had, was a steady drawdown of the upper aquifer by the agricultural users who had, since 2019, been pumping at rates the basin\'s recharge could not **replenish**.
+
+The implication was, in the strict scientific sense, **profound**: if the pattern continued, the river would, within nine years, fail to maintain a continuous flow through the dry season at all. The implication was also, in the political sense, almost impossible to deliver. Three of the twelve council members represented agricultural districts whose pumping was the principal cause of the decline. Two more represented downstream municipal users who had not been told, in any prior report, that their long-term water security was now a question.
+
+Iren did not, in the report, **propagate** the finding into a recommendation. She had decided, two years earlier, that her professional role at the council was to deliver the data and the most defensible inference she could draw from it, and to leave the question of policy to the council itself. She did, however, include in the appendix a list of seven specific measurements the council could request to **refute** her inference if it disagreed — a list that included the agricultural users\' own well logs, which had not, in eleven years, been requested.
+
+The council met to receive the report on a Tuesday in March. The meeting was, by the standards of the basin authority, unusually crowded. The two agricultural members spoke first, at length. They did not directly **refute** Iren\'s inference. They suggested, instead, that the analysis should be paused — that the council should commission an independent review before any recommendation **regressed** the agricultural sector\'s pumping rights, and that until the independent review was complete, the report itself should be marked, in the council\'s minutes, as preliminary.
+
+Iren had anticipated the move. She had her **recourse** ready. She offered, in the meeting itself, to provide every measurement, every model run, and every line of analysis code to the independent review the same day it was commissioned. She also asked, in a single sentence at the end of her response, that the council\'s minutes record the date on which the agricultural users\' well logs had first been requested by the authority\'s staff and the date on which they had, if ever, been delivered.
+
+The council voted seven to five to commission the independent review. It also voted, by the same margin, to formally request the well logs.
+
+The well logs, when delivered three months later, did not refute Iren\'s inference. They sharpened it. The independent review, when it reported the following spring, agreed in the major findings and disagreed only on a single methodological choice that did not change the headline number. The **repercussion** for the agricultural users was a phased reduction in pumping rights over five years, negotiated with the participation of every party at the table.
+
+The Mahonia, two years later, was still flowing through the dry season. The 2028 baseflow had risen for the first time in a decade. Iren\'s 2028 report, which was, by her habit, short, did not claim credit. It noted the change, footnoted the data, and acknowledged in the same sentence that one wet year did not, by itself, settle the question.`,
+  questions: [
+    {
+      id: 1,
+      kind: "vocab-context",
+      prompt: 'In this sentence, the word "precipitous" most nearly means:',
+      quote:
+        '"It had been precipitous in the most recent three years, accelerating in a pattern that her models did not allow her to attribute to short-term drought alone."',
+      options: [
+        "Slow and gradual over many decades.",
+        "Steeply and abruptly downward in a short period.",
+        "Confined to a single season of one year.",
+        "Reversed by recent rainfall events.",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Precipitous" describes a steep, abrupt drop — exactly the accelerating decline of the last three years.',
+    },
+    {
+      id: 2,
+      kind: "vocab-context",
+      prompt: 'In this sentence, the word "vigilant" most nearly means:',
+      quote:
+        '"...every measurement was footnoted, every methodology disclosed, every limitation acknowledged in the same sentence in which the finding was offered."',
+      options: [
+        "Carelessly assembled in a hurry.",
+        "Watchfully careful and attentive to potential problems.",
+        "Restricted to a single methodology.",
+        "Hostile to outside review.",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Vigilant" describes alert, watchful care — exactly the quality of footnoting, disclosing, and acknowledging the report exhibits in every line.',
+    },
+    {
+      id: 3,
+      kind: "tone-purpose",
+      prompt:
+        'The narrator says Iren refused to inflate her findings into "pretentious documents that sister agencies in adjacent basins routinely produced." Why use "pretentious" rather than simply "long"?',
+      options: [
+        '"Pretentious" is a synonym for "long" with no different meaning.',
+        '"Pretentious" carries the texture of pretending to importance one has not earned — a documentary inflation that performs significance rather than demonstrating it. The choice frames Iren\'s short reports as a stance against that performance, not just a preference for brevity.',
+        '"Pretentious" implies the sister agencies were dishonest in their measurements.',
+        '"Pretentious" suggests the documents were illegally distributed.',
+      ],
+      correctIndex: 1,
+      explanation:
+        'The word identifies a posture (performing significance) rather than a length, and frames Iren\'s brevity as principled rather than convenient.',
+    },
+    {
+      id: 4,
+      kind: "inference",
+      prompt:
+        "Based on the passage, what can the reader most reasonably infer about Iren\'s strategic purpose in including, in the appendix, a list of seven measurements the council could request to refute her inference — including the agricultural users\' own well logs?",
+      options: [
+        "She intended to bury the most damaging measurement at the bottom of the appendix where no one would find it.",
+        "She made it cheap and concrete for the council to test her finding while quietly putting a specific document — the agricultural users\' well logs — on the table; if the council later voted to commission an independent review without requesting that document, the omission would itself be visible.",
+        "She wanted the appendix to be longer than the body of the report.",
+        "She had been ordered by the agricultural members to include the list.",
+      ],
+      correctIndex: 1,
+      explanation:
+        "The structural point is exactly that pre-positioned ask: the well logs are placed in the appendix so that any later decision to skip them would be conspicuous.",
+    },
+    {
+      id: 5,
+      kind: "substitution",
+      prompt:
+        'Which single word could replace "replenish" in the sentence below without changing its meaning?',
+      quote:
+        '"...pumping at rates the basin\'s recharge could not replenish."',
+      options: [
+        "Drain",
+        "Restore",
+        "Forbid",
+        "Tax",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Restore" matches "replenish" — both describe filling something back up to its previous level.',
+    },
+    {
+      id: 6,
+      kind: "main-idea",
+      prompt:
+        "Which sentence best summarizes the central idea or arc of the passage?",
+      options: [
+        "A vigilant ecologist resigns from the basin authority after the council refuses to act on her findings.",
+        "A vigilant ecologist delivers a profound, uncomfortable finding about a precipitous decline in late-summer baseflow, declines to propagate it into a recommendation, pre-positions the well logs that would either refute or sharpen her inference, and — through an independent review and a phased agricultural reduction — sees the river\'s flow begin to recover.",
+        "An agricultural lobby successfully delays a basin authority\'s findings until the river permanently dries out.",
+        "An independent review overturns a watershed ecologist\'s findings and restores agricultural pumping rights to their previous levels.",
+      ],
+      correctIndex: 1,
+      explanation:
+        "The arc moves precisely through the report, the council\'s response, the well logs, the independent review, and the phased reduction that lets the river recover.",
+    },
+  ],
+};
+
+const MISSION_24_SET_1: SetReading = {
+  title: "The Conservatory and the Despotic Patron",
+  subtitle:
+    "A short story about a music conservatory, a benevolent fund, and a director who refused to condone what one donor called \"only a small adjustment\" to the audition rules.",
+  format: "Short Story",
+  readingMinutes: 4,
+  words: [
+    "assail",
+    "benevolent",
+    "berate",
+    "buoyant",
+    "buttress",
+    "condone",
+    "contravene",
+    "denounce",
+    "despotic",
+    "deviate",
+  ],
+  passage: `The Halsey Conservatory had been founded in 1922 on a single principle: that admission to its undergraduate program would be decided, blind, by a committee of five faculty members who would hear each candidate behind a screen and would receive no information about the candidate\'s name, school, country, or sponsor before the panel\'s vote was complete. The principle had survived four directors, three economic depressions, and one nearly fatal endowment crisis. It had not, in a hundred and four years, been **deviated** from.
+
+The current director, Theodora Markham, was in her sixth year. She had inherited a conservatory that was healthy, modestly endowed, and on the verge of needing a new recital hall. The fundraising for the recital hall was led, by long custom, by the conservatory\'s development committee, and the leading prospective donor — a man named Quentin Ardel — was the founder of a private equity firm whose first major gift to the conservatory, twelve years earlier, had built the practice-room wing.
+
+Quentin was, by every account from the development office, a **benevolent** donor in his early gifts. He had asked for nothing in return for the practice-room wing other than a small bronze plaque he himself had not been present to unveil. He was, however, on the prospective recital-hall gift, asking for one thing.
+
+The thing he was asking for, as carefully phrased to Theodora over a Tuesday lunch, was an "audition courtesy" for the children of the firm\'s twelve managing partners — a pre-screening, conducted in a separate session, in which the children would play before a single faculty member rather than the full blind panel. The courtesy would, Quentin assured her, **buttress** the firm\'s long-term commitment to the conservatory. It was, he said, a small thing.
+
+Theodora did not, at the lunch, **berate** him. She did not raise her voice. She did, however, decline immediately. She said that the blind audition rule was the founding principle of the institution, that no exception had been made in a hundred and four years, and that the conservatory could not consider an exception now. She closed the meeting cordially. She walked back to her office and wrote a one-paragraph memo to the chair of the development committee describing the request and her response.
+
+The conversation that followed, over the next three weeks, was the most difficult of her tenure. The development chair pressed her, in carefully chosen language, to consider whether the courtesy could be granted in a form that would not technically **contravene** the founding rule. Two trustees pressed her, less carefully, to consider what the loss of the recital hall gift would mean for the conservatory\'s next decade. One trustee — a man whose own family had given to the conservatory for forty years — pressed her, in a long phone call, to reflect on whether she was being **despotic** in her interpretation of a principle that had, after all, only ever been administrative.
+
+She was not, she later said, persuaded by any of these arguments. She was, however, **assailed** by them. She did not, on any of the calls, lose her temper. She did, in private, take a long walk on the third weekend and consider whether she was, in fact, being inflexible in a way the institution could not afford.
+
+Her decision, at the end of the walk, was that she would not **condone** even a quiet exception. The blind audition rule was not, in her view, an administrative convention. It was the institution\'s public promise to every applicant who had ever auditioned without a sponsor — and breaking it once, even quietly, would, by the conservatory\'s next admissions cycle, be known.
+
+She wrote a long letter to Quentin the following Monday. The letter did not **denounce** him. It thanked him for twelve years of unfailing support, acknowledged the importance of the recital hall, and declined the courtesy in two precise sentences that named no one in his firm. She offered, in the same letter, to name the recital hall after Quentin\'s late mother — a gesture the development office had been preparing for two years — if he wished to proceed with the gift on the conservatory\'s standing terms.
+
+Quentin did not respond for six weeks. When he did, his note was brief and surprisingly **buoyant**. He wrote that he had reconsidered, that the courtesy he had requested had been a mistake, and that he would proceed with the gift. The hall was named for his mother. The blind audition rule, that admissions cycle and every cycle since, held.`,
+  questions: [
+    {
+      id: 1,
+      kind: "vocab-context",
+      prompt: 'In this sentence, the word "buttress" most nearly means:',
+      quote:
+        '"The courtesy would, Quentin assured her, buttress the firm\'s long-term commitment to the conservatory."',
+      options: [
+        "To weaken or undermine over time.",
+        "To support and strengthen, like a structural support reinforces a wall.",
+        "To formally tax at a higher rate.",
+        "To photograph for archival purposes.",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Buttress" means to support or reinforce — Quentin frames the courtesy as something that would shore up his firm\'s commitment.',
+    },
+    {
+      id: 2,
+      kind: "vocab-context",
+      prompt: 'In this sentence, the word "condone" most nearly means:',
+      quote:
+        '"Her decision, at the end of the walk, was that she would not condone even a quiet exception."',
+      options: [
+        "To overlook, accept, or implicitly approve.",
+        "To strictly forbid in writing.",
+        "To rewrite the conservatory\'s charter.",
+        "To request a higher gift amount.",
+      ],
+      correctIndex: 0,
+      explanation:
+        '"Condone" describes the act of overlooking or implicitly approving wrongdoing or deviation — exactly what Theodora declines to do.',
+    },
+    {
+      id: 3,
+      kind: "tone-purpose",
+      prompt:
+        'The narrator says Theodora was "assailed" by the arguments of the trustees and the development chair. Why use "assailed" rather than simply "told"?',
+      options: [
+        '"Assailed" is a synonym for "told" with no different meaning.',
+        '"Assailed" carries the texture of being attacked or beset on multiple sides — a sustained pressure rather than a single conversation. The verb honors both the seriousness of the institutional case being made against her position and the cost to her of holding it, without portraying her as merely victimized.',
+        '"Assailed" implies physical violence was used against the director.',
+        '"Assailed" suggests the director was actively losing the argument.',
+      ],
+      correctIndex: 1,
+      explanation:
+        'The word "assailed" captures sustained pressure from multiple sides — both honoring the seriousness of the case against her and acknowledging its cost.',
+    },
+    {
+      id: 4,
+      kind: "inference",
+      prompt:
+        "Based on the passage, what can the reader most reasonably infer about why Theodora\'s letter to Quentin offered to name the recital hall after his late mother?",
+      options: [
+        "She intended to insult Quentin by invoking his mother in a refusal letter.",
+        "She wanted to refuse the audition courtesy without rejecting the donor as a person — by pairing the firm refusal with a sincere, prepared honor that was meaningful to him personally, she preserved the relationship and gave him a face-saving way to proceed with the gift on the conservatory\'s standing terms.",
+        "She had been instructed by the trustees to make the offer.",
+        "She wanted to publicly embarrass the development office for being unprepared.",
+      ],
+      correctIndex: 1,
+      explanation:
+        "The combination — firm refusal of the courtesy, prepared personal honor, restated standing terms — is the exact diplomatic structure that makes Quentin\'s eventual reconsideration possible.",
+    },
+    {
+      id: 5,
+      kind: "substitution",
+      prompt:
+        'Which single word could replace "denounce" in the sentence below without changing its meaning?',
+      quote:
+        '"The letter did not denounce him."',
+      options: [
+        "Praise",
+        "Condemn",
+        "Forget",
+        "Photograph",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Condemn" matches "denounce" — both describe publicly declaring disapproval. Theodora\'s letter is firm but does not move into condemnation.',
+    },
+    {
+      id: 6,
+      kind: "main-idea",
+      prompt:
+        "Which sentence best summarizes the central idea or arc of the passage?",
+      options: [
+        "A conservatory abandons its century-old blind audition rule in exchange for a major recital-hall gift.",
+        "A director declines a benevolent donor\'s polite request for a small audition exception, refuses to condone even a quiet contravention of the conservatory\'s founding rule despite sustained internal pressure, and — through a firm but personally generous letter — preserves both the rule and the gift.",
+        "A wealthy donor publicly denounces a conservatory and withdraws his entire family\'s support.",
+        "A board of trustees forces a conservatory director to resign over a contested audition policy.",
+      ],
+      correctIndex: 1,
+      explanation:
+        "The story\'s arc is exactly the firm refusal, the personal honor, and the preserved rule.",
+    },
+  ],
+};
+
+const MISSION_24_SET_2: SetReading = {
+  title: "The Arbitrator's Ironclad Brief",
+  subtitle:
+    "A short story about an arbitrator, a finicky escalation clause, and the disinterested handling of a contract dispute that no one wanted to escalate further.",
+  format: "Short Story",
+  readingMinutes: 4,
+  words: [
+    "disinterested",
+    "escalate",
+    "exorcise",
+    "finicky",
+    "foil",
+    "intertwined",
+    "inundate",
+    "ironclad",
+    "jeopardize",
+    "mercurial",
+  ],
+  passage: `Helena Roost had been a commercial arbitrator for sixteen years, and the file in front of her on the morning of the hearing was, by her professional standard, neither unusually large nor unusually small. It was, however, unusually **intertwined**: a software vendor and a hospital network had been suing and counter-suing each other across three jurisdictions for nineteen months, and the dispute had grown, by the time it landed in arbitration, into a tangle of overlapping claims that no junior associate had successfully been able to summarize on a single page.
+
+The clause that had brought the parties to her, however, was clean. The original 2021 contract contained a single arbitration provision: any dispute that the parties could not resolve in good faith within ninety days of written notice would be submitted to a single arbitrator selected from a named panel. The clause was, in the language of the parties\' counsel, **ironclad** — neither side could plausibly dispute its applicability, and neither side wished to **jeopardize** the existing commercial relationship by attempting to litigate around it in open court.
+
+Helena\'s first responsibility, on the morning of the hearing, was to be **disinterested**. She had no prior commercial relationship with either party. She had read the briefs over a long weekend, in the order they had been filed, and had refused — as was her habit — to read any of the press coverage of the case until after the hearing was concluded.
+
+Her second responsibility, she had come to believe over sixteen years, was to refuse to be **inundated**. The parties\' counsel, in their joint pre-hearing letter, had together submitted seventeen hundred pages of exhibits. Helena had read the briefs. She would, in the hearing itself, ask for the exhibits as she needed them — not as a stack, but as named documents tied to specific arguments. The principle was simple: if a document mattered, the party relying on it should be able to point to it; if no party pointed to it, the document did not, in any operational sense, exist for the arbitration.
+
+The hospital\'s lead counsel, a careful man named Mr. Aldrey, opened the morning. His argument was structured. He named four specific failures by the vendor, each tied to a clause in the contract, and offered, in conclusion, a single proposed remedy that would settle three of the four counts and **escalate** the fourth — a disputed integration milestone — to a structured technical review.
+
+The vendor\'s lead counsel, Ms. Quiverra, was a more **mercurial** presence. She was capable, in any given five-minute stretch, of either a tightly argued legal point or a long rhetorical excursion that did not, on Helena\'s notes, advance her client\'s case. The dispersion of her argument was not, Helena suspected, accidental: a **finicky** insistence on procedural irregularities — most of them the kind of small process complaints that did not survive scrutiny — had been a pattern in the vendor\'s pre-hearing filings, and was clearly intended to **foil** any clean adjudication of the four substantive counts.
+
+Helena did not, in the hearing itself, **exorcise** the procedural complaints by ruling on them at length. She listened. She took notes. She allowed Ms. Quiverra to make every argument she wished to make. At the appropriate moment, she said, evenly, that she would address each procedural complaint in writing in her final award and that she would now appreciate the parties\' substantive responses on the four counts in the contract.
+
+The hearing ran for two days. The award, when issued nine weeks later, ran to forty-one pages. The award acknowledged each procedural complaint, dismissed all but one of them in three sentences each, and explained the single complaint it sustained — a notice timing irregularity that did not, however, alter the substantive outcome of the counts. The four counts themselves were resolved in a structure recognizably similar to Mr. Aldrey\'s proposal, with the technical review of the integration milestone conducted under terms both parties had described, in the hearing, as acceptable.
+
+The vendor did not appeal. The hospital did not appeal. The commercial relationship resumed, in a modified form, the following quarter.`,
+  questions: [
+    {
+      id: 1,
+      kind: "vocab-context",
+      prompt: 'In this sentence, the word "disinterested" most nearly means:',
+      quote:
+        '"Helena\'s first responsibility, on the morning of the hearing, was to be disinterested."',
+      options: [
+        "Bored and inattentive to the proceedings.",
+        "Free of any personal stake or bias in the outcome; impartial.",
+        "Unfamiliar with the relevant area of law.",
+        "Openly hostile to both parties.",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Disinterested" means impartial — having no personal stake in the outcome — which is the arbitrator\'s core professional posture, distinct from being merely "uninterested."',
+    },
+    {
+      id: 2,
+      kind: "vocab-context",
+      prompt: 'In this sentence, the word "inundated" most nearly means:',
+      quote:
+        '"Her second responsibility, she had come to believe over sixteen years, was to refuse to be inundated."',
+      options: [
+        "Quietly bribed by one of the parties.",
+        "Overwhelmed by being flooded with material.",
+        "Sworn in under a formal oath.",
+        "Promoted to a higher panel.",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Inundated" means flooded or overwhelmed — exactly the danger Helena guards against by refusing to accept the exhibits as a stack.',
+    },
+    {
+      id: 3,
+      kind: "tone-purpose",
+      prompt:
+        'The narrator describes the vendor\'s procedural complaints as "finicky" and intended to "foil" any clean adjudication. Why use "finicky" rather than simply "many"?',
+      options: [
+        '"Finicky" is just a longer word for "many" with no different meaning.',
+        '"Finicky" implies the complaints were filed by an outside consultant.',
+        '"Finicky" carries the texture of fussily detailed, pickily small objections — the kind of micro-complaints that can clog a hearing without amounting to a serious challenge. The choice characterizes the strategy as one of obstruction-by-trivia rather than substantive defense.',
+        '"Finicky" suggests the complaints were dismissed without being read.',
+      ],
+      correctIndex: 2,
+      explanation:
+        'The word frames the procedural complaints as a deliberate obstruction-by-trivia strategy rather than a list of serious objections.',
+    },
+    {
+      id: 4,
+      kind: "inference",
+      prompt:
+        "Based on the passage, what can the reader most reasonably infer about why Helena chose to address the procedural complaints in writing in her final award rather than ruling on them at length during the hearing?",
+      options: [
+        "She did not understand the procedural complaints and needed weeks to research them.",
+        "Ruling on the procedural complaints in the hearing itself would have given them the airtime the vendor\'s strategy was reaching for, slowing the substantive arguments and rewarding the obstruction; addressing them in the written award gave each one its proper weight without letting them dominate the live proceedings.",
+        "She had been instructed by the named panel to defer all procedural rulings.",
+        "She wanted to give Ms. Quiverra time to revise her arguments before any ruling.",
+      ],
+      correctIndex: 1,
+      explanation:
+        "The choice deliberately denies the obstruction strategy its in-hearing payoff while still treating each complaint seriously in the written record.",
+    },
+    {
+      id: 5,
+      kind: "substitution",
+      prompt:
+        'Which single word could replace "ironclad" in the sentence below without changing its meaning?',
+      quote:
+        '"The clause was, in the language of the parties\' counsel, ironclad..."',
+      options: [
+        "Negotiable",
+        "Unbreakable",
+        "Forgotten",
+        "Optional",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Unbreakable" matches "ironclad" — both describe something that cannot be successfully challenged or avoided.',
+    },
+    {
+      id: 6,
+      kind: "main-idea",
+      prompt:
+        "Which sentence best summarizes the central idea or arc of the passage?",
+      options: [
+        "An arbitrator dismisses both parties\' arguments and orders them to pay equal damages.",
+        "A disinterested arbitrator handles a tangled commercial dispute by refusing to be inundated by exhibits, declining to give finicky procedural complaints the airtime they were reaching for, and producing a written award that addresses every complaint while resolving the substantive counts on terms both parties can accept.",
+        "An arbitrator allows a procedural sideshow to dominate the hearing and the case is escalated to open court.",
+        "A hospital network terminates its relationship with a software vendor after a hearing that ends without a decision.",
+      ],
+      correctIndex: 1,
+      explanation:
+        "The arc traces precisely the arbitrator\'s disciplined handling: limited intake of exhibits, deferred procedural rulings, substantive resolution.",
+    },
+  ],
+};
+
+const MISSION_24_SET_3: SetReading = {
+  title: "The Archivist and the Quiescent Collection",
+  subtitle:
+    "A short story about an archivist closing a long-quiescent collection, a poignant request from the descendants, and the surmounting of a single tangential complication.",
+  format: "Short Story",
+  readingMinutes: 4,
+  words: [
+    "oblivious",
+    "perpetrate",
+    "plaintive",
+    "poignant",
+    "quiescent",
+    "reiterate",
+    "subside",
+    "subsume",
+    "surmount",
+    "tangential",
+  ],
+  passage: `The Hartwell Collection had sat in its own room on the second floor of the Renton Library for forty-one years, and for thirty-seven of those years it had been **quiescent** — the kind of small, specialized archive that received no requests, generated no scholarship, and was visited, at most, by one of the library\'s graduate interns once every two summers. The collection consisted of seven hundred and thirty-two letters and four bound notebooks, all written between 1879 and 1908 by Anita Hartwell, a regional botanist whose work had been admired in her lifetime and quietly forgotten after her death.
+
+The library\'s board, in a 2024 cost review, had decided to close the collection. The letters and notebooks would be transferred, intact, to the state archives in the capital, where they would be cataloged into a larger holding that already housed the papers of three of Anita Hartwell\'s correspondents. The transfer was scheduled for the following March.
+
+The collection\'s archivist, a careful woman named Daria Vines, had been at the library for nineteen years and had inherited responsibility for the Hartwell five years earlier when the previous archivist retired. She had not, in those five years, been **oblivious** to the collection. She had read every letter at least once. She had begun, in her own time, a chronological index that the library\'s digitization budget had never quite been large enough to fund. The closure decision did not surprise her. It did, however, **subsume** a small project she had been hoping, for two years, to complete: a single conservation pass on the four notebooks, three of which had begun to show the kind of binding fatigue that careful handling could **surmount** but that storage in a larger archive\'s general stacks would, eventually, accelerate.
+
+Daria did not, in her response to the board, dispute the closure. She did write a one-page memo requesting that the conservation pass be authorized as part of the transfer — a request the board approved within two weeks, on the recommendation of the head librarian, who had read the memo and, in her own words, found nothing in it to argue with.
+
+The complication arrived in late October, in a letter from a woman named Gertrude Colquhoun, who described herself as the great-great-niece of Anita Hartwell. The letter was **plaintive** in tone but not unreasonable in substance. Gertrude had learned, through a notice in the library\'s monthly newsletter, that the collection was being moved. She wrote to ask whether her family — twelve descendants in three generations, scattered across four states — could be given an opportunity to view the original notebooks before the transfer, in a single afternoon if necessary, with appropriate supervision.
+
+The request was not, on its face, unusual. It was also, by the library\'s standing policy, **tangential** to the closure plan: the policy did not provide a procedure for descendant viewings, and the transfer date was four months away.
+
+Daria did not refuse the request. She also did not approve it on her own authority. She brought it to the head librarian, with a one-page proposal of her own: a single supervised afternoon in February, attended by no more than twelve people, in the library\'s reading room, with the notebooks under archival glass and the letters available by request as facsimiles. She **reiterated**, in the proposal, the conservation considerations that had already been approved for the transfer. She did not **perpetrate** any breach of the existing policy; she proposed, instead, a one-time procedure that the policy could absorb without amendment.
+
+The head librarian approved the proposal. The viewing took place on a Saturday in February. The twelve descendants — three of whom had driven from out of state — spent four quiet hours with the notebooks. One of them, a great-grandniece who taught high school biology in Oregon, brought a child of her own who had been named Anita.
+
+The viewing was, by any honest reckoning, **poignant**. It was not, however, theatrical. The descendants did not weep. They did not, after the four hours, deliver speeches. They thanked Daria. They left.
+
+The transfer to the state archives was completed on schedule three weeks later. The conservation pass was completed in the following month. The state archives, on receiving the collection, sent Daria a brief letter of acknowledgment. The Hartwell Collection, no longer quiescent, would, within two years, become the subject of a graduate dissertation by a student in the capital.
+
+The newsletter notice that had reached Gertrude Colquhoun did not, the librarians later realized, **subside** entirely from its small effect on the library\'s public profile: descendant viewings were quietly added, the following year, to the library\'s standing procedures.`,
+  questions: [
+    {
+      id: 1,
+      kind: "vocab-context",
+      prompt: 'In this sentence, the word "quiescent" most nearly means:',
+      quote:
+        '"...for thirty-seven of those years it had been quiescent — the kind of small, specialized archive that received no requests, generated no scholarship, and was visited, at most, by one of the library\'s graduate interns once every two summers."',
+      options: [
+        "Heavily trafficked by visiting scholars.",
+        "Inactive or dormant; in a state of rest or quiet.",
+        "Located in a different city from the library that owned it.",
+        "Officially closed to all visitors by court order.",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Quiescent" describes a dormant, quiet state — exactly the long inactivity the sentence then defines.',
+    },
+    {
+      id: 2,
+      kind: "vocab-context",
+      prompt: 'In this sentence, the word "tangential" most nearly means:',
+      quote:
+        '"It was also, by the library\'s standing policy, tangential to the closure plan..."',
+      options: [
+        "Centrally relevant and squarely within the policy.",
+        "Only loosely related; touching the main matter at a single point rather than belonging to it.",
+        "Strictly forbidden by federal law.",
+        "Already approved by the state archives.",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Tangential" describes something only loosely related to the main subject — touching it at one point, not belonging to it. The descendant request lies outside the closure plan\'s direct scope.',
+    },
+    {
+      id: 3,
+      kind: "tone-purpose",
+      prompt:
+        'The narrator describes the descendants\' viewing as "poignant" and immediately adds, "It was not, however, theatrical." Why pair those two sentences?',
+      options: [
+        '"Poignant" is just a synonym for "theatrical" with no different meaning.',
+        '"Poignant" carries the texture of a quiet, deeply felt sadness or sweetness — an emotion whose dignity depends on restraint. The narrator pairs it with the refusal of theater to honor the descendants\' composure: the feeling was real, but it did not perform itself.',
+        '"Poignant" implies the descendants had been paid for their attendance.',
+        '"Poignant" suggests the descendants regretted the transfer.',
+      ],
+      correctIndex: 1,
+      explanation:
+        'The pairing names the emotional truth of the viewing while honoring the descendants\' refusal to perform it.',
+    },
+    {
+      id: 4,
+      kind: "inference",
+      prompt:
+        "Based on the passage, what can the reader most reasonably infer about why Daria brought Gertrude\'s request to the head librarian with a complete one-page proposal of her own rather than simply forwarding the letter?",
+      options: [
+        "She had no authority to read mail addressed to the library.",
+        "She wanted the request to be approved without anyone reading the original letter.",
+        "She converted an unfamiliar request into a specific, bounded, conservation-aware procedure that the existing policy could absorb without amendment — making it cheap for the head librarian to approve and avoiding any precedent that would require a rewriting of the policy itself.",
+        "She intended to attach Gertrude\'s personal information to the proposal as evidence.",
+      ],
+      correctIndex: 2,
+      explanation:
+        "The structural choice — proposal rather than forwarded request — is what makes approval cheap and avoids reopening the policy.",
+    },
+    {
+      id: 5,
+      kind: "substitution",
+      prompt:
+        'Which single word could replace "surmount" in the sentence below without changing its meaning?',
+      quote:
+        '"...binding fatigue that careful handling could surmount but that storage in a larger archive\'s general stacks would, eventually, accelerate."',
+      options: [
+        "Worsen",
+        "Overcome",
+        "Forget",
+        "Photograph",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Overcome" matches "surmount" — both describe successfully rising above or dealing with a difficulty.',
+    },
+    {
+      id: 6,
+      kind: "main-idea",
+      prompt:
+        "Which sentence best summarizes the central idea or arc of the passage?",
+      options: [
+        "An archivist refuses to allow descendants any contact with a closing collection and is later overruled by the library\'s board.",
+        "An archivist handles the closure of a long-quiescent collection by securing a conservation pass before transfer, then converting a poignant but tangential request from descendants into a specific one-afternoon viewing that the existing policy could absorb — and her care produces both a successful transfer and, the following year, a quiet new standing procedure.",
+        "A library cancels the transfer of a quiescent collection after public protest by descendants of its original creator.",
+        "A graduate student\'s dissertation forces a library to keep a small specialized collection in its original room indefinitely.",
+      ],
+      correctIndex: 1,
+      explanation:
+        "The arc moves through the closure decision, the conservation pass, the descendant viewing, and the small policy change that follows.",
+    },
+  ],
+};
+
+const MISSION_25_SET_1: SetReading = {
+  title: "The Critic at the Auspicious Debut",
+  subtitle:
+    "A short story about a young critic, an articulate first novel, and the conclusive review that her captious senior had hoped she would not write.",
+  format: "Short Story",
+  readingMinutes: 4,
+  words: [
+    "adept",
+    "adverse",
+    "appropriate",
+    "archetype",
+    "articulate",
+    "auspicious",
+    "bereft",
+    "captious",
+    "conclusive",
+    "conspire",
+  ],
+  passage: `Imogen Adair had been a junior critic at *The Linden Review* for three years on the morning the assignment landed in her inbox. The book was *Salt and Compass*, a first novel by a previously unknown writer named Jonas Pell, and the assignment was unusual on two counts. It was the first lead review the editor-in-chief had ever given her, and it was a debut whose pre-publication reception had been — by the unspectacular standards of her corner of literary journalism — almost **auspicious**: three of the writers Imogen most respected had already, in private notes the publisher had quietly circulated, called the novel the strongest first book they had read in six years.
+
+She read the novel over a long weekend. She read it twice.
+
+The book was, in her honest professional assessment, very nearly as good as the early notes had suggested. It was, in particular, the rarest kind of debut: a first novel **adept** at structural restraint. Pell had resisted the temptation almost every first novelist succumbed to — the temptation to demonstrate every technique he was capable of within the same three hundred pages — and had, instead, chosen a single, sustained, and unusually patient prose mode that he held without faltering for the length of the book. The result was a novel that did not feel like a debut at all. It felt like the third book of a writer who had been **bereft**, in his earlier work, of the discipline he had now found.
+
+Imogen was prepared to write an enthusiastic review. She was not prepared, until the Tuesday before her deadline, for the visit that arrived at her desk from the senior critic on staff, a man named Peregrine Wode.
+
+Peregrine was, by long reputation, **captious**. He was the critic the magazine assigned when a praised debut needed to be slowed down — the writer whose function in the literary economy was to find the second-tier flaw and elevate it into a structural objection that other critics would feel obligated to engage with for the next two years. He had read *Salt and Compass*. He had, at the editor-in-chief\'s suggestion, come to Imogen\'s desk to share what he had carefully described as his "concerns."
+
+Imogen listened. Peregrine spoke for forty minutes. His concerns were, in their professional form, **articulate**: he had identified what he called a single dominant **archetype** in the novel — a recurring figure of the absent father — and argued, at length, that Pell\'s deployment of the figure was sentimentally **appropriate**ed from earlier writers without meaningful transformation. The argument was not, on its face, unfair. It was, however, in Imogen\'s reading of the novel, not the argument the book itself most rewarded.
+
+She did not dispute him at the desk. She thanked him for his time. She returned, that evening, to her draft.
+
+The draft she submitted to the editor-in-chief on Friday did not **conspire** with Peregrine\'s line. It also did not ignore it. Imogen had decided, on the train home Tuesday evening, that the most honest response to a senior critic\'s articulate concern was to engage it on the page — to name the archetype, to grant the precedent, and then to argue, with specific reference to three passages Peregrine had not addressed, that Pell had earned the figure rather than borrowed it.
+
+The review ran the following month. It was, by Imogen\'s own intention, **conclusive**: it took a position, defended it on the page, and offered the reader the means to disagree with her if the reader chose. Peregrine did not, in the office, congratulate her. He did, two issues later, publish a long essay that engaged Imogen\'s review by name and that made, on second reading, almost no points she had not already addressed in the original piece.
+
+The novel, the following spring, won a regional prize. Imogen\'s review was quoted on the paperback. She continued to receive lead assignments. Peregrine continued to write his essays. The two of them, when they passed in the corridor, were neither friendly nor **adverse** — they were, by an arrangement neither had named aloud, professional.`,
+  questions: [
+    {
+      id: 1,
+      kind: "vocab-context",
+      prompt: 'In this sentence, the word "auspicious" most nearly means:',
+      quote:
+        '"...a debut whose pre-publication reception had been — by the unspectacular standards of her corner of literary journalism — almost auspicious..."',
+      options: [
+        "Showing dim or discouraging early signs.",
+        "Showing favorable early signs that suggest future success.",
+        "Restricted to a single small audience.",
+        "Officially endorsed by a state cultural ministry.",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Auspicious" describes promising, favorable early signs — exactly the unusual quality the early private notes have given the debut.',
+    },
+    {
+      id: 2,
+      kind: "vocab-context",
+      prompt: 'In this sentence, the word "captious" most nearly means:',
+      quote:
+        '"Peregrine was, by long reputation, captious. He was the critic the magazine assigned when a praised debut needed to be slowed down..."',
+      options: [
+        "Inclined to find trivial faults and raise petty objections.",
+        "Almost always generous in praise.",
+        "Reluctant to publish under his own name.",
+        "Specialized in poetry rather than fiction.",
+      ],
+      correctIndex: 0,
+      explanation:
+        '"Captious" describes someone given to finding small, niggling faults — exactly the function the magazine assigns to Peregrine.',
+    },
+    {
+      id: 3,
+      kind: "tone-purpose",
+      prompt:
+        'The narrator describes Pell\'s prose mode as showing "structural restraint" and writes that the novel feels like the third book of a writer who had been "bereft" of discipline in his earlier work. Why use "bereft" rather than simply "lacking"?',
+      options: [
+        '"Bereft" is a fancier synonym for "lacking" with no different meaning.',
+        '"Bereft" carries the texture of a painful deprivation — a discipline the earlier writer would have wanted and missed. The choice frames Pell\'s mature restraint as something hard-won, not merely present, and locates the praise in the maturation rather than in the surface skill.',
+        '"Bereft" implies Pell had abandoned writing for several years.',
+        '"Bereft" suggests Pell\'s earlier work was anonymously published.',
+      ],
+      correctIndex: 1,
+      explanation:
+        'The painful-deprivation overtone of "bereft" frames Pell\'s mature restraint as hard-won and locates the review\'s praise in the maturation, not the surface.',
+    },
+    {
+      id: 4,
+      kind: "inference",
+      prompt:
+        "Based on the passage, what can the reader most reasonably infer about why Imogen chose to engage Peregrine\'s argument explicitly in her review rather than ignoring it?",
+      options: [
+        "She wanted to publicly humiliate Peregrine in print.",
+        "She believed an articulate concern from a senior critic was best answered on the page itself: by naming the archetype, granting the precedent, and then arguing the rebuttal with specific reference to passages Peregrine had not addressed, she produced a review that was both conclusive and immune to a follow-up essay that could only repeat the points she had already engaged.",
+        "Magazine policy required all junior critics to cite the senior critic in every lead review.",
+        "She was hoping Peregrine would help her edit the final draft.",
+      ],
+      correctIndex: 1,
+      explanation:
+        "The text confirms the strategy: Peregrine\'s later essay engaged her review by name and made almost no points she had not already addressed.",
+    },
+    {
+      id: 5,
+      kind: "substitution",
+      prompt:
+        'Which single word could replace "adverse" in the sentence below without changing its meaning?',
+      quote:
+        '"The two of them, when they passed in the corridor, were neither friendly nor adverse..."',
+      options: [
+        "Hostile",
+        "Cheerful",
+        "Anonymous",
+        "Talkative",
+      ],
+      correctIndex: 0,
+      explanation:
+        '"Hostile" matches "adverse" in this context — both describe an opposing or antagonistic posture. The corridor relationship is neither warm nor opposed, just professional.',
+    },
+    {
+      id: 6,
+      kind: "main-idea",
+      prompt:
+        "Which sentence best summarizes the central idea or arc of the passage?",
+      options: [
+        "A junior critic withdraws her review of a debut novel after a senior critic objects to its central archetype.",
+        "A junior critic given her first lead assignment writes a conclusive, articulate review of an auspicious debut — engaging a captious senior\'s concerns on the page itself rather than ignoring them or capitulating to them — and emerges with both a vindicated review and a stable, professional working relationship.",
+        "A senior critic successfully blocks the publication of a junior critic\'s positive review by arranging an unfavorable essay in advance.",
+        "A debut novelist refuses to publish his book after reading two contradictory reviews.",
+      ],
+      correctIndex: 1,
+      explanation:
+        "The arc traces precisely the assignment, the captious objection, the engagement on the page, and the quiet professional truce that follows.",
+    },
+  ],
+};
+
+const MISSION_25_SET_2: SetReading = {
+  title: "The Steward at Bay Eight",
+  subtitle:
+    "A short story about a union steward who refused to harangue, a complicated grievance she would not handle by proxy, and the poise that delineated a real complaint from a ploy.",
+  format: "Short Story",
+  readingMinutes: 4,
+  words: [
+    "delineate",
+    "disentangle",
+    "exhort",
+    "frailty",
+    "grievance",
+    "harangue",
+    "ploy",
+    "poise",
+    "pomposity",
+    "proxy",
+  ],
+  passage: `Marisol Quint had been the union steward at the Riverbend bus depot for nine years. Bay Eight, where the diesel mechanics did the long overhaul work, had produced more grievances in those nine years than the other seven bays combined — not because the mechanics were unusually quarrelsome, but because Bay Eight was where most of the new hires were assigned and where the depot\'s scheduling system, designed in 1998 and patched almost annually since, most often broke in ways that affected pay.
+
+The grievance that arrived on Marisol\'s desk on the second Wednesday in February was, in its surface form, a routine one: a mechanic named Halid Renaud was claiming that he had been short-paid for a sequence of three Saturday shifts in January, and was asking the union to file on his behalf. The amount was small — two hundred and forty dollars — and the documentation Halid had attached to his complaint was, on first review, **delineated** clearly enough that any of the depot\'s shift supervisors should have been able to confirm or refute it within an afternoon.
+
+Marisol did not, however, file the **grievance** the same morning. She had been a steward long enough to **disentangle**, in most cases, a clean grievance from a complicated one within an hour, and the documentation Halid had submitted, while clear, did not match her informal memory of the January schedule on Bay Eight. She walked to the bay. She asked Halid, privately, three questions about the three Saturdays. The answers were consistent with the documentation. They were not, however, consistent with what she had heard, in passing, from another mechanic the previous week.
+
+The other mechanic, a senior man named Eustace, had said, in a five-minute conversation that Marisol had not at the time regarded as significant, that Bay Eight had "had a problem on the Saturdays" and that Halid had been "carrying water" for two of the night-shift supervisors. The phrasing had been ambiguous. Eustace had not elaborated. Marisol had not asked. She regretted, now, not having asked.
+
+She did not, on the strength of one ambiguous remark, refuse Halid\'s grievance. She did, however, decline to file it by **proxy** — that is, she declined to submit the paperwork without first conducting her own short investigation, which she explained, calmly, to Halid in a single conversation in the bay\'s small office. She did not **exhort** him to wait. She did not **harangue** him about the seriousness of misfiling. She told him only that she would, by the following Tuesday, either file the grievance as drafted or come back to him with a specific question, and that she would, in the meantime, treat his account as the working version of the facts.
+
+Halid did not, at the meeting, object. He did, however, ask whether the delay was a **ploy** — the word was his — designed to discourage him from filing at all. Marisol said no. She also said that she understood why the question had been worth asking, and she did not, in answering it, lapse into the **pomposity** of a long speech about her own integrity.
+
+What Marisol found, over the following five days, was not what she had feared. The two night-shift supervisors had, in fact, been quietly running an off-book overtime arrangement on Bay Eight — one that had worked, on those three Saturdays, in Halid\'s favor as well as their own — and the documentation Halid had submitted was technically accurate but was, on a complete reading, the small visible piece of a much larger irregularity that the depot\'s management would, once the union filed, certainly investigate.
+
+She brought what she had found to Halid the following Tuesday. She did not, in the conversation, tell him what to do. She **delineated**, in three sentences, what she had learned, what filing the original grievance would now expose, and what an alternative — a confidential conversation with the union\'s field representative before any filing — would and would not preserve.
+
+Halid took the alternative. The field representative met with the depot\'s director the following week. The off-book arrangement was unwound; Halid was paid the two hundred and forty dollars he had been owed; the two night-shift supervisors were reassigned to a different bay under tighter scheduling controls; and Marisol\'s investigation, which had begun on a single ambiguous remark, was filed in her own notes under a heading she had used several times in nine years: "the grievance whose **frailty** was on the surface and whose strength was underneath."
+
+She kept her **poise** in the office that month. She also kept her notes.`,
+  questions: [
+    {
+      id: 1,
+      kind: "vocab-context",
+      prompt: 'In this sentence, the word "delineate" most nearly means:',
+      quote:
+        '"She delineated, in three sentences, what she had learned, what filing the original grievance would now expose, and what an alternative — a confidential conversation with the union\'s field representative before any filing — would and would not preserve."',
+      options: [
+        "To erase or obscure the boundaries of a matter.",
+        "To describe or outline something carefully and precisely, as if drawing its lines.",
+        "To delegate to a substitute decision-maker.",
+        "To prosecute under criminal law.",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Delineate" means to describe or outline precisely — to draw the lines of a matter for someone else to see. Marisol does exactly that in three sentences.',
+    },
+    {
+      id: 2,
+      kind: "vocab-context",
+      prompt: 'In this sentence, the word "ploy" most nearly means:',
+      quote:
+        '"He did, however, ask whether the delay was a ploy — the word was his — designed to discourage him from filing at all."',
+      options: [
+        "An honest, fully disclosed procedure.",
+        "A clever or cunning maneuver intended to gain an advantage by indirection.",
+        "A formal vote at a union meeting.",
+        "A scheduled vacation day.",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Ploy" describes a cunning maneuver intended to achieve something indirectly — exactly the suspicion Halid is voicing.',
+    },
+    {
+      id: 3,
+      kind: "tone-purpose",
+      prompt:
+        'The narrator says Marisol "did not lapse into the pomposity of a long speech about her own integrity" when answering Halid\'s question. Why use "pomposity" rather than simply "speech"?',
+      options: [
+        '"Pomposity" is just a synonym for "speech" with no different meaning.',
+        '"Pomposity" carries the texture of self-important grandeur — a windy performance of one\'s own virtue. Naming the temptation that way honors Marisol\'s restraint: she answers a real question with a real answer, instead of using it as a stage for self-display.',
+        '"Pomposity" implies that Marisol had previously delivered such a speech.',
+        '"Pomposity" suggests that Halid had a hearing disability.',
+      ],
+      correctIndex: 1,
+      explanation:
+        'The word identifies the specific temptation — windy self-display — that Marisol\'s restraint refuses, sharpening the moral texture of the scene.',
+    },
+    {
+      id: 4,
+      kind: "inference",
+      prompt:
+        "Based on the passage, what can the reader most reasonably infer about why Marisol declined to file the grievance by proxy and instead conducted her own short investigation first?",
+      options: [
+        "She did not believe Halid\'s account and intended to discredit him publicly.",
+        "She had detected a small inconsistency between the surface documentation and a half-remembered remark from another mechanic, and she judged that filing immediately could expose Halid to consequences his original grievance had not been intended to invite — so she chose to verify the underlying situation before locking the union into a particular paper trail.",
+        "Union rules forbade filing any grievance within the first five business days.",
+        "She wanted to delay the filing until the next quarterly meeting.",
+      ],
+      correctIndex: 1,
+      explanation:
+        "The narrative confirms exactly this: an ambiguous earlier remark, a quick check, and the discovery of a larger off-book arrangement Halid\'s clean filing would have exposed.",
+    },
+    {
+      id: 5,
+      kind: "substitution",
+      prompt:
+        'Which single word could replace "exhort" in the sentence below without changing its meaning?',
+      quote:
+        '"She did not exhort him to wait."',
+      options: [
+        "Discourage",
+        "Urge",
+        "Translate",
+        "Photograph",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Urge" matches "exhort" — both describe pressing or strongly encouraging someone toward an action. Marisol declined to do so.',
+    },
+    {
+      id: 6,
+      kind: "main-idea",
+      prompt:
+        "Which sentence best summarizes the central idea or arc of the passage?",
+      options: [
+        "A union steward refuses to file a grievance and is dismissed from her position by the union\'s field representative.",
+        "A union steward delays a routine grievance to disentangle a small inconsistency, refuses to harangue or to file by proxy, and — through a poised investigation — surfaces a larger off-book arrangement, presenting the member with a delineated alternative that resolves both his pay and the underlying irregularity.",
+        "A mechanic refuses union representation and negotiates directly with the depot\'s director.",
+        "A bus depot replaces its 1998 scheduling system and eliminates all future grievances.",
+      ],
+      correctIndex: 1,
+      explanation:
+        "The arc moves through the surface grievance, the half-remembered remark, the disciplined investigation, and the laid-out alternative the member chooses.",
+    },
+  ],
+};
+
+const MISSION_25_SET_3: SetReading = {
+  title: "The Architect of the Sparse House",
+  subtitle:
+    "A short story about a young architect, a steadfast client, and a sparse design that refused to yield to the suspect rhetoric of the planning hearing.",
+  format: "Short Story",
+  readingMinutes: 4,
+  words: [
+    "relent",
+    "rhetoric",
+    "rigor",
+    "sparse",
+    "steadfast",
+    "suspect",
+    "tedious",
+    "vitality",
+    "whimsical",
+    "yield",
+  ],
+  passage: `Wren Olafsen had been an architect for nine years and a sole practitioner for three when she received the commission for the Halpern house. The site was eight acres of mixed second-growth forest above a small lake in Vermont. The clients, an older couple named Daniel and Rose Halpern, had read three of Wren\'s small published projects and had hired her, over the phone, on the strength of a single line in one of them — a line about a hallway in which "the absence of incident is the room\'s most reliable feature."
+
+The brief Daniel and Rose sent her was short. They wanted a primary residence of approximately 1,800 square feet, a single story, on the upper meadow of the eight-acre parcel. They wanted no architectural gestures they would have to explain to their grandchildren. They wanted, in particular, no skylights.
+
+Wren designed a **sparse** house. The plan was a simple bar oriented east-west across the meadow, with three bedrooms at the west end, a single combined kitchen-living-dining room at the east end, and, between them, a long hallway whose only relief was the door to a small reading alcove on the north side. The exterior was vertical cedar siding stained dark gray. The roof was a single low-pitched plane. There were no exposed structural moments, no double-height volumes, no expressive cantilevers, and no skylights. The drawings, when Wren submitted them to the local planning board for the required hearing, were spare even by her own standards. The construction set was twenty-three sheets.
+
+The hearing was, on the surface, routine. The planning board\'s chair, a man named Rufus Crain, had served on the board for seventeen years and had developed a settled view of his role: that the board\'s function was to enforce the town\'s setback and height ordinances and not to comment on architectural style. He had, in his seventeen years, never voted against a project on aesthetic grounds.
+
+The board\'s newest member, however, a man named Beverly Lott who had joined the board the previous spring, had been preparing for the Halpern hearing for four weeks. He had visited the site twice. He had, in advance of the hearing, distributed a memo to the other board members in which he argued that the proposed house was "**suspect** in its restraint" and that the town\'s design guidelines — which were, by every honest reading, advisory rather than mandatory — implicitly required a degree of "vernacular **vitality**" that Wren\'s design did not exhibit.
+
+The memo was, in its **rhetoric**, careful. It did not directly oppose the project. It suggested, in its closing paragraph, that the board should impose a condition requiring "two **whimsical** elements" — Beverly\'s phrase — to relieve the design\'s severity. He named, by way of example, a copper standing-seam roof and a single skylight in the reading alcove.
+
+Wren had read the memo on the morning of the hearing. She did not, at the hearing itself, deliver any **tedious** rebuttal. She presented the drawings in fourteen minutes. She walked the board through the setback compliance and the height calculations. She acknowledged, in two sentences, that she had read Beverly\'s memo and that she respected the board\'s discretion to impose conditions, and she said, in the same calm voice, that the clients had asked for a sparse house, that the design had been developed with the **rigor** that request deserved, and that adding a copper roof or a skylight to relieve the design would, in her professional view, **yield** the very feature the Halperns had hired her to deliver.
+
+Daniel Halpern, who had been sitting in the second row, rose without speaking. He waited until Wren had finished. He said, in the careful, slightly amused tone that had recurred in every conversation Wren had had with him over six months, that he and his wife had asked their architect for a house without skylights, and that he was prepared, if necessary, to **relent** on a great many points but that the absence of a skylight was not one of them.
+
+The board voted four to one to approve the project as submitted. Beverly was the dissenting vote. He did not, in his subsequent comments, retract his memo. He did not, however, repeat the proposed conditions.
+
+The house was completed sixteen months later. Daniel and Rose moved in the following October. The reading alcove had no skylight. The hallway, exactly as Wren had designed it, had no incident. Wren did not publish the project for two years; when she did, she wrote, in a single line that would be quoted by other young architects, that the most **steadfast** clients she had known were the ones who had wanted, and could afford, to be left alone in their own house.`,
+  questions: [
+    {
+      id: 1,
+      kind: "vocab-context",
+      prompt: 'In this sentence, the word "sparse" most nearly means:',
+      quote:
+        '"Wren designed a sparse house. The plan was a simple bar oriented east-west across the meadow, with three bedrooms at the west end, a single combined kitchen-living-dining room at the east end..."',
+      options: [
+        "Densely packed with overlapping volumes and details.",
+        "Thinly populated with elements; spare and economical.",
+        "Constructed entirely from glass.",
+        "Hidden underground for environmental reasons.",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Sparse" describes a thin, spare, economical arrangement — exactly the design the sentence then describes.',
+    },
+    {
+      id: 2,
+      kind: "vocab-context",
+      prompt: 'In this sentence, the word "rhetoric" most nearly means:',
+      quote:
+        '"The memo was, in its rhetoric, careful. It did not directly oppose the project. It suggested, in its closing paragraph, that the board should impose a condition..."',
+      options: [
+        "The literal building materials used in a project.",
+        "The art and style of persuasive language; the chosen wording of an argument.",
+        "An official planning regulation.",
+        "A type of building permit.",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Rhetoric" describes the persuasive style or wording of an argument — the careful framing of Beverly\'s memo.',
+    },
+    {
+      id: 3,
+      kind: "tone-purpose",
+      prompt:
+        'The narrator says adding a copper roof or skylight would "yield the very feature the Halperns had hired her to deliver." Why is "yield" the right verb here, rather than "hide" or "remove"?',
+      options: [
+        '"Yield" implies that the addition would slow down the construction schedule.',
+        '"Yield" carries the sense of giving up or surrendering something — as in "yielding ground." Used here, it argues that the proposed conditions would not merely modify the house but would surrender the design\'s defining quality, which is precisely what the clients commissioned.',
+        '"Yield" suggests the architect would profit financially from the addition.',
+        '"Yield" is just a synonym for "build" with no different meaning.',
+      ],
+      correctIndex: 1,
+      explanation:
+        'The "surrender" sense of "yield" frames the proposed conditions as the loss of the design\'s defining quality — sharper than "hide" or "remove" would have been.',
+    },
+    {
+      id: 4,
+      kind: "inference",
+      prompt:
+        "Based on the passage, what can the reader most reasonably infer about why Daniel Halpern\'s brief comment at the hearing — that he was prepared to relent on a great many points but not on the absence of a skylight — was decisive for the board?",
+      options: [
+        "Daniel was a member of the planning board and his vote counted twice.",
+        "His comment converted the architect\'s aesthetic case into the client\'s explicit functional preference, making clear that the proposed conditions were not relieving an architect\'s self-indulgence but overriding a documented client request — a posture the board\'s chair, who limited himself to setbacks and heights, was unwilling to support.",
+        "Daniel threatened to sue the board if they imposed any conditions.",
+        "Daniel offered to pay an additional fee to the town in exchange for approval.",
+      ],
+      correctIndex: 1,
+      explanation:
+        "The text frames the chair\'s view (no aesthetic votes) and Beverly\'s framing (an aesthetic condition); Daniel\'s comment makes the design a client preference, which removes the aesthetic-condition justification.",
+    },
+    {
+      id: 5,
+      kind: "substitution",
+      prompt:
+        'Which single word could replace "steadfast" in the sentence below without changing its meaning?',
+      quote:
+        '"...the most steadfast clients she had known were the ones who had wanted, and could afford, to be left alone in their own house."',
+      options: [
+        "Wavering",
+        "Resolute",
+        "Anonymous",
+        "Forgetful",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Resolute" matches "steadfast" — both describe firm, unwavering commitment. The Halperns hold to their brief without wavering.',
+    },
+    {
+      id: 6,
+      kind: "main-idea",
+      prompt:
+        "Which sentence best summarizes the central idea or arc of the passage?",
+      options: [
+        "An architect agrees to add a skylight and a copper roof in order to obtain planning board approval.",
+        "An architect designs a sparse house with rigor for steadfast clients, presents it without tedious rebuttal at a hearing where a new board member\'s suspect rhetoric proposes to relieve its severity, and — supported by a single calm intervention from the client — secures approval as submitted, without yielding the design\'s defining absences.",
+        "A planning board imposes mandatory aesthetic conditions on every house in the town and the architect resigns from her practice.",
+        "A pair of clients withdraw from a building project after their architect refuses to add any whimsical elements to their house.",
+      ],
+      correctIndex: 1,
+      explanation:
+        "The arc traces precisely the design, the contested hearing, the client\'s decisive comment, and the approved project that holds its sparse character.",
+    },
+  ],
+};
+
 export const SET_READINGS: Record<string, SetReading> = {
   "1-1": MISSION_1_SET_1,
   "1-2": MISSION_1_SET_2,
@@ -7254,6 +10075,27 @@ export const SET_READINGS: Record<string, SetReading> = {
   "18-1": MISSION_18_SET_1,
   "18-2": MISSION_18_SET_2,
   "18-3": MISSION_18_SET_3,
+  "19-1": MISSION_19_SET_1,
+  "19-2": MISSION_19_SET_2,
+  "19-3": MISSION_19_SET_3,
+  "20-1": MISSION_20_SET_1,
+  "20-2": MISSION_20_SET_2,
+  "20-3": MISSION_20_SET_3,
+  "21-1": MISSION_21_SET_1,
+  "21-2": MISSION_21_SET_2,
+  "21-3": MISSION_21_SET_3,
+  "22-1": MISSION_22_SET_1,
+  "22-2": MISSION_22_SET_2,
+  "22-3": MISSION_22_SET_3,
+  "23-1": MISSION_23_SET_1,
+  "23-2": MISSION_23_SET_2,
+  "23-3": MISSION_23_SET_3,
+  "24-1": MISSION_24_SET_1,
+  "24-2": MISSION_24_SET_2,
+  "24-3": MISSION_24_SET_3,
+  "25-1": MISSION_25_SET_1,
+  "25-2": MISSION_25_SET_2,
+  "25-3": MISSION_25_SET_3,
 };
 
 export function getSetReading(day: number, group: number): SetReading | null {
