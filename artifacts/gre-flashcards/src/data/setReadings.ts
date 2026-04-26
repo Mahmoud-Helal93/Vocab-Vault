@@ -6812,6 +6812,393 @@ He did not, in the years that followed, claim the episode as a credit. He did me
   ],
 };
 
+const MISSION_18_SET_1: SetReading = {
+  title: "The Curator and the Acquisitive Donor",
+  subtitle:
+    "A short story about three independent valuations, a quietly delayed list, and a wing any visitor could walk into without being expected to recognize the names on the donor wall.",
+  format: "Short Story",
+  readingMinutes: 4,
+  words: [
+    "abet",
+    "accessible",
+    "acquisitive",
+    "amalgamate",
+    "attenuate",
+    "augment",
+    "aversion",
+    "blithe",
+    "contempt",
+    "dawdle",
+  ],
+  passage: `When the Marston Museum's new acquisitions wing was announced, its principal donor, a famously **acquisitive** collector named Thaddeus Whell, was widely expected to assume an informal but substantial influence over what the museum would purchase. The museum's senior curator, Dr. Iona Brace, had no particular **aversion** to donors. She had, in twelve years of fundraising, cultivated several of them with patience and good humor. She did, however, have a clear professional view that a museum's acquisitions could not be allowed to **amalgamate** with the personal taste of any single benefactor, however generous, without becoming, over time, a different museum than the one its public charter required it to be.
+
+Thaddeus did not, at first, push the point. His early suggestions were polite — a list of three artists he admired, each of them unobjectionable on artistic grounds, each of them, on closer reading, also represented in his own private collection in a way that meant a museum acquisition would substantially **augment** the resale value of his holdings. Iona did not refuse the list. She did, however, **dawdle** on it for two months, neither rejecting nor advancing the suggestions, while she quietly commissioned three independent valuations and circulated them, without commentary, to the acquisitions committee.
+
+The committee, when it met, did not need the valuations spelled out. The pattern was visible at a glance. Two of the three suggested acquisitions would, in the committee's judgment, **abet** what one of its more cautious members called, in a closed session, "a use of the museum we cannot approve, however we phrase the refusal."
+
+Iona did not phrase the refusal sharply. She had no interest in expressing **contempt** for a donor whose money had built a wing she would be working in for the rest of her career. She wrote, instead, a long letter to Thaddeus that proposed three alternative acquisitions in the same general aesthetic, none of them connected to his collection, and that thanked him warmly for the original suggestions while noting, in a single carefully constructed paragraph, that the museum's standing acquisitions policy would have to **attenuate** any consideration of works connected to its donors' private inventories.
+
+Thaddeus's reply was brief. It was not warm. It was not, however, hostile. He asked only whether the policy was new, or whether it had simply not been mentioned to him at the outset. Iona replied, the same afternoon, that the policy was twenty-three years old, that it was published on page nine of the museum's annual report, and that she would be happy to walk him through its history at his convenience. He did not request the meeting. He did not, however, withdraw his support.
+
+The acquisitions wing opened the following autumn. Of its first eight purchases, none were drawn from Thaddeus's collection. Three were drawn from the alternative list Iona had proposed. The opening was well attended, well reviewed, and conspicuously **accessible** — a wing, the *Marston Reporter* observed, "that any visitor in the city can walk into without being expected to recognize the names on the donor wall."
+
+Iona did not interpret the review as triumph. She did, however, allow herself one **blithe** remark, over coffee with the committee chair the following Monday, to the effect that the most successful donor relationships were the ones in which both parties left the room remembering exactly which institution they were supporting. The chair, who had been on the committee for sixteen years, did not disagree.`,
+  questions: [
+    {
+      id: 1,
+      kind: "vocab-context",
+      prompt: 'In this sentence, the word "acquisitive" most nearly means:',
+      quote:
+        '"...its principal donor, a famously acquisitive collector named Thaddeus Whell..."',
+      options: [
+        "Generous to a fault and reluctant to keep anything.",
+        "Strongly inclined to acquire and accumulate possessions.",
+        "Specializing in modern abstract art.",
+        "Trained as a professional appraiser.",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Acquisitive" describes someone strongly driven to acquire and accumulate. The whole conflict turns on Thaddeus\'s appetite for adding to a private collection.',
+    },
+    {
+      id: 2,
+      kind: "vocab-context",
+      prompt: 'In this sentence, the word "attenuate" most nearly means:',
+      quote:
+        '"...the museum\'s standing acquisitions policy would have to attenuate any consideration of works connected to its donors\' private inventories."',
+      options: [
+        "Strengthen and emphasize.",
+        "Weaken or reduce in force or extent.",
+        "Translate into a different language.",
+        "Photograph for archival purposes.",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Attenuate" means to make weaker or thinner. The policy weakens — pulls back from — any consideration of works connected to a donor\'s own holdings.',
+    },
+    {
+      id: 3,
+      kind: "tone-purpose",
+      prompt:
+        'The narrator says Iona chose to "dawdle" on the donor\'s list rather than refuse it outright. Why frame the delay that way?',
+      options: [
+        '"Dawdle" specifies a deliberate, unhurried slowness — neither rejecting nor advancing — which captures Iona\'s tactic of buying time to commission independent valuations without picking a public fight, in a way "delay" alone would not convey.',
+        '"Dawdle" implies Iona had forgotten about the list entirely.',
+        '"Dawdle" and "refuse" mean the same thing in this context.',
+        '"Dawdle" suggests Iona was secretly working for the donor.',
+      ],
+      correctIndex: 0,
+      explanation:
+        '"Dawdle" carries the texture of unhurried, almost casual slowness. That choice of word captures the deliberate, low-friction tactic of holding the list in suspension while the valuations were prepared.',
+    },
+    {
+      id: 4,
+      kind: "inference",
+      prompt:
+        "Based on the passage, what can the reader most reasonably infer about why Iona quietly commissioned independent valuations before raising any objection?",
+      options: [
+        "She wanted to embarrass the donor in front of the acquisitions committee.",
+        "Independent valuations let the conflict of interest speak for itself in numbers — converting a debate about taste into one about a documentable pattern, which the committee could read at a glance without anyone having to accuse the donor.",
+        "Her contract required outside valuations for any donation under consideration.",
+        "She was hoping the valuations would justify acquiring the works after all.",
+      ],
+      correctIndex: 1,
+      explanation:
+        "The text emphasizes that the committee \"did not need the valuations spelled out. The pattern was visible at a glance.\" The numbers carry the argument so Iona doesn't have to.",
+    },
+    {
+      id: 5,
+      kind: "substitution",
+      prompt:
+        'Which single word could replace "abet" in the sentence below without changing its meaning?',
+      quote:
+        '"Two of the three suggested acquisitions would, in the committee\'s judgment, abet what one of its more cautious members called...a use of the museum we cannot approve."',
+      options: [
+        "Prevent",
+        "Assist",
+        "Investigate",
+        "Photograph",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Assist" — help, especially help bring something about — captures the same meaning as "abet." "Prevent" is the opposite.',
+    },
+    {
+      id: 6,
+      kind: "main-idea",
+      prompt:
+        "Which sentence best summarizes the central idea or arc of the passage?",
+      options: [
+        "A senior curator publicly humiliates a major donor and is forced to resign over the resulting scandal.",
+        "A senior curator turns aside an acquisitive donor\'s suggestions through quiet documentation and an alternative proposal — preserving both the museum\'s independence and the donor\'s ongoing support, and producing a wing the public could walk into without recognizing the donor wall.",
+        "A donor successfully pressures a museum into purchasing works from his own private collection.",
+        "An acquisitions committee splits irreparably over a single contested donation and is dissolved.",
+        ],
+      correctIndex: 1,
+      explanation:
+        "The arc moves from Thaddeus's polite list, through Iona's deliberate delay and quietly circulated valuations, to the alternative proposals and the well-reviewed opening — embodying her closing remark about both parties remembering which institution they were supporting.",
+    },
+  ],
+};
+
+const MISSION_18_SET_2: SetReading = {
+  title: "The Ombudsman of Sablefield",
+  subtitle:
+    "A short story about three small procedural rules, a phone call meant to deflect, and an annual report that did not name the dissenting council member.",
+  format: "Short Story",
+  readingMinutes: 4,
+  words: [
+    "deflect",
+    "discount",
+    "dissident",
+    "efficacious",
+    "equitable",
+    "erratic",
+    "industrious",
+    "inform",
+    "irksome",
+    "manacle",
+  ],
+  passage: `When the small city of Sablefield established its first municipal ombudsman's office, the council appointed a retired civil-court judge named Halvor Brand to the post on the strength of his reputation for being **industrious**, fair, and almost impossible to flatter. The role, as the founding ordinance described it, was straightforward: investigate complaints from the public against city departments, recommend remedies, and produce a public annual report. The role, as Halvor came to understand it during his first six months, was considerably more complicated.
+
+The first complaint he received was from a small grocer who had been fined three times in eight weeks for an alleged signage violation that, on inspection, did not appear to exist. The second was from a tenant whose subsidized housing application had been pending, with no acknowledgment, for fourteen months. The third was from a city employee — a reluctant **dissident** within his own department — who reported, in a long and obviously frightened letter, that his supervisor had been asking him to backdate inspection reports for a particular building owner. None of these complaints, on their face, was **irksome**. All of them, taken together, suggested that the ombudsman's office was going to be busier than its founding ordinance had imagined.
+
+Halvor did not panic. He did not, in his first months, allow the volume of complaints to make his investigations **erratic**. He set, instead, three small procedural rules for himself. He would treat every complaint on the same template, regardless of who filed it. He would **inform** the relevant department head in writing, in advance, of any inquiry he intended to open. And he would, before issuing any public finding, give the department in question a fixed and **equitable** window in which to respond.
+
+The early reactions were instructive. One department head, a long-serving administrator who had not been seriously questioned in fifteen years, attempted to **deflect** the first inquiry by suggesting, in a long phone call, that the ombudsman was being "led by complainants who do not understand municipal procedure." Halvor listened. He did not argue. He did, however, send the same week a written request for the seven specific documents he had asked for at the start of the call, and noted, in a single sentence at the bottom of the request, that he would proceed with the inquiry on the basis of the documents available to him if the request went unanswered.
+
+The documents arrived. They confirmed the original complaint. The grocer's three fines were rescinded; the signage clause that had been used to issue them was clarified in the next council session.
+
+Halvor did not **discount** the institutional resistance he was encountering. He noted, in his private log, that two department heads had begun to treat his inquiries as if they were a personal grievance, and that one council member had publicly described the ombudsman's office as "an experiment of uncertain value." He did not respond to the council member. He continued, instead, to publish each finding on the same template, in the same plain language, with the same fixed response window.
+
+By the end of his second year, Halvor's office had handled four hundred and eleven complaints. The annual report was twenty-three pages long. It did not name the dissenting council member. It did, however, document, with **efficacious** restraint, the specific institutional changes that had followed each substantiated complaint — a record that did not, in his careful phrasing, "**manacle** any department to a single past mistake," but that made unmistakably clear what the office was for and what it was not.`,
+  questions: [
+    {
+      id: 1,
+      kind: "vocab-context",
+      prompt: 'In this sentence, the word "deflect" most nearly means:',
+      quote:
+        '"One department head...attempted to deflect the first inquiry by suggesting, in a long phone call, that the ombudsman was being led by complainants who do not understand municipal procedure."',
+      options: [
+        "Welcome and assist openly.",
+        "Turn aside or divert from a direct course.",
+        "Submit to formal arbitration.",
+        "Forward to a higher authority.",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Deflect" means to turn aside or divert. The administrator\'s long phone call is exactly an attempt to redirect the inquiry away from himself.',
+    },
+    {
+      id: 2,
+      kind: "vocab-context",
+      prompt: 'In this sentence, the word "efficacious" most nearly means:',
+      quote:
+        '"It did, however, document, with efficacious restraint, the specific institutional changes that had followed each substantiated complaint..."',
+      options: [
+        "Largely ineffective and easily ignored.",
+        "Effective in producing the intended result.",
+        "Lavishly decorated and ornamental.",
+        "Privately circulated rather than published.",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Efficacious" describes something that effectively produces the intended result. Restraint that effectively documents real institutional change is exactly that — disciplined and effective at once.',
+    },
+    {
+      id: 3,
+      kind: "tone-purpose",
+      prompt:
+        'The narrator describes the city employee who reported his supervisor as a "reluctant dissident." Why use that word rather than "complainant"?',
+      options: [
+        '"Dissident" specifies someone breaking with an institution they belong to — at personal risk — which captures the costly and frightened position of an inside reporter, in a way "complainant" (a neutral procedural label) would not.',
+        '"Dissident" implies the employee was politically radical.',
+        '"Dissident" and "complainant" mean exactly the same thing.',
+        '"Dissident" suggests the employee was an outside critic.',
+      ],
+      correctIndex: 0,
+      explanation:
+        '"Dissident" carries the weight of breaking ranks with one\'s own institution — and the qualifier "reluctant" sharpens that. "Complainant" would have lost both the cost and the courage of the position.',
+    },
+    {
+      id: 4,
+      kind: "inference",
+      prompt:
+        "Based on the passage, what can the reader most reasonably infer about why Halvor adopted three small procedural rules in his first months?",
+      options: [
+        "He hoped the rules would slow the office down enough to make his job easier.",
+        "Treating every complaint identically, informing departments in advance, and granting a fixed equitable response window converted the office into a predictable institution rather than an unpredictable personality — which is what made its findings hard to dismiss as personal vendettas.",
+        "The rules had been imposed on him by the council in a private session.",
+        "He wanted to deter ordinary citizens from filing complaints.",
+      ],
+      correctIndex: 1,
+      explanation:
+        "The procedural rules give the office institutional consistency: identical templates, advance notice, fixed response windows. That predictability is what protects the inquiries from being recast as personal grievances.",
+    },
+    {
+      id: 5,
+      kind: "substitution",
+      prompt:
+        'Which single word could replace "industrious" in the sentence below without changing its meaning?',
+      quote:
+        '"...the council appointed a retired civil-court judge named Halvor Brand to the post on the strength of his reputation for being industrious, fair, and almost impossible to flatter."',
+      options: [
+        "Lazy",
+        "Diligent",
+        "Wealthy",
+        "Charismatic",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Diligent" — hard-working and persistent — captures the same meaning as "industrious." "Lazy" is the opposite.',
+    },
+    {
+      id: 6,
+      kind: "main-idea",
+      prompt:
+        "Which sentence best summarizes the central idea or arc of the passage?",
+      options: [
+        "A new ombudsman dramatically overturns city government by publicly attacking individual department heads.",
+        "A retired judge takes on a new ombudsman\'s post and turns its informal authority into a stable institution by treating every complaint identically, holding to fixed and equitable procedures, and documenting only what each substantiated complaint actually changed.",
+        "An ombudsman\'s office is shut down after one year because of resistance from the council.",
+        "A city employee\'s anonymous letter brings down a corrupt municipal administration in a single season.",
+      ],
+      correctIndex: 1,
+      explanation:
+        "The arc moves from the founding ordinance, through the first three complaints and Halvor's procedural rules, to the second-year report — embodying his closing care to neither manacle a department to a single mistake nor blur the office\'s purpose.",
+    },
+  ],
+};
+
+const MISSION_18_SET_3: SetReading = {
+  title: "The Plant Manager's Memo",
+  subtitle:
+    "A short story about forty-one accurate complaints, a two-and-a-half-page memo, and the most expensive part of the project.",
+  format: "Short Story",
+  readingMinutes: 4,
+  words: [
+    "modest",
+    "noxious",
+    "pernicious",
+    "predicament",
+    "proficient",
+    "prolix",
+    "scorn",
+    "subordinate",
+    "unseemly",
+    "veritable",
+  ],
+  passage: `When Edda Carlsson took over as plant manager of the Norrholt processing facility, she inherited a small but real **predicament**: an aging ventilation system that had been the subject of three internal complaints over the previous year, none of which had resulted in any concrete change. The complaints alleged that the facility's east wing produced periodic episodes of mildly **noxious** fumes during certain weather conditions — not enough, on any single occasion, to require evacuation, but enough, over years, to constitute a **pernicious** background exposure for the workers stationed in that wing.
+
+Edda was not a chemical engineer. She was, however, **proficient** at reading the kind of internal report her predecessor had filed dismissing the three complaints, and she could see, on a careful first reading, that the dismissals were not so much wrong as **unseemly**: they treated a documented occupational concern as a procedural nuisance rather than as the responsibility of the plant. Her predecessor had been, by the testimony of several long-serving employees, a man whose **scorn** for what he called "office complaints" had been the open culture of the facility for eleven years.
+
+She did not call a meeting in her first week. She did, however, request, on a Monday, every internal complaint filed against the east wing in the previous decade. By Friday she had read all forty-one of them. By the following Wednesday she had visited the east wing twice, in different weather, and confirmed, on her own respiration, that the description in the complaints was not exaggerated.
+
+She wrote a memo. It was not a **prolix** document. It ran, in the version she released, to two and a half pages. It described the documented history of the complaints, the specific weather conditions under which the fumes appeared, the engineering options for remediation (with cost ranges from a third party she had quietly commissioned the previous month), and a single recommendation: that the facility commit, within ninety days, to replacing the east-wing ventilation system to current safety standards, regardless of which of the engineering options was ultimately selected.
+
+The memo was, by the standards of the facility, a **veritable** earthquake. Two members of the senior team — both holdovers from the previous administration — argued, in the next staff meeting, that the recommendation was excessive, that the complaints were "subjective," and that any acknowledgment of the problem would expose the facility to retroactive liability. Edda did not, in the meeting, deliver a sermon. She did note, with a precision she had been preparing all week, that any senior officer who treated the safety of a **subordinate** workforce as primarily a liability question had misunderstood the duties of the role, and that the recommendation in the memo was not negotiable as to its substance, only as to its engineering choice.
+
+The memo was adopted. The ventilation work began six weeks later. The cost, in the end, was **modest** by the standards of the facility's annual capital budget — slightly less than three percent of one year's expenditure on routine equipment refresh. The east-wing complaints, by the same time the following year, had dropped to zero.
+
+Edda did not announce the result. She did, however, make a single, characteristically restrained note in her quarterly report: that the most expensive part of the project had not been the new ventilation system. It had been the eleven years during which forty-one separate workers had filed accurate complaints that the previous administration had not, in any meaningful sense, read.`,
+  questions: [
+    {
+      id: 1,
+      kind: "vocab-context",
+      prompt: 'In this sentence, the word "pernicious" most nearly means:',
+      quote:
+        '"...not enough, on any single occasion, to require evacuation, but enough, over years, to constitute a pernicious background exposure for the workers stationed in that wing."',
+      options: [
+        "Mildly pleasant and refreshing.",
+        "Causing harm in a gradual, often unnoticed way.",
+        "Bright and visually distinctive.",
+        "Required by federal regulation.",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Pernicious" describes harm that is gradual and often unobtrusive — exactly the slow, cumulative danger of episodes too small to evacuate over but large enough to matter across years.',
+    },
+    {
+      id: 2,
+      kind: "vocab-context",
+      prompt: 'In this sentence, the word "prolix" most nearly means:',
+      quote:
+        '"It was not a prolix document. It ran, in the version she released, to two and a half pages."',
+      options: [
+        "Concise and tightly worded.",
+        "Tediously long-winded; using too many words.",
+        "Written in a foreign language.",
+        "Published in multiple editions.",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Prolix" describes writing that is tediously long-winded. The contrast with "two and a half pages" makes the meaning unmistakable.',
+    },
+    {
+      id: 3,
+      kind: "tone-purpose",
+      prompt:
+        'The narrator calls the previous reports\' dismissals not so much wrong as "unseemly." Why use that word rather than "incorrect"?',
+      options: [
+        '"Unseemly" specifies a moral or institutional impropriety — a failure of fitting conduct rather than a failure of fact — which captures Edda\'s real charge: that the dismissals treated workers\' safety with a casualness inappropriate to the role, regardless of whether each dismissal was technically defensible.',
+        '"Unseemly" implies the reports were physically damaged.',
+        '"Unseemly" and "incorrect" mean exactly the same thing.',
+        '"Unseemly" suggests the reports were illegal.',
+      ],
+      correctIndex: 0,
+      explanation:
+        '"Unseemly" carries the weight of conduct that does not befit the role. The point is not that the dismissals were factually wrong — it is that the posture they took toward worker safety was inappropriate to a plant manager\'s duty.',
+    },
+    {
+      id: 4,
+      kind: "inference",
+      prompt:
+        "Based on the passage, what can the reader most reasonably infer about why Edda described the most expensive part of the project as the eleven preceding years rather than the ventilation system itself?",
+      options: [
+        "The ventilation system turned out to be free.",
+        "The actual capital cost of the system was modest by the facility\'s standards; the real and continuing cost was the cumulative occupational exposure inflicted on workers during a decade in which forty-one accurate complaints had gone unread — a debt the new system could end but not refund.",
+        "She was being self-deprecating about the project\'s engineering complexity.",
+        "Her quarterly report was required to use that exact phrasing.",
+      ],
+      correctIndex: 1,
+      explanation:
+        "The passage stresses both numbers: 41 documented complaints over 11 years, and a fix costing under 3% of one year\'s routine capital. The contrast is the whole point — the human cost was paid before the financial one.",
+    },
+    {
+      id: 5,
+      kind: "substitution",
+      prompt:
+        'Which single word could replace "veritable" in the sentence below without changing its meaning?',
+      quote:
+        '"The memo was, by the standards of the facility, a veritable earthquake."',
+      options: [
+        "Imaginary",
+        "Genuine",
+        "Brief",
+        "Forgotten",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Genuine" — used as an emphatic intensifier meaning "in the truest sense" — captures the same meaning as "veritable." The word frames the memo as a real, not figurative, upheaval inside the facility.',
+    },
+    {
+      id: 6,
+      kind: "main-idea",
+      prompt:
+        "Which sentence best summarizes the central idea or arc of the passage?",
+      options: [
+        "A plant manager fires the entire senior team in her first week and rebuilds the facility from scratch.",
+        "A new plant manager reads forty-one previously dismissed complaints, writes a short, decisive memo recommending non-negotiable ventilation work, and reframes a routine capital project as the overdue settlement of an eleven-year debt to a subordinate workforce.",
+        "A processing facility shuts down after a routine air-quality inspection finds severe violations.",
+        "A plant manager is forced to resign after her senior team rejects her ventilation recommendation.",
+      ],
+      correctIndex: 1,
+      explanation:
+        "The arc moves from the inherited predicament, through Edda's reading of the forty-one complaints and her short memo, to the adopted recommendation and her closing note about what had really been expensive.",
+    },
+  ],
+};
+
 export const SET_READINGS: Record<string, SetReading> = {
   "1-1": MISSION_1_SET_1,
   "1-2": MISSION_1_SET_2,
@@ -6864,6 +7251,9 @@ export const SET_READINGS: Record<string, SetReading> = {
   "17-1": MISSION_17_SET_1,
   "17-2": MISSION_17_SET_2,
   "17-3": MISSION_17_SET_3,
+  "18-1": MISSION_18_SET_1,
+  "18-2": MISSION_18_SET_2,
+  "18-3": MISSION_18_SET_3,
 };
 
 export function getSetReading(day: number, group: number): SetReading | null {
