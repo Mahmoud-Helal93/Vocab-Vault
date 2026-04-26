@@ -3305,6 +3305,395 @@ The ledger went back into the drawer.`,
   ],
 };
 
+const MISSION_9_SET_1: SetReading = {
+  title: "The Diplomat's First Posting",
+  subtitle:
+    "A short story about a young attaché, a difficult counterpart, and the patient grammar of negotiation.",
+  format: "Short Story",
+  readingMinutes: 4,
+  words: [
+    "boorish",
+    "brook",
+    "circumspect",
+    "comity",
+    "commensurate",
+    "cordial",
+    "deleterious",
+    "dichotomy",
+    "edify",
+    "elicit",
+  ],
+  passage: `When Adaeze arrived at the embassy in late September, she had already been warned about her counterpart at the trade ministry: Mr. Halverson, a man whose **boorish** manner had reduced two previous attachés to writing weekly resignation letters they never quite sent. He greeted her, on her first morning, by sliding a folder across the table without standing up and without offering his name. It was, she would later admit, a useful introduction — it told her, before he had spoken a single word, exactly what she would need to **brook** if she wanted to keep the file open.
+
+She had been trained, of course, to be **circumspect** in early meetings — to listen for what was *not* said, to take careful notes that committed her to nothing. The training had not entirely prepared her for a counterpart who seemed to operate without a corresponding sense of restraint. Halverson cut off her opening question, dismissed her ministry's last proposal as "a series of suggestions written in the conditional tense," and then, with an abruptness that startled her, asked whether she had any actual authority or whether she was, like her predecessors, a courier with a calling card.
+
+Adaeze did not answer immediately. She had spent two years at the Academy studying the long, patient grammar of international **comity** — the small courtesies that hold even hostile delegations in the same room — and she knew that the worst thing she could do now was match his tone. The instinct to retort would be satisfying for thirty seconds and **deleterious** for the next thirty months.
+
+"I have authority **commensurate** with the proposals I bring," she said evenly, "and I bring proposals my minister has signed. If you would like to test that, we can begin."
+
+There was a pause. Then, surprisingly, his expression shifted into something almost **cordial** — not warm, exactly, but the look of a man who has discovered, against his expectations, that the person across the table is going to be useful. He pulled the folder back toward himself, opened it, and started reading aloud the first clause she had drafted.
+
+The afternoon revealed a curious **dichotomy** in him. The Halverson who had insulted her in the morning was not, it turned out, the same Halverson who actually negotiated. The first was theatrical — a gate to be passed. The second was patient, exact, and unexpectedly willing to concede a small point if it bought him a larger one. She suspected, by the third hour, that the morning's rudeness had been less an expression of contempt than a kind of customs check, designed to **elicit** whether she could be moved off her brief by personal slight alone.
+
+She did not let it move her. She let him test, and rephrased, and tested back. By six o'clock they had a draft both ministers could read without embarrassment. He did not thank her. He did, however, walk her to the door — a small concession, in his vocabulary, that approached a salute.
+
+That night, alone in the embassy apartment, Adaeze opened her diary and wrote a single line meant only to **edify** her future, more tired self: *Be polite to the gate. Save your real arguments for the room behind it.*`,
+  questions: [
+    {
+      id: 1,
+      kind: "vocab-context",
+      prompt: 'In this sentence, the word "circumspect" most nearly means:',
+      quote:
+        '"She had been trained, of course, to be circumspect in early meetings — to listen for what was not said, to take careful notes that committed her to nothing."',
+      options: [
+        "Eager to volunteer one's own positions early.",
+        "Wary, careful, and unwilling to commit prematurely.",
+        "Formal in dress and posture above all else.",
+        "Skeptical to the point of refusing to negotiate.",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Circumspect" describes cautious, watchful behavior. The phrases that follow — listening for the unsaid, taking notes that commit to nothing — are the very definition of being circumspect.',
+    },
+    {
+      id: 2,
+      kind: "vocab-context",
+      prompt: 'In this sentence, the word "deleterious" most nearly means:',
+      quote:
+        '"The instinct to retort would be satisfying for thirty seconds and deleterious for the next thirty months."',
+      options: [
+        "Amusing in a quiet, private way.",
+        "Time-consuming and procedurally complex.",
+        "Harmful or damaging over the long term.",
+        "Required by diplomatic protocol.",
+      ],
+      correctIndex: 2,
+      explanation:
+        'The contrast between thirty satisfying seconds and thirty harmful months tells you "deleterious" means damaging — a short payoff with a long cost.',
+    },
+    {
+      id: 3,
+      kind: "tone-purpose",
+      prompt:
+        'The author writes that Adaeze had studied "the long, patient grammar of international comity." Why does the author choose "comity" rather than simply "politeness"?',
+      options: [
+        '"Comity" and "politeness" are exact synonyms; the choice is purely stylistic.',
+        '"Comity" suggests informal warmth between friends, while "politeness" suggests cold formality.',
+        '"Comity" specifies a structured, mutual courtesy between groups or nations, which fits the diplomatic context far more precisely than ordinary "politeness."',
+        '"Comity" implies disagreement, while "politeness" implies agreement.',
+      ],
+      correctIndex: 2,
+      explanation:
+        '"Comity" carries a specifically civic and international weight — courteous behavior maintained between parties who may not actually like each other. "Politeness" would understate what diplomats are trained in.',
+    },
+    {
+      id: 4,
+      kind: "inference",
+      prompt:
+        "Based on the passage, what can the reader most reasonably infer about Halverson's rudeness in the opening meeting?",
+      options: [
+        "He genuinely despised Adaeze and her ministry from the beginning.",
+        "He was performing a kind of test designed to see whether she could be knocked off her brief by personal slights.",
+        "He was always rude to women but cordial to men.",
+        "He had been instructed by his minister to humiliate the new attaché.",
+      ],
+      correctIndex: 1,
+      explanation:
+        'Adaeze\'s own conclusion — that the morning rudeness was a "customs check" meant to elicit whether she could be unsettled — is the strongest inference the text supports.',
+    },
+    {
+      id: 5,
+      kind: "substitution",
+      prompt:
+        'Which single word could replace "boorish" in the sentence below without changing its meaning?',
+      quote:
+        '"...she had already been warned about her counterpart at the trade ministry: Mr. Halverson, a man whose boorish manner had reduced two previous attachés to writing weekly resignation letters they never quite sent."',
+      options: [
+        "Charming",
+        "Uncouth",
+        "Indecisive",
+        "Bureaucratic",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Uncouth" — rude, lacking in manners — captures the same meaning as "boorish." The other choices describe entirely different traits.',
+    },
+    {
+      id: 6,
+      kind: "main-idea",
+      prompt:
+        "Which sentence best summarizes the central idea or arc of the passage?",
+      options: [
+        "A young diplomat refuses to be provoked by her counterpart's rudeness and, by holding her composure, earns the working respect that allows real negotiation to begin.",
+        "A trade negotiation between two ministries collapses because one of the participants is unwilling to follow basic protocol.",
+        "A new attaché learns that diplomacy is fundamentally a profession for people who enjoy public conflict.",
+        "An experienced diplomat exposes a junior counterpart's lack of preparation by humiliating her in their first meeting.",
+      ],
+      correctIndex: 0,
+      explanation:
+        "The passage tracks Adaeze's discipline in the face of a deliberate provocation, and the small but real opening that her restraint creates by the end of the day.",
+    },
+  ],
+};
+
+const MISSION_9_SET_2: SetReading = {
+  title: "The New Editor at the Quarterly",
+  subtitle:
+    "A short story about an inherited archive, a beloved predecessor, and a first week spent in the basement.",
+  format: "Short Story",
+  readingMinutes: 4,
+  words: [
+    "erudite",
+    "fecund",
+    "feeble",
+    "felicitous",
+    "forbear",
+    "haphazard",
+    "hodgepodge",
+    "impede",
+    "impetuous",
+    "irascible",
+  ],
+  passage: `When the new editor of *The Branwell Quarterly* took her seat, she inherited two things in unequal measure: a small, beautifully designed magazine with a loyal readership, and a basement archive that could only be described as a **hodgepodge**. Manuscripts from 1981 sat next to invoices from 1996, fan letters were filed under whichever drawer had been nearest at the time, and the entire system, such as it was, had been built in a thoroughly **haphazard** way over forty years by an editor who trusted his own memory more than any index.
+
+That former editor — Mr. Stollman, **erudite**, **irascible**, beloved — had retired the previous month after a sixth heart attack persuaded him that he could no longer reasonably **forbear** from rest. His readers mourned. His staff, who had loved him with the particular love reserved for difficult mentors, mourned somewhat differently: with the relief of people who would no longer be shouted at over a comma. Maeve, the new editor, had been Stollman's deputy for nine years. She knew, better than anyone, both the **fecund** intelligence that had made his magazine essential and the **feeble** organizational habits that had made his successor's job nearly impossible.
+
+She began, on her first Monday, with the archive. Not the masthead, not the website, not the fundraising letter the board wanted by Friday — the archive. Several colleagues thought this **impetuous**, even reckless. The board, in particular, did not understand why anyone would spend a first week descending into a basement when there were donors to charm upstairs. Maeve listened patiently to each warning and went down the stairs anyway.
+
+Her reasoning, she explained later, was simple. A literary magazine, in her view, was a long conversation with its own past; it could not credibly invite a new voice without knowing which voices it had already published, paid, lost touch with, or quietly disappointed. The archive was the magazine's memory, and a memory left in this state would, eventually, **impede** every editorial decision she tried to make. Better to lose a week now than to lose a season later.
+
+The work was slower than she had expected and yielded more than she had hoped. In the second drawer she opened, she found a **felicitous** discovery: a 1989 file of unpublished letters between Stollman and a young poet who had since become one of the most important writers in the language. The letters had been forgotten — not concealed, simply mislaid in the general drift of decades. Three of them, with the poet's permission, would later become the centerpiece of the magazine's anniversary issue, and the goodwill they generated paid, almost to the dollar, for the entire week the board had begged her not to spend.
+
+She did not say *I told you so*. (Stollman, she suspected, would have. That was one of the differences between them.) Instead, at the next board meeting, she set the three retrieved letters on the table without comment and let the archive speak for itself. The treasurer, who had been the most insistent that she abandon the basement, picked up the first letter, read half a paragraph, and said quietly, "How much of this is down there?"
+
+"Forty years," Maeve said. "I thought we should know."`,
+  questions: [
+    {
+      id: 1,
+      kind: "vocab-context",
+      prompt: 'In this sentence, the word "hodgepodge" most nearly means:',
+      quote:
+        '"...she inherited two things in unequal measure: a small, beautifully designed magazine with a loyal readership, and a basement archive that could only be described as a hodgepodge."',
+      options: [
+        "A carefully curated and indexed collection.",
+        "A confused, jumbled mixture of unrelated things.",
+        "An unusually valuable private library.",
+        "A small, tidy, recently organized set of files.",
+      ],
+      correctIndex: 1,
+      explanation:
+        'The next sentence — manuscripts beside invoices, letters filed by nearest drawer — describes precisely the kind of disorderly mixture "hodgepodge" denotes.',
+    },
+    {
+      id: 2,
+      kind: "vocab-context",
+      prompt: 'In this sentence, the word "impede" most nearly means:',
+      quote:
+        '"The archive was the magazine\'s memory, and a memory left in this state would, eventually, impede every editorial decision she tried to make."',
+      options: [
+        "Justify or formally support.",
+        "Speed up or simplify.",
+        "Obstruct, delay, or get in the way of.",
+        "Make permanently impossible.",
+      ],
+      correctIndex: 2,
+      explanation:
+        '"Impede" means to obstruct or hinder. Maeve\'s point is not that the archive will block decisions outright, only that it will get in their way until it is sorted.',
+    },
+    {
+      id: 3,
+      kind: "tone-purpose",
+      prompt:
+        'The author describes Stollman\'s intelligence as "fecund." Why does the author choose "fecund" rather than simply "creative"?',
+      options: [
+        '"Fecund" implies wastefulness, while "creative" implies discipline.',
+        '"Fecund" carries the sense of an almost biological abundance — endlessly producing — which conveys not just the quality of his ideas but their unstoppable volume in a way "creative" would not.',
+        '"Fecund" is a technical editing term that means "well-edited."',
+        '"Fecund" and "creative" mean exactly the same thing; the author is just showing off vocabulary.',
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Fecund" originally describes fertility — soil, harvests, abundance. Applied to a person, it suggests an intellect that produces ceaselessly, which is a sharper image than "creative."',
+    },
+    {
+      id: 4,
+      kind: "inference",
+      prompt:
+        "Based on the passage, what can the reader most reasonably infer about why Maeve set the recovered letters on the board table without commentary?",
+      options: [
+        "She was uncertain whether the letters were genuine and hoped the board could authenticate them.",
+        "She wanted the discovery itself to demonstrate the value of the archive work she had defended, without forcing her to argue the point aloud.",
+        "She was angry with the board and wanted to embarrass the treasurer in particular.",
+        "She had been told by Stollman to present the letters in this exact way.",
+      ],
+      correctIndex: 1,
+      explanation:
+        'The passage explicitly contrasts Maeve with Stollman ("she did not say I told you so") and shows the treasurer being persuaded by the letters themselves — a quiet way of letting the evidence make her case for her.',
+    },
+    {
+      id: 5,
+      kind: "substitution",
+      prompt:
+        'Which single word could replace "irascible" in the sentence below without changing its meaning?',
+      quote:
+        '"That former editor — Mr. Stollman, erudite, irascible, beloved — had retired the previous month..."',
+      options: [
+        "Generous",
+        "Hot-tempered",
+        "Forgetful",
+        "Wealthy",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Hot-tempered" — easily provoked to anger — matches "irascible." The detail about being "shouted at over a comma" later in the passage confirms the trait.',
+    },
+    {
+      id: 6,
+      kind: "main-idea",
+      prompt:
+        "Which sentence best summarizes the central idea or arc of the passage?",
+      options: [
+        "A new editor ignores the practical demands of her job to indulge a personal interest in old papers, and is later forced to apologize to her board.",
+        "A literary magazine collapses because its founding editor refused to keep proper records.",
+        "A new editor invests her first week in restoring her magazine's institutional memory and is vindicated when the archive yields a discovery that pays for itself.",
+        "A retiring editor sabotages his successor by leaving the office archive in deliberate disorder.",
+      ],
+      correctIndex: 2,
+      explanation:
+        "The passage moves from Maeve's controversial choice to descend into the basement, through her reasoning about institutional memory, to the felicitous letters that justify the choice in front of the very board that opposed it.",
+    },
+  ],
+};
+
+const MISSION_9_SET_3: SetReading = {
+  title: "The Bookseller of Marlow Lane",
+  subtitle:
+    "A short story about a small bookshop, a quiet petitioner, and twenty-two years of careful stewardship.",
+  format: "Short Story",
+  readingMinutes: 4,
+  words: [
+    "mercenary",
+    "meticulous",
+    "mordant",
+    "outstrip",
+    "precarious",
+    "quirky",
+    "repudiate",
+    "tact",
+    "trifling",
+    "turbulent",
+  ],
+  passage: `Esther Bowdler had owned the shop on Marlow Lane for twenty-two years, through a recession, two **turbulent** changes in publishing, and one summer in which the rent on her block doubled and three of her neighbors closed within a month. The shop survived because Esther was, in equal parts, **meticulous** about her accounts and stubborn about her standards — a combination that, in retail, is rarer than either trait alone.
+
+She was not, by temperament, a **mercenary** bookseller. The titles in her front window were chosen because she believed in them, not because they paid the most attractive co-op fee. She turned down a steady stream of celebrity memoirs that her wholesaler insisted would "outsell anything else on the shelf" and was sometimes proven right, sometimes pleasantly wrong, and never quite sorry either way. The shop's profit margins remained, frankly, **precarious**. But for two decades they had not gone negative, which was, in her business, a small civic victory.
+
+What kept regulars coming back was less the inventory than Esther herself. She had a **quirky** way of recommending books — never starting with the bestseller list, always with a question about what the customer had last *finished*, never what they had last *bought* — and a **mordant** running commentary on the publishing industry that delighted everyone except the occasional sales rep. She would not stock a book she had not read. She would not **repudiate** a recommendation she had made even when the author later disgraced themselves; she would simply add, in a small handwritten card beside the title, a sentence of context that customers were free to weigh as they liked.
+
+The trouble began, as trouble in small businesses often does, with a **trifling** complaint. A new resident two doors down objected to the chalkboard Esther kept on the sidewalk — said it was a hazard to strollers, said the wording was occasionally "unprofessional," said other things that, taken individually, sounded like nothing. Taken together, they amounted to a campaign. Within six weeks the complaint had been escalated, with the careful coordination of three other newcomers, into a petition before the local business association.
+
+Most shopkeepers in Esther's position would have argued. Esther chose **tact**. She agreed to move the chalkboard six inches inside the doorway. She wrote a short, courteous letter to the association acknowledging the concern and inviting any signatory to come in for tea. Two of them did. One left with three books and a standing order.
+
+The petitioner who had started the whole affair never appeared. But the campaign, deprived of its public stage, lost momentum within the month. Esther's instinct — that a quiet, hospitable response would, in a neighborhood that valued long memory over short noise, eventually **outstrip** any louder one — turned out, again, to be correct.
+
+She did not gloat. She added one new card to the shelf nearest the door. It read, in her small careful hand: *This shop has been here longer than the people complaining about it. We intend to keep it that way.*`,
+  questions: [
+    {
+      id: 1,
+      kind: "vocab-context",
+      prompt: 'In this sentence, the word "mercenary" most nearly means:',
+      quote:
+        '"She was not, by temperament, a mercenary bookseller. The titles in her front window were chosen because she believed in them, not because they paid the most attractive co-op fee."',
+      options: [
+        "Specializing in military or historical books.",
+        "Driven primarily by money rather than principle.",
+        "Notorious for offering steep discounts.",
+        "Indifferent to which books actually sell.",
+      ],
+      correctIndex: 1,
+      explanation:
+        'The contrast in the next sentence — believing in titles versus chasing the most lucrative fee — clarifies that "mercenary" here means money-driven at the expense of conviction.',
+    },
+    {
+      id: 2,
+      kind: "vocab-context",
+      prompt: 'In this sentence, the word "repudiate" most nearly means:',
+      quote:
+        '"She would not repudiate a recommendation she had made even when the author later disgraced themselves; she would simply add, in a small handwritten card beside the title, a sentence of context..."',
+      options: [
+        "Reprint or republish.",
+        "Quietly forget about.",
+        "Formally reject or disown.",
+        "Translate into another language.",
+      ],
+      correctIndex: 2,
+      explanation:
+        '"Repudiate" means to formally reject or disown. Esther will not disown her past recommendation; she only annotates it.',
+    },
+    {
+      id: 3,
+      kind: "tone-purpose",
+      prompt:
+        'The author calls Esther\'s commentary "mordant." Why does the author choose "mordant" rather than simply "sarcastic"?',
+      options: [
+        '"Mordant" is just a synonym for "sarcastic" with no real difference in meaning.',
+        '"Mordant" implies cheerful, harmless teasing, while "sarcastic" implies cruelty.',
+        '"Mordant" carries the sense of sharp, biting wit that draws blood while remaining intelligent — closer to a literary edge than the everyday eye-rolling that "sarcastic" usually suggests.',
+        '"Mordant" specifically refers to humor about death, which Esther uses constantly.',
+      ],
+      correctIndex: 2,
+      explanation:
+        '"Mordant" describes a sharp, almost corrosive wit. It fits the picture of a long-tenured bookseller whose criticism of the publishing industry is precise enough to delight insiders and unsettle reps.',
+    },
+    {
+      id: 4,
+      kind: "inference",
+      prompt:
+        "Based on the passage, what can the reader most reasonably infer about why Esther's response defused the petition campaign so effectively?",
+      options: [
+        "She privately threatened the petitioners with legal action if they continued.",
+        "By moving the chalkboard a token amount and inviting signatories in personally, she stripped the campaign of any visible grievance for its organizers to rally around.",
+        "The business association was already biased in her favor and would have rejected the petition regardless.",
+        "She bribed two of the signatories to drop their names from the petition.",
+      ],
+      correctIndex: 1,
+      explanation:
+        'The text says the campaign "deprived of its public stage, lost momentum." Esther\'s small concession plus personal hospitality removed the visible target the campaign needed.',
+    },
+    {
+      id: 5,
+      kind: "substitution",
+      prompt:
+        'Which single word could replace "meticulous" in the sentence below without changing its meaning?',
+      quote:
+        '"...Esther was, in equal parts, meticulous about her accounts and stubborn about her standards..."',
+      options: [
+        "Careless",
+        "Scrupulous",
+        "Defensive",
+        "Generous",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Scrupulous" — exact, attentive to every detail — captures the same meaning as "meticulous." "Careless" is the opposite.',
+    },
+    {
+      id: 6,
+      kind: "main-idea",
+      prompt:
+        "Which sentence best summarizes the central idea or arc of the passage?",
+      options: [
+        "A long-tenured bookseller defends her shop from a petty neighborhood campaign by responding with measured tact rather than confrontation, and her quiet approach prevails.",
+        "A small bookshop is forced to close after newcomers to the neighborhood organize a successful petition against it.",
+        "An idealistic shopkeeper learns the hard way that principled bookselling cannot survive in a competitive market.",
+        "A neighborhood business association takes sides in a personal dispute between two shop owners and creates a lasting feud.",
+      ],
+      correctIndex: 0,
+      explanation:
+        "The arc moves from Esther's twenty-two years of careful stewardship, through a trifling but coordinated complaint, to her tactful response — and to the quiet vindication of that response when the campaign loses its momentum.",
+    },
+  ],
+};
+
 export const SET_READINGS: Record<string, SetReading> = {
   "1-1": MISSION_1_SET_1,
   "1-2": MISSION_1_SET_2,
@@ -3330,6 +3719,9 @@ export const SET_READINGS: Record<string, SetReading> = {
   "8-1": MISSION_8_SET_1,
   "8-2": MISSION_8_SET_2,
   "8-3": MISSION_8_SET_3,
+  "9-1": MISSION_9_SET_1,
+  "9-2": MISSION_9_SET_2,
+  "9-3": MISSION_9_SET_3,
 };
 
 export function getSetReading(day: number, group: number): SetReading | null {
