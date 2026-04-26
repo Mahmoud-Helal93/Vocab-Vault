@@ -3694,6 +3694,393 @@ She did not gloat. She added one new card to the shelf nearest the door. It read
   ],
 };
 
+const MISSION_10_SET_1: SetReading = {
+  title: "The Auditor in Room Twelve",
+  subtitle:
+    "A short story about a forensic accountant, a careful CFO, and the quiet space between fact and amendment.",
+  format: "Short Story",
+  readingMinutes: 4,
+  words: [
+    "acumen",
+    "antithesis",
+    "ascribe",
+    "befuddled",
+    "eschew",
+    "esoteric",
+    "evasive",
+    "exculpate",
+    "expedite",
+    "fastidious",
+  ],
+  passage: `The forensic accountant Helene Frosch arrived at Marwick & Bray on a Monday morning that the firm's senior partners had spent two weeks dreading. They had not requested her; the regulator had. A whistleblower's letter, three pages long and damningly specific, had arrived at the commission, and someone with the financial **acumen** to read sixty thousand entries without losing the thread had been required by sundown. Helene was the regulator's most **fastidious** investigator and, in many ways, the **antithesis** of the rumpled, charming examiners the partners were used to negotiating with. She wore gray. She did not laugh at jokes. She declined, politely, the offered tea.
+
+She set up in Room Twelve, the smallest conference room on the floor, and asked for the firm's general ledger, three specific sub-ledgers, and — almost as an afterthought — the comment field of every journal entry posted in the last fiscal year. The CFO, a man named Devlin who had built a long career on his ability to **expedite** difficult conversations, suggested mildly that the comment fields contained "internal shorthand" that might leave an outsider **befuddled**. Helene looked at him, smiled with the warmth of a thermostat, and said she would manage.
+
+By Wednesday she had a file of one hundred and twelve flagged entries. By Friday she had narrowed them to fourteen. The pattern, once she sketched it on a single sheet of paper, was almost embarrassingly clean: a small **esoteric** technique used elsewhere in the industry, lawful in theory, had been applied here in a way that crossed three lines at once. The amounts involved were not large. The repetition was the problem.
+
+Devlin came to Room Twelve on Friday afternoon with a folder of his own. He did not ask what she had found. He asked, instead, what it would take to bring the matter to a quiet conclusion — a phrase that could mean many things, and which Helene had been trained, since her first year, to treat with great care. She did not answer the question directly. She asked him, instead, to walk her through entry number forty-seven.
+
+His answer was **evasive**. Not a lie, exactly — a careful arrangement of true facts in an order designed to suggest a different overall picture. Helene let him finish. Then she walked him, line by line, through the same entry as it had actually been recorded, and asked whether he would like to amend his account. He sat very still for nearly a minute. Then he said, quietly, that he would.
+
+The remainder was procedural. Helene did not **ascribe** motives — that was for the commission and, eventually, the tribunal. She did not, in her formal report, attempt to **exculpate** anyone, nor did she condemn beyond what the entries themselves required. She **eschewed**, as she always did, the temptation to call the conduct "fraudulent" before that word had been earned in the legal sense. The report contained, in the end, sixteen paragraphs and one appendix. It would, the regulator told her later, be one of the cleanest she had ever filed.
+
+On Monday morning she packed her gray notebook into her gray bag and left Room Twelve for the next firm on her list. The partners watched her go with the cautious respect owed to weather one has narrowly survived.`,
+  questions: [
+    {
+      id: 1,
+      kind: "vocab-context",
+      prompt: 'In this sentence, the word "acumen" most nearly means:',
+      quote:
+        '"...someone with the financial acumen to read sixty thousand entries without losing the thread had been required by sundown."',
+      options: [
+        "Stamina or physical endurance.",
+        "Sharp judgment and the capacity for quick, accurate insight.",
+        "Formal academic credentials.",
+        "Resistance to bribery or pressure.",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Acumen" denotes shrewd, quick mental judgment — the ability to make sense of large amounts of information without losing the thread, exactly the trait the regulator needed.',
+    },
+    {
+      id: 2,
+      kind: "vocab-context",
+      prompt: 'In this sentence, the word "evasive" most nearly means:',
+      quote:
+        '"His answer was evasive. Not a lie, exactly — a careful arrangement of true facts in an order designed to suggest a different overall picture."',
+      options: [
+        "Direct and confrontational.",
+        "Tending to avoid the real point or commitment, especially through indirectness.",
+        "Spoken in a foreign language or jargon.",
+        "Rehearsed and word-for-word identical to a previous statement.",
+      ],
+      correctIndex: 1,
+      explanation:
+        'The author\'s gloss — "true facts in an order designed to suggest a different overall picture" — is a perfect description of evasion: technically truthful, deliberately misdirecting.',
+    },
+    {
+      id: 3,
+      kind: "tone-purpose",
+      prompt:
+        'The author calls the questionable technique "esoteric" rather than simply "obscure." Why?',
+      options: [
+        '"Esoteric" and "obscure" mean exactly the same thing in this context.',
+        '"Esoteric" carries the sense of specialized knowledge restricted to insiders, which fits a technique that is "lawful in theory" but understood and used by only a small group of practitioners.',
+        '"Esoteric" implies the technique is illegal, while "obscure" would imply it is merely uncommon.',
+        '"Esoteric" suggests something ancient, while "obscure" suggests something modern.',
+      ],
+      correctIndex: 1,
+      explanation:
+        'An "esoteric" technique is one understood by a closed circle of specialists. That nuance — insider knowledge — is essential to the story\'s point that the misuse depended on the technique being recognized only by a few.',
+    },
+    {
+      id: 4,
+      kind: "inference",
+      prompt:
+        "Based on the passage, what can the reader most reasonably infer about why Helene asked Devlin to walk her through entry forty-seven instead of confronting him directly?",
+      options: [
+        "She was uncertain whether the entry was actually problematic and hoped he could explain it.",
+        "She wanted him to commit to a version of events on the record before she revealed how much she already knew.",
+        "She was afraid of him and avoided open confrontation whenever possible.",
+        "Regulator policy requires a verbal explanation before any flagged entry can be reviewed.",
+      ],
+      correctIndex: 1,
+      explanation:
+        'The next paragraphs show that Helene already knew the true record and used Devlin\'s evasive account to give him the chance to commit before she walked him line-by-line through the truth — a classic technique for eliciting a clean amendment.',
+    },
+    {
+      id: 5,
+      kind: "substitution",
+      prompt:
+        'Which single word could replace "fastidious" in the sentence below without changing its meaning?',
+      quote:
+        '"Helene was the regulator\'s most fastidious investigator..."',
+      options: [
+        "Charming",
+        "Punctilious",
+        "Forgiving",
+        "Unpredictable",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Punctilious" — extremely attentive to detail and correctness — captures the same meaning as "fastidious." The other choices describe entirely different traits.',
+    },
+    {
+      id: 6,
+      kind: "main-idea",
+      prompt:
+        "Which sentence best summarizes the central idea or arc of the passage?",
+      options: [
+        "A whistleblower destroys a respectable accounting firm by leaking false information to the regulator.",
+        "A senior partner uses charm and procedural delays to defeat an inexperienced auditor sent to investigate his firm.",
+        "A disciplined forensic accountant uses patience and precision to extract a quiet, accurate amendment from a CFO whose first instinct is to manage rather than disclose.",
+        "A regulator is forced to admit that financial misconduct is too complex to investigate and closes the case without a finding.",
+      ],
+      correctIndex: 2,
+      explanation:
+        "The arc moves from Helene's careful setup, through her narrowing of flagged entries, to the moment she walks Devlin through the real record and obtains an amendment without theatrics — a study in how restraint can be a kind of force.",
+    },
+  ],
+};
+
+const MISSION_10_SET_2: SetReading = {
+  title: "The Caretaker's Letter",
+  subtitle:
+    "A short story about a quiet homecoming, a wrongly latched gate, and a decision made alone.",
+  format: "Short Story",
+  readingMinutes: 4,
+  words: [
+    "feign",
+    "furtive",
+    "hamper",
+    "indispensable",
+    "lament",
+    "myopic",
+    "nonchalant",
+    "partial",
+    "pensive",
+    "portend",
+  ],
+  passage: `The first thing Mrs. Aldred noticed, when she returned from her sister's funeral after eleven days away, was that the back gate had been latched on the wrong side. It was a small thing — almost nothing — and most people would not have noticed at all. But she had latched that gate twice a day for thirty-one years, and she did not need to pretend, even briefly, to be the sort of person who could **feign** indifference to detail.
+
+Inside the house, the **partial** stack of mail by the door had been sorted. A bowl that should have been on the second shelf was on the third. The kettle, which she always left handle-out, was turned the other way. None of it would have been visible to a casual visitor; all of it was visible to her. She made a cup of tea, sat down at the kitchen table, and grew **pensive**, her fingers tracing the rim of the cup as she considered what these small displacements might **portend**.
+
+Her caretaker — a young man named Owen whom her late husband had hired four years earlier — had been hired explicitly because he was, in matters of trust, **indispensable**. Mrs. Aldred had no children, no surviving siblings now, and a rather rich and very portable collection of small antique silver. Owen had been vetted twice, paid generously, and given keys to every door in the house. The arrangement had worked, until — possibly — it hadn't.
+
+She did not call the police. She did not, in fact, tell anyone. She simply spent the next two days walking the house slowly, photographing every shelf, every drawer, every small displacement she could identify. By Wednesday afternoon she had a list of fourteen items that had been moved and three small pieces of silver — modest, easily overlooked — that were missing. She did not **lament** the silver. She regretted, instead, the years of unguarded warmth she had extended to a man who had now made her doubt her own roof.
+
+When Owen arrived for his Thursday shift, she did not confront him. She offered him tea and watched, with great care, the small **furtive** glance he gave the side cabinet as he sat down — the kind of glance that people who are about to be caught make without realizing they are making it. She asked him, in a deliberately **nonchalant** voice, about his weekend. He answered easily. She asked, in the same tone, whether he had moved anything in the back parlor while she was away. He said he had not. She watched him say it.
+
+That night she changed every lock in the house. She did not file a report. She wrote Owen a short, formal letter, terminating his employment with two weeks' severance and without explanation, and left the silver question for the insurer to settle if it ever surfaced. A friend, when she told her, called the response **myopic** — argued that Owen would simply do the same to the next elderly woman who hired him. Mrs. Aldred listened, and did not argue, and did not change her mind.
+
+She had, she explained later, spent thirty-one years latching that gate. She had earned, she felt, the right to decide alone what to do when somebody else latched it the wrong way. Anything beyond that would only **hamper** the small, careful peace she meant to spend the rest of her days defending.`,
+  questions: [
+    {
+      id: 1,
+      kind: "vocab-context",
+      prompt: 'In this sentence, the word "portend" most nearly means:',
+      quote:
+        '"...her fingers tracing the rim of the cup as she considered what these small displacements might portend."',
+      options: [
+        "Conceal or hide from view.",
+        "Be a sign or warning of something significant about to come.",
+        "Resemble or look like.",
+        "Disprove or contradict.",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Portend" means to foreshadow or warn of something significant. The displaced bowl, kettle, and gate are clues that, taken together, hint at a larger meaning Mrs. Aldred is trying to read.',
+    },
+    {
+      id: 2,
+      kind: "vocab-context",
+      prompt: 'In this sentence, the word "furtive" most nearly means:',
+      quote:
+        '"...the small furtive glance he gave the side cabinet as he sat down — the kind of glance that people who are about to be caught make without realizing they are making it."',
+      options: [
+        "Bold and openly accusing.",
+        "Sleepy or absent-minded.",
+        "Secret, stealthy, and meant to escape notice.",
+        "Lengthy and admiring.",
+      ],
+      correctIndex: 2,
+      explanation:
+        'A "furtive" glance is a secretive one — quick, sneaky, designed not to be seen. The author\'s own gloss about being "caught without realizing it" confirms the meaning.',
+    },
+    {
+      id: 3,
+      kind: "tone-purpose",
+      prompt:
+        'The author writes that Mrs. Aldred grew "pensive" rather than, say, "anxious" or "upset." Why?',
+      options: [
+        '"Pensive" and "anxious" mean the same thing; the choice is purely stylistic.',
+        '"Pensive" describes a quiet, reflective state of mind, which captures Mrs. Aldred\'s methodical, almost deductive response — far more accurate than the agitation that "anxious" or "upset" would imply.',
+        '"Pensive" suggests she is daydreaming and ignoring the problem.',
+        '"Pensive" implies she is afraid of being judged by her neighbors.',
+      ],
+      correctIndex: 1,
+      explanation:
+        'The whole passage shows Mrs. Aldred reasoning her way through the displacements rather than reacting emotionally. "Pensive" — thoughtful, contemplative — is the word that fits a reasoner; "anxious" would distort her character.',
+    },
+    {
+      id: 4,
+      kind: "inference",
+      prompt:
+        "Based on the passage, what can the reader most reasonably infer about why Mrs. Aldred declined to file any report or warn anyone about Owen?",
+      options: [
+        "She was not certain Owen had taken the silver and feared falsely accusing him.",
+        "She believed her own private response — locks changed, employment ended quietly — was a sufficient and dignified resolution, and that wider action would cost her more peace than it would buy her.",
+        "She intended to confront Owen herself at a later date.",
+        "She was bound by a contractual non-disclosure clause from her late husband's estate.",
+      ],
+      correctIndex: 1,
+      explanation:
+        'Her closing reflection — that she had earned the right to decide alone, and that wider action would only hamper her peace — is the strongest direct support for option B. The passage does not present her as uncertain.',
+    },
+    {
+      id: 5,
+      kind: "substitution",
+      prompt:
+        'Which single word could replace "indispensable" in the sentence below without changing its meaning?',
+      quote:
+        '"Her caretaker — a young man named Owen whom her late husband had hired four years earlier — had been hired explicitly because he was, in matters of trust, indispensable."',
+      options: [
+        "Optional",
+        "Essential",
+        "Suspicious",
+        "Affordable",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Essential" — absolutely necessary — captures the same meaning as "indispensable." "Optional" is the opposite.',
+    },
+    {
+      id: 6,
+      kind: "main-idea",
+      prompt:
+        "Which sentence best summarizes the central idea or arc of the passage?",
+      options: [
+        "A widow refuses to acknowledge that her caretaker has been stealing from her, and her refusal eventually destroys her household.",
+        "A small-town theft escalates into a public scandal involving the police, an insurance company, and a betrayed employer.",
+        "A widow notices a series of small, deliberate disturbances in her home, identifies her caretaker as the cause, and chooses to handle the matter privately on her own terms.",
+        "A caretaker is wrongly accused of theft on the basis of a misplaced bowl and a kettle turned the wrong way.",
+      ],
+      correctIndex: 2,
+      explanation:
+        "The arc moves from Mrs. Aldred's quiet observation of small details, through her patient documentation, to her measured, private decision to end the arrangement on terms that protect her own peace.",
+    },
+  ],
+};
+
+const MISSION_10_SET_3: SetReading = {
+  title: "The Mayor's Quiet Reform",
+  subtitle:
+    "A short story about a small lake town, forty years of paperwork, and the patience required to retire it.",
+  format: "Short Story",
+  readingMinutes: 4,
+  words: [
+    "provincial",
+    "rudimentary",
+    "salutary",
+    "sever",
+    "slight",
+    "somnolent",
+    "stoic",
+    "supersede",
+    "tout",
+    "wane",
+  ],
+  passage: `When Mayor Halia Conescu took office in the small lake town of Veredia, the local paper described her victory as "modest" — a word she had learned, in two years of campaigning, was the polite version of an editor's **slight**. The town's enthusiasm for politics had, over a decade of uncontested elections, **waned** into something closer to indifference; the previous mayor had governed in a **somnolent** style that pleased nobody and offended even fewer. Halia had won by knocking on doors herself.
+
+The town had real problems and only **rudimentary** machinery for solving them. Its records were in three different handwriting styles. Its zoning code referred, in places, to a railroad that had been removed in 1962. Its public budget consisted of seven spreadsheets that nobody had merged in eleven years. Halia did not **tout** these failings on the campaign trail — partly out of decency, partly because her opponent had been the previous mayor's nephew — but she had taken office knowing exactly which knots she intended to untie first.
+
+Her first act, on her first morning, was to ask the town clerk to print a single, consolidated copy of every standing ordinance, in the order in which it had been passed. The clerk, a woman named Ines who had served four mayors and outlasted them all, raised one eyebrow and said it would take a week. Halia said she could wait a week. By the following Monday she had read all of it.
+
+What she found was less corruption than accumulation: forty years of rules that had been written for one situation, applied to another, and never repealed. A 1978 ordinance still required certain permits to be filed in triplicate by carbon paper. A 1991 rule limited public meetings to two hours, in a town that now routinely needed four. None of it was sinister. All of it slowed the town's small civic life into the **provincial** rhythm her predecessors had been content to mistake for charm.
+
+She did not want to **sever** the town's connection with its past — she had been raised, herself, in Veredia, and she knew the difference between tradition and inertia. She drafted, instead, a single short bill, sixty-three lines long, that allowed the council to formally **supersede** any ordinance passed before 1980 with a simple updated version, on a rolling basis, two ordinances per meeting. She presented it on a Tuesday, defended it without raising her voice, and watched four of her seven councillors vote yes by the end of the evening.
+
+Some of the older residents grumbled. One columnist wrote that the new mayor was tearing the town apart "for the sake of efficiency, that least sentimental of virtues." Halia did not pretend wounded surprise; she had expected the criticism, and answered it, in her quiet way, with a public letter that conceded the columnist's point in principle and rejected it in practice. The reform, she argued, was not a rejection of Veredia's character but a **salutary** correction of forty years of paperwork that had been allowed to outlive its usefulness.
+
+Her **stoic** patience, in the end, did more for her than any speech could have. By the close of her first year, eighteen old ordinances had been quietly retired and replaced. The town's permits moved twice as fast. The columnist, who had remained skeptical, conceded in print that the lights, at least, were on at the town hall again — and that the mayor's office, which had been somnolent for a decade, was now perceptibly awake.`,
+  questions: [
+    {
+      id: 1,
+      kind: "vocab-context",
+      prompt: 'In this sentence, the word "wane" most nearly means:',
+      quote:
+        '"The town\'s enthusiasm for politics had, over a decade of uncontested elections, waned into something closer to indifference..."',
+      options: [
+        "Sharpened or grown more intense.",
+        "Gradually decreased or weakened over time.",
+        "Become organized into a formal movement.",
+        "Been suppressed by force.",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Wane" describes a slow decline. The decade of uncontested elections sliding into indifference is exactly that kind of gradual fading.',
+    },
+    {
+      id: 2,
+      kind: "vocab-context",
+      prompt: 'In this sentence, the word "supersede" most nearly means:',
+      quote:
+        '"...allowed the council to formally supersede any ordinance passed before 1980 with a simple updated version..."',
+      options: [
+        "Translate into a different language.",
+        "Investigate for legal violations.",
+        "Replace and take the place of, rendering the previous version no longer in force.",
+        "Cite as supporting precedent.",
+      ],
+      correctIndex: 2,
+      explanation:
+        '"Supersede" means to take the place of an earlier authoritative version. The bill\'s purpose is to let an updated ordinance formally replace the older one.',
+    },
+    {
+      id: 3,
+      kind: "tone-purpose",
+      prompt:
+        'The narrator describes the previous mayor\'s style as "somnolent" rather than "lazy" or "boring." Why?',
+      options: [
+        '"Somnolent" implies cruelty, while "lazy" implies kindness.',
+        '"Somnolent" carries the specific image of drowsiness — of a town hall half-asleep — which captures both the sluggish governance and the atmosphere it produced, in a way that "lazy" or "boring" would not.',
+        '"Somnolent" is a legal term required to describe a previous mayor.',
+        '"Somnolent" is just a longer synonym for "lazy" with no real difference in meaning.',
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Somnolent" literally means sleepy, and the closing line about the town hall being "perceptibly awake" again is the payoff. The image of drowsiness frames both the governance and the atmosphere — a precision "lazy" cannot match.',
+    },
+    {
+      id: 4,
+      kind: "inference",
+      prompt:
+        "Based on the passage, what can the reader most reasonably infer about Halia's strategic choice to retire ordinances at a rate of only two per council meeting?",
+      options: [
+        "She secretly hoped the project would never finish, in order to give herself permanent work.",
+        "The pace was deliberately modest so the reform would feel like maintenance rather than upheaval, making it easier for cautious councillors and longtime residents to accept.",
+        "Town law required this exact pace and she had no choice in the matter.",
+        "She believed the older residents would notice nothing as long as no more than two rules changed at a time.",
+      ],
+      correctIndex: 1,
+      explanation:
+        'The passage emphasizes that Halia distinguishes tradition from inertia and does not want to sever the connection with the past. A modest, rolling pace is the natural expression of that distinction — reform that reads as upkeep.',
+    },
+    {
+      id: 5,
+      kind: "substitution",
+      prompt:
+        'Which single word could replace "rudimentary" in the sentence below without changing its meaning?',
+      quote:
+        '"The town had real problems and only rudimentary machinery for solving them."',
+      options: [
+        "Sophisticated",
+        "Basic",
+        "Borrowed",
+        "Hostile",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Basic" — limited to elementary essentials — captures the same meaning as "rudimentary." The examples that follow (mismatched handwriting, unmerged spreadsheets) confirm this is bare-bones machinery.',
+    },
+    {
+      id: 6,
+      kind: "main-idea",
+      prompt:
+        "Which sentence best summarizes the central idea or arc of the passage?",
+      options: [
+        "A new mayor abandons her reform plans after a single columnist criticizes her in the local paper.",
+        "A small town's residents drive out a reformist mayor who tries to dismantle their cherished local traditions.",
+        "A reform-minded mayor uses patience, restraint, and a deliberately modest pace to retire decades of accumulated regulation without breaking the town's sense of itself.",
+        "A town clerk secretly takes over from a weak mayor and runs the town through bureaucratic means.",
+      ],
+      correctIndex: 2,
+      explanation:
+        "The arc tracks Halia's careful audit of the town's accumulated rules, her short bill that supersedes them on a rolling basis, and the salutary effect that her stoic, modest pace produces by the end of her first year.",
+    },
+  ],
+};
+
 export const SET_READINGS: Record<string, SetReading> = {
   "1-1": MISSION_1_SET_1,
   "1-2": MISSION_1_SET_2,
@@ -3722,6 +4109,9 @@ export const SET_READINGS: Record<string, SetReading> = {
   "9-1": MISSION_9_SET_1,
   "9-2": MISSION_9_SET_2,
   "9-3": MISSION_9_SET_3,
+  "10-1": MISSION_10_SET_1,
+  "10-2": MISSION_10_SET_2,
+  "10-3": MISSION_10_SET_3,
 };
 
 export function getSetReading(day: number, group: number): SetReading | null {
