@@ -535,9 +535,9 @@ export default function SetReading({
                   >
                     {(
                       [
-                        { id: "sm", label: "Small", cls: "text-[11px]" },
-                        { id: "md", label: "Medium", cls: "text-[14px]" },
-                        { id: "lg", label: "Large", cls: "text-[18px]" },
+                        { id: "sm", label: "Small", cls: "text-[13px]" },
+                        { id: "md", label: "Medium", cls: "text-[16px]" },
+                        { id: "lg", label: "Large", cls: "text-[20px]" },
                       ] as { id: PassageSize; label: string; cls: string }[]
                     ).map((s, i) => {
                       const active = passageSize === s.id;
