@@ -15536,6 +15536,1138 @@ What Berk did not do, in any of the four hours, was characterize his own institu
   ],
 };
 
+const MISSION_40_SET_1: SetReading = {
+  title: "The Co-op Board Meeting",
+  subtitle:
+    "A short story about a basement community room, two long-tenured shareholders, and the chair who decided that the venue itself was the asset both members had been protecting.",
+  format: "Short Story",
+  readingMinutes: 4,
+  words: [
+    "amuck",
+    "acrimony",
+    "bilious",
+    "choleric",
+    "splenetic",
+    "vitriolic",
+    "rancorous",
+    "peevish",
+    "pique",
+    "nettle",
+  ],
+  passage: `The Cresgrove Co-op Board met on the second Tuesday of every month in a basement community room whose acoustics had, across thirty-one years of occupancy, perfectly preserved every harsh syllable any resident had ever directed at any other.
+
+The October meeting opened at 7:04 p.m. on the agenda's third item — the proposed garbage-room renovation budget — and within nine minutes had run **amuck** in a way the chair, a retired municipal accountant named Hela Cor, would later describe in her minutes with characteristic understatement as "extended discussion."
+
+The discussion, in honest terms, was the third meeting in a row in which the building's two longest-tenured board members — Mr. Pall, a shareholder for thirty-two years, and Ms. Riske, a shareholder for twenty-eight — had directed at each other a sustained **acrimony** the rest of the board had spent the prior summer hoping the renovation question itself would somehow resolve.
+
+It had not. Mr. Pall, in his opening remarks, was **bilious** about the contractor selection process, suggesting in three separate sentences that the lowest bidder had been chosen for reasons Hela had not put on the record. Ms. Riske, in her response, was **splenetic** — her tone moved past disagreement into the kind of ill-tempered pronouncement the room's acoustics multiplied — and she accused Mr. Pall of having privately **piqued** the contractor in a corridor conversation that had, by her secondhand account, ended with the contractor revising his bid downward in apparent retaliation.
+
+Mr. Pall did not deny the corridor conversation. He denied only its characterization. His **vitriolic** rebuttal — three minutes of language Hela later struck from the minutes for civility reasons — accused Ms. Riske of having harbored a **rancorous** opposition to him personally for the entire eleven years they had served together, dating to a 2014 dispute over a roof-deck planter the building had long since removed.
+
+The newer board members — three of the seven, all shareholders for under five years — had, in three previous meetings, attempted to **nettle** the two senior members into either resolving the underlying dispute or recusing themselves from the renovation vote. Both attempts had failed. The tone of the room, after each attempt, had only grown more **choleric**: Mr. Pall reading every procedural correction as a personal challenge, Ms. Riske treating every clarifying question as a covert attack.
+
+Hela, at 7:21 p.m., did the thing she had decided in the prior week she would do if the meeting reached this exact register. She tabled the renovation vote. She did not table it for next month. She tabled it for the January meeting, three months out, and she announced — on the record, into the basement's amplifying acoustics — that the intervening meetings would not include the renovation budget on the agenda and that the January vote would be conducted by written ballot.
+
+Mr. Pall objected. Ms. Riske objected. The two objections, in Hela's quiet observation, were the first two sentences either of them had said that month with which the other agreed.
+
+The remaining four board members supported the chair. The motion carried. The meeting closed at 7:48 p.m. on the building's standard fourth-quarter financial review, which the **peevish** but newly subdued senior members allowed to proceed without comment. The garbage-room renovation, voted on by written ballot in January, passed seven-to-zero.`,
+  questions: [
+    {
+      id: 1,
+      kind: "vocab-context",
+      prompt: 'In this sentence, the word "splenetic" most nearly means:',
+      quote:
+        '"Ms. Riske, in her response, was splenetic — her tone moved past disagreement into the kind of ill-tempered pronouncement the room\'s acoustics multiplied..."',
+      options: [
+        "Cheerful and conciliatory in tone.",
+        "Marked by bad-tempered, spiteful ill-humor.",
+        "Reluctant to speak at length on the record.",
+        "Carefully neutral and unemotional.",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Splenetic" describes ill-tempered, spiteful behavior — exactly the register the next clause unpacks ("ill-tempered pronouncement").',
+    },
+    {
+      id: 2,
+      kind: "vocab-context",
+      prompt: 'In this sentence, the word "rancorous" most nearly means:',
+      quote:
+        '"...accused Ms. Riske of having harbored a rancorous opposition to him personally for the entire eleven years they had served together..."',
+      options: [
+        "Briefly amused and easily forgotten.",
+        "Filled with bitter, long-standing resentment.",
+        "Politely indifferent to procedural matters.",
+        "Quietly cooperative behind the scenes.",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Rancorous" denotes deep, lingering bitterness — the eleven-year time frame and the 2014 dispute confirm the long-standing resentment reading.',
+    },
+    {
+      id: 3,
+      kind: "tone-purpose",
+      prompt:
+        "Why does the chair, Hela, table the renovation vote for January with a written-ballot procedure rather than for the next monthly meeting?",
+      options: [
+        "She intends to cancel the renovation entirely.",
+        "Pushing the vote three months out and converting it to a written ballot strips the basement room\'s amplifying acoustics — and the two senior members\' standing performance for that room — out of the decision: the vote will be made on paper, in members\' homes, where neither bilious nor splenetic register can affect the count.",
+        "She wants Mr. Pall and Ms. Riske to recuse themselves from the vote entirely.",
+        "She is following a procedural requirement of the building\'s bylaws.",
+      ],
+      correctIndex: 1,
+      explanation:
+        "Removing the room and the live audience removes the leverage of the two senior members\' performative acrimony — the written ballot is the structural fix to the acoustics problem the chair has diagnosed.",
+    },
+    {
+      id: 4,
+      kind: "inference",
+      prompt:
+        "Based on the passage, what can the reader most reasonably infer from the narrator\'s observation that the two senior members\' objections to tabling the vote were the first sentences either of them had said that month with which the other agreed?",
+      options: [
+        "The two members are about to reconcile their long-standing dispute.",
+        "Both senior members understood, correctly, that the chair\'s tabling-and-written-ballot move removed the venue in which their personal feud had been the central event of every prior meeting — and the unanimous objection reveals that the feud itself, not the renovation, was the asset they had been protecting.",
+        "The chair\'s decision was procedurally improper.",
+        "The other four board members had pre-arranged the tabling motion.",
+      ],
+      correctIndex: 1,
+      explanation:
+        "The shared objection exposes that what both senior members were protecting was the venue for their feud, not any particular position on the renovation.",
+    },
+    {
+      id: 5,
+      kind: "substitution",
+      prompt:
+        'Which single word could replace "nettle" in the sentence below without changing its meaning?',
+      quote:
+        '"The newer board members... had attempted to nettle the two senior members into either resolving the underlying dispute or recusing themselves..."',
+      options: ["Praise", "Provoke", "Compensate", "Photograph"],
+      correctIndex: 1,
+      explanation:
+        '"Provoke" matches "nettle" — both describe deliberately irritating someone in a way meant to produce a reaction.',
+    },
+    {
+      id: 6,
+      kind: "main-idea",
+      prompt:
+        "Which sentence best summarizes the central idea or arc of the passage?",
+      options: [
+        "Two long-serving co-op board members publicly reconcile their feud during a renovation discussion.",
+        "A co-op board chair, after watching two senior members\' acrimony — bilious, splenetic, vitriolic, and rancorous in turn — capture three consecutive monthly meetings, removes their venue by tabling the renovation vote three months out and converting it to a written ballot; both senior members object in unison, the motion carries, and the renovation passes seven-to-zero in January.",
+        "A co-op board votes to remove two long-serving members from the renovation committee.",
+        "A co-op board cancels its monthly meetings until the renovation dispute is resolved.",
+      ],
+      correctIndex: 1,
+      explanation:
+        "The arc is exactly the chair\'s structural fix — removing the live-room venue that had been amplifying the feud — and the unanimous January vote that confirms the underlying renovation question was never the actual obstacle.",
+    },
+  ],
+};
+
+const MISSION_40_SET_2: SetReading = {
+  title: "The Innkeeper's October Letter",
+  subtitle:
+    "A personal essay by the manager of a small rural inn, written as her standing end-of-month letter to her floor staff about three difficult guests and the difference between guests who can be vexed back into civility and guests who cannot.",
+  format: "Personal Essay",
+  readingMinutes: 4,
+  words: [
+    "vex",
+    "irk",
+    "incense",
+    "exasperate",
+    "bristle",
+    "rankle",
+    "surly",
+    "cantankerous",
+    "querulous",
+    "apoplectic",
+  ],
+  passage: `I have run the Hollen Hill Inn for fourteen Octobers now, which is to say I have written, at the end of each of those Octobers, the same kind of letter to the same eight people on my floor staff. The letter is, by the standards of the hospitality literature my predecessor left in the office desk, slightly unusual: it is not a thank-you note, and it is not a corrective. It is, in plain terms, a list of the three guests in the prior month whose behavior was, in my professional read, the most difficult to absorb without **vexation**, accompanied by my honest assessment of how each of you handled them.
+
+The first guest in October was a Mr. P., a returning visitor of seven years, whose habit on each prior visit had been to be **cantankerous** about the dinner-service hours in a way that both of you on the dining-room shift had, by November of the prior year, learned to absorb with reasonable patience. This October he was, by my own observation across his three nights, considerably worse: not merely cantankerous but openly **surly** in the dining room and, by the second night, **querulous** at the front desk in the kind of low, complaining register that begins to **irk** the adjacent guests in line behind the complainant.
+
+Mira, you handled Mr. P.'s second-night front-desk register with the calm I have come to expect from you across three full Octobers. I noted, in particular, that you did not allow yourself to **bristle** when he characterized the room's heating as deliberately misadjusted; you simply offered the supplementary blanket from the linen closet and asked, in plain language, whether anything else would help.
+
+The second guest was a Ms. R., a first-time visitor, whose three-night stay began on a Wednesday with a complaint about the Wi-Fi that **exasperated** both of you on the desk shift in a way I am not, in this letter, going to pretend I did not also feel when she escalated the same complaint to me on the Thursday. The Wi-Fi was working. We tested it on three devices in her room while she was at breakfast. The complaint was, in its honest read, the kind of complaint a guest makes when she has decided in advance that the stay will not satisfy her and is gathering evidence accordingly.
+
+It is, I will say honestly, the kind of complaint that **rankles** — not in the moment, but over the days afterward, when one realizes the guest never intended to be persuaded by any answer. Tem, you absorbed Ms. R.'s Friday checkout — at which she announced she would be writing a review — without permitting yourself to **incense**, which is, in my professional read of fourteen Octobers, the harder achievement than meeting a sympathetic guest with warmth.
+
+The third guest was the one for whom I am writing this letter at all. Mr. S. arrived on a Saturday for a single night. He was, by every interaction his stay produced, **apoplectic** — at the parking arrangement, at the bedside lamp, at the breakfast menu — in a register the inn has not housed in my fourteen Octobers and that I do not, in honest planning terms, expect to house again.
+
+Hen, you de-escalated Mr. S. twice on the Saturday evening with a steadiness that I will note in your annual review. I would like the rest of you to know: the difference between a guest who can be **vexed** back into civility and a guest who cannot is the difference between work the inn is set up to do and work the inn is not. We are paid, in honest terms, to do the first. The second, when it appears, is what I am here for.
+
+I will see you all on the November shift schedule.`,
+  questions: [
+    {
+      id: 1,
+      kind: "vocab-context",
+      prompt: 'In this sentence, the word "querulous" most nearly means:',
+      quote:
+        '"...and, by the second night, querulous at the front desk in the kind of low, complaining register that begins to irk the adjacent guests in line behind the complainant."',
+      options: [
+        "Speaking quickly and confidently.",
+        "Habitually complaining in a whining or peevish manner.",
+        "Asking specific factual questions of the staff.",
+        "Cheerfully chatty with strangers.",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Querulous" describes habitual, whining complaint — the next phrase ("low, complaining register") names exactly that quality.',
+    },
+    {
+      id: 2,
+      kind: "vocab-context",
+      prompt: 'In this sentence, the word "apoplectic" most nearly means:',
+      quote:
+        '"He was, by every interaction his stay produced, apoplectic — at the parking arrangement, at the bedside lamp, at the breakfast menu — in a register the inn has not housed in my fourteen Octobers..."',
+      options: [
+        "Mildly disappointed.",
+        "Overcome with anger to the point of being nearly unable to act or speak; extremely furious.",
+        "Politely insistent on small adjustments.",
+        "Quietly resigned to the inconveniences.",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Apoplectic" denotes extreme, almost incapacitating fury — the trifling triggers (parking, lamp, menu) and the fourteen-October scarcity confirm this is the most extreme guest the manager has seen.',
+    },
+    {
+      id: 3,
+      kind: "tone-purpose",
+      prompt:
+        'Why does the manager close the letter by distinguishing "the difference between work the inn is set up to do and work the inn is not"?',
+      options: [
+        "To suggest the inn should refuse all difficult guests in the future.",
+        "The closing distinction tells the staff exactly where the manager\'s job, not theirs, begins: the cantankerous, surly, querulous register is staff work the inn is built to absorb, while the apoplectic register is the manager\'s — protecting her staff from the implicit expectation that they should personally absorb every kind of difficult guest the inn ever houses.",
+        "To prepare the staff for staff cuts in November.",
+        "To imply that Mr. S.\'s stay was not in fact difficult.",
+      ],
+      correctIndex: 1,
+      explanation:
+        "The closing draws a working line between staff-absorbable difficulty and the apoplectic register that is the manager\'s own job — explicit protection of her staff\'s scope.",
+    },
+    {
+      id: 4,
+      kind: "inference",
+      prompt:
+        "Based on the passage, what can the reader most reasonably infer about why the manager writes that absorbing Ms. R.\'s checkout without becoming incensed is \"the harder achievement than meeting a sympathetic guest with warmth\"?",
+      options: [
+        "She is criticizing Tem\'s desk performance.",
+        "Sympathetic guests reward staff effort with warmth, which is intrinsically reinforcing; a guest who has decided in advance to write a negative review provides no reward and active provocation, so absorbing her without becoming incensed is unsubsidized emotional labor — and the manager wants the staff to recognize that the harder, less visible work is the one she most values.",
+        "Tem received an unfair review on the inn\'s public listing.",
+        "The manager is preparing to formally reprimand Tem for an over-reaction.",
+      ],
+      correctIndex: 1,
+      explanation:
+        "The harder achievement is the unrewarded one — and the manager is naming it explicitly so the staff knows that absorbing-without-warmth is the labor she values most.",
+    },
+    {
+      id: 5,
+      kind: "substitution",
+      prompt:
+        'Which single word could replace "exasperated" in the sentence below without changing its meaning?',
+      quote:
+        '"...a complaint about the Wi-Fi that exasperated both of you on the desk shift in a way I am not, in this letter, going to pretend I did not also feel..."',
+      options: ["Soothed", "Frustrated", "Confused", "Photographed"],
+      correctIndex: 1,
+      explanation:
+        '"Frustrated" matches "exasperated" — both describe intense irritation produced by a persistent, unreasonable provocation.',
+    },
+    {
+      id: 6,
+      kind: "main-idea",
+      prompt:
+        "Which sentence best summarizes the central idea or arc of the essay?",
+      options: [
+        "An innkeeper announces that her inn will no longer accept difficult guests.",
+        "A fourteen-year innkeeper writes her standing end-of-month letter naming the three difficult October guests — a cantankerous returning visitor, an exasperating one-time guest, and a single apoplectic Saturday arrival — and uses the closing to tell her staff exactly which kinds of difficulty are theirs to absorb and which are her own.",
+        "An innkeeper apologizes to her staff for failing to handle three October guests personally.",
+        "An innkeeper resigns from her position after a difficult October.",
+      ],
+      correctIndex: 1,
+      explanation:
+        "The essay\'s spine is the standing letter\'s assessment of three guests and the manager\'s explicit drawing of the line between staff-absorbable difficulty and the manager\'s own scope.",
+    },
+  ],
+};
+
+const MISSION_40_SET_3: SetReading = {
+  title: "The Subsidy Letter",
+  subtitle:
+    "A personal essay by the founder of a regional dance collective, written three weeks after the state arts council declined to renew the subsidy that had supported the company for seventeen continuous years.",
+  format: "Personal Essay",
+  readingMinutes: 4,
+  words: [
+    "incensed",
+    "glower",
+    "rile",
+    "subsidy",
+    "subsequent",
+    "stupefied",
+    "streamlined",
+    "storied",
+    "stigmas",
+    "statuesque",
+  ],
+  passage: `The morning the state arts council's letter arrived, I was the only person in the studio, which was, in honest retrospect, the right way to read it. I had founded the Brell Regional Dance Collective twenty-one years earlier in a converted feed store on the edge of a small town whose **storied** civic pride did not, at that point, extend in any practical sense to contemporary dance. The state **subsidy**, when it had first been awarded to us in the spring of our fourth year, had been the line on the budget that converted the collective from a passion project subsidizing itself on rehearsal-fee discounts into a small institution that could pay its dancers an honest wage.
+
+The letter informed us that the subsidy, after seventeen continuous years of renewal, would not be renewed in the **subsequent** fiscal year.
+
+I read the letter twice. I was not, in the first reading, **incensed**. I was, in the honest term, **stupefied** — the kind of stunned slowness in which the brain has not yet decided which of several plausible reactions to commit to. I sat at the small office desk in the corner of the studio for what was probably four minutes, looking out the window at the parking lot in which our principal dancer's **statuesque** silhouette would, in another half hour, appear with her morning coffee on the way to the eight-thirty class.
+
+I did, in the second reading, begin to **rile**. The letter's second paragraph contained two sentences I read three times each — the first characterizing the council's decision as part of a "**streamlined** portfolio strategy" and the second noting that the council's remaining grants would be directed toward applicants whose programming "more directly addresses the cultural **stigmas** the council's current strategic plan has prioritized." The two sentences, taken together, were the kind of bureaucratic language that makes one **glower** at the page in a way the page itself, of course, cannot register.
+
+I did not write the response that morning. I made the eight-thirty class. I taught the ten o'clock rehearsal. I went home at four. I drafted the response on the Thursday, in three honest paragraphs that did not characterize the council's decision as a betrayal, that did not invoke the collective's twenty-one-year record as a counter-claim, and that asked, in plain language, only one question: which two of the council's newly prioritized cultural stigmas the council believed the collective's prior programming had failed to address, and what specific change in our next season's programming would, in the council's honest view, restore eligibility for the renewal cycle two years out.
+
+The reply, when it came eleven days later, contained no answer to either question. It contained only a restatement of the original letter's second paragraph and an invitation to attend a council-wide informational session in March.
+
+I am writing this in November. The collective's board met last week. We have, in the honest accounting, eight months of operating runway at the current budget, fourteen at a reduced one. We voted to begin the reduced budget on the first of January, which is the cut we can absorb without losing dancers; we voted to keep the storied repertory we had been planning for the spring; and we voted, unanimously, to attend the March session and to ask the same two questions in person, on the record, in front of whatever other applicants were also present in the room.`,
+  questions: [
+    {
+      id: 1,
+      kind: "vocab-context",
+      prompt: 'In this sentence, the word "stupefied" most nearly means:',
+      quote:
+        '"I was not, in the first reading, incensed. I was, in the honest term, stupefied — the kind of stunned slowness in which the brain has not yet decided which of several plausible reactions to commit to."',
+      options: [
+        "Sharply alert and focused.",
+        "So astonished or shocked as to be unable to think or react normally; stunned.",
+        "Quietly relieved by the news.",
+        "Annoyed but composed.",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Stupefied" describes the stunned slowness the next clause names directly — the brain unable to commit to any single reaction.',
+    },
+    {
+      id: 2,
+      kind: "vocab-context",
+      prompt: 'In this sentence, the word "storied" most nearly means:',
+      quote:
+        '"...a small town whose storied civic pride did not, at that point, extend in any practical sense to contemporary dance."',
+      options: [
+        "Recently established and unfamiliar.",
+        "Celebrated or notable in history; famous for a remarkable past.",
+        "Composed entirely of fictional accounts.",
+        "Built across multiple architectural levels.",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Storied" describes a long, notable historical reputation — the irony of the sentence is that the storied pride did not, however, extend to the new art form.',
+    },
+    {
+      id: 3,
+      kind: "tone-purpose",
+      prompt:
+        "Why does the narrator's drafted response to the council ask only one specific procedural question rather than characterizing the decision as a betrayal or invoking the collective\'s twenty-one-year record?",
+      options: [
+        "She intends to dissolve the collective regardless of the council\'s answer.",
+        "Asking one specific procedural question — which two stigmas, what specific change, what would restore eligibility — converts the dispute from a tone-and-record argument the council can ignore into a documentary record the council must either answer or refuse to answer; the refusal, when it comes, becomes the actual evidence of the council\'s decision-making.",
+        "The collective\'s board required her to draft the response in that exact form.",
+        "She is preparing to file a legal complaint against the council.",
+      ],
+      correctIndex: 1,
+      explanation:
+        "The single specific question converts an emotional dispute into a documentary one — and the council\'s non-answer reply becomes the actual record of the decision.",
+    },
+    {
+      id: 4,
+      kind: "inference",
+      prompt:
+        "Based on the passage, what can the reader most reasonably infer about the collective\'s decision to ask the same two questions in person at the March session, in front of whatever other applicants were also present in the room?",
+      options: [
+        "The collective intends to publicly embarrass the council\'s staff.",
+        "Asking in person, in front of other applicants, converts the council\'s prior non-answer from a private exchange into a public record other applicants will have heard — which raises the cost to the council of giving the same non-answer twice and creates institutional pressure the eleven-day private reply could not.",
+        "The board hopes another applicant in the room will defend their grant application.",
+        "The board has no further plan after the March session.",
+      ],
+      correctIndex: 1,
+      explanation:
+        "The public venue raises the cost of a repeat non-answer — converting a private bureaucratic exchange into an institutional record other applicants witness.",
+    },
+    {
+      id: 5,
+      kind: "substitution",
+      prompt:
+        'Which single word could replace "glower" in the sentence below without changing its meaning?',
+      quote:
+        '"...the kind of bureaucratic language that makes one glower at the page in a way the page itself, of course, cannot register."',
+      options: ["Smile", "Scowl", "Whisper", "Photograph"],
+      correctIndex: 1,
+      explanation:
+        '"Scowl" matches "glower" — both describe an angry, sullen stare directed at something.',
+    },
+    {
+      id: 6,
+      kind: "main-idea",
+      prompt:
+        "Which sentence best summarizes the central idea or arc of the essay?",
+      options: [
+        "A regional dance collective announces it is closing after losing its state subsidy.",
+        "The founder of a twenty-one-year regional dance collective, after the state arts council declines a seventeen-year subsidy renewal in language about a streamlined portfolio and prioritized cultural stigmas, drafts a single-question procedural response, receives a non-answer reply, and votes with her board to ask the same questions in person at the council\'s March public session.",
+        "A regional arts council reverses its decision to cut funding after a public letter from a dance collective.",
+        "A dance collective replaces its founder after losing a state subsidy renewal.",
+      ],
+      correctIndex: 1,
+      explanation:
+        "The arc moves precisely from the letter\'s arrival, through the founder\'s drafted single-question response, to the board\'s decision to repeat the question publicly at the March session.",
+    },
+  ],
+};
+
+const MISSION_41_SET_1: SetReading = {
+  title: "The Charge Nurse Letter",
+  subtitle:
+    "A personal essay by a senior emergency-department charge nurse, written at the residency director\'s request as a brief account of the working composure the night shift expects of an incoming first-year resident in her first six months.",
+  format: "Personal Essay",
+  readingMinutes: 4,
+  words: [
+    "becalm",
+    "composure",
+    "conciliate",
+    "halcyon",
+    "quell",
+    "sangfroid",
+    "sedative",
+    "sedentary",
+    "serenity",
+    "unflappable",
+  ],
+  passage: `I have been a charge nurse on the night shift at Brell Regional's emergency department for nineteen years, and I am writing this — at the request of the residency program's director — as a brief account of how I would describe, to an incoming first-year resident, the specific kind of professional **composure** the night shift expects of her in her first six months.
+
+The composure I am describing is not **serenity**. I want to be careful, in this letter, not to oversell the temperament. The night shift does not produce nurses who are, in any honest reading of the term, serene. The shift can produce nurses who are, after enough years, reliably **unflappable** in the moment of the bay's acute deterioration — which is the temperament the resident will, in her first six months, observe in three or four of us and assume, incorrectly, is the same thing as inner calm.
+
+It is not. The unflappable register is, in my honest read of nineteen years, a working composure assembled deliberately from three components, none of which I would describe to the resident as resembling the **halcyon** ease the public-facing imagery of nursing sometimes suggests.
+
+The first component is the simple decision to **becalm** one's own breathing in the first eight seconds of a code, which the resident should understand is a learned action and not an innate disposition. We breathe deliberately because the bay reads our breathing before it reads our words. A nurse whose breathing is fast cannot, by any technique I have observed in nineteen years, **quell** the rising anxiety of an alert patient on the next gurney.
+
+The second component is the working choice to **conciliate** — not capitulate to, but conciliate — the family member who arrives in the bay in the wrong emotional register for the moment. The conciliation is not soft. It is, in honest terms, the brisk redirection of the family member's attention to a small task within their capacity (holding a hand, fetching water, sitting in the corner chair) so that the bay can continue its actual work without the family member's presence becoming the bay's second crisis. The resident will watch us perform this redirection eight or ten times in her first month and, I expect, ask me about it in her second.
+
+The third component is the one I am the most careful about teaching. It is the working **sangfroid** of receiving a piece of information from the attending — a lab value, a vital sign, a CT result — that the resident has not yet learned to absorb without visible reaction. The sangfroid is not concealment. It is the working pause, of perhaps two seconds, in which the nurse decides which of the three or four patients in adjacent bays should, in honest triage terms, be told what about the new information and on what timing.
+
+What I want the resident to understand, in her first six months, is that none of this composure is a **sedative**. The night shift does not, in honest terms, calm the nurse. It teaches the nurse a small repertoire of working actions that look, from the outside, like calm. The actual interior is a different thing entirely, which is why the senior nurses on the shift are not, in our off-hours, **sedentary** people. We walk, we garden, we run, we spend our weekends in rooms that bear no resemblance to the bay. The interior pressure of nineteen years of unflappable working composure is not, in my honest experience, dischargeable on the shift itself. It discharges later, and it discharges in motion.
+
+I will, at the resident's first night-shift orientation, repeat one sentence from this letter aloud, which is the sentence I would like her to remember in her first acute deterioration: composure is not serenity, and it is something we are doing, not something we are.`,
+  questions: [
+    {
+      id: 1,
+      kind: "vocab-context",
+      prompt: 'In this sentence, the word "unflappable" most nearly means:',
+      quote:
+        '"The shift can produce nurses who are, after enough years, reliably unflappable in the moment of the bay\'s acute deterioration..."',
+      options: [
+        "Easily upset by sudden changes in the bay.",
+        "Not easily disturbed; remaining outwardly calm and composed under pressure.",
+        "Rotating frequently between assignments to avoid burnout.",
+        "Reluctant to participate in a code without supervision.",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Unflappable" describes outward calm under pressure — the next clause clarifies that residents will mistake this outward calm for inner calm.',
+    },
+    {
+      id: 2,
+      kind: "vocab-context",
+      prompt: 'In this sentence, the word "sangfroid" most nearly means:',
+      quote:
+        '"It is the working sangfroid of receiving a piece of information from the attending — a lab value, a vital sign, a CT result — that the resident has not yet learned to absorb without visible reaction."',
+      options: [
+        "An open, expressive emotional response.",
+        "Composure or coolness in the face of difficult or alarming information.",
+        "A formal medical diagnostic procedure.",
+        "A familial bond between long-serving colleagues.",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Sangfroid" denotes coolness under pressure — exactly the absence-of-visible-reaction the next clause names as the resident\'s missing skill.',
+    },
+    {
+      id: 3,
+      kind: "tone-purpose",
+      prompt:
+        'Why does the nurse insist that the composure she is describing is "not serenity" and that the unflappable register is "something we are doing, not something we are"?',
+      options: [
+        "To suggest that nurses with serene temperaments should not work the night shift.",
+        "Distinguishing the working composure from inner serenity protects the resident from the most damaging mistake of her first year — assuming senior nurses are temperamentally calm and that her own ordinary anxiety is therefore evidence she is unsuited to the work; the letter\'s entire frame is that the composure is a learned action she can acquire, not a disposition she either has or lacks.",
+        "To imply that the senior nurses are not, in fact, competent.",
+        "To prepare the resident for a transfer to a different department.",
+      ],
+      correctIndex: 1,
+      explanation:
+        "The framing protects the resident from misreading senior composure as innate temperament — and frames the working composure as something she can be taught.",
+    },
+    {
+      id: 4,
+      kind: "inference",
+      prompt:
+        "Based on the passage, what can the reader most reasonably infer about why the nurse mentions that senior nurses on the shift are not sedentary in their off-hours and that the interior pressure discharges in motion?",
+      options: [
+        "She is recommending a specific exercise regimen for the resident.",
+        "The off-hours observation completes the letter\'s honest accounting: working composure on the shift is not free, and the resident should expect the cost to come due elsewhere — protecting her from the implicit assumption that an unflappable shift means an unaffected nurse, and from the long-term professional risk of trying to discharge that pressure on the shift itself.",
+        "The hospital provides a wellness subsidy for senior staff.",
+        "Sedentary nurses cannot, in fact, perform the night shift.",
+      ],
+      correctIndex: 1,
+      explanation:
+        "The off-hours observation makes explicit the cost of working composure — and warns the resident not to attempt to absorb it on the shift itself.",
+    },
+    {
+      id: 5,
+      kind: "substitution",
+      prompt:
+        'Which single word could replace "quell" in the sentence below without changing its meaning?',
+      quote:
+        '"A nurse whose breathing is fast cannot, by any technique I have observed in nineteen years, quell the rising anxiety of an alert patient on the next gurney."',
+      options: ["Amplify", "Subdue", "Diagnose", "Photograph"],
+      correctIndex: 1,
+      explanation:
+        '"Subdue" matches "quell" — both describe forcibly reducing or putting down something rising, in this case the patient\'s anxiety.',
+    },
+    {
+      id: 6,
+      kind: "main-idea",
+      prompt:
+        "Which sentence best summarizes the central idea or arc of the essay?",
+      options: [
+        "A senior charge nurse describes the halcyon serenity of her nineteen years on the night shift.",
+        "A senior emergency-department charge nurse describes the working composure the night shift expects of an incoming resident — built deliberately from breathing, conciliation of family members, and sangfroid in receiving difficult information — and insists explicitly that this composure is not serenity but a learned action whose cost discharges, on senior nurses, in their off-hours and in motion.",
+        "A charge nurse argues that the residency program should remove the night-shift requirement entirely.",
+        "A charge nurse announces her own retirement after nineteen years.",
+      ],
+      correctIndex: 1,
+      explanation:
+        "The essay\'s spine is the three-component working composure and the explicit framing that the composure is a learned action, not a temperament — with the off-hours discharge as honest accounting of its cost.",
+    },
+  ],
+};
+
+const MISSION_41_SET_2: SetReading = {
+  title: "The Editor's Memo",
+  subtitle:
+    "A small-newspaper editor\'s standing memo to her newsroom, accompanying a decision to shelve an eleven-week city-hall investigation, laying out in honest order the four reasons the story will not run.",
+  format: "Personal Essay",
+  readingMinutes: 4,
+  words: [
+    "scuttle",
+    "secretes",
+    "sectarian",
+    "segue",
+    "self-styled",
+    "shelve",
+    "skulduggery",
+    "skulk",
+    "solipsistic",
+    "staple",
+  ],
+  passage: `I am writing this as the editor's memo that, on this newspaper, accompanies any decision to **shelve** a story we had previously committed to running. The memo is, in our newsroom's standing practice, distributed to the three reporters and the one copy editor who worked on the story in question, and it is filed in the editor's office in a binder I update once a month.
+
+The story we are shelving is the one Ren Pollard, our city-hall reporter, has been working on for eleven weeks: the alleged corridor arrangement between the deputy city manager and the engineering firm whose name has appeared on three of the past five no-bid sidewalk-replacement contracts. I am shelving the story, today, for reasons I am going to lay out in the next four paragraphs in honest order.
+
+The first reason is that the **skulduggery** the story alleges is, in our current evidence, smaller than the story's framing requires. Ren has assembled a careful timeline of the deputy city manager's evening calendar, in which an unusual number of dinners with the firm's principal partner appear in the months before each contract award. The timeline is real. What the timeline does not yet establish, in any way I can defend in the editor's chair when the city attorney telephones at nine the next morning, is that the dinners caused the awards or that the firm **secretes** any payment back to the deputy city manager in any traceable form.
+
+The second reason is that one of Ren's two sources is a **self-styled** civic watchdog whose past four tips to this newsroom, on review, have proven to be the **solipsistic** preoccupations of a man who reads every routine procurement decision as evidence of a coordinated municipal conspiracy directed personally against him. I am not characterizing his tips as worthless — two of the four had real underlying facts — but I am characterizing them as a category of source the story's framing cannot afford to lean on, because the city attorney's morning telephone call will identify the source by name within sixty seconds.
+
+The third reason is that Ren's second source, who is a current municipal employee, has asked us to **scuttle** the section of the story that quotes her directly, on the grounds that her position in the engineering review office would be untenable if the quote ran. The request was not part of our original agreement with her. I am honoring it, however, because the alternative — running the quote anonymously and watching the source be identified internally within a week — is the kind of newsroom decision that **segues**, in my experience, into a year of sources in adjacent municipal departments declining to take our reporter's calls.
+
+The fourth reason is the one I am most careful about. The story, in its current draft, has begun to read as **sectarian** — in the specific sense that its rhetorical posture has shifted from reporting the documentary record to litigating, in the lede paragraph, a longstanding political dispute between the deputy city manager's faction and the council faction that has, for two years, opposed her. The opposing faction is, in honest terms, a faction this newspaper does not work for. We do not work for the deputy city manager either.
+
+I am asking Ren to continue the underlying reporting. I am asking him not to **skulk** around the story as a personal cause across the next six months but to return to it, in the standing news-meeting rotation, only when the documentary record has the additional material the current draft is missing. The dinners-and-contracts timeline will, in the meantime, remain a **staple** of his beat notes, and the binder in my office will hold this memo until the day the story runs.`,
+  questions: [
+    {
+      id: 1,
+      kind: "vocab-context",
+      prompt: 'In this sentence, the word "skulduggery" most nearly means:',
+      quote:
+        '"The first reason is that the skulduggery the story alleges is, in our current evidence, smaller than the story\'s framing requires."',
+      options: [
+        "Routine clerical work performed at city hall.",
+        "Underhanded, deceitful, or unscrupulous behavior or dealings.",
+        "A minor procedural irregularity.",
+        "Routine reporting on procurement decisions.",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Skulduggery" denotes underhanded, deceitful behavior — the kind of dealing the story alleges between the deputy city manager and the engineering firm.',
+    },
+    {
+      id: 2,
+      kind: "vocab-context",
+      prompt: 'In this sentence, the word "solipsistic" most nearly means:',
+      quote:
+        '"...the solipsistic preoccupations of a man who reads every routine procurement decision as evidence of a coordinated municipal conspiracy directed personally against him."',
+      options: [
+        "Carefully evidence-based and verifiable.",
+        "Excessively self-centered; treating one\'s own perspective and grievances as the central reality.",
+        "Originating in a coordinated political faction.",
+        "Politically neutral and dispassionate.",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Solipsistic" describes excessive self-absorption — exactly the pattern of reading every neutral decision as a personal attack the next clause unpacks.',
+    },
+    {
+      id: 3,
+      kind: "tone-purpose",
+      prompt:
+        'Why does the editor honor the second source\'s request to scuttle her direct quote even though "the request was not part of our original agreement with her"?',
+      options: [
+        "To preserve a personal friendship with the source.",
+        'Honoring the unanticipated request — even though the original agreement did not require it — preserves the long-term institutional relationship between the newsroom and sources in adjacent municipal departments; running the quote anonymously and watching it be identified internally would, by the editor\'s read, segue into a year of sources declining to take the reporter\'s calls, a cost much larger than this single story.',
+        "The newsroom\'s lawyer required her to honor the request.",
+        "The source is no longer employed by the city.",
+      ],
+      correctIndex: 1,
+      explanation:
+        "The decision protects the newsroom\'s downstream sourcing capacity — the cost of one shelved quote is much smaller than the cost of a year of declined calls.",
+    },
+    {
+      id: 4,
+      kind: "inference",
+      prompt:
+        "Based on the passage, what can the reader most reasonably infer about the editor\'s instruction that Ren \"not skulk around the story as a personal cause across the next six months\"?",
+      options: [
+        "The editor is removing Ren from the city-hall beat entirely.",
+        "The editor is naming a specific occupational hazard — a reporter whose committed story has been shelved often turns the story into a private campaign carried on outside the standing news-meeting rotation, which damages both the reporter\'s judgment and the newsroom\'s standing process; the instruction protects Ren from that pattern while explicitly preserving the underlying reporting.",
+        "The editor doubts Ren\'s overall competence as a reporter.",
+        "The editor intends to assign the story to a different reporter.",
+      ],
+      correctIndex: 1,
+      explanation:
+        "The instruction names a specific risk to the reporter and the newsroom — and explicitly preserves the underlying reporting through the standing rotation rather than the personal-cause channel.",
+    },
+    {
+      id: 5,
+      kind: "substitution",
+      prompt:
+        'Which single word could replace "shelve" in the sentence below without changing its meaning?',
+      quote:
+        '"...the editor\'s memo that, on this newspaper, accompanies any decision to shelve a story we had previously committed to running."',
+      options: ["Promote", "Postpone", "Print", "Photograph"],
+      correctIndex: 1,
+      explanation:
+        '"Postpone" matches "shelve" — both describe deferring something previously planned, with the implication of holding it for possible later use.',
+    },
+    {
+      id: 6,
+      kind: "main-idea",
+      prompt:
+        "Which sentence best summarizes the central idea or arc of the memo?",
+      options: [
+        "A small-newspaper editor announces that her city-hall reporter is being reassigned.",
+        "A small-newspaper editor\'s standing memo lays out, in honest order, the four reasons an eleven-week city-hall investigation is being shelved — evidence smaller than the story\'s framing requires, a self-styled solipsistic source, an honored request from a current municipal source, and a draft that has begun to read as sectarian — while explicitly preserving the underlying reporting through the standing news-meeting rotation.",
+        "A small-newspaper editor accuses a reporter of skulduggery in the handling of a city-hall story.",
+        "A small-newspaper editor publishes an apology to the deputy city manager.",
+      ],
+      correctIndex: 1,
+      explanation:
+        "The memo\'s spine is exactly the four-reason honest accounting and the explicit preservation of the underlying reporting through the standing rotation.",
+    },
+  ],
+};
+
+const MISSION_41_SET_3: SetReading = {
+  title: "The Diner's Last Friday",
+  subtitle:
+    "A short story, written as a binder entry by a long-tenured grill cook, about the Friday-night booth incident that scotched a chef\'s promotion and the kitchen response that did not happen.",
+  format: "Short Story",
+  readingMinutes: 4,
+  words: [
+    "ruffian",
+    "saccharine",
+    "sapid",
+    "satiated",
+    "scapegoat",
+    "sclerotic",
+    "scofflaw",
+    "scotch",
+    "scrutinize",
+    "scuffle",
+  ],
+  passage: `I had been the grill cook at Vella's Diner for nine years on the Friday in question, and I am writing this for the binder my successor will inherit when I leave the kitchen at the end of the month. The Friday in question was, in the honest reading the binder requires, the day Chef Mer's long-awaited promotion to the Halmar Hotel's flagship kitchen was **scotched**, and the binder should record both what happened in the booth at the back of the dining room at 9:14 p.m. and what did not happen in the kitchen at 9:18.
+
+The booth at the back was the one the regulars knew belonged, on Friday nights, to a man we called Old Renn, a retired ironworker who had been a Vella's regular for thirty-one years and whose Friday meatloaf order — extra gravy, no peas — had become, in the kitchen's informal vocabulary, the standing order against which the night's gravy stock was timed.
+
+I am writing this paragraph carefully because the binder should not characterize Old Renn as a **ruffian**. He was not. He was a cantankerous regular who, in nine years, had never raised his voice in the dining room. The Friday in question, however, his booth had been mistakenly seated, by a new host, with two younger men whose conversation, by 9:00 p.m., had grown loud enough to make the rest of the dining room **scrutinize** them — and one of whom, by 9:13, had said something to Old Renn that the binder will record only as "of the kind that, in this dining room, on this regular, will not be absorbed."
+
+The **scuffle** at 9:14 was brief. It involved Old Renn, the louder of the two younger men, an overturned water glass, and the corner of the booth's table. No one was injured. The host, who had been standing six feet away, separated the three of them within twenty seconds. The two younger men paid their tab and left. Old Renn finished his meatloaf.
+
+What did not happen in the kitchen at 9:18, and what the binder must record, was Chef Mer's response. The Halmar Hotel's recruiter was, by an unfortunate coincidence the binder cannot soften, seated at the counter that Friday on a final observational visit. The recruiter saw the booth incident. She did not see the kitchen's response.
+
+What the kitchen's response should have been, in any honest read of nine years of Vella's practice, was for Chef Mer to walk out of the kitchen, speak to Old Renn at the booth for thirty seconds, and return. What the response actually was, in the honest record, was that Chef Mer remained at the pass and, when asked by the recruiter at 9:22 about the dining-room incident, characterized Old Renn — by name — as a **scofflaw** the diner had, in honest terms, "tolerated for too long."
+
+The characterization was not true. It was, in the binder's honest assessment, the **saccharine** kind of distancing language a kitchen reaches for when an outside observer is present and the kitchen has not decided which loyalty the moment requires. It was also the language that **scapegoated** a thirty-one-year regular for a host's seating mistake.
+
+The recruiter left at 9:35. The promotion call, which had been expected the following Tuesday, did not arrive. Chef Mer did not, in any **sapid** sense the kitchen would have recognized in any prior week, work the line for the rest of that month — his attention turned **sclerotic** and his decisions narrowed in a way the kitchen quietly worked around. Old Renn returned the following Friday, was given his usual booth, was **satiated** by the same meatloaf, and was not, in any conversation Chef Mer initiated, addressed about the prior week.
+
+The binder ends this entry here.`,
+  questions: [
+    {
+      id: 1,
+      kind: "vocab-context",
+      prompt: 'In this sentence, the word "scotched" most nearly means:',
+      quote:
+        '"The Friday in question was, in the honest reading the binder requires, the day Chef Mer\'s long-awaited promotion to the Halmar Hotel\'s flagship kitchen was scotched..."',
+      options: [
+        "Confirmed and finalized.",
+        "Decisively put a stop to; ended or thwarted.",
+        "Postponed until a later date.",
+        "Recorded in the binder for future reference.",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Scotched" means decisively ended — the rest of the binder entry confirms the promotion call never arrived after Friday.',
+    },
+    {
+      id: 2,
+      kind: "vocab-context",
+      prompt: 'In this sentence, the word "scapegoated" most nearly means:',
+      quote:
+        '"It was also the language that scapegoated a thirty-one-year regular for a host\'s seating mistake."',
+      options: [
+        "Publicly praised for an unrelated achievement.",
+        "Unfairly blamed for the wrongdoing or mistakes of others.",
+        "Promoted to a position of greater responsibility.",
+        "Quietly removed from the regular customer list.",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Scapegoated" means unfairly blamed for others\' mistakes — the binder is explicit that the seating error was the new host\'s, not Old Renn\'s.',
+    },
+    {
+      id: 3,
+      kind: "tone-purpose",
+      prompt:
+        'Why does the narrator open the binder entry with the careful sentence: "the binder should not characterize Old Renn as a ruffian"?',
+      options: [
+        "To suggest Old Renn was, in fact, a ruffian and the binder is being polite.",
+        'The careful disclaimer protects the historical record from being read decades later — by a future grill cook or owner — through the lens of the inaccurate characterization Chef Mer used at 9:22; the binder\'s job is precisely to preserve the right description of a thirty-one-year regular against the recruiter-day distortion that scotched the promotion.',
+        "The binder is required by law to characterize all regulars in neutral terms.",
+        "The narrator is preparing to defend Chef Mer\'s decision.",
+      ],
+      correctIndex: 1,
+      explanation:
+        "The disclaimer explicitly protects the long-run historical record against the recruiter-day characterization the kitchen knows was inaccurate.",
+    },
+    {
+      id: 4,
+      kind: "inference",
+      prompt:
+        "Based on the passage, what can the reader most reasonably infer about why the binder is careful to record both \"what happened in the booth at the back of the dining room at 9:14 p.m. and what did not happen in the kitchen at 9:18\"?",
+      options: [
+        "The narrator believes the booth incident is more important than the kitchen response.",
+        "The framing makes explicit the binder\'s judgment that the actual cause of the scotched promotion was not the dining-room scuffle the recruiter saw — which the kitchen could not have prevented — but the kitchen response that did not happen, which was within the kitchen\'s control and was the choice that revealed the chef\'s loyalty to a thirty-one-year regular under outside observation.",
+        "The kitchen response was, in fact, more dramatic than the booth incident.",
+        "The binder must record all dining-room incidents by federal regulation.",
+      ],
+      correctIndex: 1,
+      explanation:
+        "The dual record names the actual decisive moment — the absence of the expected kitchen response — as distinct from the unavoidable dining-room scuffle.",
+    },
+    {
+      id: 5,
+      kind: "substitution",
+      prompt:
+        'Which single word could replace "scrutinize" in the sentence below without changing its meaning?',
+      quote:
+        '"...whose conversation, by 9:00 p.m., had grown loud enough to make the rest of the dining room scrutinize them..."',
+      options: ["Ignore", "Examine", "Photograph", "Compensate"],
+      correctIndex: 1,
+      explanation:
+        '"Examine" matches "scrutinize" — both describe close, careful inspection of something.',
+    },
+    {
+      id: 6,
+      kind: "main-idea",
+      prompt:
+        "Which sentence best summarizes the central idea or arc of the passage?",
+      options: [
+        "A grill cook records the dining-room scuffle that ruined a chef\'s career through no fault of the kitchen\'s.",
+        "A nine-year grill cook\'s binder entry records the Friday-night booth scuffle a recruiter happened to witness, the kitchen response that did not happen, and the chef\'s saccharine in-the-moment characterization of a thirty-one-year regular as a scofflaw — the choice that scapegoated Old Renn for a seating mistake and scotched the promotion the recruiter had come to confirm.",
+        "A grill cook formally complains to management about a chef\'s mistreatment of a long-time regular.",
+        "A grill cook resigns from a diner after a Friday-night scuffle in the dining room.",
+      ],
+      correctIndex: 1,
+      explanation:
+        "The arc is exactly the binder\'s dual record — the unavoidable booth incident and the avoidable kitchen response — and the chef\'s in-the-moment characterization that scapegoated the regular and scotched the promotion.",
+    },
+  ],
+};
+
+const MISSION_42_SET_1: SetReading = {
+  title: "The Retiring Professor",
+  subtitle:
+    "A personal essay by a philosophy department chair, written as the introductory note to the printed program of a colleague\'s retirement symposium that will not contain the conventional elements such an event would normally include.",
+  format: "Personal Essay",
+  readingMinutes: 4,
+  words: [
+    "accolade",
+    "adulation",
+    "encomium",
+    "eulogy",
+    "exalt",
+    "homage",
+    "kudos",
+    "laud",
+    "panegyric",
+    "revere",
+  ],
+  passage: `I am writing this as the introductory note to the printed program of Professor Inel Strake's retirement symposium, which will be held in the philosophy department's seminar hall on the second Saturday of May. I am writing it as the chair of the department, in the standing voice the program requires, but I am writing it after deciding, three weeks ago in a small conversation with Inel herself in her office, that the program will not contain the conventional elements a retirement symposium of this scale would normally include.
+
+It will not contain the long **panegyric** that the chair traditionally delivers at the opening reception. It will not contain the multiple-author festschrift volume the department's alumni committee had begun assembling in the autumn. It will not contain the tribute video the audiovisual office had scheduled for the Friday afternoon recording session. The program will contain, instead, a single forty-five-minute address by Inel herself on the philosophical question her last published paper had begun to formulate, followed by ninety minutes of open discussion of the address by the symposium's registered attendees.
+
+The reason is one Inel and I discussed at some length, and I am, with her permission, recording the substance of it here. Inel's position is that the modern academic retirement symposium has, across the past two decades, drifted toward a register of **adulation** that the people being honored — herself among them, in her honest read — find professionally embarrassing. The drift is not, in her account, a matter of insincerity. It is a matter of form. The symposium's structural elements **exalt** the honoree by accumulating tributes whose individual moderation is overwhelmed by their collective effect, with the result that the symposium's actual content — the work the honoree spent forty years producing — is **eulogized** rather than examined.
+
+The accumulated **encomium**, in her honest reading of three prior such events, displaces the very engagement with the work the events ostensibly celebrate. The chair's opening address **lauds** the early career; the festschrift contributors **revere** the middle-period publications; the colleagues at the closing dinner offer **homage** to the late synthesizing volume. The honoree spends two days seated in the front row receiving the accumulated **accolades**. The honoree's actual current thinking — which is, after all, what a working philosopher cares to be engaged on — is, by the form of the event, structurally absent.
+
+Inel proposed, in our office conversation, the revised format the program now describes. She will deliver the forty-five-minute address. She has asked the department's graduate students, in particular, to come prepared to ask the kind of pressing technical questions her seminars have been famous for receiving and offering. She has asked the department's alumni — many of whom traveled some distance to attend — not to feel obliged to deliver any prepared **kudos** at any point on the day, on the grounds that the day's use of their attention will be better served by their participation in the open discussion than by their tribute.
+
+I will offer one sentence at the opening reception in lieu of the customary chair's remarks. The sentence will note, simply, that Inel has been our colleague for thirty-eight years and that the form of this symposium reflects what she most values about the work she has done. The remainder of the day will be hers to direct, which is — as she observed in the office conversation — the form of professional respect philosophical work most often deserves and most rarely receives.`,
+  questions: [
+    {
+      id: 1,
+      kind: "vocab-context",
+      prompt: 'In this sentence, the word "panegyric" most nearly means:',
+      quote:
+        '"It will not contain the long panegyric that the chair traditionally delivers at the opening reception."',
+      options: [
+        "A brief procedural announcement.",
+        "A formal speech of high or elaborate praise.",
+        "A printed program insert listing prior publications.",
+        "A scholarly rebuttal to a colleague\'s position.",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Panegyric" denotes a formal, elaborate speech of praise — the kind of address the chair traditionally delivers and that this program is deliberately omitting.',
+    },
+    {
+      id: 2,
+      kind: "vocab-context",
+      prompt: 'In this sentence, the word "encomium" most nearly means:',
+      quote:
+        '"The accumulated encomium, in her honest reading of three prior such events, displaces the very engagement with the work the events ostensibly celebrate."',
+      options: [
+        "A formal expression of warm, glowing praise.",
+        "A scholarly critique of the honoree\'s prior work.",
+        "An administrative summary of an academic career.",
+        "A neutral biographical statement.",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Encomium" denotes warm, glowing praise — the accumulated weight of which Inel argues displaces actual engagement with the honoree\'s work.',
+    },
+    {
+      id: 3,
+      kind: "tone-purpose",
+      prompt:
+        'Why does the chair say the symposium\'s structural elements exalt the honoree "by accumulating tributes whose individual moderation is overwhelmed by their collective effect"?',
+      options: [
+        "To accuse the prior contributors of insincere praise.",
+        'The phrasing identifies the actual mechanism of the problem — no single tribute is excessive, but the structural form of the symposium accumulates moderately-praising elements until the collective register becomes adulation; this insulates the chair\'s own argument from the easy counter that any single panegyric was earned, and locates the failure in the form of the event rather than in any contributor\'s judgment.',
+        "To suggest that the philosophy department has been mismanaged.",
+        "To imply that Inel\'s prior work does not deserve any praise at all.",
+      ],
+      correctIndex: 1,
+      explanation:
+        "The phrasing locates the failure in the cumulative form, not in any single contributor — protecting the argument from the easy counter and explaining why the entire form needs revising.",
+    },
+    {
+      id: 4,
+      kind: "inference",
+      prompt:
+        "Based on the passage, what can the reader most reasonably infer about why Inel asks the alumni \"not to feel obliged to deliver any prepared kudos at any point on the day\"?",
+      options: [
+        "She wishes to discourage alumni from attending the symposium.",
+        "Releasing the alumni from the obligation to prepare tributes converts the day\'s available attention from the production of tributes — which would have been written in advance and delivered without engaging the address — to the open discussion, where the alumni\'s actual present-day judgment about the philosophical question can be exercised; the form change is, in honest terms, the request that the day be a working day rather than a ceremonial one.",
+        "She is concerned the alumni will deliver inappropriately critical remarks.",
+        "She does not value the alumni\'s opinions of her work.",
+      ],
+      correctIndex: 1,
+      explanation:
+        "Releasing the alumni from prepared tributes redirects their attention to the day\'s open discussion — converting a ceremonial event into a working philosophical one.",
+    },
+    {
+      id: 5,
+      kind: "substitution",
+      prompt:
+        'Which single word could replace "revere" in the sentence below without changing its meaning?',
+      quote:
+        '"...the festschrift contributors revere the middle-period publications..."',
+      options: ["Mock", "Honor", "Forget", "Photograph"],
+      correctIndex: 1,
+      explanation:
+        '"Honor" matches "revere" — both describe regarding someone or something with deep respect.',
+    },
+    {
+      id: 6,
+      kind: "main-idea",
+      prompt:
+        "Which sentence best summarizes the central idea or arc of the essay?",
+      options: [
+        "A philosophy department chair announces that a colleague\'s retirement symposium has been canceled.",
+        "A philosophy department chair\'s introductory note explains that a thirty-eight-year colleague\'s retirement symposium will, at the colleague\'s own request, omit the panegyric, the festschrift, and the tribute video — replacing the conventional accumulated encomium with a forty-five-minute address by the honoree and ninety minutes of open discussion, on the argument that ceremonial form structurally displaces engagement with the work it ostensibly celebrates.",
+        "A philosophy department chair criticizes a retiring colleague\'s career.",
+        "A philosophy department chair appoints a successor at the opening reception.",
+      ],
+      correctIndex: 1,
+      explanation:
+        "The essay\'s spine is exactly the omitted ceremonial elements, the honoree\'s working-day replacement, and the structural argument about ceremonial form displacing engagement.",
+    },
+  ],
+};
+
+const MISSION_42_SET_2: SetReading = {
+  title: "The Comedian's Farewell Tour",
+  subtitle:
+    "A personal essay by a critic who attended the Halmar Theater stop of a renowned mid-career stand-up comic\'s farewell tour, written about the complicated middle thirty minutes the trade-press advance coverage had not prepared her for.",
+  format: "Personal Essay",
+  readingMinutes: 4,
+  words: [
+    "commendable",
+    "paean",
+    "plaudits",
+    "renowned",
+    "revulsion",
+    "riposte",
+    "risible",
+    "risque",
+    "rotund",
+    "zeitgeist",
+  ],
+  passage: `I went to see Vell Trimm's farewell tour at the Halmar Theater on the second Saturday of October. Trimm is, by any honest measure of the past twenty years of stand-up, a **renowned** working comic — not the household-name kind, but the sort whose name is known to every other working comic in three countries — and his farewell tour, which had been announced in the spring, had received the kind of advance **plaudits** from the trade press that sometimes attach to the exits of mid-career artists who decide, on their own timing, to leave the stage at the height of their craft rather than at its long erosion.
+
+I am writing this profile after the show because my honest reaction to the ninety-minute set was complicated in a way the trade-press advance coverage had not prepared me for, and because the complication is, in my read, the actual story of the tour.
+
+The first ten minutes of the set were, by every craft measure, **commendable**. Trimm has, across twenty years, developed a stage presence — a slightly **rotund**, deliberately unhurried physical comedy of timing and pause — that the trade press has correctly described as the most precise small-room delivery of his generation. The opening bit, on the small humiliations of pre-flight airport security, was a small **paean** to the genre of mundane-grievance observational comedy that Trimm did not invent but has, across his career, refined.
+
+The middle thirty minutes were where the set became the thing I am writing about. Trimm has, in his prior tours, reached occasionally for the **risque** material the late-career comic sometimes reaches for as a deliberate signal that the honoree is no longer playing for the broadcast networks' standards-and-practices department. The signal, in his prior tours, had been used sparingly. In the farewell set, it had become the main mode. The middle thirty minutes contained, by my honest count, four extended bits of risque material that the audience around me received with a mixture of dutiful laughter and — in the row in front of mine, at least — visible **revulsion**.
+
+I want to be careful, in this profile, to distinguish the revulsion from prudishness. The audience was not prudish. The bits were not, by any reasonable craft standard, well-written. They were, in two cases, **risible** in the unintended sense — the kind of material that produces audience laughter that the comic on stage has not earned and that the comic, on the night in question, did not appear to recognize as the wrong kind of laughter.
+
+The final twenty minutes of the set were the bits the trade-press advance had focused on: the long farewell address to the audiences of twenty years, the brief reflection on the **zeitgeist** of the late-1990s comedy clubs in which Trimm had begun his career, and the closing bit on the small-room craft that the broadcast circuit had, in his honest read of his own career, repeatedly failed to value at its actual worth.
+
+The closing twenty minutes were, by every craft measure, the strongest of the set. They were also, in my honest read, the bits that suggested the actual problem with the middle thirty: that the farewell tour had been built without the editorial **riposte** of the late-career collaborator who, in any prior decade of stand-up's production economy, would have privately told the comic that the risque mode could not, on its own, carry the middle of a ninety-minute farewell.
+
+I left the theater at 10:42 p.m. uncertain whether to characterize the set's middle thirty minutes as a craft failure or as the deliberate signal of an artist refusing, on his way out, to flatter the audience that had paid for the ticket. The trade press, in its post-show coverage the following week, settled on the second reading. I am, in this profile, going to leave the question to the reader.`,
+  questions: [
+    {
+      id: 1,
+      kind: "vocab-context",
+      prompt: 'In this sentence, the word "renowned" most nearly means:',
+      quote:
+        '"Trimm is, by any honest measure of the past twenty years of stand-up, a renowned working comic — not the household-name kind, but the sort whose name is known to every other working comic in three countries..."',
+      options: [
+        "Recently emerged and largely unknown.",
+        "Widely known and celebrated for excellence within a particular field.",
+        "Politically controversial in his industry.",
+        "Officially licensed by a national broadcaster.",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Renowned" describes wide recognition for excellence — qualified here to mean known within the working craft community rather than to the general public.',
+    },
+    {
+      id: 2,
+      kind: "vocab-context",
+      prompt: 'In this sentence, the word "risible" most nearly means:',
+      quote:
+        '"They were, in two cases, risible in the unintended sense — the kind of material that produces audience laughter that the comic on stage has not earned..."',
+      options: [
+        "Carefully written and craft-worthy.",
+        "Provoking laughter, especially of a derisive or unintended kind; absurd in a way that invites ridicule.",
+        "Too quiet for the audience to hear clearly.",
+        "Politically sensitive material the comic should have avoided.",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Risible" denotes laughter-provoking absurdity — the dash clause makes explicit that the laughter the bits produced was the wrong kind, not the earned kind.',
+    },
+    {
+      id: 3,
+      kind: "tone-purpose",
+      prompt:
+        'Why does the critic carefully distinguish "the revulsion from prudishness" before describing what was wrong with the middle thirty minutes?',
+      options: [
+        "To suggest the audience was, in fact, prudish.",
+        'The disclaimer protects the critic\'s argument from the easy counter that she is just objecting to mature material on conservative grounds; once the prudishness reading is explicitly removed, the actual diagnosis — that the bits were poorly written and produced unearned laughter — has to be engaged on its craft merits rather than dismissed as squeamishness.',
+        "She intends to write a separate profile about prudish audiences.",
+        "She is preparing to defend the comic\'s career to the trade press.",
+      ],
+      correctIndex: 1,
+      explanation:
+        "The disclaimer locks the critique to craft, not propriety — the easy counter is foreclosed before it can be made.",
+    },
+    {
+      id: 4,
+      kind: "inference",
+      prompt:
+        "Based on the passage, what can the reader most reasonably infer about why the critic ends the profile by leaving the question of craft failure versus deliberate signal \"to the reader\"?",
+      options: [
+        "She has no opinion on the matter.",
+        "Leaving the question to the reader honors the actual ambiguity her ninety minutes in the theater produced — and refuses the easier path the trade press took of settling on the more flattering of the two readings; the refusal is itself a small editorial commitment to the integrity of the critic\'s own honest reaction over the more publishable single-reading conclusion.",
+        "She intends to revise the profile for a second publication.",
+        "She believes both interpretations are equally implausible.",
+      ],
+      correctIndex: 1,
+      explanation:
+        "The unresolved ending preserves the actual ambiguity of the experience and refuses the trade press\'s tidier single-reading conclusion.",
+    },
+    {
+      id: 5,
+      kind: "substitution",
+      prompt:
+        'Which single word could replace "plaudits" in the sentence below without changing its meaning?',
+      quote:
+        '"...his farewell tour... had received the kind of advance plaudits from the trade press that sometimes attach to the exits of mid-career artists..."',
+      options: ["Criticism", "Praise", "Bills", "Photographs"],
+      correctIndex: 1,
+      explanation:
+        '"Praise" matches "plaudits" — both describe expressions of approval and admiration, often public.',
+    },
+    {
+      id: 6,
+      kind: "main-idea",
+      prompt:
+        "Which sentence best summarizes the central idea or arc of the essay?",
+      options: [
+        "A critic gives an unreservedly enthusiastic review to a renowned comic\'s farewell tour.",
+        "A critic\'s honest profile of a renowned mid-career comic\'s farewell tour describes a commendable opening, a craft-strong closing, and a middle thirty minutes of risque material that produced unearned risible laughter and visible revulsion — and ends by refusing the trade press\'s tidy single reading in favor of the actual ambiguity her ninety minutes in the theater produced.",
+        "A critic accuses a renowned comic of plagiarizing his own prior tours.",
+        "A critic announces that the trade press\'s coverage of the farewell tour was inaccurate.",
+      ],
+      correctIndex: 1,
+      explanation:
+        "The essay\'s arc is the three-part craft assessment of the set and the explicit refusal to resolve the central ambiguity in the trade press\'s direction.",
+    },
+  ],
+};
+
+const MISSION_42_SET_3: SetReading = {
+  title: "The Party's November Retreat",
+  subtitle:
+    "A personal essay by the outgoing chair of a regional civic coalition, written as the closing memo of a two-day retreat held three weeks after the coalition lost five of seven contested council seats.",
+  format: "Personal Essay",
+  readingMinutes: 4,
+  words: [
+    "resurgence",
+    "retrenchment",
+    "retrospection",
+    "revanche",
+    "reverberate",
+    "whitewash",
+    "winnow",
+    "winsome",
+    "xenophobia",
+    "yoke",
+  ],
+  passage: `The Brell Civic Coalition's November retreat, held three weeks after the regional election in which the coalition's slate had lost five of seven contested council seats, was a working session of the coalition's thirty-one elected and active members, scheduled for two days at a small lakeside conference center forty minutes from town. I am the coalition's outgoing chair, and I am writing this as the closing memo of the retreat, which the standing rules require the chair to circulate to the membership within seven days of the second day's adjournment.
+
+The retreat had been organized around a single working question, which I had stated in the convening letter three weeks earlier: whether the coalition's response to the November loss should be a posture of **revanche** — an organized counter-effort directed at recovering the five lost seats in the next cycle through aggressive contestation of the same races on the same terms — or a posture of **retrenchment**, in which the coalition would consolidate around a smaller working agenda and a narrower geographic focus for the next two years.
+
+I am recording, in this memo, that neither posture was adopted.
+
+The first day was given over to **retrospection** — six hours of structured discussion, in groups of six, of the specific decisions across the prior eighteen months that the membership now read as having contributed to the November result. The exercise was uncomfortable in a way I had hoped it would be. Three of the decisions identified by multiple groups — the messaging on the mid-summer transit referendum, the candidate selection in the third council district, and the late-September decision to decline a debate invitation — were decisions I had personally chaired. The discussion of them was direct. It was not, in any honest read of the room, an attempt to **yoke** the loss to any single member or faction.
+
+The second day opened with a long working session on the question of whether the coalition's membership should make a deliberate effort, in the next two years, to **winnow** its own internal positions on the three issues the November exit polling had most clearly identified as having alienated the swing precincts in the eastern part of the region. The session was, in my honest read of three prior such sessions across nine years of coalition work, the most candid I have witnessed — in particular on the question of whether the coalition's prior messaging on the regional immigration question had, in some precincts, been read as a **whitewash** of the underlying **xenophobia** of a faction the coalition has spent a decade declining to address by name.
+
+The session did not resolve the question. It did, however, produce a working document that the membership voted, on the afternoon of the second day, to circulate to the regional precinct captains for response by the end of December.
+
+The closing two hours of the retreat were given to a presentation by our two newest elected members — a county commissioner in her first term and a municipal council member in his — on what they characterized, in honest terms, as a possible **resurgence** of small-scale local volunteer infrastructure that the coalition's prior cycle had, in their reading, neglected. The presentation was, by every measure the room responded to, **winsome** in the precise sense the word ought to mean: it won the room not by argument but by the specific local detail of three small precinct organizations the two members had, in the prior year, helped rebuild.
+
+The applause at the close of the presentation **reverberated** in the small conference room in a way the conventional applause of a coalition meeting does not. I noted, in my chair's observation, that the applause came from members of factions that had not, across the prior eighteen months, applauded each other's contributions in any standing meeting I had chaired.
+
+The retreat adjourned at 4:18 p.m. on the second day. The working document on the eastern precincts will circulate by Friday. The next standing meeting is on the second Tuesday of December.`,
+  questions: [
+    {
+      id: 1,
+      kind: "vocab-context",
+      prompt: 'In this sentence, the word "revanche" most nearly means:',
+      quote:
+        '"...whether the coalition\'s response to the November loss should be a posture of revanche — an organized counter-effort directed at recovering the five lost seats in the next cycle through aggressive contestation of the same races on the same terms..."',
+      options: [
+        "A quiet, withdrawing response to a loss.",
+        "An organized effort to recover lost ground or status, often in a spirit of vengeance or retaliation.",
+        "A formal acceptance of the prior result.",
+        "A neutral procedural review of the campaign.",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Revanche" denotes an organized counter-effort to reclaim lost ground — the dash clause names exactly that posture.',
+    },
+    {
+      id: 2,
+      kind: "vocab-context",
+      prompt: 'In this sentence, the word "winnow" most nearly means:',
+      quote:
+        '"...whether the coalition\'s membership should make a deliberate effort, in the next two years, to winnow its own internal positions on the three issues the November exit polling had most clearly identified as having alienated the swing precincts..."',
+      options: [
+        "Rapidly expand and add to a list of positions.",
+        "To narrow or reduce by sifting, separating out the less essential to leave only what is most important.",
+        "To formally vote on each item in turn.",
+        "To publish a written defense of all prior positions.",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Winnow" describes narrowing by separating out — the coalition is considering reducing its set of internal positions on the three issues exit polling identified.',
+    },
+    {
+      id: 3,
+      kind: "tone-purpose",
+      prompt:
+        'Why does the chair record, in the memo, that three of the decisions identified by multiple groups in the retrospection session were "decisions I had personally chaired"?',
+      options: [
+        "To resign from the chair position effective immediately.",
+        'Naming her own chaired decisions in the closing memo — rather than allowing the retrospection record to remain general — protects the coalition\'s honest reading of the November result from the chair-protective drift that documented retrospections often acquire after the fact, and signals to the membership that the closing memo is being written without an attempt to yoke the loss to anyone but the chair herself.',
+        "To imply that no one else on the coalition was responsible for the loss.",
+        "To request that the membership reverse all three decisions retroactively.",
+      ],
+      correctIndex: 1,
+      explanation:
+        "Naming her own chaired decisions in the memo blocks the chair-protective drift retrospection records often acquire — and signals the memo\'s honest framing.",
+    },
+    {
+      id: 4,
+      kind: "inference",
+      prompt:
+        "Based on the passage, what can the reader most reasonably infer from the chair\'s observation that the closing presentation\'s applause came from members of factions that had not applauded each other\'s contributions in any standing meeting in the prior eighteen months?",
+      options: [
+        "The factions have formally merged into a single working group.",
+        'The shared applause is a small empirical signal — visible to the chair from the front of the room — that the closing presentation\'s frame (small-scale local volunteer infrastructure rebuilt precinct by precinct) is the one frame in the two-day retreat that crossed the coalition\'s standing factional lines, and is therefore the most likely candidate for the actual unifying direction of the next two years.',
+        "The factions are about to formally split from the coalition.",
+        "The chair is overstating the significance of routine applause.",
+      ],
+      correctIndex: 1,
+      explanation:
+        "The cross-factional applause is the small empirical signal that the volunteer-infrastructure frame is the working direction the coalition\'s standing factional structure has not previously crossed.",
+    },
+    {
+      id: 5,
+      kind: "substitution",
+      prompt:
+        'Which single word could replace "reverberated" in the sentence below without changing its meaning?',
+      quote:
+        '"The applause at the close of the presentation reverberated in the small conference room in a way the conventional applause of a coalition meeting does not."',
+      options: ["Faded", "Echoed", "Photographed", "Concluded"],
+      correctIndex: 1,
+      explanation:
+        '"Echoed" matches "reverberated" — both describe a sound continuing to bounce or resound after its initial production.',
+    },
+    {
+      id: 6,
+      kind: "main-idea",
+      prompt:
+        "Which sentence best summarizes the central idea or arc of the memo?",
+      options: [
+        "A regional civic coalition formally adopts a posture of revanche after losing five of seven council seats.",
+        "A regional civic coalition\'s two-day November retreat — convened around the choice between revanche and retrenchment — adopts neither, working instead through structured retrospection of the chair\'s own decisions, an unresolved candid session on whether prior messaging had whitewashed a faction\'s xenophobia, and a closing presentation on a possible resurgence of small-scale precinct volunteer infrastructure that produced the only cross-factional applause of the retreat.",
+        "A regional civic coalition disbands after a contested November election loss.",
+        "A regional civic coalition replaces its chair at the end of the retreat\'s second day.",
+      ],
+      correctIndex: 1,
+      explanation:
+        "The arc moves precisely through the retreat\'s convened question, the chair-implicating retrospection, the candid unresolved second-day session, and the cross-factional applause at the closing presentation.",
+    },
+  ],
+};
+
 export const SET_READINGS: Record<string, SetReading> = {
   "1-1": MISSION_1_SET_1,
   "1-2": MISSION_1_SET_2,
@@ -15654,6 +16786,15 @@ export const SET_READINGS: Record<string, SetReading> = {
   "39-1": MISSION_39_SET_1,
   "39-2": MISSION_39_SET_2,
   "39-3": MISSION_39_SET_3,
+  "40-1": MISSION_40_SET_1,
+  "40-2": MISSION_40_SET_2,
+  "40-3": MISSION_40_SET_3,
+  "41-1": MISSION_41_SET_1,
+  "41-2": MISSION_41_SET_2,
+  "41-3": MISSION_41_SET_3,
+  "42-1": MISSION_42_SET_1,
+  "42-2": MISSION_42_SET_2,
+  "42-3": MISSION_42_SET_3,
 };
 
 export function getSetReading(day: number, group: number): SetReading | null {
