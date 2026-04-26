@@ -15,7 +15,6 @@ import {
 } from "lucide-react";
 import { getSetReading, type ReadingQuestion } from "@/data/setReadings";
 import { useApp } from "@/context/AppContext";
-import vocabNinjaLogo from "@assets/Gemini_Generated_Image_tgtyf7tgtyf7tgty_1776986903352.png";
 
 interface SetReadingProps {
   onBack: () => void;
@@ -156,28 +155,6 @@ function ExplorerArt() {
       {/* Legs */}
       <line x1="84" y1="160" x2="84" y2="168" stroke="#1E293B" strokeWidth="3" strokeLinecap="round" />
       <line x1="90" y1="160" x2="90" y2="168" stroke="#1E293B" strokeWidth="3" strokeLinecap="round" />
-    </svg>
-  );
-}
-
-function FlashcardArt() {
-  return (
-    <svg viewBox="0 0 120 110" className="w-full h-full" aria-hidden="true">
-      <defs>
-        <linearGradient id="cardA" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0%" stopColor="#FB923C" />
-          <stop offset="100%" stopColor="#F97316" />
-        </linearGradient>
-        <linearGradient id="cardB" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0%" stopColor="#FBBF24" />
-          <stop offset="100%" stopColor="#F59E0B" />
-        </linearGradient>
-      </defs>
-      <rect x="34" y="22" width="62" height="74" rx="10" fill="url(#cardB)" transform="rotate(8 65 60)" />
-      <rect x="20" y="14" width="62" height="74" rx="10" fill="url(#cardA)" />
-      <circle cx="92" cy="20" r="3" fill="#FDE68A" />
-      <circle cx="100" cy="34" r="2" fill="#FDE68A" />
-      <circle cx="14" cy="80" r="2.5" fill="#FB923C" opacity="0.6" />
     </svg>
   );
 }
@@ -342,54 +319,65 @@ export default function SetReading({
           </nav>
         </div>
 
-        {/* ── Two-column grid ── */}
-        <div
-          className={`grid gap-5 ${
-            focusMode ? "grid-cols-1" : "grid-cols-1 lg:grid-cols-[1fr_360px]"
-          }`}
-        >
-          {/* ── LEFT COLUMN ── */}
-          <div className="space-y-5 min-w-0">
-            {/* Hero card */}
-            <motion.div
-              initial={{ opacity: 0, y: 8 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="bg-brand-gradient relative overflow-hidden rounded-3xl shadow-md"
-            >
-              <div className="grid grid-cols-1 sm:grid-cols-[1fr_220px] gap-4 p-6 sm:p-7 items-center">
-                <div className="space-y-3 relative z-10 min-w-0">
-                  <div className="w-12 h-12 rounded-2xl bg-white/90 backdrop-blur flex items-center justify-center shadow-sm">
-                    <BookOpen size={22} style={{ color: "hsl(var(--brand-orange))" }} />
-                  </div>
-                  <h2 className="text-2xl sm:text-[28px] font-extrabold leading-tight text-white drop-shadow-sm">
-                    {reading.title}
-                  </h2>
-                  <p className="text-sm sm:text-[15px] text-white/90 leading-relaxed max-w-md">
-                    {reading.subtitle}
-                  </p>
-                  <div className="pt-1">
-                    <button
-                      onClick={scrollToStory}
-                      className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-white text-foreground font-bold text-sm shadow-md hover:-translate-y-0.5 hover:shadow-lg transition-all"
-                    >
-                      <BookOpen size={16} style={{ color: "hsl(var(--brand-orange))" }} />
-                      Start Reading
-                    </button>
-                  </div>
-                  <div className="flex flex-wrap items-center gap-4 pt-1 text-xs sm:text-sm font-semibold text-white/95">
-                    <span className="inline-flex items-center gap-1.5">
-                      <Clock size={14} /> {reading.readingMinutes} min read
-                    </span>
-                    <span className="inline-flex items-center gap-1.5">
-                      <Zap size={14} className="text-yellow-200" /> +20 XP
-                    </span>
-                  </div>
+        {/* ── Main column (full width) ── */}
+        <div className="space-y-5 min-w-0">
+          {/* Merged hero + CTA banner */}
+          <motion.div
+            ref={readyCtaRef}
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="relative overflow-hidden rounded-3xl border border-orange-200/70 dark:border-orange-500/20 bg-orange-50/70 dark:bg-orange-500/5 shadow-sm scroll-mt-6"
+          >
+            <div className="grid grid-cols-1 md:grid-cols-[1fr_200px_minmax(240px,280px)] gap-5 md:gap-6 p-6 sm:p-7 items-center">
+              {/* Left: title + meta */}
+              <div className="space-y-3 min-w-0">
+                <div className="w-11 h-11 rounded-xl bg-white dark:bg-card flex items-center justify-center shadow-sm border border-orange-100 dark:border-orange-500/20">
+                  <BookOpen
+                    size={20}
+                    style={{ color: "hsl(var(--brand-orange))" }}
+                  />
                 </div>
-                <div className="hidden sm:block h-44 ml-auto w-full max-w-[220px]">
-                  <ExplorerArt />
+                <h2 className="text-2xl sm:text-[28px] font-extrabold leading-tight text-foreground">
+                  {reading.title}
+                </h2>
+                <p className="text-sm sm:text-[15px] text-muted-foreground leading-relaxed max-w-md">
+                  {reading.subtitle}
+                </p>
+                <div className="flex flex-wrap items-center gap-x-5 gap-y-2 pt-1 text-xs sm:text-sm font-semibold text-muted-foreground">
+                  <span className="inline-flex items-center gap-1.5">
+                    <Clock size={14} /> {reading.readingMinutes} min read
+                  </span>
+                  <span className="inline-flex items-center gap-1.5">
+                    <Zap size={14} className="text-amber-500" /> +20 XP
+                  </span>
+                  <span className="text-orange-600 dark:text-orange-400 font-bold">
+                    Step 1 of 3 · Pre-Read
+                  </span>
                 </div>
               </div>
-            </motion.div>
+
+              {/* Center: art */}
+              <div className="hidden md:block h-36 w-full max-w-[200px] mx-auto">
+                <ExplorerArt />
+              </div>
+
+              {/* Right: CTAs */}
+              <div className="flex flex-col gap-2.5 w-full">
+                <button
+                  onClick={() => onContinue(firstWordId)}
+                  className="btn-brand w-full inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl font-bold text-sm shadow-md"
+                >
+                  Start Learning Flashcards <ChevronRight size={16} />
+                </button>
+                <button
+                  onClick={scrollToStory}
+                  className="w-full inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-card border border-border text-foreground font-semibold text-sm hover:bg-muted transition-all"
+                >
+                  <RotateCcw size={14} /> Review Story Again
+                </button>
+              </div>
+            </div>
+          </motion.div>
 
             {/* Words chips card */}
             <div className="rounded-2xl border border-border bg-card px-5 py-4 shadow-sm">
@@ -534,56 +522,6 @@ export default function SetReading({
               </div>
             </article>
           </div>
-
-          {/* ── RIGHT COLUMN ── */}
-          {!focusMode && (
-            <aside className="space-y-5 lg:sticky lg:top-4 lg:self-start min-w-0">
-              {/* Ready CTA card (moved up to replace the Learning Journey) */}
-              <div
-                ref={readyCtaRef}
-                className="rounded-2xl border border-border bg-card p-5 shadow-sm scroll-mt-6"
-              >
-                <div className="grid grid-cols-[1fr_84px] gap-3 items-center">
-                  <div>
-                    <h3 className="text-sm font-extrabold text-foreground leading-tight">
-                      Ready to learn these words?
-                    </h3>
-                    <p className="text-xs text-muted-foreground mt-1 leading-snug">
-                      Let's master these {reading.words.length} words with
-                      interactive flashcards.
-                    </p>
-                  </div>
-                  <div className="relative h-20">
-                    <div className="absolute inset-0">
-                      <FlashcardArt />
-                    </div>
-                    <img
-                      src={vocabNinjaLogo}
-                      alt=""
-                      className="absolute bottom-0 left-1/2 -translate-x-1/2 h-9 w-auto object-contain drop-shadow"
-                      aria-hidden
-                    />
-                  </div>
-                </div>
-                <div className="mt-3 space-y-2">
-                  <button
-                    onClick={() => onContinue(firstWordId)}
-                    className="btn-brand w-full inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl font-bold text-sm"
-                  >
-                    Start Learning Flashcards <ChevronRight size={16} />
-                  </button>
-                  <button
-                    onClick={scrollToStory}
-                    className="w-full inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-background border border-border text-foreground font-semibold text-sm hover:bg-muted transition-all"
-                  >
-                    <RotateCcw size={14} /> Review Story Again
-                  </button>
-                </div>
-              </div>
-
-            </aside>
-          )}
-        </div>
 
         {/* ── Comprehension Check (full width, below the story) ── */}
         {!focusMode && (
