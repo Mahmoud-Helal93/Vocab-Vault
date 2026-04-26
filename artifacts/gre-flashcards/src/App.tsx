@@ -16,6 +16,7 @@ import SetTest from "@/pages/SetTest";
 import Bookmarks from "@/pages/Bookmarks";
 import MissionDetail from "@/pages/MissionDetail";
 import SetReading from "@/pages/SetReading";
+import StoryLibrary from "@/pages/StoryLibrary";
 import QuickTen from "@/components/QuickTen";
 import SidebarSearch from "@/components/SidebarSearch";
 import BadgeToast from "@/components/BadgeToast";
@@ -25,19 +26,20 @@ import vocabNinjaLogo from "@assets/Gemini_Generated_Image_tgtyf7tgtyf7tgty_1776
 import {
   LayoutDashboard, BookOpen, Target, Clock, Settings, Moon, Sun,
   CalendarDays, GitFork, BarChart3, TrendingUp, Zap, Menu,
-  Trophy, Bookmark,
+  Trophy, Bookmark, Library,
 } from "lucide-react";
 
-type Page = "dashboard" | "study" | "practice" | "review" | "settings" | "plan" | "confusables" | "analytics" | "progress" | "achievements" | "mission-test" | "set-test" | "bookmarks" | "mission-detail" | "set-reading";
+type Page = "dashboard" | "study" | "practice" | "review" | "settings" | "plan" | "confusables" | "analytics" | "progress" | "achievements" | "mission-test" | "set-test" | "bookmarks" | "mission-detail" | "set-reading" | "story-library";
 
 const NAV_ITEMS: Array<{ id: Page; icon: React.ReactNode; label: string }> = [
-  { id: "dashboard",   icon: <LayoutDashboard size={18} />, label: "Home" },
-  { id: "study",       icon: <BookOpen size={18} />,        label: "Learn" },
-  { id: "review",      icon: <Clock size={18} />,           label: "Review" },
-  { id: "practice",    icon: <Target size={18} />,          label: "Test" },
-  { id: "bookmarks",   icon: <Bookmark size={18} />,        label: "Bookmarks" },
-  { id: "achievements",icon: <Trophy size={18} />,          label: "Achievements" },
-  { id: "settings",    icon: <Settings size={18} />,        label: "Settings" },
+  { id: "dashboard",     icon: <LayoutDashboard size={18} />, label: "Home" },
+  { id: "study",         icon: <BookOpen size={18} />,        label: "Learn" },
+  { id: "review",        icon: <Clock size={18} />,           label: "Review" },
+  { id: "practice",      icon: <Target size={18} />,          label: "Test" },
+  { id: "story-library", icon: <Library size={18} />,         label: "Story Library" },
+  { id: "bookmarks",     icon: <Bookmark size={18} />,        label: "Bookmarks" },
+  { id: "achievements",  icon: <Trophy size={18} />,          label: "Achievements" },
+  { id: "settings",      icon: <Settings size={18} />,        label: "Settings" },
 ];
 
 type HistoryEntry = { page: Page; params: Record<string, unknown> };
@@ -124,7 +126,15 @@ function MainApp() {
       case "set-reading":
         return (
           <SetReading
-            onBack={() => goBack(() => setPage("mission-detail"))}
+            onBack={() =>
+              goBack(() =>
+                setPage(
+                  pageParams.libraryMode
+                    ? "story-library"
+                    : "mission-detail",
+                ),
+              )
+            }
             onNavigate={navigate}
             onContinue={(firstWordId) => {
               if (firstWordId) navigate("study", { wordId: firstWordId });
@@ -135,6 +145,14 @@ function MainApp() {
             }}
             missionDay={(pageParams.missionDay as number) ?? 1}
             group={(pageParams.group as number) ?? 1}
+            libraryMode={Boolean(pageParams.libraryMode)}
+          />
+        );
+      case "story-library":
+        return (
+          <StoryLibrary
+            onBack={() => goBack(() => setPage("dashboard"))}
+            onNavigate={navigate}
           />
         );
       case "settings":

@@ -22,6 +22,7 @@ interface SetReadingProps {
   onNavigate?: (page: string, params?: Record<string, unknown>) => void;
   missionDay: number;
   group: number;
+  libraryMode?: boolean;
 }
 
 const KIND_LABELS: Record<ReadingQuestion["kind"], string> = {
@@ -97,6 +98,7 @@ export default function SetReading({
   onNavigate,
   missionDay,
   group,
+  libraryMode = false,
 }: SetReadingProps) {
   const reading = useMemo(
     () => getSetReading(missionDay, group),
@@ -239,19 +241,48 @@ export default function SetReading({
             <ArrowLeft size={16} />
           </button>
           <nav className="flex items-center gap-1.5 text-muted-foreground font-medium flex-wrap">
-            <button
-              type="button"
-              onClick={() => onNavigate?.("mission-detail", { missionDay })}
-              className="text-foreground font-semibold hover:underline hover:text-foreground/80 transition-colors"
-            >
-              Mission {missionDay}
-            </button>
-            <span className="text-muted-foreground/60">/</span>
-            <span className="text-foreground font-semibold" aria-current="page">Set {group}</span>
-            <span className="text-muted-foreground/60">/</span>
-            <span className="text-orange-600 dark:text-orange-400 font-semibold" aria-current="page">
-              Pre-Read
-            </span>
+            {libraryMode ? (
+              <>
+                <button
+                  type="button"
+                  onClick={() => onNavigate?.("story-library")}
+                  className="text-foreground font-semibold hover:underline hover:text-foreground/80 transition-colors"
+                >
+                  Story Library
+                </button>
+                <span className="text-muted-foreground/60">/</span>
+                <span
+                  className="text-foreground font-semibold"
+                  aria-current="page"
+                >
+                  Mission {missionDay} · Set {group}
+                </span>
+              </>
+            ) : (
+              <>
+                <button
+                  type="button"
+                  onClick={() => onNavigate?.("mission-detail", { missionDay })}
+                  className="text-foreground font-semibold hover:underline hover:text-foreground/80 transition-colors"
+                >
+                  Mission {missionDay}
+                </button>
+                <span className="text-muted-foreground/60">/</span>
+                <span
+                  className="text-foreground font-semibold"
+                  aria-current="page"
+                >
+                  Set {group}
+                </span>
+                <span className="text-muted-foreground/60">/</span>
+                <span
+                  className="text-orange-600 dark:text-orange-400 font-semibold"
+                  aria-current="page"
+                >
+                  Pre-Read
+                </span>
+              </>
+            )}
           </nav>
         </div>
 
@@ -283,29 +314,52 @@ export default function SetReading({
                   <span className="inline-flex items-center gap-1.5">
                     <Clock size={14} /> {reading.readingMinutes} min read
                   </span>
-                  <span className="inline-flex items-center gap-1.5">
-                    <Zap size={14} className="text-amber-500" /> +20 XP
-                  </span>
+                  {!libraryMode && (
+                    <span className="inline-flex items-center gap-1.5">
+                      <Zap size={14} className="text-amber-500" /> +20 XP
+                    </span>
+                  )}
                   <span className="text-orange-600 dark:text-orange-400 font-bold">
-                    Step 1 of 3 · Pre-Read
+                    {libraryMode
+                      ? "Library · Re-read mode"
+                      : "Step 1 of 3 · Pre-Read"}
                   </span>
                 </div>
               </div>
 
               {/* Right: CTAs */}
               <div className="flex flex-col gap-2.5 w-full">
-                <button
-                  onClick={() => onContinue(firstWordId)}
-                  className="btn-brand w-full inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl font-bold text-sm shadow-md"
-                >
-                  Start Learning Flashcards <ChevronRight size={16} />
-                </button>
-                <button
-                  onClick={scrollToStory}
-                  className="w-full inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-card border border-border text-foreground font-semibold text-sm hover:bg-muted transition-all"
-                >
-                  <RotateCcw size={14} /> Review Story Again
-                </button>
+                {libraryMode ? (
+                  <>
+                    <button
+                      onClick={scrollToStory}
+                      className="btn-brand w-full inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl font-bold text-sm shadow-md"
+                    >
+                      <BookOpen size={16} /> Read Story
+                    </button>
+                    <button
+                      onClick={() => onNavigate?.("story-library")}
+                      className="w-full inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-card border border-border text-foreground font-semibold text-sm hover:bg-muted transition-all"
+                    >
+                      <ArrowLeft size={14} /> Back to Library
+                    </button>
+                  </>
+                ) : (
+                  <>
+                    <button
+                      onClick={() => onContinue(firstWordId)}
+                      className="btn-brand w-full inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl font-bold text-sm shadow-md"
+                    >
+                      Start Learning Flashcards <ChevronRight size={16} />
+                    </button>
+                    <button
+                      onClick={scrollToStory}
+                      className="w-full inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-card border border-border text-foreground font-semibold text-sm hover:bg-muted transition-all"
+                    >
+                      <RotateCcw size={14} /> Review Story Again
+                    </button>
+                  </>
+                )}
               </div>
             </div>
           </motion.div>
@@ -438,6 +492,7 @@ export default function SetReading({
           </div>
 
         {/* ── Comprehension Check (full width, below the story) ── */}
+        {!libraryMode && (
         <div className="rounded-2xl border border-border bg-card p-5 shadow-sm">
             <div className="flex items-center justify-between mb-4 flex-wrap gap-2">
               <h3 className="text-sm font-bold text-foreground">
@@ -640,6 +695,7 @@ export default function SetReading({
                   </div>
                 )}
           </div>
+        )}
       </div>
     </div>
   );
