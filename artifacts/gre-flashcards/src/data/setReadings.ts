@@ -2043,6 +2043,429 @@ She set her bag down on the third-floor desk, looked at the empty room, and bega
   ],
 };
 
+const MISSION_6_SET_1: SetReading = {
+  title: "The Curator's Long Apprenticeship",
+  subtitle:
+    "A short story about a museum, a difficult mentor, and an attribution nobody wanted to revisit.",
+  format: "Short Story",
+  readingMinutes: 4,
+  words: [
+    "admonish",
+    "aesthetic",
+    "affectation",
+    "alleviate",
+    "analogous",
+    "bolster",
+    "chauvinistic",
+    "connoisseur",
+    "dissemble",
+    "dogged",
+  ],
+  passage: `For the first eight months at the Lavanesi Museum of Decorative Arts, the new junior curator Mira Aldecoa had been shadowed, almost daily, by her department head — a small, exacting woman named Dr. Tovias who had a reputation, in the staff cafeteria, for being severe enough to **admonish** an apprentice for the angle at which they held a clipboard. The reputation was not entirely false. But Mira had also come to understand, in her first month, that Dr. Tovias's strictness was less personal than pedagogical: she was not unkind, exactly, but she would not pretend to a friendliness she did not feel.
+
+The museum specialized in eighteenth-century European furniture and ceramics. Dr. Tovias was, by general acknowledgment, the leading European **connoisseur** of one particularly fine but unsigned set of marquetry tables made in a small workshop outside Lyon. Her judgments were treated, in scholarly journals, as nearly oracular.
+
+Mira's first independent task, that autumn, was a small one: to draft a wall label for a single side table the museum had owned, uncontroversially, for forty years. The piece was lovely — its inlay was an unusually quiet **aesthetic** that paired walnut and pale satinwood without ornament — and the existing label had stood, without amendment, since the year of its acquisition.
+
+It was while comparing the table's underside to two **analogous** pieces in the museum's storage that Mira noticed something she could not unsee. The dovetailing on the table did not match the workshop pattern Dr. Tovias herself had documented in her famous 1996 article. It matched, instead, a slightly later — and considerably less prestigious — workshop on the other side of the river.
+
+She spent two weeks looking for ways to be wrong. She measured the joints; she compared photographs; she read everything in the library that might **alleviate** her doubt. None of it did.
+
+The other voice in the building Mira had to consider was a senior conservator named Verdun — a man famously **chauvinistic** about the museum's own collection, who reviewed every external loan request as though the integrity of the building personally depended on his rejection of it. If Mira's note traveled the wrong corridor, Verdun would treat it not as scholarship but as betrayal.
+
+There was, accordingly, an obvious cowardice available to her. The label had stood for forty years; no visitor would notice; she could simply submit her draft unchanged. To raise the question would be to challenge the most respected scholar in her own building, on a piece she had been trusted with for less than a season. She knew, too, how easy it would be to **dissemble** — to mention "minor discrepancies" in a margin note, to leave the conclusion implicit, to let the question float politely past the people who would have to act on it.
+
+But she suspected Dr. Tovias would notice the floating, and she suspected her senior would interpret the **affectation** of caution exactly for what it was. The whole point of the apprenticeship, she had begun to realize, was not to **bolster** her confidence with easy successes; it was to test whether she could file the difficult note when no one had asked her to.
+
+She wrote a single page. It was not accusatory. It contained the measurements, the photographs, and a careful sentence noting that her observations did not match Dr. Tovias's published pattern. She did not propose a reattribution. She proposed only that the existing one be reviewed.
+
+She handed it to Dr. Tovias on a Thursday afternoon. The older woman read it for a long time, then set it on her desk without comment. Mira left the office not knowing, that day, whether she had been **dogged** in the right way or merely impertinent.
+
+The reply came on Monday. It was three lines. The first thanked her for her care. The second confirmed that the matter would be reviewed by an external panel. The third, which Mira read twice, said only: "Continue."`,
+  questions: [
+    {
+      id: 1,
+      kind: "vocab-context",
+      prompt: 'In this sentence, the word "connoisseur" most nearly means:',
+      quote:
+        '"Dr. Tovias was, by general acknowledgment, the leading European connoisseur of one particularly fine but unsigned set of marquetry tables..."',
+      options: [
+        "A formal critic employed by a museum to write reviews.",
+        "An expert judge in matters of taste, especially in a refined area such as art.",
+        "An auctioneer who sets the prices of fine objects.",
+        "A wealthy collector who owns rare pieces.",
+      ],
+      correctIndex: 1,
+      explanation:
+        'A "connoisseur" is an expert judge of taste in a refined field. The passage emphasizes Dr. Tovias\'s scholarly authority — her judgments are treated as "nearly oracular."',
+    },
+    {
+      id: 2,
+      kind: "vocab-context",
+      prompt: 'In this sentence, the word "dissemble" most nearly means:',
+      quote:
+        '"...how easy it would be to dissemble — to mention \'minor discrepancies\' in a margin note, to leave the conclusion implicit..."',
+      options: [
+        "To take apart and analyze in detail.",
+        "To conceal one\'s true thoughts or feelings; to disguise the real meaning.",
+        "To correct an error openly and immediately.",
+        "To formally disagree in a meeting.",
+      ],
+      correctIndex: 1,
+      explanation:
+        'To "dissemble" is to disguise — to hide the real point under polite vagueness. The dashes spell out the technique: floating the conclusion past the reader.',
+    },
+    {
+      id: 3,
+      kind: "tone-purpose",
+      prompt:
+        'The narrator describes Verdun as "chauvinistic" about the museum\'s own collection. Why use "chauvinistic" rather than just "protective"?',
+      options: [
+        '"Chauvinistic" and "protective" are exact synonyms; the choice is purely decorative.',
+        '"Chauvinistic" carries a sense of aggressive, biased loyalty to one\'s own group — fitting a conservator who treats outside attributions as personal threats rather than as scholarship.',
+        '"Chauvinistic" refers specifically to military service and is unrelated to museums.',
+        '"Chauvinistic" implies financial corruption, while "protective" would imply concern.',
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Chauvinistic" describes biased, almost belligerent loyalty to one\'s own group. The passage shows Verdun reviewing loan requests as if his rejection of them is the building\'s defense.',
+    },
+    {
+      id: 4,
+      kind: "inference",
+      prompt:
+        "Based on the passage, what can the reader most reasonably infer about why Mira ultimately writes the careful single-page note?",
+      options: [
+        "She is hoping to discredit Dr. Tovias and replace her as the senior scholar.",
+        "She has been ordered by Verdun to challenge Dr. Tovias's published work.",
+        "She recognizes that the apprenticeship is testing whether she will file a difficult note when no one asks her to, and that polite vagueness would be visible to her mentor as exactly the affectation it would be.",
+        "She believes the wall label has been deliberately falsified by a previous curator.",
+      ],
+      correctIndex: 2,
+      explanation:
+        "The passage says directly that the apprenticeship is meant to test her courage on hard cases — and that Dr. Tovias would see through any softening of the question.",
+    },
+    {
+      id: 5,
+      kind: "substitution",
+      prompt:
+        'Which single word could replace "dogged" in the sentence below without changing its meaning?',
+      quote:
+        '"Mira left the office not knowing, that day, whether she had been dogged in the right way or merely impertinent."',
+      options: [
+        "Lazy",
+        "Tenacious",
+        "Apologetic",
+        "Reckless",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Tenacious" — persistently determined — captures "dogged." The other options point in the wrong direction.',
+    },
+    {
+      id: 6,
+      kind: "main-idea",
+      prompt:
+        "Which sentence best summarizes the central idea or arc of the passage?",
+      options: [
+        "A junior curator publicly humiliates her mentor by exposing a forty-year-old mistake during a press conference.",
+        "A young curator, faced with a quiet attribution problem on a long-trusted piece, files a careful, evidence-led note rather than dissembling — and is recognized for doing so.",
+        "A museum dismisses an apprentice for questioning the authority of its most respected scholar in her first season.",
+        "Two senior conservators feud over a side table while a junior curator stays out of the dispute.",
+      ],
+      correctIndex: 1,
+      explanation:
+        "The arc traces Mira's discovery, her temptation to soften, her decision to write a careful page, and Dr. Tovias's measured one-word reply.",
+    },
+  ],
+};
+
+const MISSION_6_SET_2: SetReading = {
+  title: "The Reviewer's Friday",
+  subtitle:
+    "A short story about a peer review, a suspicious dataset, and a long weekend in academic ethics.",
+  format: "Short Story",
+  readingMinutes: 4,
+  words: [
+    "dupe",
+    "empirical",
+    "engender",
+    "entitled",
+    "pertinacious",
+    "presumptuous",
+    "probity",
+    "proliferate",
+    "specious",
+    "spurious",
+  ],
+  passage: `When the manuscript landed in her inbox at 4:47 on a Friday afternoon, Dr. Selene Voronkova made the small, automatic noise that mid-career professors make when they realize the weekend has just been claimed by something they did not ask for. The paper was unsolicited but not unexpected: she had been a quiet, **pertinacious** voice on her field's editorial board for eleven years, and the editor — fairly or not — had begun routing the difficult papers her way.
+
+This one was titled, with characteristic confidence, *Definitive Empirical Evidence for the Calenza Effect in Cross-Border Trade*. Its claims were extraordinary; its appendix was thin; its corresponding author was a young researcher she did not know, at an institution she did not recognize.
+
+She read the abstract twice and reached for tea.
+
+By page four she had begun to suspect that the paper was not merely overconfident but actively **specious**. The argument moved quickly past three places where it should have slowed; the figures, on close inspection, were drawn at scales that flattered the strongest result and obscured the weakest; and the dataset, which the authors described as "newly compiled," was — she realized at the bottom of page seven — almost certainly a relabeling of a publicly available 2019 panel that her own department had used the previous spring.
+
+The relabeling was the part that made her sit back.
+
+To label something as "newly compiled" when it was not was, in her field, a **spurious** claim with real consequences. Other researchers would cite it; **empirical** debate would form around findings that rested on a foundation no one had checked, because the authors had implied it was new.
+
+By Saturday morning she had laid the original 2019 dataset and the manuscript's appendix side by side on her dining-room table. The match, with two small renumberings, was nearly exact. The reframing — calling the dataset new, claiming credit for its compilation — would have **engendered** a paper that, on the strength of that single misrepresentation, could **proliferate** through the citation networks for years.
+
+She drafted her review on Sunday.
+
+The hard part was not the technical objection, which would write itself. The hard part was the tone. A junior author misled by a careless co-author was a different problem from a deliberate **dupe** of the journal's review process, and Dr. Voronkova had learned, the long way, not to engender more enmity than the case required.
+
+She allowed herself one direct sentence: *The dataset described in the appendix as "newly compiled" appears to be a relabeling of the publicly available 2019 Calenza panel. The authors should clarify, with citation and acknowledgement, before any further review.*
+
+The rest of the review was, as it should have been, a careful reconstruction of which sentences in the abstract would not survive that clarification.
+
+She submitted it on Sunday night.
+
+What surprised her was the response. The corresponding author, far from being **entitled** about the challenge, replied within twenty-four hours with a long, plainly contrite note acknowledging that the dataset description had been written by a senior co-author whose **probity** he had been too junior to question. He withdrew the paper himself, by Tuesday, and asked Dr. Voronkova whether she would consider, at her convenience, sitting on the small internal committee his university was now convening to review the senior co-author's broader record.
+
+She did not answer immediately. It was not a **presumptuous** request — it was, in fact, brave of him to make — but it was also exactly the kind of obligation that, multiplied across eleven years, had once nearly burned her out.
+
+In the end she said yes. She set the kettle on for tea.`,
+  questions: [
+    {
+      id: 1,
+      kind: "vocab-context",
+      prompt: 'In this sentence, the word "specious" most nearly means:',
+      quote:
+        '"By page four she had begun to suspect that the paper was not merely overconfident but actively specious."',
+      options: [
+        "Carefully accurate and conservative.",
+        "Superficially plausible but actually wrong or misleading.",
+        "Written in an unfamiliar technical language.",
+        "Overly long and repetitive.",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Specious" describes an argument that looks convincing on the surface but does not hold up — exactly what the next sentences proceed to demonstrate.',
+    },
+    {
+      id: 2,
+      kind: "vocab-context",
+      prompt: 'In this sentence, the word "probity" most nearly means:',
+      quote:
+        '"...the dataset description had been written by a senior co-author whose probity he had been too junior to question."',
+      options: [
+        "Technical expertise in statistics.",
+        "Strong moral integrity; honesty.",
+        "Personal charm and charisma.",
+        "Public reputation and fame.",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Probity" denotes moral integrity. The junior author had taken the senior\'s honesty for granted in a way he had not yet earned the standing to challenge.',
+    },
+    {
+      id: 3,
+      kind: "tone-purpose",
+      prompt:
+        'The narrator calls Dr. Voronkova a "pertinacious" voice on the editorial board. Why use "pertinacious" rather than simply "persistent"?',
+      options: [
+        '"Pertinacious" and "persistent" are exact synonyms; the choice is purely stylistic.',
+        '"Pertinacious" carries a sense of stubborn, almost obstinate persistence — explaining both why difficult papers are routed to her and why she does not give them up easily.',
+        '"Pertinacious" implies a hostile or aggressive temperament, the opposite of what the passage portrays.',
+        '"Pertinacious" specifies that her work is unpaid, while "persistent" would imply she is paid.',
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Pertinacious" is a sharper word than "persistent" — it implies a steady, unyielding determination, which is why the editor has come to trust her with the hard papers.',
+    },
+    {
+      id: 4,
+      kind: "inference",
+      prompt:
+        "Based on the passage, what can the reader most reasonably infer about why Dr. Voronkova writes a measured, technical objection rather than an open accusation?",
+      options: [
+        "She is afraid that an accusation could end her own academic career.",
+        "She wants to take credit for discovering the misrepresentation by writing softly enough that the editor will not notice the seriousness.",
+        "She recognizes that a junior author misled by a senior co-author is a different case from a deliberate fraud, and that an unnecessarily hostile review would create more enmity than the situation requires.",
+        "She is too tired by Sunday night to write anything stronger than a brief technical note.",
+      ],
+      correctIndex: 2,
+      explanation:
+        "The passage explicitly contrasts a misled junior with a deliberate dupe and notes her hard-won lesson not to engender more enmity than the case requires.",
+    },
+    {
+      id: 5,
+      kind: "substitution",
+      prompt:
+        'Which single word could replace "entitled" in the sentence below without changing its meaning?',
+      quote:
+        '"The corresponding author, far from being entitled about the challenge, replied within twenty-four hours with a long, plainly contrite note..."',
+      options: [
+        "Humble",
+        "Privileged",
+        "Apologetic",
+        "Forgetful",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Privileged" — believing oneself owed special treatment — captures "entitled" in this sense. "Humble" is the opposite, which the sentence rules out with "far from being."',
+    },
+    {
+      id: 6,
+      kind: "main-idea",
+      prompt:
+        "Which sentence best summarizes the central idea or arc of the passage?",
+      options: [
+        "A peer reviewer rejects a paper publicly and writes an open letter calling out the corresponding author for fraud.",
+        "An exhausted reviewer accepts a misleading paper because she does not have the energy to write a full critique over the weekend.",
+        "A reviewer identifies a misrepresented dataset, writes a measured technical objection rather than an accusation, and finds her care reciprocated by a junior author who withdraws the paper and asks for her help.",
+        "An editorial board punishes a senior researcher by routing all of his papers to one particular reviewer for years.",
+      ],
+      correctIndex: 2,
+      explanation:
+        "The arc moves from the suspicious manuscript, through Voronkova's deliberate weighing of tone, to the junior author's unexpected and earnest withdrawal.",
+    },
+  ],
+};
+
+const MISSION_6_SET_3: SetReading = {
+  title: "The Town and the Two Files",
+  subtitle:
+    "A short story about a small courthouse, an unmarked folder, and a young defender's first refusal to look away.",
+  format: "Short Story",
+  readingMinutes: 4,
+  words: [
+    "subjective",
+    "subvert",
+    "timorous",
+    "tortuous",
+    "tractable",
+    "transient",
+    "ubiquitous",
+    "underscore",
+    "venal",
+    "venerate",
+  ],
+  passage: `In the seventeen weeks since Esra Demir had been hired as the county's newest public defender, she had developed a quiet, almost methodical habit of pinning a single typed quotation above her desk for each case file she opened. Most weeks the quotations were, in retrospect, faintly embarrassing. They were the small ceremonies, she had decided, of a young lawyer who needed to **underscore** for herself, in plain language, what the work was for.
+
+The town she had moved to was the kind of place where people **venerated** the small, dignified courthouse on the square the way other towns venerated their cathedrals. It was a beautiful building. It was also, she had begun to suspect by her sixth week, a building inside which a few quiet, **ubiquitous** assumptions did much of the actual deciding before any judge sat down.
+
+The case that finally made the assumptions visible to her was, on its surface, almost trivial. A man named Halbert Rooke had been arrested for a small property offense. The evidence against him was thin; the prosecution's witness was unreliable; and any competent first-year defender, in a normal jurisdiction, would have moved for dismissal in a single afternoon.
+
+Esra was not yet competent in the local sense — which was, she had come to understand, a different competence entirely. She filed the motion. She was politely told, by an older defender she liked, that the motion was technically correct and unlikely to succeed before this particular bench.
+
+He did not, of course, say why. He gave her the smile of a man who had spent twenty years in this courthouse and had decided, somewhere along the way, that being usefully **tractable** was preferable to being correctly stubborn.
+
+That afternoon, in the file room, Esra found two folders for the same defendant.
+
+One was the routine prosecution file. The other, much thinner, was unmarked. Inside, in a hand she did not recognize, was a single folded note describing — in cautious, almost **timorous** language — a previous interaction between Mr. Rooke and a local business owner whose own son worked in the district attorney's office.
+
+The note did not name anyone explicitly. It did not need to.
+
+Esra stood in the file room for a long time. The path forward was not technical; it was a question about which kind of lawyer she intended to become. Her instinct, on a **subjective** reading of the note, was that the prosecution's interest in this small case was less in the alleged offense than in a private grievance. To act on that instinct would be to formally suggest that something **venal** had quietly shaped a docket the courthouse pretended was neutral.
+
+She took her time. The conversation she would have to have with the chief defender would be **tortuous** — full of careful turnings, of qualifications she would have to refine on the spot — and any version that came across as melodramatic would, she knew, **subvert** her own credibility long before it touched anyone else's.
+
+What she did, in the end, was small and exact. She drafted a brief asking the court to make a particular ancillary record public. The brief did not accuse. It did not insinuate. It merely asked the court to release information that, under the jurisdiction's transparency rules, the defense was entitled to see.
+
+The chief defender called her into his office that evening. He read the brief twice. He set it down. He told her, in the same tone the older defender had used at lunch, that the motion was technically correct and that its consequences in this particular building would not be **transient**.
+
+He filed it the next morning.`,
+  questions: [
+    {
+      id: 1,
+      kind: "vocab-context",
+      prompt: 'In this sentence, the word "ubiquitous" most nearly means:',
+      quote:
+        '"...a building inside which a few quiet, ubiquitous assumptions did much of the actual deciding before any judge sat down."',
+      options: [
+        "Rare and almost forgotten.",
+        "Present, appearing, or operating everywhere.",
+        "Loudly stated and openly debated.",
+        "Officially recorded in the courthouse rules.",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Ubiquitous" means present everywhere. The assumptions are everywhere in the building precisely because no one names them aloud.',
+    },
+    {
+      id: 2,
+      kind: "vocab-context",
+      prompt: 'In this sentence, the word "venal" most nearly means:',
+      quote:
+        '"To act on that instinct would be to formally suggest that something venal had quietly shaped a docket the courthouse pretended was neutral."',
+      options: [
+        "Carefully impartial and lawful.",
+        "Susceptible to bribery; motivated by improper financial or personal gain.",
+        "Slightly outdated but still legally valid.",
+        "Extremely complicated to understand.",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Venal" describes corruptibility — the kind of private interest that, in this story, has shaped which thin cases get pursued and which do not.',
+    },
+    {
+      id: 3,
+      kind: "tone-purpose",
+      prompt:
+        'The narrator says people in the town "venerated" the courthouse. Why "venerated" rather than "respected"?',
+      options: [
+        '"Venerated" and "respected" mean exactly the same thing; the choice is purely decorative.',
+        '"Venerated" carries a near-religious sense of reverence — and the explicit comparison to a cathedral makes the irony clear, since the building harbors quiet practices the town would not openly approve of.',
+        '"Venerated" implies the courthouse is older than any cathedral in the area, which is its main historical fact.',
+        '"Venerated" specifies that the courthouse is funded by donations rather than taxes.',
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Venerated" carries the weight of religious reverence. Pairing it with the cathedral comparison sharpens the gap between the town\'s public reverence and the building\'s private compromises.',
+    },
+    {
+      id: 4,
+      kind: "inference",
+      prompt:
+        "Based on the passage, what can the reader most reasonably infer about why Esra files a narrow transparency motion rather than openly accusing the prosecution of a private grievance?",
+      options: [
+        "She has not yet read enough of the unmarked file to be confident in any accusation.",
+        "She believes the chief defender will fire her if she files anything more aggressive in her first months.",
+        "She recognizes that any accusation she could not yet substantiate would undermine her own credibility long before it touched the system, and that a procedural request is the cleanest way to surface what should not have been hidden.",
+        "She is hoping the prosecution will quietly drop the case if she stays out of the politics entirely.",
+      ],
+      correctIndex: 2,
+      explanation:
+        "The passage states directly that any version of the conversation that came across as melodramatic would subvert her own credibility — a procedural request lets the system reveal what it has been hiding.",
+    },
+    {
+      id: 5,
+      kind: "substitution",
+      prompt:
+        'Which single word could replace "timorous" in the sentence below without changing its meaning?',
+      quote:
+        '"...a single folded note describing — in cautious, almost timorous language — a previous interaction between Mr. Rooke and a local business owner..."',
+      options: [
+        "Boastful",
+        "Fearful",
+        "Cheerful",
+        "Sarcastic",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Fearful" — marked by nervous, hesitant caution — captures "timorous." The other options reverse or change the tone of the note.',
+    },
+    {
+      id: 6,
+      kind: "main-idea",
+      prompt:
+        "Which sentence best summarizes the central idea or arc of the passage?",
+      options: [
+        "A young defender wins a high-profile dismissal in her first months by publicly naming a corrupt district attorney during a press conference.",
+        "A young public defender, recognizing how a small case has been quietly shaped by interests outside the file, files a narrow procedural motion that lets the courthouse surface the truth without melodrama.",
+        "A senior defender warns a new colleague to stop filing motions and accept the way the local courthouse has always operated.",
+        "A small-town courthouse uncovers a corruption scheme entirely on its own and asks Esra to help draft a public report.",
+      ],
+      correctIndex: 1,
+      explanation:
+        "The arc tracks Esra's discovery of the two folders, her careful weighing of credibility, and her decision to file a narrow, procedurally exact request that does the necessary work without overreach.",
+    },
+  ],
+};
+
 export const SET_READINGS: Record<string, SetReading> = {
   "1-1": MISSION_1_SET_1,
   "1-2": MISSION_1_SET_2,
@@ -2059,6 +2482,9 @@ export const SET_READINGS: Record<string, SetReading> = {
   "5-1": MISSION_5_SET_1,
   "5-2": MISSION_5_SET_2,
   "5-3": MISSION_5_SET_3,
+  "6-1": MISSION_6_SET_1,
+  "6-2": MISSION_6_SET_2,
+  "6-3": MISSION_6_SET_3,
 };
 
 export function getSetReading(day: number, group: number): SetReading | null {
