@@ -835,6 +835,1214 @@ He opened the drawer.`,
   ],
 };
 
+const MISSION_3_SET_1: SetReading = {
+  title: "The Hermit's Letter",
+  subtitle:
+    "A short story about a long retreat, a single envelope, and what cannot be ignored from a mountain.",
+  format: "Short Story",
+  readingMinutes: 4,
+  words: [
+    "abate",
+    "abjure",
+    "anomalous",
+    "antipathy",
+    "arcane",
+    "arduous",
+    "artless",
+    "ascetic",
+    "assuage",
+    "betray",
+  ],
+  passage: `For seven years, Arman Kellis had lived alone in a stone hut at the edge of a high alpine forest, in what most of his former colleagues described, with affectionate exaggeration, as **ascetic** seclusion. He cut his own wood. He ate, mostly, what he could grow. He answered no telephone, because he owned none, and the letters that found their way up the mountain — folded into the canvas pouch of a postman who climbed the path twice each month — accumulated in a wooden box on his table until winter, when he finally read them.
+
+The retreat had been chosen, originally, to **assuage** a particular kind of grief. Arman had spent fifteen years as a manuscripts scholar at a small university press, decoding texts so **arcane** that even his colleagues sometimes treated his footnotes as a form of quiet showing-off. When the press had closed under circumstances he refused to discuss in public, his **antipathy** for institutional life had hardened into something like a vow. He had not so much retired as **abjured** — formally, almost ceremonially — the world of committees, deadlines, and donor banquets.
+
+The letter that broke seven years of stillness arrived in late September. Most of his post was **artless**: invoices, mass appeals, the occasional well-meaning note from a former student. This envelope, by contrast, was unusually thin and unusually careful. It was addressed in the hand of his former dean.
+
+Inside was a single page. A young researcher at the press — one Arman had once briefly mentored — had been accused, on the basis of a partial and possibly doctored email chain, of fabricating the provenance of a small medieval cartulary. The accusation, the dean wrote, looked **anomalous**: it did not fit the young man's record, his temperament, or any plausible motive. But the press was now under new leadership, and the new leadership had a preference for resolving such matters quickly rather than carefully. The dean wrote — politely, ashamedly — that an outside opinion from the one scholar who had read the cartulary in its entirety might **abate** the harm before the disciplinary committee met in November.
+
+Arman read the letter three times. The trip down the mountain, in late autumn, would be **arduous**: the path was narrow even in summer; there was already early snow at the higher switchbacks; and the train station at the valley floor was a full day's walk beyond that. He had not opened a manuscript in seven years.
+
+There was, of course, an obvious refusal available to him. He had abjured this world precisely so that he would never again have to weigh small evils against larger ones. To return — even briefly — would be, in some private sense, to **betray** the discipline of the seven years. And yet to refuse would also be a betrayal, of a quieter and more specific kind, because the young researcher had nothing to do with the wound Arman had carried up the mountain in the first place.
+
+He set the letter on the table, banked the fire, and went outside to look, one more time, at the long shape of the valley below. The light was already beginning to thin.
+
+In the morning, he packed.`,
+  questions: [
+    {
+      id: 1,
+      kind: "vocab-context",
+      prompt: 'In this sentence, the word "assuage" most nearly means:',
+      quote:
+        '"The retreat had been chosen, originally, to assuage a particular kind of grief."',
+      options: [
+        "To deliberately intensify a feeling.",
+        "To make a painful feeling less severe; to soothe.",
+        "To carefully document for later use.",
+        "To formally apologize for and renounce.",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Assuage" means to ease or soothe — exactly what a retreat to a quiet hut would be expected to do for grief.',
+    },
+    {
+      id: 2,
+      kind: "vocab-context",
+      prompt: 'In this sentence, the word "abate" most nearly means:',
+      quote:
+        '"...an outside opinion from the one scholar who had read the cartulary in its entirety might abate the harm before the disciplinary committee met in November."',
+      options: [
+        "To ignore or set aside.",
+        "To publicize or amplify.",
+        "To reduce in degree or intensity.",
+        "To formally accuse or prosecute.",
+      ],
+      correctIndex: 2,
+      explanation:
+        '"Abate" means to lessen. The dean is hoping Arman\'s expertise will reduce the harm before the committee acts on a partial picture.',
+    },
+    {
+      id: 3,
+      kind: "tone-purpose",
+      prompt:
+        'The narrator describes Arman\'s seclusion as "ascetic" rather than simply "simple." What does this word choice add?',
+      options: [
+        '"Ascetic" and "simple" are exact synonyms; the choice is purely decorative.',
+        '"Ascetic" suggests the seclusion was forced on him by poverty, while "simple" would suggest a free choice.',
+        '"Ascetic" carries a sense of disciplined, almost spiritual self-denial — fitting a man who has formally abjured a world rather than merely left it.',
+        '"Ascetic" implies the hut was poorly built, while "simple" would mean it was modestly furnished.',
+      ],
+      correctIndex: 2,
+      explanation:
+        '"Ascetic" suggests deliberate, almost religious discipline. It fits Arman\'s vow-like withdrawal — a moral posture, not just a lifestyle.',
+    },
+    {
+      id: 4,
+      kind: "inference",
+      prompt:
+        "Based on the passage, what can the reader most reasonably infer about why Arman finally decides to pack in the morning?",
+      options: [
+        "He misses institutional life and is looking for an excuse to return permanently.",
+        "He recognizes that refusing would itself be a betrayal — of the young researcher, who has no connection to the original injury that drove Arman to the mountain.",
+        "He believes the dean has personally guaranteed his reinstatement at the press.",
+        "He is curious to read a manuscript he has never seen before and treats the request as a research opportunity.",
+      ],
+      correctIndex: 1,
+      explanation:
+        "The passage explicitly weighs both possible betrayals — and the deciding fact is that the researcher had nothing to do with Arman's original wound.",
+    },
+    {
+      id: 5,
+      kind: "substitution",
+      prompt:
+        'Which single word could replace "antipathy" in the sentence below without changing its meaning?',
+      quote:
+        '"...his antipathy for institutional life had hardened into something like a vow."',
+      options: [
+        "Affection",
+        "Aversion",
+        "Curiosity",
+        "Indifference",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Aversion" — a strong dislike — captures the same meaning. "Indifference" is too weak to harden into a vow, and the others are wrong in direction.',
+    },
+    {
+      id: 6,
+      kind: "main-idea",
+      prompt:
+        "Which sentence best summarizes the central idea or arc of the passage?",
+      options: [
+        "A retired scholar abandons his solitary life permanently when offered a chance to return to his old position at the press.",
+        "A scholar who once renounced institutional life decides, reluctantly and on principle, to leave his retreat to defend a young researcher whose accusation has nothing to do with the original wound that drove him away.",
+        "A dean cleverly manipulates a hermit into helping a press that has consistently mistreated him.",
+        "A long debate between two friends ends in their decision to publish a controversial book together.",
+      ],
+      correctIndex: 1,
+      explanation:
+        "The passage tracks the discipline of the seven years, the careful weight of the dean's request, and Arman's recognition that the researcher's situation deserves a response separate from his own grievance.",
+    },
+  ],
+};
+
+const MISSION_3_SET_2: SetReading = {
+  title: "The Bell That Couldn't Be Heard",
+  subtitle:
+    "A short story about a quiet village, a large festival, and a vote that almost came too soon.",
+  format: "Short Story",
+  readingMinutes: 4,
+  words: [
+    "bucolic",
+    "burgeon",
+    "cacophonous",
+    "canonize",
+    "censure",
+    "chicanery",
+    "coalesce",
+    "cogent",
+    "compelling",
+    "contend",
+  ],
+  passage: `The hills above Senillon had been, for as long as anyone in the valley could remember, almost theatrically **bucolic** — orchards stitched into terraces, a single white road winding past two churches, and a riverside meadow where, on summer evenings, the only sound was the slow ringing of cowbells. So when the regional cultural board announced, with great fanfare, that Senillon had been chosen as the site of a new annual music festival, the village divided overnight into two camps that did not yet know how loud they were about to become.
+
+The proponents argued — quite reasonably — that a festival would help local restaurants and inns **burgeon** in a tourist economy that had grown thinner each decade. They produced graphs. They invited a former mayor of a similar village to speak. The arguments were **cogent**, well-rehearsed, and supported by figures from a regional consultancy whose reputation, until quite recently, had been excellent.
+
+The opposition, led by a retired schoolteacher named Madeleine Aubry, was at first more difficult to take seriously. She did not have graphs. She had instead a small black notebook in which she had been recording, year after year, the precise hour at which the first cuckoo arrived in spring, the dates of the last cherry harvest, and the names of the families who still kept their orchards by hand. Her case, she argued, was not against music but against a specific kind of festival — one whose stage equipment, late hours, and amplified sets would, on the nights it ran, make the village so **cacophonous** that the older residents and the small remaining wildlife would have nowhere to go.
+
+The first public meeting was orderly. The second was not. Several younger residents accused the opposition of trying to **censure** the village's only realistic chance at economic survival. Madeleine, in turn, asked the board to address allegations of **chicanery** in the consultancy's report — figures, she said, that did not match the original survey she had requested under the regional transparency law. The accusations on both sides began to **coalesce** into the kind of permanent feud that small villages survive but rarely fully heal from.
+
+What surprised everyone, including Madeleine, was the third meeting. A young agronomist whom no one had ever met stood up near the back and explained, calmly, that the meadow proposed for the main stage sat directly above the aquifer that fed three of the orchards downhill. His ten-minute presentation was so quietly **compelling** — slides drawn on graph paper, hydrology in plain language — that the room, briefly, fell silent.
+
+The proponents did not change their minds in that silence. But they did agree, that night, to **contend** with a smaller plan: a daylight festival, no amplified sets after eight, the stage on a gravel field rather than the meadow, and a five-year review.
+
+It was not a victory anyone wanted to **canonize**. Both sides had wanted more. But several months later, when the first festival ran and the cuckoo, that spring, had arrived only an hour later than usual in Madeleine's small black notebook, the schoolteacher made a quiet entry in the margin: *neither ruined, nor rescued — only adjusted.*`,
+  questions: [
+    {
+      id: 1,
+      kind: "vocab-context",
+      prompt: 'In this sentence, the word "cacophonous" most nearly means:',
+      quote:
+        '"...amplified sets would, on the nights it ran, make the village so cacophonous that the older residents and the small remaining wildlife would have nowhere to go."',
+      options: [
+        "Pleasantly musical and harmonious.",
+        "Filled with a harsh, jarring mixture of loud sounds.",
+        "Eerily silent and abandoned.",
+        "Crowded with admiring tourists.",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Cacophonous" describes a noisy, discordant clamor — the very thing late-night amplified sets would inflict on a village whose normal soundscape is cowbells.',
+    },
+    {
+      id: 2,
+      kind: "vocab-context",
+      prompt: 'In this sentence, the word "compelling" most nearly means:',
+      quote:
+        '"His ten-minute presentation was so quietly compelling — slides drawn on graph paper, hydrology in plain language — that the room, briefly, fell silent."',
+      options: [
+        "Confusingly technical and hard to follow.",
+        "So persuasive that it commands attention and belief.",
+        "Politely uninteresting but professionally delivered.",
+        "Aggressive and accusatory in tone.",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Compelling" describes something that compels — that demands attention. The room\'s silence is the proof.',
+    },
+    {
+      id: 3,
+      kind: "tone-purpose",
+      prompt:
+        'The narrator calls the village "almost theatrically bucolic." Why use "bucolic" rather than just "rural"?',
+      options: [
+        '"Bucolic" and "rural" are exact synonyms; the choice is purely stylistic.',
+        '"Bucolic" carries a literary sense of an idealized, picturesque countryside — fitting a setting that the narrator goes on to portray as almost staged in its quiet beauty.',
+        '"Bucolic" implies the village is poor and struggling, while "rural" would imply prosperity.',
+        '"Bucolic" refers specifically to dairy farming, which is not the village\'s main industry.',
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Bucolic" carries the literary, almost pastoral sense of an idealized countryside — the modifier "almost theatrically" sharpens that frame.',
+    },
+    {
+      id: 4,
+      kind: "inference",
+      prompt:
+        "Based on the passage, what can the reader most reasonably infer about why the agronomist's presentation was so effective?",
+      options: [
+        "He was a famous expert whose reputation alone settled the debate.",
+        "He shouted down both camps until they agreed to compromise.",
+        "He shifted the question from economics versus tradition to a concrete physical fact — the aquifer — that neither side could easily dismiss.",
+        "He bribed the board to vote for a smaller festival.",
+      ],
+      correctIndex: 2,
+      explanation:
+        "The agronomist introduces a piece of physical evidence — the aquifer beneath the meadow — that is independent of either side's prior arguments and therefore harder to wave away.",
+    },
+    {
+      id: 5,
+      kind: "substitution",
+      prompt:
+        'Which single word could replace "cogent" in the sentence below without changing its meaning?',
+      quote:
+        '"The arguments were cogent, well-rehearsed, and supported by figures from a regional consultancy whose reputation, until quite recently, had been excellent."',
+      options: [
+        "Sloppy",
+        "Persuasive",
+        "Hostile",
+        "Indecipherable",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Persuasive" — clear and convincing — captures the same meaning as "cogent." The other choices are wrong in direction.',
+    },
+    {
+      id: 6,
+      kind: "main-idea",
+      prompt:
+        "Which sentence best summarizes the central idea or arc of the passage?",
+      options: [
+        "A small village rejects a music festival outright in order to preserve its traditional way of life.",
+        "A regional cultural board uses pressure tactics to force a reluctant village into hosting a festival nobody wants.",
+        "A polarized debate over a music festival is reshaped by an unexpected technical objection, producing a compromise that satisfies neither side completely but protects what mattered most.",
+        "A retired schoolteacher single-handedly defeats a coalition of business owners through her charisma and personal popularity.",
+      ],
+      correctIndex: 2,
+      explanation:
+        "The passage moves from polarization to an unexpected piece of evidence to a narrow compromise — the schoolteacher's own margin note captures the arc.",
+    },
+  ],
+};
+
+const MISSION_3_SET_3: SetReading = {
+  title: "The Footnote in Geneva",
+  subtitle:
+    "A short story about a draft report, a long conference table, and a junior analyst's first refusal to be polite.",
+  format: "Short Story",
+  readingMinutes: 4,
+  words: [
+    "copious",
+    "cosmopolitan",
+    "deference",
+    "desultory",
+    "diffident",
+    "dilatory",
+    "equivocate",
+    "polarize",
+    "prodigal",
+    "verbose",
+  ],
+  passage: `By her third month at the Geneva office, Yuna Kavalec had filled three notebooks with **copious** observations about her new colleagues — not unkindly, she told herself, only in the way of someone trying very hard to learn an unfamiliar room. The Office of Migration Statistics was, like much of the city around it, more **cosmopolitan** than any place she had worked before: nine languages were spoken in the canteen on any given day, and the senior staff included a former ambassador, two retired demographers, and a man who had once briefed three different presidents in a single year.
+
+In such a room, a junior analyst was expected to behave with a certain **deference**. Yuna had no objection to deference in principle — she had been raised to listen carefully before she spoke — but she had begun to suspect, after several of the long Tuesday meetings, that what was passing for deference in this office was something looser and more **dilatory**: a habit of polite delay that allowed difficult numbers to soften, by attrition, into more comfortable ones.
+
+She herself was naturally **diffident** in meetings, more inclined to write notes than to speak. Her supervisor, Aurelio, had told her on her first week that the habit was "becoming," which she suspected was professional code for: please continue. Aurelio was, by reputation, a brilliant editor of other people's work and a profoundly **verbose** writer of his own, given to producing thirty-page memoranda where six pages would have done. He was not unkind. He was simply, as a former colleague had once told her, the sort of person who did not so much **equivocate** on a hard question as bury it gently under his footnotes.
+
+The hard question, that autumn, concerned a single chart in a draft report on internal displacement. The chart, as drafted, smoothed a cluster of unusually sharp recent figures into a gentle decade-long curve. The smoothing was technically defensible. It was also, Yuna had spent two weeks confirming, statistically misleading. The sharper figures were not noise; they were the most informative part of the dataset, and removing them would, in her view, **polarize** the eventual policy debate exactly along the lines the office most wanted to avoid: those who would say the report had been hidden, and those who would defend the smoothing as routine.
+
+She drafted a single-page note to Aurelio. She rewrote it four times. She knew that any version that read as accusatory would be set aside; any version that read as **desultory** — a casual, take-it-or-leave-it observation — would be taken as exactly that. What she finally sent contained no adjectives at all: it identified the chart, summarized the original distribution, proposed two alternative presentations, and offered to draft either one before the end of the week.
+
+Aurelio read it on a Thursday. He did not reply for two full days, which, in his vocabulary, was either a high compliment or a slow refusal. On the Monday morning, however, he forwarded her note to the senior demographer with a single line: "Yuna's analysis is correct. We should not be **prodigal** with the office's credibility on a chart we know to be wrong."
+
+Yuna kept her composure all the way to lunch. Then she walked out to the lake and laughed, by herself, for nearly five minutes.`,
+  questions: [
+    {
+      id: 1,
+      kind: "vocab-context",
+      prompt: 'In this sentence, the word "deference" most nearly means:',
+      quote:
+        '"In such a room, a junior analyst was expected to behave with a certain deference."',
+      options: [
+        "Open hostility toward authority.",
+        "Polite, respectful submission to others' judgment.",
+        "Independent and unconventional thinking.",
+        "Cheerful indifference to office politics.",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Deference" is respectful yielding — exactly the posture a junior is expected to adopt toward senior colleagues in a hierarchical office.',
+    },
+    {
+      id: 2,
+      kind: "vocab-context",
+      prompt: 'In this sentence, the word "prodigal" most nearly means:',
+      quote:
+        '"Yuna\'s analysis is correct. We should not be prodigal with the office\'s credibility on a chart we know to be wrong."',
+      options: [
+        "Carefully thrifty and conserving.",
+        "Wastefully extravagant; spending without restraint.",
+        "Slightly suspicious or distrustful.",
+        "Slow to make a decision.",
+      ],
+      correctIndex: 1,
+      explanation:
+        'Aurelio is warning against squandering — being wastefully extravagant — with the office\'s credibility, the way a prodigal heir squanders an inheritance.',
+    },
+    {
+      id: 3,
+      kind: "tone-purpose",
+      prompt:
+        'Yuna comes to suspect the office\'s "deference" is really something more "dilatory." Why does the author choose "dilatory" rather than simply "slow"?',
+      options: [
+        '"Dilatory" and "slow" are exact synonyms; the choice is decorative.',
+        '"Dilatory" implies the slowness is deliberate or habitual delay — a posture, not a circumstance — which fits an office that uses politeness to soften inconvenient numbers over time.',
+        '"Dilatory" suggests speed at the expense of accuracy, the opposite of slowness.',
+        '"Dilatory" refers specifically to speech rather than to action.',
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Dilatory" implies habitual, often deliberate delay. It captures a posture of polite postponement, not just literal slowness.',
+    },
+    {
+      id: 4,
+      kind: "inference",
+      prompt:
+        "Based on the passage, what can the reader most reasonably infer about Aurelio?",
+      options: [
+        "He privately disagrees with Yuna's analysis but is forced to support it for political reasons.",
+        "He is genuinely able to recognize a strong piece of work, but his own instincts run toward avoidance, so a junior's clear-eyed note is exactly the kind of intervention his style does not produce.",
+        "He intends to fire Yuna at the next opportunity for going around him to the senior demographer.",
+        "He has been waiting for years for someone to give him an excuse to recommend the smoothing of the chart.",
+      ],
+      correctIndex: 1,
+      explanation:
+        "Aurelio's two-day delay reads as evaluation, not refusal; his forwarded line shows he can recognize a correct argument even when his own habit would have been to bury the question.",
+    },
+    {
+      id: 5,
+      kind: "substitution",
+      prompt:
+        'Which single word could replace "verbose" in the sentence below without changing its meaning?',
+      quote:
+        '"Aurelio was, by reputation, a brilliant editor of other people\'s work and a profoundly verbose writer of his own, given to producing thirty-page memoranda where six pages would have done."',
+      options: [
+        "Concise",
+        "Long-winded",
+        "Reluctant",
+        "Disorganized",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Long-winded" — using more words than necessary — captures "verbose." "Concise" is the opposite; the others change the trait.',
+    },
+    {
+      id: 6,
+      kind: "main-idea",
+      prompt:
+        "Which sentence best summarizes the central idea or arc of the passage?",
+      options: [
+        "A junior analyst is forced out of an international office for challenging her supervisor too aggressively.",
+        "A naturally reserved analyst writes a careful, adjective-free note that successfully redirects a senior office's instinct to soften a misleading chart.",
+        "A supervisor uses an analyst's note to discredit a senior demographer he had been quarreling with for years.",
+        "A young statistician learns that her training was insufficient for the kind of sophisticated work the Geneva office requires.",
+      ],
+      correctIndex: 1,
+      explanation:
+        "The passage tracks Yuna's careful read of the office, her four-draft note, and Aurelio's quiet endorsement — a study in how a junior voice can change a decision without raising it.",
+    },
+  ],
+};
+
+const MISSION_4_SET_1: SetReading = {
+  title: "The Long Off-Season",
+  subtitle:
+    "A short story about a young swimmer, a famously quiet coach, and the season nobody else sees.",
+  format: "Short Story",
+  readingMinutes: 4,
+  words: [
+    "abstain",
+    "approbation",
+    "cherish",
+    "corroborate",
+    "disparate",
+    "emulate",
+    "enervate",
+    "ephemeral",
+    "fervid",
+    "garrulous",
+  ],
+  passage: `When Sela Marin first met her new coach in the lobby of the Berlin training center, she had been prepared — by years of magazines and short documentaries — for someone louder. Markus Veidt was, in person, almost startlingly quiet. He shook her hand once, watched her swim for an hour without comment, and at the end said only, "We have eleven months. Most of them you will dislike."
+
+That, it turned out, was the warmest sentence he would offer for a long time.
+
+Sela was nineteen, two years out of a national team in which she had been celebrated as the rising star of an entire **disparate** group of swimmers from small clubs across the country. The praise had been **fervid** and continuous. Coaches had spoken her name in interviews. Sponsors had sent gifts to her mother's house. Everyone she met seemed to **cherish** her trajectory more than she did.
+
+Veidt, by contrast, was not a man who handed out **approbation**. In his first week he watched her swim, took notes she was not allowed to see, and made her swim again. He told her she would **abstain** from racing entirely for four months — no meets, no time trials, not even the friendly intra-club sprints she had used since childhood to settle her nerves. "Times," he said, "will lie to you. We will not consult them until they tell the truth."
+
+She had expected to **emulate** Veidt's most famous swimmers — to study their stroke videos, to copy their starts, to move, by careful imitation, into the shape of an Olympian. He forbade this too. "You are not them," he said. "We will discover what you are."
+
+The off-season was, as promised, **enervating**. She had not understood, until she lived it, how much of her old training had been carried by adrenaline — by a meet on the horizon, a measured time, a small public moment of glory. Now there were only mornings: a five-kilometer warm-up at six, drills she had thought she was past at seven, video review at four in the afternoon, sleep at nine. Her teammates were friendly but, by Veidt's design, not particularly **garrulous**; he disliked locker-room talk that turned every workout into an argument, and the room reflected him.
+
+What kept her in Berlin, that first long winter, was not faith in Veidt — she did not yet know him well enough for faith — but a single afternoon in the video room. He had played, side by side, two clips of her own racing: one from a televised race the previous summer, one from an unpublished training session three weeks earlier. The televised race, the one she had been congratulated for, had been visibly worse. He pointed, frame by frame, at the difference, then turned off the screen. He did not need to **corroborate** what the video had already said.
+
+She walked back to her apartment in the cold realizing, for the first time in her career, that the praise of the previous two years had been **ephemeral** — generous, well-intentioned, and entirely beside the point. The work was the point. The work would have to be enough.
+
+That evening she set her alarm for five-thirty, which in Berlin in February felt like an act of either devotion or insanity, and slept very deeply.`,
+  questions: [
+    {
+      id: 1,
+      kind: "vocab-context",
+      prompt: 'In this sentence, the word "approbation" most nearly means:',
+      quote:
+        '"Veidt, by contrast, was not a man who handed out approbation."',
+      options: [
+        "Severe punishment for failure.",
+        "Formal approval or warm praise.",
+        "Detailed written instructions.",
+        "Public criticism of others' work.",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Approbation" denotes approval and praise. The contrast with the earlier coaches who praised Sela "fervidly" makes this sense unmistakable.',
+    },
+    {
+      id: 2,
+      kind: "vocab-context",
+      prompt: 'In this sentence, the word "ephemeral" most nearly means:',
+      quote:
+        '"...the praise of the previous two years had been ephemeral — generous, well-intentioned, and entirely beside the point."',
+      options: [
+        "Permanent and lasting in influence.",
+        "Short-lived; lasting only a brief time.",
+        "Hostile and corrosive in effect.",
+        "Carefully measured and analytical.",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Ephemeral" describes something fleeting. The point of Sela\'s realization is that the praise, however well-meaning, did not last and did not produce real improvement.',
+    },
+    {
+      id: 3,
+      kind: "tone-purpose",
+      prompt:
+        'The author writes that the early praise had been "fervid and continuous." Why "fervid" rather than "warm" or "frequent"?',
+      options: [
+        '"Fervid" is just a more elegant synonym for "warm" with no real difference in meaning.',
+        '"Fervid" carries a sense of intense, almost feverish enthusiasm — capturing how the praise was not merely warm but excessive in a way the rest of the passage will quietly criticize.',
+        '"Fervid" implies the praise was given reluctantly, while "warm" would suggest it was sincere.',
+        '"Fervid" specifies that the praise was written rather than spoken.',
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Fervid" means intensely passionate, even feverish. The word foreshadows the passage\'s point that this kind of overheated praise can mislead a young athlete more than it helps her.',
+    },
+    {
+      id: 4,
+      kind: "inference",
+      prompt:
+        "Based on the passage, what can the reader most reasonably infer about why Sela stays in Berlin despite the difficulty of the off-season?",
+      options: [
+        "She has signed a contract that prevents her from leaving.",
+        "She has been shown direct, frame-by-frame evidence that her celebrated public results were worse than her quiet training, and she trusts that evidence more than her past adrenaline.",
+        "She is afraid that quitting would damage her sponsors' opinion of her.",
+        "She believes Veidt will eventually become warmer once he sees her dedication.",
+      ],
+      correctIndex: 1,
+      explanation:
+        "The video-room afternoon — two clips, side by side — is what keeps her in Berlin. It is not faith in Veidt; it is the unarguable evidence on the screen.",
+    },
+    {
+      id: 5,
+      kind: "substitution",
+      prompt:
+        'Which single word could replace "garrulous" in the sentence below without changing its meaning?',
+      quote:
+        '"Her teammates were friendly but, by Veidt\'s design, not particularly garrulous; he disliked locker-room talk..."',
+      options: [
+        "Reserved",
+        "Talkative",
+        "Athletic",
+        "Punctual",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Talkative" matches "garrulous." "Reserved" is the opposite, and the others change the trait.',
+    },
+    {
+      id: 6,
+      kind: "main-idea",
+      prompt:
+        "Which sentence best summarizes the central idea or arc of the passage?",
+      options: [
+        "A young swimmer is bullied by a famous coach into abandoning the techniques that had made her a national star.",
+        "A celebrated young athlete, taken in hand by a quiet, demanding coach, learns to value patient, evidence-based work over the bright but ephemeral praise that had carried her career until then.",
+        "A coach refuses to praise his swimmers as a deliberate strategy to break their confidence so he can rebuild them.",
+        "A swimmer leaves Berlin after one winter because the off-season is too enervating to bear.",
+      ],
+      correctIndex: 1,
+      explanation:
+        "The arc is Sela's quiet shift from a career carried by approbation to one carried by careful, unglamorous work — and the moment in the video room is the hinge.",
+    },
+  ],
+};
+
+const MISSION_4_SET_2: SetReading = {
+  title: "The Editor's Archive",
+  subtitle:
+    "A short story about a small-town newspaper, an angry letter, and a single yellowed clipping.",
+  format: "Short Story",
+  readingMinutes: 4,
+  words: [
+    "incendiary",
+    "inimical",
+    "intimate",
+    "invigorate",
+    "mitigate",
+    "obsolete",
+    "opaque",
+    "paradigmatic",
+    "pedantic",
+    "placid",
+  ],
+  passage: `When the angry letter arrived at the *Mareton Sentinel* — printed in a font deliberately too large, addressed to the editor by full middle name, and accusing the paper of "decades of cowardice" on the question of the river dam — Henrika Voss did not, at first, take it personally. She had been the paper's editor for nineteen years. She had received versions of this letter, in waves of varying ferocity, since her second week.
+
+What was different about this one was its **incendiary** specificity. The writer had not merely declared the *Sentinel* timid; he had named three articles, by date and headline, that he claimed proved the paper had downplayed the dam's risks for an entire generation. Two of the dates Henrika could refute from memory in a sentence. The third, however, was older than her tenure, and the writer had, with unusual care, attached a photocopy of the original page.
+
+She read the photocopy twice. The article, by a long-retired reporter, was not — as the letter alleged — sympathetic to the dam's developers. But it was not exactly **inimical** to them either. It was something stranger: deliberately **opaque**, written in a register so cautious that an attentive reader could come away with almost any conclusion they had brought to it.
+
+That afternoon she went down to the basement archive — a room she had always found oddly **placid**, despite the dust — and pulled the original from its bound volume. The paper itself was yellowed but intact. The accompanying notes, in the reporter's own crabbed handwriting, were still tucked into the back of the binder. They told a more interesting story than the article had.
+
+The reporter had interviewed two engineers and a regional inspector. One engineer had been sharply critical of the dam's spillway design; one had defended it; the inspector, then close to retirement, had refused to be quoted. The published article had presented these as a **paradigmatic** "two sides" piece — careful, balanced, almost ostentatiously neutral — and had quietly omitted the most damaging quotation, which Henrika now read for the first time.
+
+She stood in the archive for a long while.
+
+Her instinct, professionally, was to **mitigate**: to write a short clarifying note, to acknowledge in a single column that the original framing had been incomplete, to let the matter recede. Such notes were considered, in her trade, **pedantic** rather than dramatic — a minor adjustment to the historical record, the sort of thing a careful institution did quietly. But standing in the basement, holding the reporter's actual notes, she suspected that any response that small would be accurate without being honest.
+
+The dam, fifty years later, was not yet **obsolete**, but the spillway question — the very one the paper had softened — was now back on the regional council's agenda. Whatever the *Sentinel* published next would, inevitably, become part of that debate.
+
+She climbed back up to her office, opened a fresh document, and began to write. The piece would not be **intimate** — she did not believe in turning a public failure into a personal confession — but it would print the omitted quotation in full, would publish the relevant passages of the reporter's notes, and would, she hoped, **invigorate** a debate that had spent half a century being politely, professionally muffled.`,
+  questions: [
+    {
+      id: 1,
+      kind: "vocab-context",
+      prompt: 'In this sentence, the word "opaque" most nearly means:',
+      quote:
+        '"It was something stranger: deliberately opaque, written in a register so cautious that an attentive reader could come away with almost any conclusion they had brought to it."',
+      options: [
+        "Bright and easy to read.",
+        "Difficult to see through; not transparent in meaning.",
+        "Aggressive and openly accusatory.",
+        "Brief and clearly summarized.",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Opaque" here is figurative: the article was so guarded that its meaning could not be clearly seen through the prose, leaving the reader free to read it almost any way.',
+    },
+    {
+      id: 2,
+      kind: "vocab-context",
+      prompt: 'In this sentence, the word "mitigate" most nearly means:',
+      quote:
+        '"Her instinct, professionally, was to mitigate: to write a short clarifying note...to let the matter recede."',
+      options: [
+        "To deliberately worsen a problem.",
+        "To make the consequences of a problem less severe.",
+        "To celebrate publicly.",
+        "To formally accuse a third party.",
+      ],
+      correctIndex: 1,
+      explanation:
+        'To "mitigate" is to lessen the harm or severity of something — exactly what a brief, careful clarifying note is designed to do.',
+    },
+    {
+      id: 3,
+      kind: "tone-purpose",
+      prompt:
+        'The narrator calls the letter "incendiary" rather than simply "angry." What does this word choice add?',
+      options: [
+        '"Incendiary" and "angry" are exact synonyms; the choice is purely stylistic.',
+        '"Incendiary" carries a sense of being designed to set things on fire — to provoke, not merely to express feeling — fitting a letter built around named dates and an attached photocopy.',
+        '"Incendiary" implies the letter was written by someone employed by the dam authority.',
+        '"Incendiary" specifies that the letter was hand-delivered rather than mailed.',
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Incendiary" emphasizes intent to inflame — and the letter\'s detailed, evidence-laden construction is precisely what makes it more dangerous than a vent of feeling.',
+    },
+    {
+      id: 4,
+      kind: "inference",
+      prompt:
+        "Based on the passage, what can the reader most reasonably infer about why Henrika rejects writing only a small clarifying note?",
+      options: [
+        "She believes the original reporter is still alive and would object to a quiet correction.",
+        "She is hoping a longer article will win her a national journalism prize.",
+        "She recognizes that with the spillway question back on the council's agenda, a small note would be technically accurate but would fail to repair a public debate the paper itself had long muffled.",
+        "Her publisher has explicitly forbidden small clarifying notes as a matter of editorial policy.",
+      ],
+      correctIndex: 2,
+      explanation:
+        "The passage explicitly weighs accuracy against honesty and turns on the timing — the spillway question is once again live, so a small note would be technically true but materially insufficient.",
+    },
+    {
+      id: 5,
+      kind: "substitution",
+      prompt:
+        'Which single word could replace "placid" in the sentence below without changing its meaning?',
+      quote:
+        '"...the basement archive — a room she had always found oddly placid, despite the dust..."',
+      options: [
+        "Chaotic",
+        "Tranquil",
+        "Crowded",
+        "Echoing",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Tranquil" — calm and peaceful — captures "placid." The other options shift or reverse the mood of the room.',
+    },
+    {
+      id: 6,
+      kind: "main-idea",
+      prompt:
+        "Which sentence best summarizes the central idea or arc of the passage?",
+      options: [
+        "An editor proves an angry letter false by checking the original article and dismissing the writer's claims.",
+        "An editor reviews her newspaper's archive in response to a sharply specific complaint and decides that the moment requires a fuller account, not a small clarifying note.",
+        "A newspaper apologizes publicly for a single article written before its current editor was hired.",
+        "An angry reader is permanently banned from the *Mareton Sentinel* after sending a long, personal letter to the editor.",
+      ],
+      correctIndex: 1,
+      explanation:
+        "The passage moves from the letter, through the archive, to Henrika's choice between a quiet correction and a fuller account — and her decision turns on the renewed public stakes.",
+    },
+  ],
+};
+
+const MISSION_4_SET_3: SetReading = {
+  title: "The Manuscript on the Lake",
+  subtitle:
+    "A short story about a retired judge, a finished book, and a single decision that will not stay decided.",
+  format: "Short Story",
+  readingMinutes: 4,
+  words: [
+    "polemical",
+    "precipitate",
+    "profundity",
+    "prophetic",
+    "prudent",
+    "punctilious",
+    "recondite",
+    "scrupulous",
+    "tranquil",
+    "vacillate",
+  ],
+  passage: `For three years after his retirement, Justice Halvor Bren had lived in what his old clerks, with mock envy, called "the suspiciously **tranquil** house" — a small wooden cottage on the western shore of a Norwegian lake, twelve kilometers from the nearest neighbor, with a view of three pines and a kettle that whistled in the same key as the morning loons.
+
+In that house, in those three years, he had written a book.
+
+The book was not, on its surface, **polemical**. It was a long, careful study of judicial reasoning in a particular set of administrative cases — the kind of subject most readers would call **recondite** without finishing the title page. Halvor had researched it with the **scrupulous** habits of a man who, throughout his career, had been congratulated less for the brilliance of his opinions than for their **punctilious** attention to procedure. He had checked every footnote himself, twice.
+
+What made the book difficult was not its prose but its conclusion. The cases Halvor had studied — many decided by colleagues he had liked and admired — formed, when read together, a quiet but unmistakable pattern of deference to a single ministry whose conduct his own dissents had occasionally, but not often enough, criticized. To publish the book would be to argue, with the authority of his name, that the judiciary of his own generation had been more compliant than it had told itself.
+
+It would not be a **precipitate** decision. He had drafted, redrafted, set aside, and returned to the manuscript over thirty-one months. But sometime in the second winter, he had begun to **vacillate** — not about the argument, which he believed, but about whether his own publication of it would do more good than harm. There were younger judges, his former colleagues among them, who would be wounded by the book in ways he could already imagine in unwelcome detail.
+
+His old friend Mariam, a retired prosecutor, came up for the long weekend in March. She read the manuscript on the porch in two days, walking down to the dock between chapters, returning with the pages folded under one arm.
+
+"It's good," she said on the second evening. "It's also not yours to keep."
+
+He asked what she meant.
+
+"You think the question is whether to publish," she said. "But the book has already been written. The only remaining question is whether the people who will be most embarrassed by it learn about it from you, or — eight years from now — from a graduate student who finds your draft in an archive and doesn't know any of them personally."
+
+The remark was not **prophetic** in any mystical sense. Mariam had simply spent her career predicting, with depressing accuracy, what would happen to documents people tried to suppress.
+
+Halvor walked the lake path in the morning. The water was very still. He thought about whether the most **prudent** course was, paradoxically, the least cautious one — to publish now, with whatever **profundity** the book contained, while he was still alive to correct misreadings and to absorb the criticisms in person.
+
+By mid-afternoon he had drafted a short letter to his publisher in Oslo. He did not seal it immediately. He set it on the kitchen table and walked back down to the dock, because he had learned, in three years on this lake, that decisions made before sunset were often quietly amended by it — and this one, he suspected, would not be.
+
+It wasn't.
+
+He sealed the letter at dawn.`,
+  questions: [
+    {
+      id: 1,
+      kind: "vocab-context",
+      prompt: 'In this sentence, the word "recondite" most nearly means:',
+      quote:
+        '"...a long, careful study of judicial reasoning in a particular set of administrative cases — the kind of subject most readers would call recondite without finishing the title page."',
+      options: [
+        "Widely popular and easy to understand.",
+        "Obscure, dealing with subjects beyond ordinary knowledge.",
+        "Politically explosive and controversial.",
+        "Religious or devotional in tone.",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Recondite" describes specialized, hard-to-access subject matter — the very thing most readers would dismiss before reading.',
+    },
+    {
+      id: 2,
+      kind: "vocab-context",
+      prompt: 'In this sentence, the word "vacillate" most nearly means:',
+      quote:
+        '"...he had begun to vacillate — not about the argument, which he believed, but about whether his own publication of it would do more good than harm."',
+      options: [
+        "To grow more certain over time.",
+        "To swing back and forth between alternatives without settling.",
+        "To formally renounce a position.",
+        "To delegate a decision to someone else.",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Vacillate" means to waver between options. The next clause sharpens it: he is wavering not about the argument but about whether to publish.',
+    },
+    {
+      id: 3,
+      kind: "tone-purpose",
+      prompt:
+        'The narrator describes Halvor as known for "punctilious attention to procedure." Why "punctilious" rather than just "careful"?',
+      options: [
+        '"Punctilious" is a more elegant synonym for "careful" with no real difference in meaning.',
+        '"Punctilious" specifies a near-obsessive attention to fine points of correct procedure — a distinctive judicial virtue, sharper than ordinary "carefulness."',
+        '"Punctilious" implies he was often late and apologetic.',
+        '"Punctilious" describes loud, public scrupulousness rather than private discipline.',
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Punctilious" specifically describes attention to small, correct details of form and procedure — the precise reputation a judge of his kind would have earned.',
+    },
+    {
+      id: 4,
+      kind: "inference",
+      prompt:
+        "Based on the passage, what can the reader most reasonably infer Mariam means when she says the book \"is also not yours to keep\"?",
+      options: [
+        "Halvor does not legally own the rights to the manuscript and must transfer them to a colleague.",
+        "Once such an argument has been written, suppressing it merely guarantees that someone else will publish it later, in worse circumstances and without Halvor present to defend or refine it.",
+        "Halvor's family has the right to decide whether the book will be published.",
+        "The judiciary itself owns any analysis of its decisions.",
+      ],
+      correctIndex: 1,
+      explanation:
+        "Mariam's point — sharpened by her career predicting suppressed documents — is that the real choice is between publishing now or being published later by someone else, in less forgiving terms.",
+    },
+    {
+      id: 5,
+      kind: "substitution",
+      prompt:
+        'Which single word could replace "tranquil" in the sentence below without changing its meaning?',
+      quote:
+        '"...his old clerks, with mock envy, called \'the suspiciously tranquil house\' — a small wooden cottage on the western shore of a Norwegian lake..."',
+      options: [
+        "Crowded",
+        "Serene",
+        "Hostile",
+        "Industrial",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Serene" — calm and peaceful — matches "tranquil." The other options reverse or unrelate the mood.',
+    },
+    {
+      id: 6,
+      kind: "main-idea",
+      prompt:
+        "Which sentence best summarizes the central idea or arc of the passage?",
+      options: [
+        "A retired judge writes a book, decides it is too dangerous to publish, and burns the manuscript at the end of a quiet weekend.",
+        "A retired prosecutor convinces a former colleague to abandon a careful study because it will harm the reputation of younger judges.",
+        "A retired judge, after years of careful drafting, comes to see that the most prudent path is also the least cautious — to publish now, while he can answer for what he has written.",
+        "A small Norwegian publisher refuses a manuscript because it is too technical for general readers.",
+      ],
+      correctIndex: 2,
+      explanation:
+        "The arc tracks Halvor's deliberate scrupulousness, his vacillation, Mariam's reframing, and his eventual conclusion that publishing now is the genuinely prudent course.",
+    },
+  ],
+};
+
+const MISSION_5_SET_1: SetReading = {
+  title: "The Bell at the End of the Garden",
+  subtitle:
+    "A short story about a wedding, two estranged sisters, and a sound from childhood.",
+  format: "Short Story",
+  readingMinutes: 4,
+  words: [
+    "aloof",
+    "clangor",
+    "conventional",
+    "debunk",
+    "diminutive",
+    "discernible",
+    "enigmatic",
+    "estranged",
+    "extravagant",
+    "fanciful",
+  ],
+  passage: `Karina had not seen her younger sister in eleven years when the wedding invitation, on cream paper with **extravagant** silver lettering, arrived at her apartment. The card was so heavily decorated that the address itself was barely **discernible** beneath the foil; only the postmark gave away its origin. She read it twice, set it on the kitchen counter, and did not respond for nine days.
+
+The sisters had been close as children and had grown **estranged** in the long, undramatic way of adult lives that quietly rearrange themselves around grievances no one ever quite states. There had been no single event, no famous quarrel, only an accumulating distance that family members had learned to describe with words like "complicated" and "private." By her thirties, Karina had grown used to thinking of her sister Aleksa as a slightly **enigmatic** figure who appeared in family photographs at holidays she did not attend.
+
+The wedding was to be held in the garden of their grandmother's old house — a detail the invitation almost concealed, in the same fancy script. That garden, Karina had not seen since she was twenty-two.
+
+She went, in the end, because her grandmother was eighty-nine, and because no satisfying excuse would have survived contact with her own conscience.
+
+The wedding itself was, by intention, **conventional**: white flowers, a string quartet, a polite minister, three short speeches. Karina sat near the back of the rows and tried to look, throughout the ceremony, neither warm nor pointedly **aloof** — the careful neutrality of a guest who is also a story the other guests have been told.
+
+It was after the ceremony, during the long unstructured hour before the reception began, that she found herself walking the garden path she had walked, almost daily, as a child. The path narrowed past the rose hedge and ended at the small wooden gate at the edge of the orchard, where her grandfather had once hung an old brass bell — **diminutive**, dented, a little ridiculous — that the children had been allowed to ring once before each meal.
+
+The bell was still there.
+
+It was Aleksa, in the long ivory dress, who saw her first. She did not approach immediately. She stood at the far end of the path, a distance of maybe twenty meters, and waited, as if she had spent the years between rehearsing exactly this hesitation.
+
+Karina lifted her hand. Aleksa lifted hers.
+
+When her sister did, finally, walk down the path, she rang the small brass bell with one quick swing as she passed under it. The **clangor** was not, of course, especially loud — the bell was the size of a small fist — but in the still garden it was perfectly audible, and to Karina, who had not heard it in twenty years, it carried a quality the rest of the day did not.
+
+"I wasn't sure you'd come," Aleksa said.
+
+"I almost didn't," Karina said. "I almost wrote a very long letter explaining why I wasn't coming. It would have been completely **fanciful** — I'd have invented half of it as I went."
+
+Aleksa laughed once, briefly. They did not, that afternoon, **debunk** the version of their estrangement that the family had quietly agreed on. There was time enough for that, perhaps, in the years that might or might not follow. But the bell had rung, and the garden, for an hour, was a place they were both willing to stand in.`,
+  questions: [
+    {
+      id: 1,
+      kind: "vocab-context",
+      prompt: 'In this sentence, the word "aloof" most nearly means:',
+      quote:
+        '"...Karina sat near the back of the rows and tried to look, throughout the ceremony, neither warm nor pointedly aloof..."',
+      options: [
+        "Openly hostile and confrontational.",
+        "Reserved and emotionally distant.",
+        "Visibly tearful and overwhelmed.",
+        "Cheerfully social and welcoming.",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Aloof" describes deliberate emotional distance — the careful coolness Karina is trying to balance against the appearance of warmth.',
+    },
+    {
+      id: 2,
+      kind: "vocab-context",
+      prompt: 'In this sentence, the word "estranged" most nearly means:',
+      quote:
+        '"The sisters had been close as children and had grown estranged in the long, undramatic way of adult lives that quietly rearrange themselves around grievances no one ever quite states."',
+      options: [
+        "Newly devoted to one another.",
+        "Distant and separated in feeling, no longer close.",
+        "Legally divorced or annulled.",
+        "Still emotionally close, despite physical distance.",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Estranged" means alienated or no longer close. The whole passage turns on the slow, undramatic distance the word describes.',
+    },
+    {
+      id: 3,
+      kind: "tone-purpose",
+      prompt:
+        'The invitation\'s lettering is called "extravagant." Why does the author choose "extravagant" rather than just "fancy"?',
+      options: [
+        '"Extravagant" and "fancy" mean exactly the same thing; the choice is purely decorative.',
+        '"Extravagant" carries the sense of going beyond what is reasonable or necessary, gently signaling that the wedding\'s formal trappings are themselves a little overdone — and may obscure as much as they announce.',
+        '"Extravagant" means "expensive" specifically and refers to the cost of the silver foil.',
+        '"Extravagant" implies the invitation is poorly made, while "fancy" would imply the opposite.',
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Extravagant" suggests excess. The narrator notes that even the address is barely discernible beneath the foil — the very richness of the design conceals.',
+    },
+    {
+      id: 4,
+      kind: "inference",
+      prompt:
+        "Based on the passage, what can the reader most reasonably infer about why Karina ultimately attends the wedding?",
+      options: [
+        "She is hoping to confront her sister publicly during the ceremony.",
+        "She has been promised an inheritance she will lose if she does not appear.",
+        "She recognizes that her grandmother's age and her own conscience will not allow her to construct a believable excuse for staying away.",
+        "She has been advised by a therapist that attending will fully heal the estrangement.",
+      ],
+      correctIndex: 2,
+      explanation:
+        "The passage states the reason directly: her grandmother was eighty-nine, and \"no satisfying excuse would have survived contact with her own conscience.\"",
+    },
+    {
+      id: 5,
+      kind: "substitution",
+      prompt:
+        'Which single word could replace "enigmatic" in the sentence below without changing its meaning?',
+      quote:
+        '"By her thirties, Karina had grown used to thinking of her sister Aleksa as a slightly enigmatic figure who appeared in family photographs at holidays she did not attend."',
+      options: [
+        "Familiar",
+        "Mysterious",
+        "Boisterous",
+        "Hostile",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Mysterious" — hard to interpret or understand — captures "enigmatic." The others change the relationship entirely.',
+    },
+    {
+      id: 6,
+      kind: "main-idea",
+      prompt:
+        "Which sentence best summarizes the central idea or arc of the passage?",
+      options: [
+        "Two estranged sisters use a wedding to publicly resolve every grievance that had separated them for eleven years.",
+        "An older sister attends an estranged sibling's wedding, walks back to a childhood place, and shares a small, unspectacular moment of recognition that does not heal the estrangement but suspends it for an hour.",
+        "A grandmother orchestrates a reunion between two sisters by deliberately seating them next to each other at the reception.",
+        "An estranged sister leaves a wedding early after realizing the family will never accept her decision to attend.",
+      ],
+      correctIndex: 1,
+      explanation:
+        "The passage tracks Karina's reluctant attendance, the walk to the bell, the brief ringing, and a guarded but real moment between the sisters — neither resolution nor refusal.",
+    },
+  ],
+};
+
+const MISSION_5_SET_2: SetReading = {
+  title: "The New Director's First Season",
+  subtitle:
+    "A short story about a regional theatre, an inherited program, and a young director's first refusal to bow.",
+  format: "Short Story",
+  readingMinutes: 4,
+  words: [
+    "frivolous",
+    "heterogeneous",
+    "imperious",
+    "impertinent",
+    "invasive",
+    "irresolute",
+    "laudable",
+    "lax",
+    "marginalize",
+    "panache",
+  ],
+  passage: `When Ines Verra was named, at thirty-four, the new artistic director of the Carragh Regional Theatre, the local paper devoted an entire column to her surprising youth, her unusually long résumé, and what one critic memorably called her "alarming **panache**." The word was meant, she suspected, as praise — but the kind of praise that, in a small theatre town, is also a warning.
+
+The board that had hired her was, like most boards, almost theatrically **heterogeneous**: a retired oil-services executive, two longtime donors, a former drama teacher, a young app developer who attended one play a year, and a single working actor who said almost nothing in meetings. They had hired Ines, as far as she could tell, because each of them had hoped she would deliver a slightly different theatre.
+
+She inherited a season, half-programmed by her predecessor, that she found **lax** in almost every direction at once: safe choices stretched thin, an over-reliance on a single touring company, and — most worrying — a quiet pattern of programming that consistently **marginalized** the regional playwrights the theatre had once been famous for championing.
+
+In her first board meeting, she proposed three changes. None of them was **frivolous**. None of them was, in budgetary terms, particularly aggressive. But the second proposal — to commission a new play from a writer the previous director had publicly dismissed — caused the room to grow visibly cold.
+
+The retired executive spoke first. His tone was not unkind, exactly, but it was distinctly **imperious**: he had served on three boards over forty years, he reminded her, and could anticipate the donor reaction. The drama teacher then asked whether the proposal was perhaps a little **impertinent** for a director's first month — a question that, Ines noticed, no one would have asked a man of forty-five.
+
+She did not answer immediately. She had spent the previous week imagining versions of this exact meeting, and she had decided that whatever else she did, she would not be **irresolute** about the second proposal. The writer in question was, in her professional judgment, exactly the voice the theatre's audience had been quietly missing for a decade. To withdraw the commission under polite pressure in her first month would set a tone she would not later be able to undo.
+
+So she did three things. She thanked the executive for the institutional memory. She told the drama teacher that whether her proposal was impertinent depended entirely on what the proposal was *for*, and described again, in two sentences, what she believed it was for. And she offered the board a single concrete compromise: she would, for the first season only, share programming authority on the new commission with a small advisory panel that included the working actor.
+
+The proposal passed by a margin so narrow it counted, technically, as a tie broken by the chair.
+
+The board did not exactly love her by the end of the meeting. But they had also not voted her down on her first significant proposal, and the working actor, on the way out, told her quietly that her instinct on the playwright was correct.
+
+It was a **laudable** outcome, in the cautious vocabulary the theatre press would later use, though Ines knew that in this profession a laudable first season was only ever the beginning of an **invasive** scrutiny of the second. She walked out into the cold air of the parking lot already half-thinking about the third.`,
+  questions: [
+    {
+      id: 1,
+      kind: "vocab-context",
+      prompt: 'In this sentence, the word "imperious" most nearly means:',
+      quote:
+        '"His tone was not unkind, exactly, but it was distinctly imperious: he had served on three boards over forty years, he reminded her, and could anticipate the donor reaction."',
+      options: [
+        "Apologetic and self-doubting.",
+        "Domineering, accustomed to being obeyed without argument.",
+        "Cheerfully encouraging.",
+        "Quietly indifferent.",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Imperious" describes a tone of expected authority — fitting an executive whose forty years on boards have trained him to assume his judgment will carry the room.',
+    },
+    {
+      id: 2,
+      kind: "vocab-context",
+      prompt: 'In this sentence, the word "laudable" most nearly means:',
+      quote:
+        '"It was a laudable outcome, in the cautious vocabulary the theatre press would later use..."',
+      options: [
+        "Disastrous and embarrassing.",
+        "Worthy of praise; commendable.",
+        "Trivially small and unimportant.",
+        "Suspiciously expensive.",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Laudable" means deserving of praise. The narrator\'s "cautious vocabulary" qualifier shows it is faint praise, but praise nonetheless.',
+    },
+    {
+      id: 3,
+      kind: "tone-purpose",
+      prompt:
+        'The critic calls Ines\'s style "alarming panache." Why does the author build the column around "panache" rather than a plainer word like "style"?',
+      options: [
+        '"Panache" is just a French-flavored synonym for "style" with no different meaning.',
+        '"Panache" carries a sense of distinctive, almost showy flair — and the modifier "alarming" makes the praise double-edged in a way "style" could not.',
+        '"Panache" specifies that Ines is good with money, while "style" would describe her clothing.',
+        '"Panache" implies that Ines is theatrical only in her private life, not professionally.',
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Panache" suggests distinctive, almost flamboyant flair. Pairing it with "alarming" turns a compliment into a small warning — exactly the local paper\'s tone.',
+    },
+    {
+      id: 4,
+      kind: "inference",
+      prompt:
+        "Ines notices that the drama teacher's question — whether the proposal was 'impertinent' for a director's first month — is one no one would have asked a man of forty-five. What can the reader most reasonably infer from this observation?",
+      options: [
+        "Ines believes she is being treated more skeptically than a comparable male director would be, because of her age and likely her gender.",
+        "Ines believes the drama teacher dislikes the writer being commissioned for personal reasons.",
+        "Ines believes board members are forbidden from using the word 'impertinent' in meetings.",
+        "Ines believes the question is a private joke between the drama teacher and the executive.",
+      ],
+      correctIndex: 0,
+      explanation:
+        "The observation isolates a difference in expectation that would not be applied to a comparable man — Ines is reading the question as a quiet sign of double standard.",
+    },
+    {
+      id: 5,
+      kind: "substitution",
+      prompt:
+        'Which single word could replace "irresolute" in the sentence below without changing its meaning?',
+      quote:
+        '"...she had decided that whatever else she did, she would not be irresolute about the second proposal."',
+      options: [
+        "Determined",
+        "Wavering",
+        "Boastful",
+        "Relaxed",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Wavering" — uncertain or unable to decide — captures "irresolute." "Determined" is the opposite.',
+    },
+    {
+      id: 6,
+      kind: "main-idea",
+      prompt:
+        "Which sentence best summarizes the central idea or arc of the passage?",
+      options: [
+        "A young director quits her first board meeting after concluding that the board will never approve her programming.",
+        "A new artistic director, recognizing the cost of yielding on her first significant proposal, holds her position with a careful compromise that wins her a narrow but meaningful first vote.",
+        "A board of donors successfully blocks every proposal a new director brings to her first meeting.",
+        "A regional theatre is forced to dissolve when a new director and a retired executive cannot agree on a single play.",
+      ],
+      correctIndex: 1,
+      explanation:
+        "The passage tracks Ines's preparation, her decision not to be irresolute, and the narrowly successful compromise that lets her hold her ground without breaking the room.",
+    },
+  ],
+};
+
+const MISSION_5_SET_3: SetReading = {
+  title: "The Tuesday Class",
+  subtitle:
+    "A short story about an after-school program, a doubting administrator, and the long art of persuasion.",
+  format: "Short Story",
+  readingMinutes: 4,
+  words: [
+    "plodding",
+    "prosaic",
+    "remedial",
+    "restive",
+    "sporadic",
+    "stigmatize",
+    "undermine",
+    "utterly",
+    "weary",
+    "zealous",
+  ],
+  passage: `For the first three months of her tenure at Sablon Middle School, the new literacy coach Petra Halász felt **utterly** invisible. The school had hired her, on paper, to lead a small **remedial** reading program for sixth graders who had fallen behind during the long disruption of the previous two years; in practice, she had been handed a windowless classroom on the third floor, a roster that arrived in **sporadic** updates, and the polite indifference of a faculty that had seen too many short-lived programs come and go to invest its hopes in another.
+
+The students themselves were, on Day One, **restive**. They knew, as students always know, that a new program meant a new label. Petra suspected — correctly, as it turned out — that more than one child in the room had already been gently warned, by adults trying to be kind, that the class might **stigmatize** them with the rest of the school if they treated it too seriously.
+
+She had, accordingly, two problems to solve at once: the visible one of teaching reading, and the invisible one of slowly disarming the idea that the class was a punishment.
+
+Her early lessons were, by design, **plodding** — short paragraphs, predictable formats, the kind of careful step-by-step work that adults who had not done it sometimes called dull. The principal, dropping in unannounced in the second week, observed a lesson on contextual inference and afterwards told Petra, without quite meaning to be cruel, that he had expected something "less **prosaic**." He had imagined, perhaps, group games and bright posters; he had not imagined a quiet room of eleven-year-olds working through one paragraph at a time.
+
+Petra heard the comment without arguing. She had been a remedial teacher long enough to know that arguing, in her first month, would only **undermine** her standing in a school that was already half-inclined to dismiss the program. She also knew that the slow, plodding work was, in her judgment, exactly what most of these students needed — and that any attempt to make it look more exciting for visiting adults would, in a few weeks, cost her the trust of the room.
+
+By the end of the first quarter she was tired. She did not let the students see this. **Weary** teachers, in her experience, taught nervous students. But on the long bus ride home each Friday she would close her eyes and feel her own face, briefly, soften out of its classroom expression.
+
+What kept her going was not, at first, results — those came later — but the quiet conduct of a single child, an unusually **zealous** sixth grader named Marek, who had begun arriving ten minutes early to the Tuesday session to reread the previous week's passage on his own. He did not announce this. He simply did it. Petra never mentioned it, because she suspected that any praise she offered would, in this particular child's case, feel like a trap.
+
+By the end of the second quarter, the principal observed another lesson. He did not, this time, use the word "prosaic." He stayed the entire period, asked one careful question about the assessment protocol, and left without a comment.
+
+Petra took this, in the cautious vocabulary of her trade, as the highest praise the school was, for the moment, capable of giving her.
+
+She set her bag down on the third-floor desk, looked at the empty room, and began to plan Tuesday's lesson.`,
+  questions: [
+    {
+      id: 1,
+      kind: "vocab-context",
+      prompt: 'In this sentence, the word "restive" most nearly means:',
+      quote: '"The students themselves were, on Day One, restive."',
+      options: [
+        "Calmly attentive and eager to begin.",
+        "Restless and resistant to being controlled.",
+        "Deeply asleep at their desks.",
+        "Cheerfully obedient and quiet.",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Restive" describes restless, uneasy resistance — exactly how a class of newly relabeled sixth graders would behave on Day One.',
+    },
+    {
+      id: 2,
+      kind: "vocab-context",
+      prompt: 'In this sentence, the word "zealous" most nearly means:',
+      quote:
+        '"...the quiet conduct of a single child, an unusually zealous sixth grader named Marek, who had begun arriving ten minutes early to the Tuesday session to reread the previous week\'s passage on his own."',
+      options: [
+        "Reluctant and resentful about attending.",
+        "Marked by intense, eager devotion.",
+        "Absent-minded and forgetful.",
+        "Loud and boastful in front of peers.",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Zealous" describes eager, devoted commitment. Arriving early to reread a passage on his own is the unmistakable behavior of a zealous student.',
+    },
+    {
+      id: 3,
+      kind: "tone-purpose",
+      prompt:
+        'The principal expects something "less prosaic." Why does the author choose "prosaic" rather than just "boring"?',
+      options: [
+        '"Prosaic" and "boring" mean exactly the same thing; the choice is purely stylistic.',
+        '"Prosaic" carries a literary sense of being matter-of-fact and unembellished — fitting a principal who expected showy lessons and is gently disappointed by careful, ordinary-looking instruction.',
+        '"Prosaic" implies the lessons were poorly prepared, while "boring" would imply intentional dullness.',
+        '"Prosaic" specifically refers to the use of prose rather than poetry in the classroom.',
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Prosaic" describes the matter-of-fact, unornamented quality of the lesson — and it captures the principal\'s mild disappointment more precisely than "boring" would.',
+    },
+    {
+      id: 4,
+      kind: "inference",
+      prompt:
+        "Based on the passage, what can the reader most reasonably infer about why Petra does not argue with the principal's comment?",
+      options: [
+        "She privately agrees that her lessons are too dull and intends to change them immediately.",
+        "She is afraid the principal will fire her if she speaks back to him in the hallway.",
+        "She judges that defending plodding work in her first month would weaken her standing more than the comment itself does, and she trusts the work to make its own case over time.",
+        "She is too tired by the end of the day to construct a coherent reply.",
+      ],
+      correctIndex: 2,
+      explanation:
+        "The passage explicitly says arguing would undermine her standing — and she also believes the slow work is right and will eventually speak for itself.",
+    },
+    {
+      id: 5,
+      kind: "substitution",
+      prompt:
+        'Which single word could replace "plodding" in the sentence below without changing its meaning?',
+      quote:
+        '"Her early lessons were, by design, plodding — short paragraphs, predictable formats, the kind of careful step-by-step work that adults who had not done it sometimes called dull."',
+      options: [
+        "Frantic",
+        "Methodical",
+        "Glamorous",
+        "Improvised",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Methodical" — slow and steady, step by step — captures the deliberate, unhurried quality of "plodding" in this educational context.',
+    },
+    {
+      id: 6,
+      kind: "main-idea",
+      prompt:
+        "Which sentence best summarizes the central idea or arc of the passage?",
+      options: [
+        "A literacy coach is dismissed at the end of her first quarter for refusing to make her lessons more entertaining.",
+        "A reading program collapses after the principal openly criticizes the new coach in front of her sixth-grade students.",
+        "A literacy coach quietly defends slow, methodical work against early skepticism, trusting that the program's worth will be recognized by behavior — both her students' and her principal's — long before it is recognized by words.",
+        "A school dramatically transforms its remedial program by adopting bright posters and group games at the principal's suggestion.",
+      ],
+      correctIndex: 2,
+      explanation:
+        "The arc traces Petra's decision to hold the line on careful, plodding instruction; her trust in the work to vindicate itself; and the principal's quieter second visit as the first real sign that it is doing so.",
+    },
+  ],
+};
+
 export const SET_READINGS: Record<string, SetReading> = {
   "1-1": MISSION_1_SET_1,
   "1-2": MISSION_1_SET_2,
@@ -842,6 +2050,15 @@ export const SET_READINGS: Record<string, SetReading> = {
   "2-1": MISSION_2_SET_1,
   "2-2": MISSION_2_SET_2,
   "2-3": MISSION_2_SET_3,
+  "3-1": MISSION_3_SET_1,
+  "3-2": MISSION_3_SET_2,
+  "3-3": MISSION_3_SET_3,
+  "4-1": MISSION_4_SET_1,
+  "4-2": MISSION_4_SET_2,
+  "4-3": MISSION_4_SET_3,
+  "5-1": MISSION_5_SET_1,
+  "5-2": MISSION_5_SET_2,
+  "5-3": MISSION_5_SET_3,
 };
 
 export function getSetReading(day: number, group: number): SetReading | null {
