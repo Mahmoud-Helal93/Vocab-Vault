@@ -12,8 +12,6 @@ import {
   Sparkles,
   Info,
   RotateCcw,
-  Maximize2,
-  Minimize2,
 } from "lucide-react";
 import { getSetReading, type ReadingQuestion } from "@/data/setReadings";
 import { useApp } from "@/context/AppContext";
@@ -34,17 +32,27 @@ const KIND_LABELS: Record<ReadingQuestion["kind"], string> = {
   "main-idea": "Main Idea",
 };
 
+type PassageSize = "sm" | "md" | "lg";
+
+const PASSAGE_SIZE_CLASS: Record<PassageSize, string> = {
+  sm: "text-[14px] sm:text-[15px] leading-[1.85]",
+  md: "text-[16px] sm:text-[17px] leading-[1.95]",
+  lg: "text-[19px] sm:text-[21px] leading-[2.05]",
+};
+
 function renderPassage(
   passage: string,
   highlightWord: string | null,
+  size: PassageSize = "md",
 ) {
   const paragraphs = passage.split(/\n\n+/);
+  const sizeCls = PASSAGE_SIZE_CLASS[size];
   return paragraphs.map((para, pi) => {
     const tokens = para.split(/(\*\*[^*]+\*\*|\*[^*]+\*)/g);
     return (
       <p
         key={pi}
-        className="text-foreground leading-[1.95] text-[16px] sm:text-[17px] mb-5 last:mb-0"
+        className={`text-foreground ${sizeCls} mb-5 last:mb-0`}
       >
         {tokens.map((tok, ti) => {
           if (/^\*\*[^*]+\*\*$/.test(tok)) {
@@ -198,6 +206,7 @@ export default function SetReading({
   const [focusMode, setFocusMode] = useState(false);
   const [highlightWord, setHighlightWord] = useState<string | null>(null);
   const [previewWord, setPreviewWord] = useState<string | null>(null);
+  const [passageSize, setPassageSize] = useState<PassageSize>("md");
 
   const storyRef = useRef<HTMLElement | null>(null);
   const chipsContainerRef = useRef<HTMLDivElement | null>(null);
@@ -461,6 +470,40 @@ export default function SetReading({
                   {reading.title}
                 </h2>
                 <div className="flex items-center gap-3">
+                  <div
+                    role="group"
+                    aria-label="Adjust passage font size"
+                    className="inline-flex items-stretch rounded-lg border border-border bg-background overflow-hidden"
+                  >
+                    {(
+                      [
+                        { id: "sm", label: "Small", cls: "text-[11px]" },
+                        { id: "md", label: "Medium", cls: "text-[14px]" },
+                        { id: "lg", label: "Large", cls: "text-[18px]" },
+                      ] as { id: PassageSize; label: string; cls: string }[]
+                    ).map((s, i) => {
+                      const active = passageSize === s.id;
+                      return (
+                        <button
+                          key={s.id}
+                          type="button"
+                          onClick={() => setPassageSize(s.id)}
+                          aria-label={`${s.label} text`}
+                          aria-pressed={active}
+                          title={`${s.label} text`}
+                          className={`w-8 h-8 flex items-center justify-center font-extrabold leading-none transition ${
+                            i > 0 ? "border-l border-border" : ""
+                          } ${
+                            active
+                              ? "bg-orange-100 text-orange-700 dark:bg-orange-500/20 dark:text-orange-300"
+                              : "text-muted-foreground hover:bg-muted hover:text-foreground"
+                          }`}
+                        >
+                          <span className={s.cls}>A</span>
+                        </button>
+                      );
+                    })}
+                  </div>
                   <label className="inline-flex items-center gap-2 cursor-pointer select-none text-xs font-semibold text-muted-foreground">
                     <span>Focus Mode</span>
                     <span
@@ -478,21 +521,10 @@ export default function SetReading({
                       />
                     </span>
                   </label>
-                  <button
-                    onClick={() => setFocusMode((v) => !v)}
-                    aria-label="Toggle focus mode"
-                    className="w-8 h-8 rounded-lg border border-border bg-background flex items-center justify-center text-muted-foreground hover:bg-muted transition"
-                  >
-                    {focusMode ? (
-                      <Minimize2 size={14} />
-                    ) : (
-                      <Maximize2 size={14} />
-                    )}
-                  </button>
                 </div>
               </div>
               <div className="prose-reading">
-                {renderPassage(reading.passage, highlightWord)}
+                {renderPassage(reading.passage, highlightWord, passageSize)}
               </div>
               <div className="mt-6 pt-5 border-t border-border text-center text-xs text-muted-foreground">
                 <span className="inline-flex items-center gap-1.5">
