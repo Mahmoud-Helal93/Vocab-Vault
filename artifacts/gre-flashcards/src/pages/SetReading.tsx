@@ -45,7 +45,10 @@ const PASSAGE_SIZE_CLASS: Record<PassageSize, string> = {
 function renderPassage(
   passage: string,
   highlightWord: string | null,
-  size: PassageSize = "md",
+  size: PassageSize,
+  openPopoverKey: string | null,
+  onWordTap: (key: string, word: string) => void,
+  wordInfoMap: Record<string, { pos: string; definition: string }>,
 ) {
   const paragraphs = passage.split(/\n\n+/);
   const sizeCls = PASSAGE_SIZE_CLASS[size];
@@ -65,17 +68,59 @@ function renderPassage(
               (lower === highlightWord ||
                 lower.startsWith(highlightWord) ||
                 highlightWord.startsWith(lower));
+            const wordKey = `${pi}-${ti}`;
+            const isOpen = openPopoverKey === wordKey;
+            const info = wordInfoMap[lower];
             return (
               <span
                 key={ti}
-                data-target-word={lower}
-                className={`font-semibold text-orange-600 dark:text-orange-300 underline decoration-orange-400/60 decoration-2 underline-offset-4 px-0.5 rounded transition-colors ${
-                  isHL
-                    ? "bg-orange-200/80 dark:bg-orange-500/30 text-orange-700 dark:text-orange-200"
-                    : ""
-                }`}
+                className="relative inline-block align-baseline"
               >
-                {inner}
+                <button
+                  type="button"
+                  data-passage-word={lower}
+                  data-target-word={lower}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    onWordTap(wordKey, lower);
+                  }}
+                  aria-expanded={isOpen}
+                  aria-label={`Show definition of ${inner}`}
+                  className={`font-semibold text-orange-600 dark:text-orange-300 underline decoration-orange-400/60 decoration-2 underline-offset-4 px-0.5 rounded cursor-pointer transition-colors hover:bg-orange-100/70 dark:hover:bg-orange-500/20 focus:outline-none focus-visible:ring-2 focus-visible:ring-orange-300 dark:focus-visible:ring-orange-500/40 ${
+                    isOpen || isHL
+                      ? "bg-orange-200/80 dark:bg-orange-500/30 text-orange-700 dark:text-orange-200"
+                      : ""
+                  }`}
+                >
+                  {inner}
+                </button>
+                {isOpen && (
+                  <span
+                    role="dialog"
+                    data-passage-popover
+                    onClick={(e) => e.stopPropagation()}
+                    className="absolute z-30 left-0 top-full mt-2 w-72 max-w-[80vw] rounded-xl border border-border bg-popover text-popover-foreground shadow-xl p-3 text-left not-italic font-normal block"
+                  >
+                    <span
+                      className="absolute -top-1.5 left-5 w-3 h-3 rotate-45 bg-popover border-l border-t border-border block"
+                      aria-hidden
+                    />
+                    <span className="flex items-baseline gap-2 mb-1.5">
+                      <span className="text-base font-extrabold text-foreground">
+                        {lower}
+                      </span>
+                      {info?.pos && (
+                        <span className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground italic">
+                          {info.pos}
+                        </span>
+                      )}
+                    </span>
+                    <span className="text-xs leading-relaxed text-foreground/90 block">
+                      {info?.definition ??
+                        "Definition will appear in the flashcards."}
+                    </span>
+                  </span>
+                )}
               </span>
             );
           }
@@ -119,6 +164,9 @@ export default function SetReading({
   const [highlightWord, setHighlightWord] = useState<string | null>(null);
   const [previewWord, setPreviewWord] = useState<string | null>(null);
   const [passageSize, setPassageSize] = useState<PassageSize>("md");
+  const [passagePopoverKey, setPassagePopoverKey] = useState<string | null>(
+    null,
+  );
 
   const storyRef = useRef<HTMLElement | null>(null);
   const chipsContainerRef = useRef<HTMLDivElement | null>(null);
@@ -150,6 +198,33 @@ export default function SetReading({
       document.removeEventListener("keydown", keyHandler);
     };
   }, [previewWord]);
+
+  useEffect(() => {
+    if (!passagePopoverKey) return;
+    const handler = (e: MouseEvent) => {
+      const t = e.target as HTMLElement | null;
+      if (!t) return;
+      if (t.closest("[data-passage-word], [data-passage-popover]")) return;
+      setPassagePopoverKey(null);
+    };
+    const keyHandler = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setPassagePopoverKey(null);
+    };
+    document.addEventListener("mousedown", handler);
+    document.addEventListener("keydown", keyHandler);
+    return () => {
+      document.removeEventListener("mousedown", handler);
+      document.removeEventListener("keydown", keyHandler);
+    };
+  }, [passagePopoverKey]);
+
+  const onPassageWordTap = (key: string, word: string) => {
+    setPassagePopoverKey((prev) => {
+      const next = prev === key ? null : key;
+      setHighlightWord(next ? word : null);
+      return next;
+    });
+  };
 
   if (!reading) {
     return (
@@ -490,7 +565,14 @@ export default function SetReading({
                 </div>
               </div>
               <div className="prose-reading">
-                {renderPassage(reading.passage, highlightWord, passageSize)}
+                {renderPassage(
+                  reading.passage,
+                  highlightWord,
+                  passageSize,
+                  passagePopoverKey,
+                  onPassageWordTap,
+                  wordInfoMap,
+                )}
               </div>
               <div className="mt-6 pt-5 border-t border-border text-center text-xs text-muted-foreground">
                 <span className="inline-flex items-center gap-1.5">
