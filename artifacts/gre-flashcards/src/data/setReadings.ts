@@ -10020,6 +10020,1225 @@ The house was completed sixteen months later. Daniel and Rose moved in the follo
   ],
 };
 
+const MISSION_26_SET_1: SetReading = {
+  title: "The First-Year Lecturer's Tuesday Seminar",
+  subtitle:
+    "A short story about a junior philosophy lecturer, an ardent doctrinaire student, and the equanimity it takes to refuse to grade an exorbitant final paper down.",
+  format: "Short Story",
+  readingMinutes: 4,
+  words: [
+    "apprehension",
+    "ardent",
+    "axiomatic",
+    "cease",
+    "conducive",
+    "corporeal",
+    "doctrinaire",
+    "eclectic",
+    "equanimity",
+    "exorbitant",
+  ],
+  passage: `Dr. Selene Aro had been hired in August to teach the introductory ethics seminar at Marlow College, and she walked into the first Tuesday of the semester with the small, professional **apprehension** that any new lecturer brought to a room of fourteen second-year students who had not chosen her course but had been assigned to it.
+
+The first six weeks went well. The students were, as they almost always were in the introductory seminar, an **eclectic** mix — three pre-medical students, two literature majors, a music composer, a few political-science students still deciding whether they wanted to be philosophers — and Selene, who had drafted her syllabus on the principle that an introductory course should not pretend to settle anything, taught it that way. She stated her own positions sparingly. She read her students' positions back to them more accurately than most of them could read them themselves. She kept the room **conducive** to disagreement without ever letting the disagreement **cease** to be productive.
+
+The trouble — if it was trouble; she would later refuse the word — began in the seventh week, when one of the pre-medical students, an **ardent** young man named Carlson Heath, submitted his midterm paper.
+
+The paper was eighteen pages long. The assignment had been six.
+
+It was, on its surface, a defense of a strict ethical position Carlson had begun the semester announcing — a position that held, **axiomatically**, that the moral worth of any action was reducible, without remainder, to its measurable effect on bodily, **corporeal** well-being. The position was not new to philosophy. It had been argued, in various forms, for two centuries. Carlson, however, had argued it with the kind of **doctrinaire** certainty that the position itself, in its more careful proponents, had long since abandoned. The paper conceded nothing. It engaged no counterargument seriously. It quoted, in three different footnotes, the same passage from a popular contemporary book in a way that suggested he had not, perhaps, read the original sources.
+
+The paper was also, Selene had to admit on her second reading, in many places quite good. It was clearly written. It had energy. It had a thesis. The student had thought.
+
+She had, in her first year of teaching, two competing temptations. The first was to grade the paper down for its **exorbitant** length, its overconfidence, and its narrowness — the kind of corrective grade a senior colleague would later have called "an inoculation." The second was to grade it generously on the strength of the writing alone and to use the comments to do the corrective work.
+
+She did neither. She graded the paper at exactly the level she would have graded it if Carlson had been a stranger — a B, on the strength of the writing and the structure, with the points off cleanly attributable to the failure to engage the strongest version of the opposing view. She wrote, in two pages of comments, the careful re-reading of three philosophers Carlson had quoted that he had not, in her professional judgment, read closely enough.
+
+Carlson came to her office hours the following week. He did not, in the conversation, accept the grade. He was respectful. He was also, in a long second sentence that ran for nearly three minutes, indignant. He had expected, he said, an A.
+
+Selene heard him out. She did not, in reply, raise her voice. She had decided, in advance — on a long walk the previous Saturday — that the only useful posture for the conversation was **equanimity**: that any agitation she allowed herself in the office hour would teach Carlson, more powerfully than the paper itself, that an ardent argument could shake an instructor into adjusting a grade.
+
+She did not adjust the grade. She did, however, offer Carlson a specific reading list of the four texts she believed he had skipped, and she offered to read, before the final, a three-page memo from him on any one of them. Carlson took the offer. He wrote the memo. The memo was, by Selene's reading, a different student's work.
+
+His final paper, ten weeks later, was a defense of the same position. It was eight pages long. It engaged three serious counterarguments. It received an A.`,
+  questions: [
+    {
+      id: 1,
+      kind: "vocab-context",
+      prompt: 'In this sentence, the word "doctrinaire" most nearly means:',
+      quote:
+        '"Carlson, however, had argued it with the kind of doctrinaire certainty that the position itself, in its more careful proponents, had long since abandoned."',
+      options: [
+        "Open to revision and willing to engage opposing views.",
+        "Rigidly adhering to a doctrine without regard to practical or counterargumentative considerations.",
+        "Trained in classical Latin grammar.",
+        "Reluctant to take any position at all.",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Doctrinaire" describes a rigid, dogmatic adherence to a doctrine — exactly the inflexible certainty that the more careful proponents have given up.',
+    },
+    {
+      id: 2,
+      kind: "vocab-context",
+      prompt: 'In this sentence, the word "equanimity" most nearly means:',
+      quote:
+        '"...the only useful posture for the conversation was equanimity: that any agitation she allowed herself in the office hour would teach Carlson, more powerfully than the paper itself, that an ardent argument could shake an instructor into adjusting a grade."',
+      options: [
+        "An openly hostile, confrontational stance.",
+        "Calm, even-tempered composure under pressure.",
+        "An explicit refusal to speak.",
+        "A formal academic complaint.",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Equanimity" describes calm, balanced composure — the explicit alternative to the agitation Selene refuses to display.',
+    },
+    {
+      id: 3,
+      kind: "tone-purpose",
+      prompt:
+        'The narrator says Carlson argued his position "axiomatically." Why use "axiomatically" rather than simply "confidently"?',
+      options: [
+        '"Axiomatically" is just a longer word for "confidently" with no different meaning.',
+        '"Axiomatically" carries the sense of treating a claim as a self-evident axiom requiring no proof. The word names exactly the move the paper makes — assuming the reductive position rather than arguing for it — and locates the failure not in tone but in method.',
+        '"Axiomatically" implies the paper was written in mathematical notation.',
+        '"Axiomatically" suggests Carlson copied the argument from a textbook.',
+      ],
+      correctIndex: 1,
+      explanation:
+        'The word names the methodological move — treating the position as a foundational axiom rather than a conclusion to be argued for — which is the paper\'s real weakness.',
+    },
+    {
+      id: 4,
+      kind: "inference",
+      prompt:
+        "Based on the passage, what can the reader most reasonably infer about why Selene refused to lower the grade as a corrective \"inoculation\" or to raise it generously and do the corrective work in the comments?",
+      options: [
+        "She wanted Carlson to fail the course on principle.",
+        "She judged that grading at the level she would have graded a stranger — and locating the corrective work in two pages of comments and a specific reading list — would teach Carlson more than either a punitive or a generous grade, and would protect her own future grading from being reactive to ardor or to charm.",
+        "She had been instructed by the department to grade strictly to the letter of the rubric.",
+        "She did not actually have time to read the paper carefully.",
+      ],
+      correctIndex: 1,
+      explanation:
+        "The text frames the choice as a refusal of both temptations — the punitive correction and the generous one — in favor of a stranger-grade plus substantive comments and a reading list.",
+    },
+    {
+      id: 5,
+      kind: "substitution",
+      prompt:
+        'Which single word could replace "exorbitant" in the sentence below without changing its meaning?',
+      quote:
+        '"...to grade the paper down for its exorbitant length, its overconfidence, and its narrowness..."',
+      options: [
+        "Modest",
+        "Excessive",
+        "Anonymous",
+        "Routine",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Excessive" matches "exorbitant" — both describe something far beyond a reasonable or expected limit.',
+    },
+    {
+      id: 6,
+      kind: "main-idea",
+      prompt:
+        "Which sentence best summarizes the central idea or arc of the passage?",
+      options: [
+        "A junior lecturer lowers a student\'s grade in retaliation for the student\'s confrontational behavior in office hours.",
+        "A first-year lecturer holds her equanimity through an ardent, doctrinaire student\'s overlong midterm paper, declines both a punitive and a generous grade in favor of careful comments and a specific reading list, and watches the same student return — through the work — with a serious final paper that earns the A he had wanted at midterm.",
+        "A pre-medical student abandons philosophy after receiving a B on his midterm paper.",
+        "A philosophy department changes its grading rubric after a single contested midterm.",
+      ],
+      correctIndex: 1,
+      explanation:
+        "The arc moves through the midterm paper, the office-hour conversation, the offered reading list, the memo, and the eventual final paper that earns the A through the work itself.",
+    },
+  ],
+};
+
+const MISSION_26_SET_2: SetReading = {
+  title: "The Editor of the Lampoon",
+  subtitle:
+    "A personal essay by the editor of a small satirical weekly on the difference between a flustered target and a credibly lampooned one.",
+  format: "Personal Essay",
+  readingMinutes: 4,
+  words: [
+    "fickle",
+    "figurative",
+    "flustered",
+    "gullible",
+    "idiosyncratic",
+    "incidental",
+    "ingrained",
+    "insolent",
+    "lampoon",
+    "lavish",
+  ],
+  passage: `I have been the editor of *The Marston Crank* — a satirical weekly that no one outside this town has heard of and that almost everyone inside it reads — for fourteen years. We publish, in a single Friday issue, eight pages of news satire, a back-page comic strip, and one long-running column called "The Mayor\'s Diary," which is written by a rotating cast of writers and which the mayor herself has, on at least three occasions, asked me politely not to discontinue.
+
+People ask me, sometimes, what makes a good lampoon. I have, over fourteen years, developed a settled and slightly **idiosyncratic** answer.
+
+A good **lampoon** does not, in my view, set out to leave its target **flustered**. A flustered target is the cheapest possible reward of the form, and most of the writers I have hired straight out of college believe, in their first six months, that producing fluster is the goal. It is not. A flustered target is news for one issue; he recovers; he writes a letter to the editor; we run the letter; the letter is, in many cases, funnier than the original piece, because the target — having been merely flustered — has reached, in print, for the first defense that occurred to him, which is almost always the defense most useful to us.
+
+The good lampoon does something different. It chooses a single trait of the target — almost always a trait the target has already, **ingrained**ly, made part of his public self — and it returns to that trait, in a single sustained imagination, until the reader, the target, and even the writer can no longer distinguish the fictional version from the public one. The fictional version becomes, by long repetition, the figure the public sees in the original. The lampoon is, in that sense, mostly **incidental** to the target himself. The target merely walks around afterward in the version of himself the lampoon has installed.
+
+This is harder than it sounds. It requires, on the writer\'s part, a respect for the target. The respect is not affection. It is closer to attention. A writer who does not pay attention to his target writes a piece that turns out to be **figurative** in only the loosest sense — a piece that gestures at the target without ever describing him — and the piece, when read aloud, does not produce recognition. It produces, in the writer\'s ear, only the satisfaction of having been **insolent**. Insolence is not a goal. Insolence is a side effect of accuracy.
+
+I have, over the years, made several mistakes. The biggest was a piece I commissioned in 2017 about a city council member I personally disliked, in which I encouraged the writer to be more **lavish** with the personal description than was warranted by the public record. The piece ran. It was not funny. It was not — and this is the worse charge — accurate. The council member did not respond. He did not have to. The next four pieces I commissioned about him were, by the room\'s honest reading, weaker than they would have been, because the 2017 piece had, by overreaching, lent the target a small reservoir of sympathy that took eighteen months to drain.
+
+I learned, slowly, that the magazine\'s readers were not **gullible**. They could tell the difference between a piece that had been written from observation and a piece that had been written from grievance. They were not **fickle** about the difference. They forgave the early ones, eventually, but they remembered. The magazine\'s authority, such as it is, is the slowly accumulated trust that we will not — even when we badly want to — overreach against a target whose public conduct does not invite the overreach.
+
+I now tell every new writer, on his or her first Friday, that the most useful question to ask of a draft is not whether the target will be flustered by it. The most useful question is whether the target, reading the piece in the privacy of his own kitchen, will recognize himself.
+
+If he will, you have written a lampoon. If he will not, you have written something else, and it does not, in the end, belong in the *Crank*.`,
+  questions: [
+    {
+      id: 1,
+      kind: "vocab-context",
+      prompt: 'In this sentence, the word "ingrained" most nearly means:',
+      quote:
+        '"It chooses a single trait of the target — almost always a trait the target has already, ingrainedly, made part of his public self..."',
+      options: [
+        "Recently and tentatively adopted.",
+        "Firmly fixed or established by long habit; deeply embedded.",
+        "Officially licensed by the state.",
+        "Hidden behind a pseudonym.",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Ingrained" describes a trait that has become deeply, durably part of someone — exactly the kind of trait the editor argues a good lampoon must work from.',
+    },
+    {
+      id: 2,
+      kind: "vocab-context",
+      prompt: 'In this sentence, the word "fickle" most nearly means:',
+      quote:
+        '"They were not fickle about the difference. They forgave the early ones, eventually, but they remembered."',
+      options: [
+        "Steady and consistent in their judgments over time.",
+        "Frequently changing one\'s loyalties or opinions on a whim.",
+        "Politically conservative.",
+        "Reluctant to read the magazine at all.",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Fickle" describes a tendency to change loyalties or opinions on a whim. The narrator emphasizes that the readers were the opposite — steady enough to remember the overreach.',
+    },
+    {
+      id: 3,
+      kind: "tone-purpose",
+      prompt:
+        'The narrator writes, "Insolence is not a goal. Insolence is a side effect of accuracy." Why deliver the point in two short, paired sentences?',
+      options: [
+        'To pad the essay with repetition because the writer ran out of material.',
+        'The pairing isolates a small, easily missed correction at the heart of the essay\'s craft argument: writers chase insolence as if it were the work, and the editor reframes it as the consequence of doing the actual work — the brevity makes the inversion impossible to miss or misread.',
+        'To imitate the style of legal contracts.',
+        'To suggest that insolence and accuracy are exact synonyms.',
+      ],
+      correctIndex: 1,
+      explanation:
+        'The two short paired sentences perform the inversion the editor wants younger writers to absorb — insolence is not the goal, only the consequence of accuracy.',
+    },
+    {
+      id: 4,
+      kind: "inference",
+      prompt:
+        "Based on the passage, what can the reader most reasonably infer about why the editor regrets the 2017 piece even though its target — the city council member — never publicly responded to it?",
+      options: [
+        "She wishes the target had sued the magazine to generate publicity.",
+        "She judges that the piece, by being lavish beyond what the public record warranted, lent the target a small but durable reservoir of sympathy that weakened the four pieces that followed — meaning the cost of the overreach was paid not by the council member but by the magazine itself, in the form of eighteen months of weaker satire.",
+        "She fears the council member will sue her in retaliation for the next piece.",
+        "She has come to admire the council member personally.",
+      ],
+      correctIndex: 1,
+      explanation:
+        "The text names exactly that cost: the overreach lent the target sympathy that took eighteen months to drain, and the next four pieces were weaker because of it.",
+    },
+    {
+      id: 5,
+      kind: "substitution",
+      prompt:
+        'Which single word could replace "lavish" in the sentence below without changing its meaning?',
+      quote:
+        '"...I encouraged the writer to be more lavish with the personal description than was warranted by the public record."',
+      options: [
+        "Sparing",
+        "Extravagant",
+        "Anonymous",
+        "Patient",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Extravagant" matches "lavish" in this sense — both describe an over-generous, over-the-top abundance. "Sparing" is the opposite.',
+    },
+    {
+      id: 6,
+      kind: "main-idea",
+      prompt:
+        "Which sentence best summarizes the central idea or arc of the essay?",
+      options: [
+        "A satirical editor argues that the goal of a good lampoon is to fluster its target into a public response.",
+        "A satirical editor argues that the goal of a lampoon is recognition rather than fluster, that insolence is a side effect of accuracy rather than its own goal, and that a single overreach against an unworthy target — paid for by the magazine\'s readers, who are not gullible — can weaken the work for over a year afterward.",
+        "A satirical editor announces that her magazine will cease publishing the long-running \"Mayor\'s Diary\" column at the request of the mayor.",
+        "A satirical editor advises young writers to choose targets they personally dislike.",
+      ],
+      correctIndex: 1,
+      explanation:
+        "The essay\'s thesis is exactly the recognition-over-fluster argument, paired with the cost of the 2017 overreach as the editor\'s cautionary case.",
+    },
+  ],
+};
+
+const MISSION_26_SET_3: SetReading = {
+  title: "The Funeral Director's Quiet Treatise",
+  subtitle:
+    "A short story about a small-town funeral director, an officious new ordinance, and the serene refusal to let a procedural change supplant a tacit local custom.",
+  format: "Short Story",
+  readingMinutes: 4,
+  words: [
+    "lugubrious",
+    "macabre",
+    "morose",
+    "officious",
+    "ramification",
+    "serene",
+    "supplant",
+    "tacit",
+    "transcend",
+    "treatise",
+  ],
+  passage: `Edmund Calder had been the funeral director of the only funeral home in Helton for twenty-six years, and the home had been in his family, in one form or another, since 1907. He was, in person, neither **lugubrious** nor **morose** — qualities that the public, in his experience, mistakenly expected of a man in his profession and that he had, very early on, decided not to perform. He wore gray suits because the suits were practical. He kept his voice at the volume the room required. He did not, when he met a family for the first time, deliver the slightly hushed greeting that the funeral-director archetype in films required, because he had observed, over twenty-six years, that the hushed greeting tended to make the family more uncomfortable rather than less.
+
+Helton, like most towns of its size, had a small set of unwritten customs around its funerals. The most settled of these was that the family of the deceased would, in the three days between the death and the service, receive visitors at the funeral home in a small parlor that the home had reserved for that purpose since the building was constructed. The parlor was used for nothing else. There was no formal sign-in. There was no charge. The visit was, by long **tacit** agreement among the town\'s families, the principal way Helton remembered its dead — a custom that had **transcended**, by a margin of decades, any of the procedural changes the funeral-home industry had adopted in the meantime.
+
+In the spring of the year in question, the county passed a new public-health ordinance. The ordinance was not, in its substance, unreasonable: it required funeral homes to maintain a written log of all visitors to the premises, including those visiting families in private parlors, for the purpose of contact tracing in the event of a future communicable disease outbreak. The ordinance had been drafted in an **officious** style — the kind of careful, fully-cited legal document that no one but a county attorney would actually read — and it was, on first reading, the sort of thing that funeral homes in Helton\'s county would simply have to comply with.
+
+Edmund read the ordinance twice. He did not, on first read, oppose it. He did, however, note one specific **ramification** that the drafters had clearly not considered: in Helton, the parlor visits were attended by people who would not, on any other occasion, sign a log to enter a funeral home. Some of them were elderly neighbors who had stopped driving and who would arrive on foot in pairs and would, in the awkwardness of the front desk, often turn around. Some of them were members of the deceased\'s extended family who had not been on speaking terms with the immediate family for years and who had come, in the privacy of the parlor, to make a quiet peace. The log, in his honest reading, would not change much for the immediate family of the deceased. It would, however, **supplant** — by procedural attrition over five or six years — the parlor visit itself.
+
+He did not, in his response to the county, file a complaint. He wrote, instead, a four-page memo. The memo was not a **macabre** dwelling on death; it was, in its tone, **serene** and almost professorial — closer in form to a small **treatise** on the social function of the parlor visit than to an objection to the ordinance. The memo described the custom in three pages, named eight specific examples (without identifying any family) of visits whose value would have been lost to a sign-in sheet, and proposed, in a single closing page, an alternative: that funeral homes be permitted to maintain a single sealed log per parlor, opened only on county request in the event of an actual outbreak, and that the log be filled out by the funeral-home staff from observation rather than by the visitor in person.
+
+The county counsel read the memo. She did not, in her reply, accept the proposal in full. She did, however, accept it in part: the regulation was amended, two months later, to permit staff-completed logs in private parlors, on the same sealed-on-request basis Edmund had proposed.
+
+The amendment did not make the news. It did, however, mean that the parlor in Helton continued, as it had since 1907, to receive its visitors in the privacy the custom required. Edmund did not, in any subsequent conversation, claim authorship of the amendment. He did, however, keep the original four-page memo in the home\'s archive, in a folder labeled "ordinances — letters." He had written, over twenty-six years, several such letters. Most of them had been similarly serene. None of them had been, in his own description, a treatise. The 2026 letter was the only one to which he had given that name.`,
+  questions: [
+    {
+      id: 1,
+      kind: "vocab-context",
+      prompt: 'In this sentence, the word "tacit" most nearly means:',
+      quote:
+        '"The visit was, by long tacit agreement among the town\'s families, the principal way Helton remembered its dead..."',
+      options: [
+        "Formally written, signed, and notarized.",
+        "Understood and accepted without being explicitly stated.",
+        "Loudly proclaimed at every public meeting.",
+        "Imposed by an outside authority.",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Tacit" describes an unspoken, implicit understanding — exactly the kind of agreement that has held the parlor custom in place for decades without anyone writing it down.',
+    },
+    {
+      id: 2,
+      kind: "vocab-context",
+      prompt: 'In this sentence, the word "officious" most nearly means:',
+      quote:
+        '"The ordinance had been drafted in an officious style — the kind of careful, fully-cited legal document that no one but a county attorney would actually read..."',
+      options: [
+        "Casual and informal in tone.",
+        "Fussily intrusive, asserting authority through overbearing procedural detail.",
+        "Concise to the point of being unclear.",
+        "Written entirely in plain English.",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Officious" describes a style of overbearing, fussily intrusive procedural authority — exactly the kind of drafting Edmund identifies in the ordinance.',
+    },
+    {
+      id: 3,
+      kind: "tone-purpose",
+      prompt:
+        'The narrator says Edmund\'s memo was "closer in form to a small treatise on the social function of the parlor visit than to an objection to the ordinance." Why frame it as a treatise rather than as an objection?',
+      options: [
+        '"Treatise" is just a longer word for "objection" with no different meaning.',
+        '"Treatise" carries the texture of a careful, almost scholarly account of a subject. By framing the memo that way, Edmund refuses the posture of grievance and instead invites the county counsel into the underlying social fact the ordinance had not considered — making the proposed alternative read as an obvious accommodation rather than as a complaint to be argued down.',
+        '"Treatise" implies the memo was published in an academic journal.',
+        '"Treatise" suggests Edmund was acting as the county\'s attorney.',
+      ],
+      correctIndex: 1,
+      explanation:
+        'The treatise form converts what could have been a complaint into a careful description of a social fact, making the proposed accommodation read as obvious rather than adversarial.',
+    },
+    {
+      id: 4,
+      kind: "inference",
+      prompt:
+        "Based on the passage, what can the reader most reasonably infer about why Edmund\'s memo names eight specific examples of valuable visits without identifying any family?",
+      options: [
+        "He was attempting to embarrass particular families by hinting at their identities.",
+        "He needed to make the social cost of the sign-in requirement vivid and specific — abstractions about \"customs\" rarely move a county counsel — while preserving the very privacy the parlor custom is built around, since identifying families would itself be a violation of the practice he was defending.",
+        "He had been instructed by the county counsel to provide named examples.",
+        "The memo had originally been a public newspaper article.",
+      ],
+      correctIndex: 1,
+      explanation:
+        "The structural choice — specific examples without identification — is exactly the move that makes the abstract social fact concrete to the reader while preserving the privacy the custom protects.",
+    },
+    {
+      id: 5,
+      kind: "substitution",
+      prompt:
+        'Which single word could replace "supplant" in the sentence below without changing its meaning?',
+      quote:
+        '"The log, in his honest reading, would not change much for the immediate family of the deceased. It would, however, supplant — by procedural attrition over five or six years — the parlor visit itself."',
+      options: [
+        "Strengthen",
+        "Replace",
+        "Forget",
+        "Photograph",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Replace" matches "supplant" — both describe the act of taking the place of something previously established.',
+    },
+    {
+      id: 6,
+      kind: "main-idea",
+      prompt:
+        "Which sentence best summarizes the central idea or arc of the passage?",
+      options: [
+        "A funeral director publicly denounces a county ordinance and forces its complete repeal.",
+        "A funeral director identifies a small but real ramification of a well-meaning officious ordinance — that a sign-in requirement would, over years, supplant a long tacit custom of private parlor visits — and through a serene, treatise-form memo persuades the county to permit a sealed staff-completed log instead, preserving the custom without rejecting the public-health concern.",
+        "A funeral director resigns in protest after the county refuses to amend a contact-tracing ordinance.",
+        "A county attorney drafts a new ordinance to formally protect funeral-home parlor visits as historic landmarks.",
+      ],
+      correctIndex: 1,
+      explanation:
+        "The arc moves through the ordinance, the identified ramification, the treatise-style memo, and the partial amendment that preserves the custom.",
+    },
+  ],
+};
+
+const MISSION_27_SET_1: SetReading = {
+  title: "The Mayor and the Bombastic Council Member",
+  subtitle:
+    "A short story about a chary first-term mayor, a bombastic colleague who would rather excoriate than govern, and the estimable opponent who refused to be antagonized.",
+  format: "Short Story",
+  readingMinutes: 4,
+  words: [
+    "antagonize",
+    "barren",
+    "bombastic",
+    "cajole",
+    "chary",
+    "curmudgeon",
+    "dirge",
+    "estimable",
+    "euphemism",
+    "excoriate",
+  ],
+  passage: `Mayor Imelda Roost had been in office for ten months when the budget hearings began, and she had, in those ten months, developed a careful and **chary** working understanding of the seven-person town council. Five of the seven members were people she could, on most issues, work with. The sixth was an old **curmudgeon** named Dale Strommer who had served on the council for twenty-eight years, who voted against approximately one in four motions on principle, and who was, on those motions, more often than not the council member whose objection turned out to have prevented an avoidable mistake. Imelda had come, over ten months, to regard Dale as one of the more **estimable** voices in the room.
+
+The seventh council member was Vincent Holb. Vincent had been elected the previous November on a platform of "saving Helton from itself" — a phrase that Imelda had quickly learned was a **euphemism** for blocking, on principle, almost any expenditure proposed by the previous administration, including expenditures that Vincent\'s own platform had also endorsed. Vincent was, by every standard the room used, **bombastic**: he opened nearly every statement with a long preamble, he favored adjectives over numbers, and he had, in his ten months on the council, used the word "catastrophic" in seventeen separate motions, none of which had concerned an actual catastrophe.
+
+The 2026 budget hearings were not, in their substance, dramatic. Imelda\'s proposed budget was a quiet document. It increased the road-repair allocation by three percent. It held the police budget flat. It funded a small expansion of the library\'s evening hours. It was, on its face, the kind of budget that any mayor in her first term would propose and that any council, in a normal year, would amend in three small ways and approve.
+
+Vincent, on the third night of hearings, delivered what could only be called a **dirge**. He spoke for forty minutes. He **excoriated** the budget — those were his exact words to the *Helton Reporter* the following morning — for what he described as a "pattern of slow, deliberate fiscal recklessness" that would, within five years, leave the town\'s reserves "**barren**." He named no specific line item. He proposed no specific cut. He concluded by suggesting that any council member who voted for the budget as drafted would have to "answer to the next generation."
+
+Imelda did not, in reply, **antagonize** him. She had decided, in the first month of her term — on a long walk that the previous mayor had recommended she take before the first contested vote — that her standing posture toward Vincent would be one of unfailing professional courtesy and that she would, on every Vincent speech, decline to deliver a speech in reply.
+
+She also did not **cajole** the other council members into voting against him. She had observed, over ten months, that Vincent\'s rhetorical style was more effective when it was met with rhetoric of comparable intensity. Met with arithmetic, it tended to dissolve.
+
+She thanked Vincent for his comments. She invited any council member who wished to identify a specific line item for reduction to do so before the following Tuesday\'s vote. She suggested that the budget office could, on twenty-four hours\' notice, produce a revised projection under any specific assumption a council member wished to test. She closed the meeting on time.
+
+The Monday before the vote, three council members — Dale Strommer among them — submitted specific line-item amendments. Vincent did not. He delivered, on the Tuesday evening of the vote, a second speech that was shorter than the first and that named, again, no specific line item. The budget passed five to two, with Vincent and one other council member voting against.
+
+The *Helton Reporter*\'s editorial the following Sunday described Imelda\'s handling of the hearings as "an unshowy refusal to be drawn into a fight that would have made the budget worse." It described Dale Strommer\'s line-item amendments as "the kind of objection that strengthens a budget rather than performs against it." It did not, in any sentence, mention Vincent by name. Vincent, in the council\'s following meeting, complained about the omission.
+
+Imelda did not, in her response to the complaint, deliver a speech.`,
+  questions: [
+    {
+      id: 1,
+      kind: "vocab-context",
+      prompt: 'In this sentence, the word "bombastic" most nearly means:',
+      quote:
+        '"Vincent was, by every standard the room used, bombastic: he opened nearly every statement with a long preamble, he favored adjectives over numbers..."',
+      options: [
+        "Concise and rigorously focused on numerical detail.",
+        "Pompous and inflated in style, full of grandly empty rhetoric.",
+        "Politically moderate and consensus-seeking.",
+        "Reluctant to speak in public meetings.",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Bombastic" describes inflated, grandly empty rhetorical style — exactly the long preamble, adjective-heavy, catastrophe-tagged speech the sentence then characterizes.',
+    },
+    {
+      id: 2,
+      kind: "vocab-context",
+      prompt: 'In this sentence, the word "estimable" most nearly means:',
+      quote:
+        '"Imelda had come, over ten months, to regard Dale as one of the more estimable voices in the room."',
+      options: [
+        "Worthy of esteem; deserving respect.",
+        "Easily ignored or dismissed.",
+        "Numerically calculated to the nearest percent.",
+        "Recently elected for the first time.",
+      ],
+      correctIndex: 0,
+      explanation:
+        '"Estimable" describes someone deserving of esteem and respect — the opposite of dismissable. Dale\'s principled vote earns Imelda\'s regard.',
+    },
+    {
+      id: 3,
+      kind: "tone-purpose",
+      prompt:
+        'The narrator says Imelda observed that "Vincent\'s rhetorical style was more effective when it was met with rhetoric of comparable intensity. Met with arithmetic, it tended to dissolve." Why frame the contrast as rhetoric vs. arithmetic?',
+      options: [
+        'To suggest that arithmetic is morally superior to rhetoric in all situations.',
+        'The contrast names the precise mechanism of Imelda\'s strategy: bombast feeds on bombast, but it has nothing to grab onto when the response is a request for specific line-item amendments and revised budget projections — turning the floor from a stage into a worksheet.',
+        'To indicate that Imelda was a former mathematics teacher.',
+        'To imply that arithmetic and rhetoric have the same meaning.',
+      ],
+      correctIndex: 1,
+      explanation:
+        'The contrast names exactly the strategic move — arithmetic dissolves bombast that rhetoric would have amplified — and explains why Imelda\'s standing posture works.',
+    },
+    {
+      id: 4,
+      kind: "inference",
+      prompt:
+        "Based on the passage, what can the reader most reasonably infer about why the *Helton Reporter*\'s editorial did not mention Vincent by name even though he had delivered the longest speech of the hearings?",
+      options: [
+        "The editorial board was personally afraid of Vincent.",
+        "The editorial reflected the same arithmetic-over-rhetoric judgment Imelda had applied: a forty-minute speech that named no specific line item and proposed no specific cut had not earned a place in the substantive account of how the budget was made better.",
+        "Vincent had paid the newspaper to omit his name.",
+        "The editorial was written before Vincent\'s speech took place.",
+      ],
+      correctIndex: 1,
+      explanation:
+        "The omission is consistent with the same standard Imelda applied: substantive contribution earns mention; speech without proposals does not.",
+    },
+    {
+      id: 5,
+      kind: "substitution",
+      prompt:
+        'Which single word could replace "excoriated" in the sentence below without changing its meaning?',
+      quote:
+        '"He excoriated the budget — those were his exact words to the Helton Reporter the following morning..."',
+      options: [
+        "Praised",
+        "Denounced",
+        "Forgot",
+        "Photographed",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Denounced" matches "excoriated" — both describe a severe, harsh public condemnation.',
+    },
+    {
+      id: 6,
+      kind: "main-idea",
+      prompt:
+        "Which sentence best summarizes the central idea or arc of the passage?",
+      options: [
+        "A first-term mayor allows a bombastic council member to dominate the budget hearings and the budget collapses.",
+        "A chary first-term mayor faces a bombastic council member\'s rhetorical attack on a quiet budget by refusing to be antagonized, declining to cajole the other members, and meeting bombast with arithmetic — letting an estimable old curmudgeon\'s line-item amendments do the substantive work and producing a budget that passes five to two.",
+        "A bombastic council member single-handedly forces a town to abandon its proposed budget for the year.",
+        "A small-town newspaper retracts its budget editorial after a council member files a formal complaint.",
+      ],
+      correctIndex: 1,
+      explanation:
+        "The arc traces precisely the rhetorical attack, the disciplined arithmetic-over-rhetoric response, the line-item amendments from Dale and others, and the budget\'s passage.",
+    },
+  ],
+};
+
+const MISSION_27_SET_2: SetReading = {
+  title: "The Conservatory's Imperturbable Examiner",
+  subtitle:
+    "A short story about a haughty heady jury chair, an implacable junior examiner, and a single peccadillo that no one was prepared to relegate.",
+  format: "Short Story",
+  readingMinutes: 4,
+  words: [
+    "exigent",
+    "haughty",
+    "heady",
+    "imperturbable",
+    "implacable",
+    "lambaste",
+    "miscreant",
+    "peccadillo",
+    "philistine",
+    "relegate",
+  ],
+  passage: `The senior diploma examination at the Halsey Conservatory was conducted, every June, by a five-member jury that sat on a slightly raised wooden platform in the back of the recital hall. The jury\'s deliberations were, by long tradition, conducted behind a closed door in a small adjoining room. The jury\'s decisions were, also by long tradition, final.
+
+In the year in question, the jury chair was Professor Tobias Crain, a pianist whose career had peaked in the late 1990s and whose presence on the jury was, by every standard the conservatory used, **haughty** — a man who had developed, over twenty years on the panel, the slightly **heady** conviction that his own taste was the standard against which the diploma was conferred. The other four members were the conservatory\'s usual rotation: a violist, a singer, a composition professor, and a junior examiner named Mira Halpern, who was sitting on the panel for the first time and who had been added to the rotation, that spring, on the recommendation of the conservatory\'s director.
+
+The candidate on the third afternoon of the exams was a horn player named Anwar Selim. His program was conventional. His playing was, by every member of the jury\'s own private notes, very nearly the strongest performance of the week. The single weakness was a small intonation slip in the second movement of the Strauss concerto — a momentary flatness on a high concert F that lasted, by the jury\'s timer, less than a quarter of a second and that Anwar himself, in his post-exam acknowledgment, had not registered as a problem.
+
+The jury withdrew to deliberate. Tobias spoke first. He proposed, in a tone that was, in Mira\'s honest perception, more **exigent** than the playing required, that the panel should withhold the highest mark on the strength of the intonation slip. He framed the slip as a "**peccadillo** that we cannot, in our role, simply **relegate** to the footnotes," and he suggested that any panel that conferred the highest mark on a performance with a discernible flaw would be acting as a kind of **philistine** — confusing the audience\'s pleasure with the jury\'s technical responsibility.
+
+The other three senior examiners did not, in the moment, contest him. They were, by long habit, deferential to Tobias on the day-of votes. They had, over years, learned to save their disagreements for the post-exam debrief, which Tobias did not attend.
+
+Mira did not have that habit. She also did not, on the strength of her first afternoon on the panel, possess the standing to **lambaste** him. She did, however, possess one quality that the other three examiners had developed over decades and that Tobias had not bothered to cultivate: she had been, since her own student years, **imperturbable** under the kind of high-toned senior assertion that Tobias had just delivered.
+
+She did not, in reply, raise her voice. She also did not, at any point in her response, treat Tobias as the **miscreant** the other three had been quietly waiting for someone to name. She said, in three sentences, that she agreed the intonation slip was real and that she agreed the panel\'s technical responsibility was important. She then asked, in a single fourth sentence, whether the panel\'s precedent over the previous nine years would, on a similar slip in a similar performance by a similar candidate, have produced the same vote.
+
+The composition professor, on her left, opened a small black notebook he carried to every jury session. He read aloud, without commentary, the recorded jury notes from three exams in the previous nine years in which slips of comparable duration and pitch had been recorded. In each case, the highest mark had been conferred.
+
+Tobias did not, in reply, become **implacable**. He was, in fact, momentarily silent. He then said, in a single careful sentence, that he had not realized the precedent had been so consistent and that he would, on reflection, vote for the highest mark.
+
+The vote was unanimous. Anwar received the highest mark. The jury did not, in its written report, mention the deliberation. Mira, in her own private notes that evening, recorded the encounter in two sentences. The conservatory\'s director, when she renewed Mira\'s appointment to the rotation the following spring, did not, in their conversation, mention the third afternoon. She did, however, ask Mira whether she would be willing to chair the panel within five years.`,
+  questions: [
+    {
+      id: 1,
+      kind: "vocab-context",
+      prompt: 'In this sentence, the word "imperturbable" most nearly means:',
+      quote:
+        '"...she had been, since her own student years, imperturbable under the kind of high-toned senior assertion that Tobias had just delivered."',
+      options: [
+        "Easily flustered or rattled by senior figures.",
+        "Calmly unshaken; not easily disturbed or upset.",
+        "Loudly confrontational in committee meetings.",
+        "Reluctant to attend formal panels.",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Imperturbable" describes a steady calm that cannot be disturbed — exactly Mira\'s composure in the face of Tobias\'s heady assertion.',
+    },
+    {
+      id: 2,
+      kind: "vocab-context",
+      prompt: 'In this sentence, the word "peccadillo" most nearly means:',
+      quote:
+        '"...a peccadillo that we cannot, in our role, simply relegate to the footnotes..."',
+      options: [
+        "A grave, career-ending offense.",
+        "A small fault or minor lapse, not a serious matter.",
+        "A formal disciplinary charge.",
+        "A complete absence of error.",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Peccadillo" describes a small, minor fault. Tobias\'s use of the word actually undercuts his case: he has named the slip as small while arguing it should weigh heavily.',
+    },
+    {
+      id: 3,
+      kind: "tone-purpose",
+      prompt:
+        'The narrator says Mira did not treat Tobias as the "miscreant the other three had been quietly waiting for someone to name." Why include the qualifier about the other three?',
+      options: [
+        'To suggest that the other three examiners actively disliked Tobias and wanted Mira to attack him.',
+        'It tells the reader something the surface conversation does not: the senior panel had a long-standing private view of Tobias\'s overreach but had developed the habit of saving it for the post-exam debrief, which Tobias did not attend. The line locates Mira\'s restraint as a positive choice not to play the room\'s suppressed grievance, even when the room would have backed her.',
+        'To indicate that Tobias had been formally charged with misconduct.',
+        'To suggest that the deliberation was being recorded for legal review.',
+      ],
+      correctIndex: 1,
+      explanation:
+        'The qualifier reveals the suppressed dynamic the senior examiners had been carrying — and shows that Mira\'s restraint is a deliberate refusal to weaponize it, not just inexperience.',
+    },
+    {
+      id: 4,
+      kind: "inference",
+      prompt:
+        "Based on the passage, what can the reader most reasonably infer about why Mira asked, as her single fourth sentence, whether the panel\'s precedent on similar slips would have produced the same vote — rather than directly arguing against Tobias\'s position?",
+      options: [
+        "She had no opinion of her own and needed the precedent to form one.",
+        "She converted what could have been a confrontation into a procedural question that drew on the panel\'s own institutional record — letting the composition professor\'s notebook do the rebuttal in Tobias\'s own preferred currency, consistency, without forcing Tobias into a defensive posture that would have hardened his vote.",
+        "She wanted the deliberation to last longer for procedural reasons.",
+        "Conservatory rules required all junior examiners to ask one question per deliberation.",
+      ],
+      correctIndex: 1,
+      explanation:
+        "The structural choice — a precedent question rather than a direct argument — pulls the rebuttal out of the composition professor\'s notebook in the panel\'s own institutional terms.",
+    },
+    {
+      id: 5,
+      kind: "substitution",
+      prompt:
+        'Which single word could replace "haughty" in the sentence below without changing its meaning?',
+      quote:
+        '"In the year in question, the jury chair was Professor Tobias Crain, a pianist whose career had peaked in the late 1990s and whose presence on the jury was, by every standard the conservatory used, haughty..."',
+      options: [
+        "Humble",
+        "Arrogant",
+        "Anonymous",
+        "Cheerful",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Arrogant" matches "haughty" — both describe a disdainfully superior bearing.',
+    },
+    {
+      id: 6,
+      kind: "main-idea",
+      prompt:
+        "Which sentence best summarizes the central idea or arc of the passage?",
+      options: [
+        "A junior examiner publicly humiliates a senior jury chair and is removed from the panel rotation.",
+        "An imperturbable junior examiner, on her first afternoon on a senior diploma jury, declines to lambaste a haughty chair whose case rests on a peccadillo, and instead asks a single procedural question about precedent — letting the panel\'s own institutional record produce the rebuttal that secures the highest mark for the candidate.",
+        "A senior pianist resigns from the conservatory after losing a single deliberation.",
+        "A horn player\'s diploma is withheld over a quarter-second intonation slip.",
+      ],
+      correctIndex: 1,
+      explanation:
+        "The arc traces exactly Mira\'s composure, the precedent question, the composition professor\'s notebook, and the unanimous vote.",
+    },
+  ],
+};
+
+const MISSION_27_SET_3: SetReading = {
+  title: "The Director Who Refused to Wheedle",
+  subtitle:
+    "A personal essay by a small-town nonprofit director on the difference between an unalloyed donor and one whose tangible enthusiasm has begun to undercut the work.",
+  format: "Personal Essay",
+  readingMinutes: 4,
+  words: [
+    "repugnant",
+    "sentimental",
+    "squander",
+    "swindle",
+    "tangible",
+    "turpitude",
+    "unalloyed",
+    "undercut",
+    "wheedle",
+    "xenophobic",
+  ],
+  passage: `I have been the executive director of the Marston Newcomers\' Resource Center for eleven years. The Center\'s mission is narrow: we help families who have arrived in the county from outside the United States — most of them in the previous twenty-four months — with the practical paperwork of resettlement. We do not, despite a recurring suggestion from one of our older board members, run any cultural programs. We do not, despite a more recent suggestion from a different board member, run any English-language classes. We file forms. We make phone calls. We sit with people in waiting rooms. The work is **tangible**, and on its best days it is also small.
+
+I am writing this essay because I want to be honest about a single decision I made last spring that I have, in the months since, been asked about by three other directors of small organizations and that I would not, in any of those conversations, have been able to summarize in less than half an hour. I am going to try to summarize it here.
+
+The Center has, for nine of its eleven years, received its largest annual gift from a man I will call Mr. H. Mr. H is a retired engineer in his late seventies. His annual gift covers, by itself, roughly forty percent of our operating budget. He has, in nine years, asked for nothing in return. His support of the Center is, by every measure I can apply, **unalloyed** — he has never sought naming rights, he has never asked to attend a board meeting, and he has, twice in nine years, asked me politely not to mention his name in the annual report.
+
+In the last eighteen months, however, Mr. H has begun to send me letters. The letters are handwritten. They are courteous. They are also, by my honest reading, increasingly **xenophobic** in their tone — not in any way that would be visible to a casual reader of a single letter, but in a slow accumulation of phrasings about which arrivals he believes the Center should and should not be helping.
+
+The letters do not direct me to change the Center\'s practice. They suggest, in the way that an older man with no formal authority over an organization sometimes suggests, that the Center might wish to "be more thoughtful" about the families it accepts. The phrasing is courteous. The implication is not.
+
+I am not going to describe in any detail what the letters propose, because I do not, on principle, want to repeat phrasings I find **repugnant**. I will say only that they would, if implemented, **undercut** the entire mission of the Center, which has from its founding refused to ask a country-of-origin question on its intake form.
+
+The first temptation I noticed in myself was to **wheedle**. I drafted, in my head, several possible responses that would gently steer Mr. H back to the early years of his giving — letters that would invoke, in slightly **sentimental** terms, the families he had, in person, helped me settle in 2017 and 2018. I am not above sentiment. I have used it, in fundraising, when it was honest. It would not, in this case, have been honest. It would have been an attempt to **wheedle** Mr. H out of a position he had clearly held for at least eighteen months by means of an emotional appeal I did not believe in.
+
+The second temptation was to refuse the next gift outright, with a short letter naming the disagreement. This would have been, in my honest assessment, the easier of the two — easier because it would have produced a clean conscience by Tuesday morning at the cost of forty percent of our budget by Wednesday afternoon, and a closed Center by July.
+
+I did neither.
+
+I wrote Mr. H a single one-page letter. I did not, in the letter, accuse him of any moral **turpitude**. I did not call him names. I described, in three paragraphs, what the Center actually did and did not do, and I named, by category and not by family, the two specific practices the Center would not change. I closed the letter by saying that I valued his nine years of support and that I would understand, if he chose to redirect his giving on the strength of those practices, why he had done so.
+
+He did not write back for six weeks. When he did, he wrote a single sentence. He said he understood. He sent the gift.
+
+I do not know whether the gift will continue next year. I do know that I did not **squander** the nine years of trust, and I did not **swindle** him with sentiment. I told him what we did. He sent the money to the place that did it. That is, in my eleventh year, the only currency I am willing to operate in.`,
+  questions: [
+    {
+      id: 1,
+      kind: "vocab-context",
+      prompt: 'In this sentence, the word "unalloyed" most nearly means:',
+      quote:
+        '"His support of the Center is, by every measure I can apply, unalloyed — he has never sought naming rights, he has never asked to attend a board meeting..."',
+      options: [
+        "Mixed with significant other motives or expectations.",
+        "Pure; not mixed with anything that would qualify or contaminate it.",
+        "Made of a metal alloy.",
+        "Restricted to a single tax year.",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Unalloyed" describes something pure, not mixed or qualified. The narrator means Mr. H\'s early support was generosity without qualifying motives.',
+    },
+    {
+      id: 2,
+      kind: "vocab-context",
+      prompt: 'In this sentence, the word "wheedle" most nearly means:',
+      quote:
+        '"It would have been an attempt to wheedle Mr. H out of a position he had clearly held for at least eighteen months by means of an emotional appeal I did not believe in."',
+      options: [
+        "To convince someone through verifiable factual argument.",
+        "To persuade someone by flattery or coaxing, often using charm rather than substance.",
+        "To formally vote against a proposal in a board meeting.",
+        "To withdraw from a relationship abruptly.",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Wheedle" describes coaxing someone through flattery or charm rather than honest substantive argument — exactly the temptation the narrator identifies and refuses.',
+    },
+    {
+      id: 3,
+      kind: "tone-purpose",
+      prompt:
+        'The narrator says, "I am not above sentiment. I have used it, in fundraising, when it was honest." Why include those two sentences before describing the temptation she refuses?',
+      options: [
+        'To brag about her fundraising skills.',
+        'The pair establishes that the narrator is not refusing sentiment as a category — she has used it before — and that the specific objection is to dishonest sentiment in this case. The qualifier prevents the rest of the essay from reading as a blanket moralism and locates the refusal precisely in the dishonesty, not in the sentiment.',
+        'To suggest that all sentimental fundraising appeals are dishonest.',
+        'To imply that the narrator has never used sentiment in fundraising.',
+      ],
+      correctIndex: 1,
+      explanation:
+        'The two sentences refuse the easy moralism of rejecting sentiment outright and pin the objection exactly where it belongs — on dishonesty, not on the use of feeling itself.',
+    },
+    {
+      id: 4,
+      kind: "inference",
+      prompt:
+        "Based on the passage, what can the reader most reasonably infer about why the narrator chose to write the letter she did — describing what the Center does and does not do, and naming the two specific practices it would not change — rather than either wheedling Mr. H or refusing the next gift outright?",
+      options: [
+        "She wanted to keep the door open for further private negotiation about the practices.",
+        "She converted a personal disagreement with a major donor into an honest description of the organization itself, transferring the decision back to him on accurate information; she neither manipulated him with feeling nor closed the Center on principle by Wednesday afternoon, and she preserved her own ability to keep operating in the only currency she trusted.",
+        "She was hoping Mr. H would publicly retract the suggestions in his letters.",
+        "She had been ordered by her board to write the letter exactly as she did.",
+      ],
+      correctIndex: 1,
+      explanation:
+        "The text frames the choice precisely that way: a refusal of both temptations in favor of an honest description that lets the donor decide on accurate information.",
+    },
+    {
+      id: 5,
+      kind: "substitution",
+      prompt:
+        'Which single word could replace "undercut" in the sentence below without changing its meaning?',
+      quote:
+        '"I will say only that they would, if implemented, undercut the entire mission of the Center..."',
+      options: [
+        "Reinforce",
+        "Undermine",
+        "Photograph",
+        "Translate",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Undermine" matches "undercut" — both describe weakening or eroding the foundation of something. "Reinforce" is the opposite.',
+    },
+    {
+      id: 6,
+      kind: "main-idea",
+      prompt:
+        "Which sentence best summarizes the central idea or arc of the essay?",
+      options: [
+        "A nonprofit director ends a nine-year donor relationship over a single objectionable letter and the organization closes within months.",
+        "A nonprofit director, faced with an unalloyed nine-year donor whose recent letters would, if heeded, undercut her organization\'s mission, refuses both the temptation to wheedle him with dishonest sentiment and the temptation to reject the gift outright — choosing instead an honest one-page description of the Center\'s actual practices that returns the decision to him on accurate information.",
+        "A nonprofit director publicly accuses a major donor of moral turpitude and is removed from her position by the board.",
+        "A small organization decides to reject all donations larger than a fixed threshold to avoid donor influence.",
+      ],
+      correctIndex: 1,
+      explanation:
+        "The essay\'s spine is exactly the refusal of both easy options in favor of an honest description that hands the decision back to the donor.",
+    },
+  ],
+};
+
+const MISSION_28_SET_1: SetReading = {
+  title: "The August Curator and the Coy Bidder",
+  subtitle:
+    "A short story about a museum gala, a coy auction lot, and a curator who refused either to deprecate the bidder or to disperse her own attention from the work itself.",
+  format: "Short Story",
+  readingMinutes: 4,
+  words: [
+    "abeyance",
+    "abstract",
+    "affront",
+    "agitate",
+    "august",
+    "burnish",
+    "coy",
+    "deprecate",
+    "disdain",
+    "disperse",
+  ],
+  passage: `The Halsey Museum\'s annual benefit gala, in the year in question, was held in the museum\'s upper sculpture court — a high, daylit room with white plaster walls and a polished concrete floor whose use for any social event was, in the museum\'s long internal practice, a small **affront** to the room\'s primary purpose. The gala had been held there, however, every year since 2009, on the strength of a single argument: that the donors who attended the gala were the same donors whose contributions kept the room open the other three hundred and sixty-four nights of the year.
+
+The senior curator, Dr. Esther Voll, was, in the museum\'s polite internal language, **august**. She had been at the Halsey for thirty-one years. She had, in those years, declined two directorships at larger museums and one named professorship at a research university. She did not, on most evenings, attend the gala for more than the ninety minutes the development office required. She made one circuit of the room. She thanked the donors who had given the year\'s most consequential gifts. She left.
+
+The 2026 gala featured, in addition to the usual silent auction, a single live-auction lot — a small **abstract** painting by a regional mid-century artist whose work the museum had been quietly acquiring for two decades. The painting had been donated by an estate. The proceeds would go to the museum\'s acquisitions fund. Esther had, herself, written the catalog entry.
+
+The bidding opened at twelve thousand dollars. It rose, in three increments, to twenty-six thousand. At twenty-six thousand, a man in the third row — a financier named Mr. Pell, who had attended the gala for six years and whose annual giving was, by the development office\'s standing reckoning, modest — raised his paddle in a gesture that the auctioneer, a careful woman named Ms. Crom, was clearly uncertain how to read. The gesture was **coy**. It was not a clean raise. It was, by Ms. Crom\'s honest description in her notes the following morning, "the kind of half-paddle a bidder uses when he wants the room to know he is bidding without committing to the bid."
+
+Esther, who had been standing at the side of the room, did not, at the half-paddle, **agitate**. She did not exchange any look with Ms. Crom. She also did not, in any subsequent moment of the auction, indulge any private **disdain** for Mr. Pell — whose bidding pattern she had, in fact, observed in two prior galas without remarking on it.
+
+The lot eventually closed at twenty-eight thousand dollars to a different bidder, a couple in the back of the room whom Esther did not personally know. The hammer fell at 9:47 p.m. The development office\'s after-action notes the following morning would record the price as the strongest live-auction result in three years.
+
+Mr. Pell approached Esther at the bar after the lot closed. He asked her, in a careful five-minute conversation, whether the museum would consider a private acquisition of a similar painting from his own collection in the following calendar year. The painting he described was, by Esther\'s read, a real piece of mid-century work. It was also, by her read, perhaps thirty percent overstated in the casual valuation he offered.
+
+She did not, in reply, **deprecate** the painting. She thanked him for the offer. She said the museum\'s acquisitions process required an independent valuation and a curatorial review and that she would, on receipt of a written description, hold the matter in **abeyance** through the standard committee process — which, she noted, would conclude in approximately six months.
+
+Mr. Pell did not press further. He was, in his subsequent conversation with the development director, complimentary about the museum\'s "thoroughness." Whether he submitted the written description was, four months later, still unclear. Esther had not asked.
+
+She did not, after the gala, **burnish** her account of the evening to her colleagues. She described it, in her one-paragraph internal report, as a successful gala with a strong live-auction result and one inquiry that had been routed through standing process. She did not, in the report, mention Mr. Pell by name. She did not, in any conversation in the following weeks, **disperse** her attention from the painting that had actually been acquired and that was, the following Tuesday, hung in the room she had spent thirty-one years curating.`,
+  questions: [
+    {
+      id: 1,
+      kind: "vocab-context",
+      prompt: 'In this sentence, the word "august" most nearly means:',
+      quote:
+        '"The senior curator, Dr. Esther Voll, was, in the museum\'s polite internal language, august."',
+      options: [
+        "Junior and recently appointed.",
+        "Inspiring respect and reverence; venerable and dignified.",
+        "Born in the eighth month of the year.",
+        "Frequently absent from the museum\'s premises.",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"August" describes a venerable, dignified standing — exactly the institutional respect Esther has accumulated over thirty-one years.',
+    },
+    {
+      id: 2,
+      kind: "vocab-context",
+      prompt: 'In this sentence, the word "abeyance" most nearly means:',
+      quote:
+        '"...she would, on receipt of a written description, hold the matter in abeyance through the standard committee process..."',
+      options: [
+        "Permanent rejection without further consideration.",
+        "Temporary suspension or pause, pending later resolution.",
+        "Public disclosure to the entire board.",
+        "Immediate approval without further review.",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Abeyance" describes a state of temporary suspension pending resolution — the standard six-month committee track Esther offers.',
+    },
+    {
+      id: 3,
+      kind: "tone-purpose",
+      prompt:
+        'The narrator describes Mr. Pell\'s paddle gesture as "coy" and adds the auctioneer\'s description of it as "the kind of half-paddle a bidder uses when he wants the room to know he is bidding without committing to the bid." Why dwell on this small physical detail?',
+      options: [
+        'To suggest that Mr. Pell did not understand how the auction worked.',
+        'The detail names a specific social maneuver — being seen to bid without committing — that the rest of the story will then test against Esther\'s response. It also prepares the later bar conversation, which is itself a request for special treatment delivered in similarly soft, plausibly-deniable terms.',
+        'To imply that the auctioneer was personally hostile to Mr. Pell.',
+        'To indicate that the gala\'s lighting was poor.',
+      ],
+      correctIndex: 1,
+      explanation:
+        'The half-paddle is a tonal preview of Mr. Pell\'s entire posture, including the bar conversation; the detail establishes the social texture the story will then test.',
+    },
+    {
+      id: 4,
+      kind: "inference",
+      prompt:
+        "Based on the passage, what can the reader most reasonably infer about why Esther routes Mr. Pell\'s offer into the standard six-month committee process rather than expressing interest or skepticism in the moment?",
+      options: [
+        "She wanted to delay the offer because she personally disliked Mr. Pell.",
+        "Routing the offer through standing process gives the matter the same independent valuation and curatorial review as any other acquisition; it neither rewards the social pressure of a bar-side ask with informal interest nor refuses the offer in a way that would deprecate the painting before it has been examined.",
+        "Museum policy required all gala-night offers to be deferred for at least one year.",
+        "She intended to hand the offer to a different curator without informing Mr. Pell.",
+      ],
+      correctIndex: 1,
+      explanation:
+        "The standing-process routing is exactly the move that refuses both informal interest and informal refusal in favor of the same review any other acquisition would receive.",
+    },
+    {
+      id: 5,
+      kind: "substitution",
+      prompt:
+        'Which single word could replace "burnish" in the sentence below without changing its meaning?',
+      quote:
+        '"She did not, after the gala, burnish her account of the evening to her colleagues."',
+      options: [
+        "Polish",
+        "Erase",
+        "Photograph",
+        "Translate",
+      ],
+      correctIndex: 0,
+      explanation:
+        '"Polish" matches "burnish" in this sense — both describe the act of shining up or making more attractive, including in a metaphorical sense.',
+    },
+    {
+      id: 6,
+      kind: "main-idea",
+      prompt:
+        "Which sentence best summarizes the central idea or arc of the passage?",
+      options: [
+        "A senior curator publicly disdains a coy bidder at a museum gala and is reprimanded by the development office.",
+        "An august senior curator handles a coy gala bidder by refusing to be agitated by his half-paddle, declining either to deprecate his subsequent private offer or to entertain it in the moment, and routing it instead through the standard committee process — keeping her own attention on the painting that was actually acquired.",
+        "A museum cancels its annual gala after a contested live-auction result.",
+        "A financier successfully donates a painting to a museum after a single bar-side conversation with the senior curator.",
+      ],
+      correctIndex: 1,
+      explanation:
+        "The arc traces precisely Esther\'s composure during the auction, her standing-process routing of Mr. Pell\'s offer, and her undispersed attention on the actual acquisition.",
+    },
+  ],
+};
+
+const MISSION_28_SET_2: SetReading = {
+  title: "The Infectious Disease Officer's Quandary",
+  subtitle:
+    "A short story about a hospital outbreak, an inchoate cluster, and the quarantine decision an impudent visiting consultant tried to escalate into hysterical territory.",
+  format: "Short Story",
+  readingMinutes: 4,
+  words: [
+    "distend",
+    "endemic",
+    "enmity",
+    "gauche",
+    "hysterical",
+    "impudent",
+    "inchoate",
+    "penchant",
+    "quandary",
+    "quarantine",
+  ],
+  passage: `Dr. Yusra Bel had been the infectious disease officer at St. Aldwyn Regional Hospital for eight years on the Tuesday morning the cluster appeared. The cluster was not, at the moment of its first detection, a cluster. It was four cases of an unusual gastrointestinal illness in three patients on the same medical-surgical floor, plus a single nurse who had reported similar symptoms at the start of her shift. The cases had emerged within a thirty-six-hour window. None of the four were severe. None of the four matched the small, predictable list of pathogens that were, by long experience, **endemic** to the floor.
+
+Yusra opened a working file at 7:14 a.m. By 9:00 a.m., she had ordered the standard panel of stool cultures, requested that the three patient rooms be cleaned to enhanced contact-precaution standards, asked the nurse to remain home pending results, and notified the hospital\'s incident commander that she was tracking what she described, in writing, as an "**inchoate** cluster" — meaning a cluster whose pattern, source, and pathogen were all still incompletely formed.
+
+The visiting consultant arrived at 11:00 a.m. He was a man named Dr. Lloyd Strom, who had been brought in by the hospital network the previous month on a six-month contract to "modernize the network\'s outbreak response." Yusra had met him twice. He had, on both occasions, struck her as a man with a **penchant** for escalation — a clinical instinct that almost always read a small finding as a leading edge of a much larger one.
+
+Dr. Strom read Yusra\'s working file in fourteen minutes. He then proposed, in what Yusra would later describe in her own notes as an **impudent** opening sentence, that the entire medical-surgical floor be placed under a unit-wide **quarantine**, that all visitors be turned away for seventy-two hours, and that the network\'s public information office be put on standby for a media statement.
+
+Yusra was, at that moment, in the small **quandary** any infectious disease officer faced when a visiting consultant proposed an escalation that the floor\'s actual evidence did not yet support. She had, in eight years, learned that the cost of an unjustified unit-wide quarantine was not zero. It would **distend** the hospital\'s patient flow for at least three days. It would, in her honest estimation, scare two dozen families whose loved ones were on the floor. It would, by the principle of escalations being more visible than de-escalations, make any later return to standard precautions politically difficult.
+
+She also knew that the cost of an avoided justified quarantine, if the cluster turned out to be the leading edge of something serious, would be measured in actual harm.
+
+She did not, in her response to Dr. Strom, develop any **enmity** toward him. She did not, in the conversation, become **hysterical**. She also did not capitulate. She said, in three sentences, that she shared his concern about the cluster, that the standard panel of cultures would return preliminary results within four hours, and that she proposed, in the meantime, an intermediate step: a soft hold on new admissions to the floor, enhanced contact precautions for the three identified rooms, a single shared incident log she and Dr. Strom would both update in real time, and a 3:00 p.m. meeting at which they would jointly review the preliminary culture results and any new cases and would decide together whether the unit-wide quarantine was warranted.
+
+Dr. Strom did not, at first, accept the intermediate step. He suggested, in a tone Yusra later described as **gauche**, that her proposal was an institutional preference for incrementalism over patient safety. Yusra did not respond to the framing. She offered, instead, a single small clarification: that the cost of waiting four hours for cultures, given the patients\' clinical stability, was, in her professional judgment, lower than the cost of an unjustified unit-wide quarantine, and that she was prepared to put both judgments in the shared log under her own name and to revisit them at 3:00 p.m.
+
+The 11:30 a.m. version of the shared log carried both names. By 2:45 p.m., the cultures had returned. The pathogen was a known, non-novel norovirus strain. The four cases were traced to a single shared snack bin in the staff break room that the nurse had, the previous Saturday, refilled from a personal Costco run. The break room was cleaned. No additional cases emerged.
+
+The 3:00 p.m. meeting was brief. Dr. Strom did not, in the meeting, retract his earlier proposal. He did not, however, repeat it. The shared log was archived. The medical-surgical floor never went into unit-wide quarantine. The hospital\'s incident commander, in her one-paragraph after-action note, described the morning\'s handling as "appropriately calibrated."`,
+  questions: [
+    {
+      id: 1,
+      kind: "vocab-context",
+      prompt: 'In this sentence, the word "inchoate" most nearly means:',
+      quote:
+        '"...she was tracking what she described, in writing, as an \'inchoate cluster\' — meaning a cluster whose pattern, source, and pathogen were all still incompletely formed."',
+      options: [
+        "Fully developed and clearly understood.",
+        "Just begun and not yet fully formed; rudimentary and imperfectly defined.",
+        "Officially closed and archived.",
+        "Restricted to a single patient.",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Inchoate" describes something just beginning, not yet fully formed — exactly the cluster\'s state when Yusra opens the file.',
+    },
+    {
+      id: 2,
+      kind: "vocab-context",
+      prompt: 'In this sentence, the word "penchant" most nearly means:',
+      quote:
+        '"He had, on both occasions, struck her as a man with a penchant for escalation — a clinical instinct that almost always read a small finding as a leading edge of a much larger one."',
+      options: [
+        "A reluctance to take any action without overwhelming evidence.",
+        "A strong habitual inclination or liking; a settled tendency.",
+        "A formal certification in epidemiology.",
+        "A short-term six-month contract.",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Penchant" describes a strong habitual inclination or settled liking — exactly Dr. Strom\'s consistent tendency to escalate small findings.',
+    },
+    {
+      id: 3,
+      kind: "tone-purpose",
+      prompt:
+        'The narrator notes that Yusra did not, in her response, become "hysterical." Why use "hysterical" rather than simply "angry"?',
+      options: [
+        '"Hysterical" is just a longer word for "angry" with no different meaning.',
+        '"Hysterical" carries the texture of an excessive, uncontrolled emotional reaction — the very mode Dr. Strom\'s escalation framing has tried to pull the room into. Naming it specifically marks the trap Yusra is refusing: the choice was not between angry resistance and capitulation, but between a hysterical match for his framing and a calibrated counter-proposal in a shared log.',
+        '"Hysterical" implies Yusra was laughing inappropriately.',
+        '"Hysterical" suggests Yusra had a personal medical emergency.',
+      ],
+      correctIndex: 1,
+      explanation:
+        'The word names the precise mode the escalation framing was reaching for; refusing hysteria, Yusra refuses to validate the rhetorical pull toward unit-wide quarantine without evidence.',
+    },
+    {
+      id: 4,
+      kind: "inference",
+      prompt:
+        "Based on the passage, what can the reader most reasonably infer about why Yusra proposed a single shared incident log that both she and Dr. Strom would update in real time?",
+      options: [
+        "She wanted to embarrass Dr. Strom by recording his proposals on the network\'s permanent record.",
+        "The shared log converted what could have become a private clinical disagreement into a transparent joint record under both names — making escalation and de-escalation decisions equally documented, equally reviewable, and equally accountable, which both stabilized the morning\'s handling and protected the institution from a later one-sided account.",
+        "Hospital regulations required all infectious disease consultations to be conducted in shared logs.",
+        "She intended to delete the log immediately after the cultures returned.",
+      ],
+      correctIndex: 1,
+      explanation:
+        "The shared log\'s function is exactly the joint accountability it produces — both judgments visible, both names attached, both available for the 3:00 p.m. review.",
+    },
+    {
+      id: 5,
+      kind: "substitution",
+      prompt:
+        'Which single word could replace "distend" in the sentence below without changing its meaning?',
+      quote:
+        '"It would distend the hospital\'s patient flow for at least three days."',
+      options: [
+        "Streamline",
+        "Stretch",
+        "Photograph",
+        "Forget",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Stretch" matches "distend" in this context — both describe an excessive expansion or stretching beyond normal capacity.',
+    },
+    {
+      id: 6,
+      kind: "main-idea",
+      prompt:
+        "Which sentence best summarizes the central idea or arc of the passage?",
+      options: [
+        "An infectious disease officer refuses to investigate a cluster of illness and is later disciplined when patients are harmed.",
+        "An infectious disease officer faces an inchoate cluster and an impudent visiting consultant\'s push for an immediate unit-wide quarantine, refuses both hysteria and capitulation by proposing a transparent intermediate step in a shared log, and is vindicated four hours later when the cultures identify a contained, non-novel cause.",
+        "A hospital is closed by network officials after a single nurse falls ill on a medical-surgical floor.",
+        "A visiting consultant successfully imposes a unit-wide quarantine on a hospital floor and the cluster turns out to be a major outbreak.",
+      ],
+      correctIndex: 1,
+      explanation:
+        "The arc traces precisely the inchoate cluster, the consultant\'s escalation, the calibrated counter-proposal, and the contained resolution.",
+    },
+  ],
+};
+
+const MISSION_28_SET_3: SetReading = {
+  title: "The Retiring Judge's Last Quibble",
+  subtitle:
+    "A short story about a redoubtable retiring judge, a wily defense attorney, and the sophistry that the judge, on his last contested hearing, declined to indulge.",
+  format: "Short Story",
+  readingMinutes: 4,
+  words: [
+    "quash",
+    "quibble",
+    "ravage",
+    "recant",
+    "redoubtable",
+    "retiring",
+    "shrill",
+    "sophistry",
+    "substantiate",
+    "wily",
+  ],
+  passage: `Judge Halmer Krost had served on the Eaton County Civil Court for twenty-nine years and was, on the morning of the hearing in question, exactly eleven weeks from his **retiring** date. He had announced the date at a small dinner the previous fall. He had, in the months since, reduced his calendar to a half-bench schedule and had handed off, to two of his colleagues, the longer trials his remaining tenure would not accommodate. The hearing on the morning in question was the last contested motion the calendar would put in front of him.
+
+He was, by every standard the bar association used, **redoubtable**. He had, in twenty-nine years, been overturned on appeal seven times, which was, for a sitting civil judge with his caseload, an unusually low number. He was known, in the small circle of attorneys who practiced regularly before him, for two things: that he did not, on the bench, indulge **shrill** argument from either side, and that he did not, in any thirty-minute hearing, allow a single sentence of **sophistry** to pass without a brief, evenly delivered question that exposed it for what it was.
+
+The motion before him on the Tuesday morning was a defense motion to **quash** a subpoena. The plaintiff, a small commercial supplier, had subpoenaed two years of internal communications from a mid-sized distributor, alleging that the distributor had, over those two years, systematically delayed payments and, in the most recent quarter, had begun to issue payment instructions that contained inconsistencies the plaintiff\'s counsel believed could be **substantiated** as deliberate.
+
+The defense, represented by a careful and notoriously **wily** attorney named Marcus Holb, had filed the motion to quash on three grounds. The first two were standard relevance and burden objections that Judge Krost had heard, in some form, in perhaps four hundred similar motions over twenty-nine years. The third was novel.
+
+The third ground argued, in eleven pages, that the subpoenaed communications were privileged on the strength of an internal "compliance review" that the distributor\'s general counsel had, three weeks earlier, designated as covering the entire two-year period. Mr. Holb argued that any communication during the period that touched, however incidentally, on payment policy was now within the scope of the compliance review and was therefore protected.
+
+Judge Krost read the third ground twice. He did not, at the bench, deliver a **shrill** ruling. He did, however, **quibble** — politely, in the careful judicial sense — with a single sentence in Mr. Holb\'s brief. He asked Mr. Holb whether the compliance review had been initiated before or after the subpoena was served.
+
+Mr. Holb did not, in his reply, **recant** the position. He said, with the small careful pause that Judge Krost had come to recognize over twelve years of motions before this attorney, that the compliance review had been initiated "in the same general period." Judge Krost asked the question again, in the same even tone, and asked specifically for a date.
+
+The date, as Mr. Holb produced it from his binder, was three days after the subpoena had been served.
+
+Judge Krost did not, in the moment, deliver a long ruling. He acknowledged the standing-relevance and burden objections, addressed each in two sentences, and overruled them. He then turned to the third ground. He said, in three short sentences, that a privilege claim could not be retroactively constructed to **ravage** the scope of a properly served subpoena, that an internal compliance review designated three days after the fact did not bring earlier communications within a privilege they had not previously enjoyed, and that the third ground was, in his ruling, an attempt at **sophistry** that the court would not, on any of his remaining mornings, indulge.
+
+He denied the motion to quash. He set a compliance schedule for the production of the documents. He thanked both counsel. The hearing was over by 10:24 a.m.
+
+Mr. Holb did not, in the corridor afterward, complain. He had practiced before Judge Krost for twelve years and was, in his own private description to a junior associate that afternoon, "not surprised — only slightly disappointed in the timing." The documents were produced on the schedule the judge had set. The case settled, three months later, on terms the plaintiff\'s counsel described as "appropriate to the documents."
+
+Judge Krost retired on the date he had announced. His final docket carried, in its closing entries, the Tuesday morning ruling — a single page, evenly written, with no rhetorical flourish. It was, in its tone, exactly the docket entry he had been writing for twenty-nine years.`,
+  questions: [
+    {
+      id: 1,
+      kind: "vocab-context",
+      prompt: 'In this sentence, the word "redoubtable" most nearly means:',
+      quote:
+        '"He was, by every standard the bar association used, redoubtable. He had, in twenty-nine years, been overturned on appeal seven times..."',
+      options: [
+        "Frequently doubted by his colleagues.",
+        "Commanding respect through proven skill or strength; formidable.",
+        "Inexperienced and easily challenged.",
+        "Reluctant to issue rulings on contested motions.",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Redoubtable" describes someone formidable, commanding respect through demonstrated skill — exactly the standing the appeal record evidences.',
+    },
+    {
+      id: 2,
+      kind: "vocab-context",
+      prompt: 'In this sentence, the word "sophistry" most nearly means:',
+      quote:
+        '"...the third ground was, in his ruling, an attempt at sophistry that the court would not, on any of his remaining mornings, indulge."',
+      options: [
+        "An argument grounded in straightforward, well-documented evidence.",
+        "Reasoning that appears clever and persuasive on the surface but is intentionally misleading or fallacious.",
+        "An open admission of a procedural error.",
+        "An automatic appeal to a higher court.",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Sophistry" describes specious, deliberately misleading reasoning that imitates valid argument — exactly what the retroactive privilege claim attempts.',
+    },
+    {
+      id: 3,
+      kind: "tone-purpose",
+      prompt:
+        'The narrator says Judge Krost did not deliver a "shrill" ruling, but did "quibble — politely, in the careful judicial sense — with a single sentence." Why pair those two descriptions?',
+      options: [
+        '"Shrill" and "quibble" mean the same thing in legal contexts.',
+        'The pair establishes the precise judicial mode: not raised in tone, but unwilling to let a specific weak sentence pass. The judge\'s power, the story has argued from the start, lies exactly in even-toned questions that expose the weakness without any rhetorical heat.',
+        '"Shrill" implies the ruling was issued in writing rather than orally.',
+        '"Quibble" implies the judge agreed with Mr. Holb\'s third ground.',
+      ],
+      correctIndex: 1,
+      explanation:
+        'The pairing names the judge\'s characteristic mode — quiet but exact — which is the very pattern the story has set up across his twenty-nine years.',
+    },
+    {
+      id: 4,
+      kind: "inference",
+      prompt:
+        "Based on the passage, what can the reader most reasonably infer about why Judge Krost\'s single question — whether the compliance review had been initiated before or after the subpoena was served — was decisive?",
+      options: [
+        "The judge wanted to embarrass Mr. Holb in front of his junior associate.",
+        "A privilege claim that protects communications must be in place before the subpoena that asks for them; if the compliance review was designated after the subpoena, the privilege cannot retroactively cover the earlier period — meaning a single date answer collapses the entire eleven-page third ground without the judge having to argue against it.",
+        "The judge had personal experience with compliance reviews from a previous career.",
+        "Mr. Holb had failed to file the motion within the required deadline.",
+      ],
+      correctIndex: 1,
+      explanation:
+        "The structural point is exactly that the date fixes the question: a privilege constructed three days after the subpoena cannot ravage the scope of what was already served.",
+    },
+    {
+      id: 5,
+      kind: "substitution",
+      prompt:
+        'Which single word could replace "wily" in the sentence below without changing its meaning?',
+      quote:
+        '"The defense, represented by a careful and notoriously wily attorney named Marcus Holb..."',
+      options: [
+        "Naive",
+        "Crafty",
+        "Anonymous",
+        "Forgetful",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Crafty" matches "wily" — both describe a clever, skilled cunning, often in maneuvering an argument or situation.',
+    },
+    {
+      id: 6,
+      kind: "main-idea",
+      prompt:
+        "Which sentence best summarizes the central idea or arc of the passage?",
+      options: [
+        "A retiring judge issues a final shrill ruling against a defense attorney he personally dislikes.",
+        "A redoubtable retiring judge, on his last contested hearing, declines to be drawn into shrill argument by a wily defense attorney\'s third novel ground for quashing a subpoena, exposes the sophistry of a retroactively constructed privilege through a single quiet question about dates, and closes his final docket entry in exactly the even tone he has used for twenty-nine years.",
+        "A wily defense attorney persuades a retiring judge to quash a properly served subpoena over a procedural technicality.",
+        "A small commercial supplier withdraws its lawsuit after a judge denies its motion to compel discovery.",
+      ],
+      correctIndex: 1,
+      explanation:
+        "The arc traces precisely the motion, the single date question, the collapse of the third ground, and the closing docket entry consistent with a twenty-nine-year style.",
+    },
+  ],
+};
+
 export const SET_READINGS: Record<string, SetReading> = {
   "1-1": MISSION_1_SET_1,
   "1-2": MISSION_1_SET_2,
@@ -10096,6 +11315,15 @@ export const SET_READINGS: Record<string, SetReading> = {
   "25-1": MISSION_25_SET_1,
   "25-2": MISSION_25_SET_2,
   "25-3": MISSION_25_SET_3,
+  "26-1": MISSION_26_SET_1,
+  "26-2": MISSION_26_SET_2,
+  "26-3": MISSION_26_SET_3,
+  "27-1": MISSION_27_SET_1,
+  "27-2": MISSION_27_SET_2,
+  "27-3": MISSION_27_SET_3,
+  "28-1": MISSION_28_SET_1,
+  "28-2": MISSION_28_SET_2,
+  "28-3": MISSION_28_SET_3,
 };
 
 export function getSetReading(day: number, group: number): SetReading | null {
