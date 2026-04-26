@@ -15157,6 +15157,385 @@ The November 18 meeting ran four hours. The cooperative\'s outside legal advisor
   ],
 };
 
+const MISSION_39_SET_1: SetReading = {
+  title: "The Grant Program",
+  subtitle:
+    "A short story about a small regional arts foundation\'s first open-call cycle and the program officer who had to learn, in eight weeks, how to read a grant application stack she had not been prepared for.",
+  format: "Short Story",
+  readingMinutes: 4,
+  words: [
+    "ample",
+    "profusion",
+    "cornucopia",
+    "opulent",
+    "plethora",
+    "glut",
+    "myriad",
+    "rife",
+    "raft",
+    "slew",
+  ],
+  passage: `The Vellren Regional Arts Foundation had, across its first eighteen years, run its small grant program by invitation. Its program officer — a forty-one-year-old former gallery director named Rena Olm — had handled, in any given cycle, between fourteen and twenty-two invited applications, all of them from artists and small institutions she had personally identified across the prior twelve months. The foundation\'s board had voted, in the spring of 2026, to open the next cycle to a regional public call.
+
+The call closed on the first of June. The applications that arrived in Rena\'s shared review folder were a **cornucopia** in the precise sense the trade press had warned her, in three separate articles the prior April, that a first open call would produce: a **profusion** of work she had not previously seen, from artists and small institutions whose practice was, in her honest read of the first twenty applications, **ample** in ways the foundation\'s eighteen-year invited cycle had not surfaced. The folder held two hundred and seventy-three applications by the closing date. The foundation\'s prior largest cycle had been twenty-two.
+
+Rena did not, in the first week of review, allow herself to characterize the application stack as a **glut**. The trade press articles had specifically warned her about the word — the way a first open call\'s sheer numbers can, on the program officer\'s first read, be experienced as a regrettable surplus to be triaged rather than as a measurable signal about how much regional practice the prior invited cycle had simply not been seeing. She used, instead, in her own working notes across the first two weeks, the more careful word **plethora** — which acknowledged the abundance without smuggling in the dismissiveness the easier word would have carried.
+
+The applications were, on Rena\'s read across the first three weeks, **rife** with the kinds of small structural surprises she had not anticipated. A **raft** of applications came from working artists in two of the foundation\'s region\'s smaller counties — counties Rena had visited only once each in the prior three years and from which she had identified, across the prior eighteen invited cycles, exactly two grantees. A separate **slew** of applications came from small community-based institutions whose work was, in three specific cases, the equal of the more **opulent** institutional programming the foundation had funded in its 2024 cycle. The applications were not uniformly strong; on Rena\'s honest read, a **myriad** of them were under-developed in the specific ways first-time applicants\' proposals tend to be. But the under-development did not, in any of the cases, mask the underlying practice the proposal was describing.
+
+Rena drafted, in the fifth week of review, a four-page memo to the foundation\'s grants committee. The memo did not recommend funding any specific application. It recommended, instead, two procedural changes she said the eight-week review had made unavoidable: that the foundation\'s next cycle move to a two-stage review, with a short letter-of-inquiry stage that would let the foundation engage the under-developed applications constructively before requiring full proposals; and that the foundation commit to a regional outreach budget that would, by the next cycle, let Rena visit each of the region\'s eleven counties at least twice in the prior twelve months. The committee approved both recommendations on the second Friday of August. The 2027 cycle ran on the new structure. The 2026 cycle\'s grants were announced in October — sixteen of them, from eight counties, across both small institutions and individual artists — with a one-page funder\'s note from Rena that named, in plain language, what the foundation\'s eighteen-year invited cycle had not been seeing.`,
+  questions: [
+    {
+      id: 1,
+      kind: "vocab-context",
+      prompt: 'In this sentence, the word "cornucopia" most nearly means:',
+      quote:
+        '"The applications that arrived in Rena\'s shared review folder were a cornucopia in the precise sense the trade press had warned her..."',
+      options: [
+        "A scarce or limited supply requiring careful rationing.",
+        "An overflowing abundance of varied, often plentiful contents.",
+        "A formal complaint filed with a regulatory body.",
+        "A traditional type of grant application form.",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Cornucopia" describes an overflowing abundance of varied things — exactly the unexpectedly rich and varied application stack Rena receives.',
+    },
+    {
+      id: 2,
+      kind: "vocab-context",
+      prompt: 'In this sentence, the word "glut" most nearly means:',
+      quote:
+        '"Rena did not, in the first week of review, allow herself to characterize the application stack as a glut."',
+      options: [
+        "A precisely calibrated and useful quantity.",
+        "An excessive supply, especially one regarded as a problematic surplus.",
+        "A carefully invited shortlist of nominees.",
+        "A required minimum number under foundation bylaws.",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Glut" describes an excessive supply seen as a problematic surplus — the dismissive framing Rena specifically refuses to apply to the open-call response.',
+    },
+    {
+      id: 3,
+      kind: "tone-purpose",
+      prompt:
+        'Why does the narrator carefully distinguish Rena\'s use of "plethora" from the rejected word "glut" in her own working notes?',
+      options: [
+        "To suggest that Rena is overly fastidious about vocabulary.",
+        'The lexical distinction is the structural setup for the whole memo: how Rena names the application stack determines what she sees in it, and "plethora" preserves the abundance as a measurable signal about regional practice the prior invited cycle had not been seeing, while "glut" would have converted the same abundance into a triage problem.',
+        "To imply that Rena distrusts the trade press articles\' advice.",
+        "To indicate that the foundation\'s style guide forbids certain words.",
+      ],
+      correctIndex: 1,
+      explanation:
+        "How Rena names the stack determines what she sees in it — \"plethora\" preserves the signal that \"glut\" would have converted into a mere triage problem.",
+    },
+    {
+      id: 4,
+      kind: "inference",
+      prompt:
+        "Based on the passage, what can the reader most reasonably infer about why Rena\'s memo does not recommend funding any specific application but instead recommends two procedural changes?",
+      options: [
+        "She has not had time to read any of the applications in detail.",
+        "The two-hundred-seventy-three-application open call has surfaced a structural mismatch between the foundation\'s practice and its region — under-developed first-time applications and uncovered counties — that no specific funding decision could repair; the procedural changes address the structural cause that produced the visible signal in the first place.",
+        "She believes the foundation should suspend its grant program entirely.",
+        "Foundation rules require the program officer to abstain from funding recommendations.",
+      ],
+      correctIndex: 1,
+      explanation:
+        "The procedural changes address the structural cause behind the application stack's surprises — funding decisions alone can't repair the eighteen-year mismatch.",
+    },
+    {
+      id: 5,
+      kind: "substitution",
+      prompt:
+        'Which single word could replace "raft" in the sentence below without changing its meaning?',
+      quote:
+        '"A raft of applications came from working artists in two of the foundation\'s region\'s smaller counties..."',
+      options: [
+        "Multitude",
+        "Handful",
+        "Pair",
+        "Trickle",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Multitude" matches "raft" — both describe a large number or quantity of something coming together.',
+    },
+    {
+      id: 6,
+      kind: "main-idea",
+      prompt:
+        "Which sentence best summarizes the central idea or arc of the passage?",
+      options: [
+        "A program officer rejects most of the applications submitted to her foundation\'s first open call.",
+        "A program officer\'s first open call produces an unexpected cornucopia of two hundred seventy-three applications that surfaces a structural mismatch between the foundation\'s eighteen-year invited cycle and its actual region; her five-week review yields a memo recommending two procedural changes — a two-stage review and a regional outreach budget — that the committee approves and that the next cycle runs on.",
+        "A foundation cancels its open-call grant program after a difficult first cycle.",
+        "A foundation\'s board fires its program officer after a contested grant cycle.",
+      ],
+      correctIndex: 1,
+      explanation:
+        "The arc is exactly the unexpected cornucopia, the structural mismatch it surfaces, and the two procedural changes the committee approves.",
+    },
+  ],
+};
+
+const MISSION_39_SET_2: SetReading = {
+  title: "The Profile",
+  subtitle:
+    "A personal essay by a magazine writer about the four days she spent profiling a long-overlooked sculptor whose work the New York critics had begun, in 2025, to call the most surpassing recovery of the prior decade.",
+  format: "Personal Essay",
+  readingMinutes: 4,
+  words: [
+    "spate",
+    "opulence",
+    "unsavory",
+    "unpretentiousness",
+    "unkempt",
+    "uncultivated",
+    "unconventional",
+    "unassuming",
+    "tremulous",
+    "touted",
+  ],
+  passage: `When the magazine assigned me, in March 2026, to profile the sculptor Hael Dorr at her home and studio in the high country, I had read the **spate** of recent critical writing on her work — twelve major pieces in fourteen months — and I had read, more carefully, the three earlier pieces from the late 1990s and early 2000s that had, for two and a half decades, been the only writing of consequence on her practice. The recent pieces had **touted** her work in the register the New York critics reach for when a long-overlooked artist\'s recovery becomes, briefly, the consensus story of a season; the earlier pieces had been quieter, more careful, and, I had thought before the assignment, more accurate.
+
+I drove up on a Tuesday afternoon in early April. The road past the river crossing was narrower than the assignment editor had described, and the last six miles to Hael\'s property were, on the day I arrived, half-snowed in by a late storm the valley had not been ready for. The house, when I reached it, was a small wood-and-stone structure that the property\'s 1981 architect had set against a south-facing rock face, and the studio — separate from the house, fifty yards downhill — was a former barn that Hael had, by her own slow account across our four days, converted in 1992 with three carpenters from the next valley over.
+
+Hael met me at the kitchen door. She was sixty-eight, with the kind of **unkempt** practical appearance — wool jacket, work boots, hands stained from the morning\'s work — that the New York pieces had specifically not described, the pieces having reached for a more romanticized **opulence** of artist-in-the-mountains imagery the actual Tuesday afternoon did not provide. She made coffee. She did not, in the first three hours of our conversation, offer the kind of curated artist\'s biography the recent profiles had built their pieces around.
+
+What she offered, instead, was the **unpretentiousness** that the earlier 1990s pieces had carefully described and that I had come to the assignment skeptical of. The skepticism was not personal; it was the skepticism a working profile writer learns to carry into any assignment in which the subject is reputed to be **unassuming**, because the reputed unassumingness is, in honest professional terms, frequently a more carefully constructed performance than the more obviously curated kind. Hael\'s unassumingness, in our four days, was not a performance. It was the working register of a sixty-eight-year-old artist who had spent thirty-four years in the same studio without the **unsavory** distractions the New York reception had, in the prior fourteen months, briefly threatened to introduce.
+
+The work itself — which she walked me through on the second morning, in the studio, in a sequence she had not, on her own account, walked any prior visitor through in the same order — was **unconventional** in two specific ways the recent critical writing had not, on my reading, named precisely. The first was a structural choice in the armature work that the New York pieces had read as a stylistic flourish and that was, in Hael\'s own brief account, a load-bearing decision the work\'s scale had required from 1994 onward. The second was the surface treatment of the bronze, which she had developed across three years in the late 1990s by a method that the New York pieces had read as accidental and that was, on her account, the result of a careful patination practice she had, by 1999, made entirely her own.
+
+I left on the Friday morning. The piece I filed three weeks later was, on my own honest read of the draft, **tremulous** in two paragraphs the editor and I cut in the second revision — paragraphs in which I had, despite my own intentions, reached for the romanticized register the recent New York pieces had set the precedent for. The published piece, in the magazine\'s June issue, was the piece I had wanted to write: a portrait of an artist whose practice had been, across thirty-four years in the same studio, **uncultivated** by the markets that had, in the prior fourteen months, finally noticed her, and whose work was the better for the noticing having taken thirty-four years to arrive.`,
+  questions: [
+    {
+      id: 1,
+      kind: "vocab-context",
+      prompt: 'In this sentence, the word "spate" most nearly means:',
+      quote:
+        '"...I had read the spate of recent critical writing on her work — twelve major pieces in fourteen months..."',
+      options: [
+        "A long-running, slow-paced series of publications.",
+        "A sudden, large outpouring or flood (especially of activity, words, or events).",
+        "A formal academic monograph.",
+        "A confidential editorial memo.",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Spate" describes a sudden flood or outpouring — twelve major pieces in fourteen months is exactly that kind of concentrated burst.',
+    },
+    {
+      id: 2,
+      kind: "vocab-context",
+      prompt: 'In this sentence, the word "unassuming" most nearly means:',
+      quote:
+        '"...the skepticism a working profile writer learns to carry into any assignment in which the subject is reputed to be unassuming..."',
+      options: [
+        "Openly seeking public attention and praise.",
+        "Modest, not pretentious or arrogant; not drawing attention to oneself.",
+        "Hostile to interview requests.",
+        "Required to remain anonymous by contract.",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Unassuming" describes someone modest who does not draw attention to themselves — the quality the writer has learned to be skeptical of as a reputation.',
+    },
+    {
+      id: 3,
+      kind: "tone-purpose",
+      prompt:
+        'Why does the narrator carefully describe her own initial skepticism of "reputed unassumingness" — calling it "frequently a more carefully constructed performance than the more obviously curated kind" — before reporting that Hael\'s unassumingness was not a performance?',
+      options: [
+        "To suggest the narrator is generally cynical about artists.",
+        "Naming the skepticism upfront makes the eventual judgment credible: the writer establishes that she came in professionally suspicious of exactly this trait, which earns the reader\'s trust when she reports the trait as genuine — and grounds the contrast with the romanticized New York register the published piece is trying to step away from.",
+        "To imply that the narrator dislikes Hael personally.",
+        "To indicate that other journalists have been deceived by Hael in the past.",
+      ],
+      correctIndex: 1,
+      explanation:
+        "Naming the upfront skepticism makes the eventual judgment credible — and grounds the contrast with the romanticized register the piece is stepping away from.",
+    },
+    {
+      id: 4,
+      kind: "inference",
+      prompt:
+        'Based on the essay, what can the reader most reasonably infer about why the narrator includes her own two cut paragraphs — the ones she calls "tremulous" — in the final reflection?',
+      options: [
+        "She regrets the published piece and wishes she had kept the cut paragraphs.",
+        "Naming her own near-miss with the romanticized register honestly acknowledges that the pull of the reception narrative is a real professional risk even for a writer who came in skeptical of it; the cut paragraphs become evidence that the published portrait\'s restraint was a worked-for choice, not an effortless given.",
+        "She is criticizing her editor for the cuts.",
+        "She intends to publish the cut paragraphs separately at a later date.",
+      ],
+      correctIndex: 1,
+      explanation:
+        "Naming the near-miss honestly shows the published portrait's restraint was a worked-for choice — and the reception narrative's pull a real professional risk.",
+    },
+    {
+      id: 5,
+      kind: "substitution",
+      prompt:
+        'Which single word could replace "touted" in the sentence below without changing its meaning?',
+      quote:
+        '"The recent pieces had touted her work in the register the New York critics reach for when a long-overlooked artist\'s recovery becomes, briefly, the consensus story of a season..."',
+      options: [
+        "Promoted",
+        "Concealed",
+        "Translated",
+        "Audited",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Promoted" matches "touted" — both describe loudly praising or publicizing something to attract attention.',
+    },
+    {
+      id: 6,
+      kind: "main-idea",
+      prompt:
+        "Which sentence best summarizes the central idea or arc of the essay?",
+      options: [
+        "A magazine writer concludes after a four-day visit that a much-touted sculptor\'s reputation is undeserved.",
+        "A magazine writer profiling a long-overlooked sculptor finds her unassumingness genuine rather than performed and her work\'s unconventional choices structural rather than stylistic; she catches her own draft\'s tremulous reach for the romanticized New York register, cuts those paragraphs in revision, and publishes a portrait that honors the thirty-four years the noticing took to arrive.",
+        "A magazine writer\'s profile of a sculptor is rejected by her editor and never published.",
+        "A magazine writer becomes a personal friend of the artist she is profiling.",
+      ],
+      correctIndex: 1,
+      explanation:
+        "The arc is exactly the genuine unassumingness, the precise structural readings of the work, and the worked-for restraint of the published portrait.",
+    },
+  ],
+};
+
+const MISSION_39_SET_3: SetReading = {
+  title: "The Curator\'s Walkthrough",
+  subtitle:
+    "A short story about a botanical garden\'s incoming director and the long Saturday her senior curator spent walking her through the collection she had inherited.",
+  format: "Short Story",
+  readingMinutes: 4,
+  words: [
+    "totalitarian",
+    "toothsome",
+    "titular",
+    "tensile",
+    "taxonomic",
+    "flourish",
+    "swathe",
+    "susceptible",
+    "surpassing",
+    "succumb",
+  ],
+  passage: `The Vellren Botanical Garden\'s incoming director was a woman named Sera Loon, forty-seven, who had come to the garden after fourteen years as a senior curator at a larger institution two states away. She had been hired in February and had begun the role on the first of April. Her first Saturday in the new position was the Saturday her senior curator, a man named Berk Vell who had been at the garden for twenty-six years, had set aside, by his own request the prior week, to walk her through the collection she had inherited.
+
+They began at the south gate at nine in the morning. Berk did not, in the first hour, deploy the **titular** authority his twenty-six years could have authorized — the easy register of the long-serving curator showing the new director, in the well-known house tour, the things the new director should know and the things she should not. He did not show Sera the garden in that order. He showed her, instead, in the order he had himself learned the garden across his first three years in the late 1990s, in a sequence the garden\'s standing visitor map did not preserve and that the garden\'s **taxonomic** organization had, by Berk\'s own honest read of the prior decade, gradually obscured.
+
+The first stop was the long **swathe** of native grasses that Berk\'s 1999 predecessor had planted along the garden\'s eastern boundary and that Berk himself had, across twenty-two years, expanded and refined into the **surpassing** native-prairie demonstration plot the garden\'s 2024 annual report had called the strongest of its kind in the region. Berk did not call the plot surpassing. He called it, with some care, "the planting that had taught him most about what the garden could and could not do," and he walked Sera through, in plain language, the two specific years across the twenty-two — 2007 and 2018 — in which the planting had nearly **succumb**ed to weather pressures the garden had not been prepared for and that he had, in both years, addressed by changes the garden\'s working manuals still bore the marks of.
+
+They walked, across the second hour, into the conservatory. The conservatory\'s tropical collection was the garden\'s most visible asset. Berk\'s account of it was the most careful of the morning. He named, by genus and growth habit, six specimens whose **tensile** structural relationship to their supporting armatures had been, across the prior decade, the conservatory\'s slow internal engineering problem; he named two specimens that were, in his honest read, **susceptible** to a particular fungal pressure the prior winter\'s warm spell had made plausible by the spring; and he named the single specimen — a forty-one-year-old palm at the conservatory\'s north end — that he was, in his own private working notes, watching most carefully across the next twelve months.
+
+The third hour took them into the kitchen-garden demonstration plots, where Berk paused, for the longest single stop of the morning, at the heritage-tomato collection the garden had developed across the prior decade. He named, with some affection, four varieties he characterized as **toothsome** in the precise sense the heritage-seed community used the word — varieties whose flavor merited the slower growth and lower yield they required — and he walked Sera through the small cultivar-rotation policy he had developed, with the garden\'s plot manager, across three growing seasons.
+
+What Berk did not do, in any of the four hours, was characterize his own institutional preferences as the standing direction of the garden. He did not deploy the **totalitarian** register some long-serving curators reach for in the new-director conversation, in which the prior curator\'s preferences are presented as the garden\'s settled judgment. He presented the collection as Sera\'s to read, **flourish**, and adjust on her own incoming directorship. They returned to the south gate at one in the afternoon. Sera, by the end of her first month, had carried four specific items from the Saturday into her own working plan, and Berk, by the end of the same month, had been formally named senior curator emeritus on a five-year working contract that gave him the conservatory and the heritage-tomato plot and gave Sera the rest.`,
+  questions: [
+    {
+      id: 1,
+      kind: "vocab-context",
+      prompt: 'In this sentence, the word "titular" most nearly means:',
+      quote:
+        '"Berk did not, in the first hour, deploy the titular authority his twenty-six years could have authorized..."',
+      options: [
+        "Recently and provisionally appointed.",
+        "Existing only in name or by virtue of one\'s title or position, without exercising the full power that goes with it.",
+        "Granted by an external accreditation body.",
+        "Rotating among several senior staff members.",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Titular" describes authority that belongs to one\'s position by name — the kind of authority Berk could have deployed but deliberately does not.',
+    },
+    {
+      id: 2,
+      kind: "vocab-context",
+      prompt: 'In this sentence, the word "succumb" most nearly means:',
+      quote:
+        '"...the planting had nearly succumbed to weather pressures the garden had not been prepared for..."',
+      options: [
+        "Adapted readily and thrived under pressure.",
+        "Yielded, given way, or been overcome (especially by an external pressure or force).",
+        "Been formally documented in the garden\'s archives.",
+        "Been transferred to a sister institution.",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Succumb" means to yield or be overcome by something — the planting nearly gave way to weather pressures in 2007 and 2018.',
+    },
+    {
+      id: 3,
+      kind: "tone-purpose",
+      prompt:
+        'Why does the narrator note that Berk "did not call the plot surpassing" but instead described it as "the planting that had taught him most about what the garden could and could not do"?',
+      options: [
+        "To suggest Berk is falsely modest about his work.",
+        "Refusing the report\'s superlative and substituting the working-knowledge frame is the structural move of the whole walkthrough: Berk is handing Sera the planting as a record of what the garden has learned, not as a settled achievement to inherit, which is the difference between a directorship that can adjust the planting and one that has to defend it.",
+        "To imply Berk disagrees with the 2024 annual report\'s assessment.",
+        "To indicate that Berk plans to dismantle the planting after his departure.",
+      ],
+      correctIndex: 1,
+      explanation:
+        "Refusing the superlative and substituting the working-knowledge frame hands Sera a record she can adjust — not a settled achievement she has to defend.",
+    },
+    {
+      id: 4,
+      kind: "inference",
+      prompt:
+        "Based on the passage, what can the reader most reasonably infer about why Berk\'s eventual emeritus contract gives him the conservatory and the heritage-tomato plot specifically and gives Sera the rest?",
+      options: [
+        "Sera lacks the expertise to manage the conservatory or the tomato plot.",
+        "The two areas Berk retains are precisely the ones whose institutional knowledge — the susceptible specimens, the cultivar-rotation policy, the forty-one-year-old palm — is most concentrated in his twenty-six years and least transferable through any handoff a new director\'s first year could absorb; the rest is left to Sera, which preserves her directorship.",
+        "Berk has refused to relinquish his most-loved areas of the collection.",
+        "The board has overruled Sera\'s preferred division of responsibilities.",
+      ],
+      correctIndex: 1,
+      explanation:
+        "The retained areas concentrate institutional knowledge least transferable in a year — leaving the rest to Sera preserves her directorship.",
+    },
+    {
+      id: 5,
+      kind: "substitution",
+      prompt:
+        'Which single word could replace "swathe" in the sentence below without changing its meaning?',
+      quote:
+        '"The first stop was the long swathe of native grasses..."',
+      options: [
+        "Stretch",
+        "Sliver",
+        "Pebble",
+        "Boundary",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Stretch" matches "swathe" — both describe a long, broad strip or expanse of something.',
+    },
+    {
+      id: 6,
+      kind: "main-idea",
+      prompt:
+        "Which sentence best summarizes the central idea or arc of the passage?",
+      options: [
+        "A senior curator uses a Saturday walkthrough to convince an incoming director to preserve all his prior decisions unchanged.",
+        "A senior curator with twenty-six years at a botanical garden walks his incoming director through the collection in a non-titular register that hands her each planting as a record of what the garden has learned rather than a settled judgment to defend; the morning produces four working items for the new director\'s plan and an emeritus contract that retains for him only the two areas whose institutional knowledge is least transferable in a year.",
+        "A botanical garden\'s board fires its long-serving senior curator to make room for a new director.",
+        "An incoming director cancels a planned Saturday walkthrough after a disagreement with the senior curator.",
+      ],
+      correctIndex: 1,
+      explanation:
+        "The arc is exactly the non-titular walkthrough, the planting-as-record frame, and the emeritus contract that retains only the least-transferable areas.",
+    },
+  ],
+};
+
 export const SET_READINGS: Record<string, SetReading> = {
   "1-1": MISSION_1_SET_1,
   "1-2": MISSION_1_SET_2,
@@ -15272,6 +15651,9 @@ export const SET_READINGS: Record<string, SetReading> = {
   "38-1": MISSION_38_SET_1,
   "38-2": MISSION_38_SET_2,
   "38-3": MISSION_38_SET_3,
+  "39-1": MISSION_39_SET_1,
+  "39-2": MISSION_39_SET_2,
+  "39-3": MISSION_39_SET_3,
 };
 
 export function getSetReading(day: number, group: number): SetReading | null {
