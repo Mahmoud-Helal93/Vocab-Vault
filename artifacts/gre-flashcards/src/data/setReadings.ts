@@ -14014,6 +14014,1149 @@ The piece ran in September. The bridge image was not on the cover. The informati
   ],
 };
 
+const MISSION_36_SET_1: SetReading = {
+  title: "The Standards Committee",
+  subtitle:
+    "A short story about a small accreditation body\'s annual standards review and the chair who refused, in October, to allow a single ad hoc exception to ossify into precedent.",
+  format: "Short Story",
+  readingMinutes: 4,
+  words: [
+    "accord",
+    "ad hoc",
+    "adhere",
+    "all-encompassing",
+    "aphorism",
+    "benchmark",
+    "blighted",
+    "content",
+    "debase",
+    "disconcerting",
+  ],
+  passage: `The Northeastern Standards Council met in October every year to review its accreditation standards for small museums in a region that had been quietly **blighted**, across the prior decade, by the closure of three small institutions whose accreditation had lapsed for reasons the Council had, in private post-mortems, characterized as preventable. The Council\'s standards were not, by the trade press\'s honest read, **all-encompassing**; they covered six specific operational domains and left a great deal of programming and curatorial discretion to the institutions themselves. They were, however, the **benchmark** the region\'s museum directors used to calibrate their internal practice, and the Council\'s annual revisions to them carried weight beyond the Council\'s small membership.
+
+The chair that year was Yara Trev, a former director of a regional art museum who had served on the Council for eleven years and as chair for the prior two. She had been elected, by the standing committee\'s **accord**, to a third year on the strength of a chairmanship that had been characterized, in the Council\'s own internal review, as procedurally rigorous without being officious. Yara was forty-eight. She had a working **aphorism** she had used in three prior chair conversations and that the standing committee had, by October, learned to expect: "The standards are not the museum; the standards are the rope the museum holds when the floor moves."
+
+The October meeting\'s contested item was a single proposed exception to the Council\'s acquisitions-documentation standard, requested by a small folk-art museum whose director had argued, in a thirty-page memo, that the standard\'s photograph-and-provenance requirements were, in his institution\'s context, prohibitively expensive and, on three of the prior year\'s four acquisitions, practically impossible to **adhere** to within the timeframe the standard required. The director had requested an **ad hoc** waiver for his institution, with no reference to whether the same waiver would, in principle, be available to other small folk-art museums in the region.
+
+The standing committee was inclined, on the merits of the thirty-page memo, to grant the waiver. Yara was not. She was not opposed to a waiver. She was opposed, she said in the second hour of the meeting, to an ad hoc waiver — a waiver granted to one institution on the strength of one director\'s memo, without a written rule the next folk-art museum could **adhere** to without a thirty-page memo of its own.
+
+The conversation that followed was the most **disconcerting** of the meeting. Three senior committee members had been the small folk-art museum\'s allies for six years. Two more had served, in various capacities, with the requesting director on a separate professional board. The procedural objection Yara was raising was, in their honest read, the right objection on the merits and the wrong objection on the friendships at the table. Yara understood this. She did not, in any sentence, characterize the friendships as a problem; she characterized only the procedural risk that an ad hoc grant, however merited, would, by next October, **debase** the standard for the institutions that had not, this year, asked.
+
+The committee, by the third hour, agreed to the procedural reframing. The Council issued, in November, a written waiver-eligibility rule that named the conditions under which any small folk-art museum could request and be granted what the original memo had asked for. The folk-art museum was the first to apply. Two other museums applied within six weeks. All three were granted under the named rule. The standard\'s integrity held. The Council was, in its February internal review, **content** with the procedural reframing, and the chair was, in the same review, asked to consider a fourth year.`,
+  questions: [
+    {
+      id: 1,
+      kind: "vocab-context",
+      prompt: 'In this sentence, the phrase "ad hoc" most nearly means:',
+      quote:
+        '"The director had requested an ad hoc waiver for his institution, with no reference to whether the same waiver would, in principle, be available to other small folk-art museums..."',
+      options: [
+        "Established by long-standing tradition.",
+        "Created or arranged for a specific, immediate purpose, without reference to a general rule.",
+        "Approved unanimously by all parties.",
+        "Reviewed by an external auditing body.",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Ad hoc" describes something arranged for one specific case without reference to a general rule — exactly the waiver structure Yara objects to.',
+    },
+    {
+      id: 2,
+      kind: "vocab-context",
+      prompt: 'In this sentence, the word "debase" most nearly means:',
+      quote:
+        '"...an ad hoc grant, however merited, would, by next October, debase the standard for the institutions that had not, this year, asked."',
+      options: [
+        "To formally rescind or annul.",
+        "To lower in quality, value, or integrity; to degrade.",
+        "To celebrate widely in public.",
+        "To translate into a simpler form.",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Debase" means to degrade or lower the quality of something — what an unwritten ad hoc waiver would do to the standard\'s integrity.',
+    },
+    {
+      id: 3,
+      kind: "tone-purpose",
+      prompt:
+        'Why does the narrator dwell on the friendships among committee members — three "the small folk-art museum\'s allies for six years," two more on a "separate professional board" — before showing Yara\'s response?',
+      options: [
+        "To suggest that Yara distrusts her colleagues personally.",
+        "The careful tally of friendships is the structural setup for the scene\'s real difficulty: the procedural objection is right on the merits and socially costly at the table, and the paragraph that follows shows Yara declining to characterize the friendships as a problem while still holding the procedural line.",
+        "To imply that the committee is corrupt.",
+        "To indicate that Yara is unfamiliar with the requesting director.",
+      ],
+      correctIndex: 1,
+      explanation:
+        "The friendship tally sets up the cost of the procedural objection — and the paragraph shows Yara holding the line without naming the friendships as the problem.",
+    },
+    {
+      id: 4,
+      kind: "inference",
+      prompt:
+        "Based on the passage, what can the reader most reasonably infer about why the Council\'s solution — a written waiver-eligibility rule — produces three applications within six weeks?",
+      options: [
+        "The folk-art museum had been concealing the existence of similar institutions.",
+        "Naming the eligibility conditions in writing reveals that the original need was not unique to one director\'s thirty-page memo — other small folk-art museums had likely been operating outside the documentation standard quietly, and the written rule converts a private workaround into a publicly accessible accommodation.",
+        "The Council was forced by external regulators to issue waivers.",
+        "All three applicant museums were owned by the same institution.",
+      ],
+      correctIndex: 1,
+      explanation:
+        "The three quick applications reveal that the need wasn\'t unique — the written rule converts private workarounds into a public accommodation.",
+    },
+    {
+      id: 5,
+      kind: "substitution",
+      prompt:
+        'Which single word could replace "adhere" in the sentence below without changing its meaning?',
+      quote:
+        '"...practically impossible to adhere to within the timeframe the standard required."',
+      options: [
+        "Comply",
+        "Object",
+        "Translate",
+        "Schedule",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Comply" matches "adhere" — both describe following or sticking to a rule or standard.',
+    },
+    {
+      id: 6,
+      kind: "main-idea",
+      prompt:
+        "Which sentence best summarizes the central idea or arc of the passage?",
+      options: [
+        "An accreditation council denies a small folk-art museum\'s waiver request on the merits.",
+        "An accreditation council\'s chair refuses to grant a single ad hoc waiver — even one merited and supported by friendships at the table — and instead steers the council to a written eligibility rule that converts the requested accommodation into a public, repeatable standard, which three institutions then apply for within six weeks.",
+        "An accreditation council\'s chair resigns over a procedural disagreement with her committee.",
+        "A small museum sues an accreditation council over a documentation standard.",
+      ],
+      correctIndex: 1,
+      explanation:
+        "The arc is exactly the refusal of the ad hoc grant, the procedural reframing, and the three applications under the new written rule.",
+    },
+  ],
+};
+
+const MISSION_36_SET_2: SetReading = {
+  title: "The Translation Committee",
+  subtitle:
+    "A short story about a small academic press\'s decision to commission a fresh translation of a nineteenth-century novel whose only extant English version had begun, by the late 2010s, to read as the work of a different decade.",
+  format: "Short Story",
+  readingMinutes: 4,
+  words: [
+    "extant",
+    "facility",
+    "fitful",
+    "incite",
+    "induce",
+    "infelicity",
+    "intelligible",
+    "makeshift",
+    "onetime",
+    "opportunistic",
+  ],
+  passage: `The novel in question had been published in its original language in 1873 and translated into English exactly once, in 1949, by a translator whose **facility** with both source and target languages had been, by the standards of his decade, exceptional. The 1949 translation had remained the only **extant** English version for seventy-six years. The Yarrow Press had, in the spring of 2025, commissioned an internal review of whether a fresh translation was warranted.
+
+The review committee was three people: the press\'s contemporary-fiction editor, the press\'s translation series editor, and an outside reader, a working translator named Esme Morr who had not previously worked with the press. The committee\'s charge was narrow. It was not to assess the 1949 translation\'s historical importance, which was settled. It was to determine whether the 1949 translation, in 2025, remained sufficiently **intelligible** to a contemporary reader to discharge the press\'s obligation to the novel — or whether the prose\'s **fitful** mid-century rhythms, by the 2020s, had begun to interfere with what the novel was actually doing.
+
+Esme read the 1949 translation in a single weekend. She returned the following Tuesday with a four-page memo. The memo did not characterize the 1949 translation as poor; it characterized it, with care, as a translation of its decade. The translator\'s lexical choices — five of which the memo named specifically — had been the natural choices of a translator working in 1949 prose conventions, and three of those choices had, by 2025, drifted into a register the contemporary reader would not, on first read, find **intelligible** in the way the original prose had been to its 1873 reader. The 1949 prose had not been wrong. It had been, on Esme\'s honest read, dated in three structural ways the press\'s mandate could no longer overlook.
+
+The press\'s translation series editor, who had championed the 1949 translation\'s republication in a 1998 paperback edition that had remained in print for twenty-seven years, was visibly unconvinced. She did not, in the meeting, deploy the **opportunistic** argument some of her predecessors might have used — that a fresh translation was a marketing opportunity dressed up as a literary one — but she did press, in five careful sentences, on whether the three structural drifts Esme had named were sufficient to **induce** the press to invest in a new commission rather than a careful afterword to a re-issued edition.
+
+Esme had anticipated the question. She read aloud, from the 1873 original and the 1949 translation in parallel, three short passages — none longer than a paragraph — in which the original\'s prose carried a particular rhythmic pressure that the 1949 translation had, in her honest read, smoothed into a **makeshift** equivalence the original had not authorized. The third passage, a short interior monologue in the novel\'s second chapter, was the one the meeting later agreed had settled the question. The 1949 prose, in that passage, did not so much translate the original as **incite** the contemporary reader, with its rhythmic stiffness, to mistake the original\'s strangeness for clumsiness it did not have.
+
+The press commissioned a new translation in November. The 1949 translation was not removed from print. The press\'s autumn 2026 catalog listed both editions, each with a brief paragraph of editorial framing, and the **onetime** decision the committee had been told to settle in a four-page memo became, in the catalog, two sentences explaining why the press had decided that a single English **infelicity** of seventy-six years\' standing did not require, in its eighth decade, to be the only English-language door into the novel.`,
+  questions: [
+    {
+      id: 1,
+      kind: "vocab-context",
+      prompt: 'In this sentence, the word "extant" most nearly means:',
+      quote:
+        '"The 1949 translation had remained the only extant English version for seventy-six years."',
+      options: [
+        "No longer surviving; out of print.",
+        "Still in existence; currently available.",
+        "Translated by multiple competing scholars.",
+        "Restricted to academic libraries only.",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Extant" describes something that still exists today — the 1949 translation has been the only surviving English version for seventy-six years.',
+    },
+    {
+      id: 2,
+      kind: "vocab-context",
+      prompt: 'In this sentence, the word "induce" most nearly means:',
+      quote:
+        '"...whether the three structural drifts Esme had named were sufficient to induce the press to invest in a new commission..."',
+      options: [
+        "To formally prohibit.",
+        "To bring about, persuade, or lead someone to take an action.",
+        "To translate from a foreign language.",
+        "To audit financially.",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Induce" means to bring about or lead someone to do something — the question is whether the named drifts are enough to lead the press to commission new work.',
+    },
+    {
+      id: 3,
+      kind: "tone-purpose",
+      prompt:
+        'Why does the narrator note that Esme\'s memo "did not characterize the 1949 translation as poor; it characterized it, with care, as a translation of its decade"?',
+      options: [
+        "To suggest Esme is reluctant to offer a clear professional opinion.",
+        "The careful framing is the memo\'s ethical move: it refuses the lazy register that would dismiss the 1949 work to justify a new commission, separating the historical achievement from the contemporary fit question — which is exactly the question the press\'s mandate had asked her to answer.",
+        "To imply the 1949 translator was Esme\'s personal mentor.",
+        "To indicate that the memo lacked specific examples.",
+      ],
+      correctIndex: 1,
+      explanation:
+        "The framing refuses to dismiss the historical achievement to justify the new commission — keeping the question on contemporary fit.",
+    },
+    {
+      id: 4,
+      kind: "inference",
+      prompt:
+        "Based on the passage, what can the reader most reasonably infer about why the press\'s autumn 2026 catalog lists both translations, each with editorial framing, rather than retiring the 1949 edition?",
+      options: [
+        "Contractual restrictions prevent the press from removing the 1949 translation.",
+        "Listing both editions preserves the 1949 translation\'s historical record while giving contemporary readers the door the new translation opens — converting what could have been a replacement into a parallel access, which honors both the seventy-six-year achievement and the present-day mandate the committee was charged with.",
+        "The press is uncertain which translation is more accurate.",
+        "Booksellers refused to stock only one edition.",
+      ],
+      correctIndex: 1,
+      explanation:
+        "Listing both honors the historical achievement and the present-day mandate — parallel access rather than replacement.",
+    },
+    {
+      id: 5,
+      kind: "substitution",
+      prompt:
+        'Which single word could replace "infelicity" in the sentence below without changing its meaning?',
+      quote:
+        '"...a single English infelicity of seventy-six years\' standing did not require, in its eighth decade, to be the only English-language door into the novel."',
+      options: [
+        "Awkwardness",
+        "Triumph",
+        "Translation",
+        "Edition",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Awkwardness" matches "infelicity" — both describe something inelegant or imperfectly suited to its purpose.',
+    },
+    {
+      id: 6,
+      kind: "main-idea",
+      prompt:
+        "Which sentence best summarizes the central idea or arc of the passage?",
+      options: [
+        "A press cancels a long-running translation series after a single contested commission.",
+        "A small press\'s review committee considers whether the only extant English translation of an 1873 novel still discharges the press\'s contemporary obligation, reads three parallel passages aloud to settle the question, commissions a new translation without retiring the 1949 one, and frames both editions as parallel doors into the novel.",
+        "A press editor resigns over the commissioning of a new translation she opposed.",
+        "A foreign-language novel is removed from a press\'s catalog after a contested editorial review.",
+      ],
+      correctIndex: 1,
+      explanation:
+        "The arc is exactly the contemporary-fit review, the parallel-passage demonstration, and the parallel publication of both editions.",
+    },
+  ],
+};
+
+const MISSION_36_SET_3: SetReading = {
+  title: "The Valedictory Address",
+  subtitle:
+    "A short story about a retiring department chair\'s farewell speech to a small humanities faculty in late spring.",
+  format: "Short Story",
+  readingMinutes: 4,
+  words: [
+    "plausible",
+    "posturing",
+    "potent",
+    "redundant",
+    "sacrosanct",
+    "shrewd",
+    "unadorned",
+    "valedictory",
+    "warranted",
+    "wistful",
+  ],
+  passage: `Professor Hael Renn had chaired the small humanities department at Wendover College for eleven years, and her **valedictory** address at the end-of-term faculty dinner in May was the address her colleagues, in the small kitchen-table conversations of the prior month, had agreed they were curious to hear. Hael was not, by the department\'s honest read, a sentimental administrator; her chair years had been characterized, in the dean\'s own internal review, as "**shrewd** without being political," and the address she had been preparing — six pages of draft, the senior secretary said, none of it shared with anyone — was widely expected to follow the dinner\'s standing protocol of brevity and to skip, with characteristic restraint, the **wistful** retrospective register most retiring chairs reached for at the May dinner.
+
+The address was, in the event, almost exactly that. It ran for nine minutes. It was, in its prose, **unadorned** in the precise sense her colleagues had come to expect of her department memos — short sentences, no hedging clauses, no rhetorical flourishes — and it began with a single **potent** observation that she said had been the lesson of her eleven years and that she now wished to set on the record before she left the chair: that the department\'s standing argument about whether to reduce its first-year survey from two semesters to one had been, on every occasion the department had taken it up across her chairmanship, the wrong argument, conducted in the wrong terms, on the strength of an unexamined assumption neither side had ever put on the table.
+
+The room sat up. The argument Hael was naming was the longest-running internal disagreement in the department, an argument the department had taken up four times in eleven years, twice formally and twice in the corridor, and that Hael had, in three of those four occasions, declined to chair from a position. The fourth-year argument, in 2019, had, by the dean\'s subsequent memo, been the most strained internal episode of the chairmanship.
+
+Hael did not, in the next four minutes, characterize either side\'s prior arguments as wrong on the merits. She named the unexamined assumption: that the survey\'s pedagogical value was **sacrosanct** in its current two-semester form, and that any reduction was therefore a reduction in value rather than a re-allocation of departmental teaching capacity that the senior faculty were, in private conversation, clearly **warranted** in considering on its own terms. The two prior formal arguments, she said, had treated the assumption as the question — and had, in consequence, made every conversation about staffing and class-size **redundant** with a conversation neither side had been willing to have honestly.
+
+She did not, in the address, recommend a course of action. She did not propose, on the way out the door, the reform her chairmanship had declined to recommend in the eleven years she had been chair. She said only that the next chair — to be elected the following Tuesday — would, in her honest read, find the staffing question more **plausible** to address productively if the assumption were named first, and that her last act as chair was to put the assumption on the record so the next chairmanship would not begin, as her own had, with the argument framed in the terms that had failed it four times.
+
+There was no **posturing** in the address. There was no flourish in the close. Hael thanked the department in two sentences, sat down, and the dinner moved to dessert. The next chair was elected on the Tuesday. The first staffing conversation of the new chairmanship took place in October. The unexamined assumption, by then named on the record, was the conversation\'s opening item.`,
+  questions: [
+    {
+      id: 1,
+      kind: "vocab-context",
+      prompt: 'In this sentence, the word "valedictory" most nearly means:',
+      quote:
+        '"...her valedictory address at the end-of-term faculty dinner in May was the address her colleagues...had agreed they were curious to hear."',
+      options: [
+        "Delivered at the start of a new appointment.",
+        "Of or pertaining to a farewell, especially a formal speech given on departure.",
+        "Strongly congratulatory in tone.",
+        "Required by faculty bylaws.",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Valedictory" describes a formal farewell speech — the address Hael gives on the occasion of her departure from the chair.',
+    },
+    {
+      id: 2,
+      kind: "vocab-context",
+      prompt: 'In this sentence, the word "sacrosanct" most nearly means:',
+      quote:
+        '"...the survey\'s pedagogical value was sacrosanct in its current two-semester form, and that any reduction was therefore a reduction in value..."',
+      options: [
+        "Open to ongoing revision and debate.",
+        "Regarded as too sacred or important to be questioned, criticized, or interfered with.",
+        "Officially approved by an external accrediting body.",
+        "Recently introduced as an experiment.",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Sacrosanct" describes something held as too sacred or important to be questioned — the unexamined assumption Hael is putting on the record.',
+    },
+    {
+      id: 3,
+      kind: "tone-purpose",
+      prompt:
+        'Why does the narrator note that Hael\'s address "did not, in the next four minutes, characterize either side\'s prior arguments as wrong on the merits"?',
+      options: [
+        "To suggest Hael lacks the courage to take a position.",
+        "The careful refusal to relitigate the merits is the address\'s structural move: by naming only the unexamined assumption rather than scoring the prior arguments, Hael leaves the next chair a clean diagnostic instrument rather than a fresh score-settling, which is what makes the October conversation possible.",
+        "To imply that Hael agrees with both sides equally.",
+        "To indicate that the prior arguments had been forgotten.",
+      ],
+      correctIndex: 1,
+      explanation:
+        "Refusing to relitigate the merits hands the next chair a clean diagnostic instrument — exactly what the October conversation needs.",
+    },
+    {
+      id: 4,
+      kind: "inference",
+      prompt:
+        "Based on the passage, what can the reader most reasonably infer about why Hael waits until her valedictory address to name the unexamined assumption rather than naming it during one of her four years as the active chair?",
+      options: [
+        "She had not noticed the assumption until late in her chairmanship.",
+        "Naming the assumption while in the chair would have read as Hael steering the argument toward her own preferred outcome — naming it on the way out converts the observation from a chair\'s intervention into a departing colleague\'s diagnostic, which is what allows the next chairmanship to take it as a starting point rather than a contested move.",
+        "Department bylaws prohibit a chair from naming structural assumptions.",
+        "She intends to return to the chair in a future term.",
+      ],
+      correctIndex: 1,
+      explanation:
+        "Naming it from the chair would have steered the argument; naming it on the way out converts the observation into a clean diagnostic for the next chairmanship.",
+    },
+    {
+      id: 5,
+      kind: "substitution",
+      prompt:
+        'Which single word could replace "warranted" in the sentence below without changing its meaning?',
+      quote:
+        '"...the senior faculty were, in private conversation, clearly warranted in considering on its own terms."',
+      options: [
+        "Justified",
+        "Forbidden",
+        "Reluctant",
+        "Anxious",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Justified" matches "warranted" — both describe being properly authorized or having a legitimate basis for an action.',
+    },
+    {
+      id: 6,
+      kind: "main-idea",
+      prompt:
+        "Which sentence best summarizes the central idea or arc of the passage?",
+      options: [
+        "A retiring chair endorses a specific reform on her way out the door.",
+        "A retiring department chair uses her valedictory address — short, unadorned, and free of posturing — to put on the record a single unexamined assumption that had derailed the department\'s longest-running internal argument across four prior occasions, leaving the next chairmanship with a clean diagnostic for the October conversation rather than a chair\'s recommendation.",
+        "A retiring department chair settles a long-running argument by recommending a reform she had previously opposed.",
+        "A departmental dinner is canceled after a contentious valedictory address.",
+      ],
+      correctIndex: 1,
+      explanation:
+        "The arc is exactly the unadorned address that names the unexamined assumption and hands the next chair a diagnostic, not a recommendation.",
+    },
+  ],
+};
+
+const MISSION_37_SET_1: SetReading = {
+  title: "The Reading List Challenge",
+  subtitle:
+    "A short story about a small public library\'s standing committee handling, in February, the third formal book-removal challenge of the year.",
+  format: "Short Story",
+  readingMinutes: 4,
+  words: [
+    "attribute",
+    "calamitous",
+    "censor",
+    "champion",
+    "compound",
+    "deter",
+    "dexterous",
+    "dictum",
+    "dutiful",
+    "empathetic",
+  ],
+  passage: `The Tarrend Public Library\'s reading-list challenge committee met on the third Tuesday of every month and, in most months, met for forty minutes and adjourned without a contested item. February was an exception. The committee had, by February, already heard two formal book-removal challenges in the new year, and the third — filed on the second Friday of the month against a young-adult novel the library had carried in its collection for nine years — was, by the chair\'s honest read of the filing, the one the committee\'s standing **dictum** about ten-day responses would test.
+
+The committee\'s standing dictum, written in 1996 and unchanged since, was that any formal challenge would be answered, in writing, within ten working days, with a response that addressed the challenger\'s specific objection rather than the challenge\'s general posture. The dictum had been written, the 1996 minutes recorded, by a chair who had served through the most **calamitous** removal episode in the library\'s prior history and who had concluded, on the strength of that episode, that a slow procedural reply was the single best instrument the committee had to **deter** the political escalation challenges sometimes invited.
+
+The chair in 2026 was a librarian named Reeve Tay, who had taken the chair the prior September. Reeve was thirty-nine. He was, by the committee\'s honest read, the most procedurally **dexterous** chair the committee had had in a decade, in the specific sense that he was unusually good at writing replies that named the challenger\'s objection in the challenger\'s own terms and answered it without conceding the underlying question of whether the book belonged in the collection. He had, in November and December, written two such replies. The third challenge would be the one that tested whether the dictum\'s ten-day window would hold under the longer **empathetic** reading the February filing seemed to invite.
+
+The February filing was twenty-two pages. The challenger — a parent whose objection was specific to one chapter of the novel — had filed in the careful register of someone who had read the book in full and who was not asking the library to **censor** the book in any general sense. The filing asked, in five specific paragraphs, that the book be moved from the open YA shelf to a parents\'-permission-required shelf, with the parent acknowledging in the filing\'s second sentence that no such shelf currently existed at the library and that the request, if granted, would require the committee to recommend, to the board, the creation of one.
+
+The committee did not, in the meeting, **attribute** the filing to any motive other than the one the filing itself stated. Reeve had read the filing twice. He drafted, on the Friday after the meeting, a six-page reply that named, by paragraph, each of the five specific objections, declined the underlying restructuring proposal on the grounds that a parents\'-permission shelf would, in the committee\'s honest read, **compound** the access friction the library was supposed to be reducing, and offered, as a separate item, a single specific accommodation: a content note on the book\'s catalog page describing, in two sentences, the chapter\'s subject matter, with a link to a parent-resources page the library would, by April, develop.
+
+The reply went out on the eighth working day. The challenging parent wrote back on the eleventh. She did not, in her reply, characterize the committee\'s response as inadequate. She thanked the committee for the catalog-note accommodation, said she had not expected the library to **champion** her restructuring proposal, and said she was, on the strength of the reply, **dutiful**ly withdrawing the formal request.`,
+  questions: [
+    {
+      id: 1,
+      kind: "vocab-context",
+      prompt: 'In this sentence, the word "dictum" most nearly means:',
+      quote:
+        '"...the committee\'s standing dictum about ten-day responses would test."',
+      options: [
+        "An informal preference held by individual members.",
+        "An authoritative, formal pronouncement or rule.",
+        "A privately negotiated arrangement.",
+        "A vote requiring unanimous approval.",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Dictum" describes an authoritative, formal rule — the committee\'s 1996 standing rule about ten-day responses.',
+    },
+    {
+      id: 2,
+      kind: "vocab-context",
+      prompt: 'In this sentence, the word "compound" most nearly means:',
+      quote:
+        '"...a parents\'-permission shelf would, in the committee\'s honest read, compound the access friction the library was supposed to be reducing..."',
+      options: [
+        "Reduce or simplify.",
+        "Make worse, intensify, or add to (an existing condition or problem).",
+        "Privately renegotiate.",
+        "Translate into another language.",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Compound" here means to make worse — adding the parents\'-permission shelf would intensify the access friction the library is trying to reduce.',
+    },
+    {
+      id: 3,
+      kind: "tone-purpose",
+      prompt:
+        'Why does the narrator dwell on the careful register of the February filing — that it "did not, in any general sense" ask the library to censor, and that the filing\'s second sentence acknowledges the proposed shelf does not exist?',
+      options: [
+        "To suggest the parent is concealing a more aggressive position.",
+        "The careful filing\'s register is the structural setup for the committee\'s reply: a procedurally serious challenge invites a procedurally serious response, and the substance of the reply — naming each objection, declining the restructure on access grounds, offering a specific catalog-note accommodation — is the form of answer the dictum was written to make possible.",
+        "To imply that the parent has committee experience.",
+        "To indicate that the filing was prepared by an attorney.",
+      ],
+      correctIndex: 1,
+      explanation:
+        "The careful filing invites a procedurally serious reply — exactly the answer-form the dictum was written to make possible.",
+    },
+    {
+      id: 4,
+      kind: "inference",
+      prompt:
+        "Based on the passage, what can the reader most reasonably infer about why Reeve\'s reply offers the catalog-note accommodation as a separate item rather than presenting it as a partial concession to the restructure proposal?",
+      options: [
+        "Reeve is reluctant to acknowledge that the parent\'s concerns have any merit.",
+        "Separating the accommodation from the declined restructure prevents the catalog note from being read as a partial victory for the restructure proposal — which preserves the access principle the committee declined the restructure on, while giving the parent\'s actual underlying concern a real, granular response that does not depend on the procedural framing being accepted.",
+        "The accommodation is mandated by state library regulations.",
+        "Reeve plans to recommend the restructure to the board separately.",
+      ],
+      correctIndex: 1,
+      explanation:
+        "Separating the accommodation preserves the access principle while giving the actual concern a granular response — without conceding the framing.",
+    },
+    {
+      id: 5,
+      kind: "substitution",
+      prompt:
+        'Which single word could replace "deter" in the sentence below without changing its meaning?',
+      quote:
+        '"...a slow procedural reply was the single best instrument the committee had to deter the political escalation challenges sometimes invited."',
+      options: [
+        "Discourage",
+        "Encourage",
+        "Document",
+        "Translate",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Discourage" matches "deter" — both describe preventing or dissuading someone from a course of action.',
+    },
+    {
+      id: 6,
+      kind: "main-idea",
+      prompt:
+        "Which sentence best summarizes the central idea or arc of the passage?",
+      options: [
+        "A library committee removes a young-adult novel from its collection after a parent\'s formal challenge.",
+        "A library committee\'s ten-day-response dictum is tested by a carefully written restructure challenge; the chair drafts a six-page reply that names each of the five objections, declines the restructure on access grounds, offers a separate catalog-note accommodation, and the challenging parent withdraws the formal request after the reply.",
+        "A library board overrules a committee\'s decision to retain a contested book on the YA shelf.",
+        "A library committee changes its standing dictum after a contested challenge.",
+      ],
+      correctIndex: 1,
+      explanation:
+        "The arc is exactly the procedural reply, the separated accommodation, and the parent\'s withdrawal of the formal request.",
+    },
+  ],
+};
+
+const MISSION_37_SET_2: SetReading = {
+  title: "The Workplace Mediator",
+  subtitle:
+    "A short story about a small architecture firm\'s internal mediator brought in, in March, to handle a long-running disagreement between two senior partners.",
+  format: "Short Story",
+  readingMinutes: 4,
+  words: [
+    "ensue",
+    "fathom",
+    "frank",
+    "germane",
+    "grumble",
+    "hidebound",
+    "hypocrite",
+    "impolitic",
+    "insidious",
+    "intermediary",
+  ],
+  passage: `The two senior partners were Marsh Vell and Iola Brent, who had founded the small architecture firm of Vell-Brent in 1998 and had, across twenty-eight years, designed and delivered eighty-one projects without an internal disagreement that the firm\'s third partner, the office manager, had ever needed to formally **fathom**. The disagreement that had begun, on Marsh\'s honest read, in the previous October, was the first.
+
+The disagreement was not about a project. It was about a hiring decision the partners had made jointly in September and that Marsh had, by November, come to believe Iola had reconsidered without telling him. The hire — a senior associate named Tuli Dor — had been brought on with a clear understanding, set down in a one-page internal memo Marsh had drafted, that Tuli would lead the firm\'s healthcare-design practice, a practice the firm had been building, in fits and starts, for four years. By January, three healthcare-related conversations Marsh had expected to route through Tuli had been routed, instead, through Iola, who had not, in any of the three instances, mentioned the routing change to Marsh.
+
+The mediator the firm called in was an outside consultant named Aris Nor, who had handled three prior small-firm internal mediations and who had, in the firm\'s reference checks, been described as the **intermediary** the firm wanted because she did not deploy the **hypocrite**\'s register some of her competitors used — the register that named one party\'s grievance to the other party while privately reassuring the other party that the grievance was overstated. Aris arrived on a Tuesday. She met with Marsh and Iola separately for ninety minutes each, and jointly for two hours on the Wednesday morning.
+
+The Wednesday-morning meeting was the meeting in which, Aris later said in her own brief summary memo, the actual disagreement became visible. Iola, in the **frank** register Aris had asked the partners to commit to, said that she had reconsidered the September decision in late October because Tuli had, in his first three weeks, demonstrated a working method she now believed was **insidious**ly mismatched with the firm\'s standing collaboration practice — not in any single moment that would have been **germane** to a partner conversation in October, but in a pattern of small intake-meeting decisions that had, by late October, accumulated into a pattern Iola did not feel ready to name aloud at the time and had, instead, addressed by quietly routing around.
+
+Marsh listened. He did not, in the moment, characterize the routing-around as an act of bad faith. He did say — in three sentences, in the same frank register Aris had asked for — that the route-around had been **impolitic** in the specific institutional sense: it had spared the partners a difficult October conversation while creating a January institutional fact that Tuli had not been told about, that Marsh had not been told about, and that the firm\'s healthcare clients had begun, by February, to **grumble** about because the routing was not, in their honest read, working.
+
+The conversation that **ensue**d ran past lunch. Aris did not, at any point, propose a resolution. She did not characterize Iola\'s late-October concerns as wrong on the merits, and she did not characterize Marsh\'s January frustration as overstated. She named, in three sentences at the meeting\'s close, the single procedural commitment the partners had not yet made and, on the evidence of the disagreement, would need to make if they were not to become, in their second three decades, the **hidebound** partnership the founding decade\'s flexibility had protected them from. They committed, on the Thursday morning, to that procedural change. The Tuli situation was addressed, separately, in a Friday meeting that all three attended.`,
+  questions: [
+    {
+      id: 1,
+      kind: "vocab-context",
+      prompt: 'In this sentence, the word "germane" most nearly means:',
+      quote:
+        '"...not in any single moment that would have been germane to a partner conversation in October, but in a pattern of small intake-meeting decisions..."',
+      options: [
+        "Hostile to or critical of.",
+        "Relevant or appropriate to the matter at hand.",
+        "Strictly confidential and private.",
+        "Insignificant in financial terms.",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Germane" means relevant to the matter at hand — Iola felt no single moment was relevant enough to surface in October, only the cumulative pattern.',
+    },
+    {
+      id: 2,
+      kind: "vocab-context",
+      prompt: 'In this sentence, the word "insidious" most nearly means:',
+      quote:
+        '"...Tuli had...demonstrated a working method she now believed was insidiously mismatched with the firm\'s standing collaboration practice..."',
+      options: [
+        "Loud, dramatic, and obviously confrontational.",
+        "Proceeding in a subtle or stealthy way that produces gradual, often harmful effects.",
+        "Strongly recommended by external consultants.",
+        "Required by professional licensing standards.",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Insidious" describes something whose harm is subtle and gradual rather than immediate and visible — exactly the small accumulating pattern Iola names.',
+    },
+    {
+      id: 3,
+      kind: "tone-purpose",
+      prompt:
+        'Why does the narrator carefully describe Aris\'s reference-check reputation as the mediator who "did not deploy the hypocrite\'s register" — naming one party\'s grievance to the other while privately reassuring the other party?',
+      options: [
+        "To suggest that Aris is uncomfortable with directness.",
+        "Naming the failure mode Aris specifically does not deploy is the structural setup for the Wednesday-morning meeting: the actual disagreement only becomes visible because both partners commit to a frank register that the more two-faced mediator style would have prevented from surfacing in either ninety-minute private session.",
+        "To imply that Aris is biased toward Iola.",
+        "To indicate that previous mediators were dishonest.",
+      ],
+      correctIndex: 1,
+      explanation:
+        "The hypocrite's-register failure mode is the contrast that makes the Wednesday meeting's frank register possible — and the disagreement visible.",
+    },
+    {
+      id: 4,
+      kind: "inference",
+      prompt:
+        "Based on the passage, what can the reader most reasonably infer about why Aris closes the meeting by naming a procedural commitment rather than a resolution to the Tuli situation specifically?",
+      options: [
+        "Aris is unable to assess the merits of the Tuli situation.",
+        "The procedural commitment addresses the underlying failure mode — quiet routing-around in place of a difficult conversation — which is the pattern that produced the Tuli problem and would, untreated, produce the next one; resolving Tuli without the procedural change would leave the partnership exposed to the same drift in the second decade.",
+        "Aris does not have authority to recommend a Tuli resolution.",
+        "The partners have already privately resolved the Tuli situation.",
+      ],
+      correctIndex: 1,
+      explanation:
+        "The procedural fix addresses the failure mode that produced Tuli and would otherwise produce the next problem — Tuli alone wouldn't protect the second decade.",
+    },
+    {
+      id: 5,
+      kind: "substitution",
+      prompt:
+        'Which single word could replace "ensue" in the sentence below without changing its meaning?',
+      quote:
+        '"The conversation that ensued ran past lunch."',
+      options: [
+        "Followed",
+        "Preceded",
+        "Concluded",
+        "Adjourned",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Followed" matches "ensue" — both describe something that comes about as a consequence or result of what came before.',
+    },
+    {
+      id: 6,
+      kind: "main-idea",
+      prompt:
+        "Which sentence best summarizes the central idea or arc of the passage?",
+      options: [
+        "A long-running architecture partnership dissolves over a contested hiring decision.",
+        "A small architecture firm\'s twenty-eight-year partnership confronts its first internal disagreement — a quiet routing-around of an October decision — through a mediator whose frank-register practice surfaces the actual pattern, names the procedural commitment the partnership had not made, and addresses the underlying failure mode rather than the specific case.",
+        "An outside mediator dismisses both partners\' grievances as overstated.",
+        "An architecture firm hires and then immediately fires a senior associate over a routing dispute.",
+      ],
+      correctIndex: 1,
+      explanation:
+        "The arc is exactly the frank-register meeting, the visible pattern, and the procedural commitment that addresses the failure mode underneath the case.",
+    },
+  ],
+};
+
+const MISSION_37_SET_3: SetReading = {
+  title: "The Roommate Conversation",
+  subtitle:
+    "A short story about two college roommates in the third week of an unresolved disagreement about a shared kitchen practice neither of them had, until the third week, named aloud.",
+  format: "Short Story",
+  readingMinutes: 4,
+  words: [
+    "passive",
+    "raillery",
+    "ramble",
+    "resent",
+    "residual",
+    "resolve",
+    "surrogate",
+    "vilify",
+    "wanting",
+    "willful",
+  ],
+  passage: `The roommates were Anya Lar and Tess Bern, juniors at a small liberal-arts college, sharing the off-campus apartment that had been the apartment of Anya\'s older sister and her sister\'s roommate the prior year. The disagreement, which had begun in the second week of the September term, was about the kitchen sink. The kitchen sink, as the prior year\'s roommates had used it, had been a sink that received dishes and held them, sometimes for two days, before whoever\'s turn it was in the rotation washed them. The September apartment had no rotation. By the third week, the sink held, on most mornings, eleven items.
+
+Anya was, by Tess\'s honest read of three weeks of cohabitation, **passive** in the precise sense the word carries when one roommate is **passive** in a way that produces, in the other, a low-grade **resent**ment that the second roommate cannot, in any single moment, name aloud without sounding **willful** about a sink that had not, in itself, ever been the subject of a roommate conversation. Anya did not, in any of the three weeks, leave dishes in the sink. She also did not, in any of the three weeks, wash the dishes Tess had left in the sink. The dishes Tess had left in the sink were, by the third Friday, the eleven items.
+
+Tess raised the conversation on the Saturday afternoon. She had been preparing the conversation, in working notes she would later describe as somewhat **wanting** in their early drafts, for four days. She did not, when the conversation arrived, **vilify** Anya in any sentence. She did not characterize the dish situation as a failure of character. She characterized it, in the **frank** register her older sister had recommended over the phone, as a practice the apartment had not yet established and that the September weeks had, in the absence of an established practice, produced a **residual** annoyance she did not want to carry into the October term.
+
+Anya listened. She did not, at any point in the conversation\'s first ten minutes, deploy the **raillery** the sisters\' phone-call advice had specifically warned Tess to expect — the small register of light teasing some roommates used to deflect a serious conversation toward a less serious one. Anya did not deflect. She also did not, in the same ten minutes, agree with any of Tess\'s specific characterizations.
+
+What Anya said, when her own ten minutes arrived, was that the dish situation was a **surrogate** for a different conversation she had been carrying for three weeks and had not been ready to name. The different conversation was about the apartment\'s general division of labor — not the dishes specifically, but the small uncounted social labor of the apartment that Anya had, by the third week, come to believe she was carrying disproportionately and that Tess had, by the third week, not noticed she was not carrying. Anya did not **ramble** in her account; she named, in five sentences, three specific examples.
+
+Tess did not, in the moment, dispute the three examples. She asked, in two sentences, whether Anya would be willing to put the broader division-of-labor conversation on the table for a second Saturday\'s discussion the following week, on the understanding that the dishes themselves — as the smaller, more concrete instance — would, in the meantime, be addressed by a written rotation taped to the inside of the cabinet door.
+
+Anya agreed. The rotation was taped on the Sunday. The second Saturday\'s conversation took place on the seventh of October. The apartment did not, by the November term, **resolve** every item the second Saturday surfaced; it did, by then, address them in a register that the September weeks had not made available.`,
+  questions: [
+    {
+      id: 1,
+      kind: "vocab-context",
+      prompt: 'In this sentence, the word "surrogate" most nearly means:',
+      quote:
+        '"...the dish situation was a surrogate for a different conversation she had been carrying for three weeks and had not been ready to name."',
+      options: [
+        "An obvious and unrelated topic.",
+        "A substitute or stand-in that takes the place of something else.",
+        "A formal legal proceeding.",
+        "A document signed by both parties.",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Surrogate" describes something acting as a stand-in for something else — the dish dispute is standing in for the unspoken division-of-labor conversation.',
+    },
+    {
+      id: 2,
+      kind: "vocab-context",
+      prompt: 'In this sentence, the word "passive" most nearly means:',
+      quote:
+        '"Anya was, by Tess\'s honest read of three weeks of cohabitation, passive in the precise sense the word carries when one roommate is passive in a way that produces, in the other, a low-grade resentment..."',
+      options: [
+        "Aggressively assertive in stating one\'s preferences.",
+        "Accepting or allowing what happens without active response, opposition, or initiation.",
+        "Decisively confrontational.",
+        "Energetically participatory.",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Passive" describes accepting or allowing without active response — exactly Anya\'s pattern of neither leaving dishes nor washing the ones Tess left.',
+    },
+    {
+      id: 3,
+      kind: "tone-purpose",
+      prompt:
+        'Why does the narrator note that Anya does not, in the conversation\'s first ten minutes, deploy the raillery "the sisters\' phone-call advice had specifically warned Tess to expect"?',
+      options: [
+        "To suggest Anya is humorless.",
+        "Naming the deflection Anya does not use is the structural setup for what she does instead: the absence of teasing-deflection is what makes possible the surrogate-conversation reframe in Anya\'s own ten minutes — the register the conversation needs to actually shift the apartment\'s footing.",
+        "To imply Tess was hostile from the opening.",
+        "To indicate that the apartment\'s rules forbid teasing.",
+      ],
+      correctIndex: 1,
+      explanation:
+        "Naming the deflection Anya does not use sets up the surrogate-conversation reframe — the register the apartment needs to shift its footing.",
+    },
+    {
+      id: 4,
+      kind: "inference",
+      prompt:
+        "Based on the passage, what can the reader most reasonably infer about why Tess proposes the written kitchen rotation as the immediate fix while parking the broader division-of-labor question for a second Saturday?",
+      options: [
+        "Tess does not believe the broader question is real.",
+        "Splitting the two conversations gives the dishes — the concrete, urgent friction — a procedural fix that removes the daily irritant from the apartment, while preserving the harder, slower conversation for a moment when both roommates can address it without the dish backlog acting as the proxy that distorts what each is actually saying.",
+        "Tess plans to move out before the second Saturday.",
+        "The college\'s housing office requires written rotations.",
+      ],
+      correctIndex: 1,
+      explanation:
+        "Splitting the two removes the daily irritant so the harder conversation can happen without the dish backlog acting as a distorting proxy.",
+    },
+    {
+      id: 5,
+      kind: "substitution",
+      prompt:
+        'Which single word could replace "vilify" in the sentence below without changing its meaning?',
+      quote:
+        '"She did not, when the conversation arrived, vilify Anya in any sentence."',
+      options: [
+        "Disparage",
+        "Praise",
+        "Translate",
+        "Avoid",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Disparage" matches "vilify" — both describe speaking ill of someone, attacking their character or reputation.',
+    },
+    {
+      id: 6,
+      kind: "main-idea",
+      prompt:
+        "Which sentence best summarizes the central idea or arc of the passage?",
+      options: [
+        "Two roommates resolve a long-running dispute by establishing a strict written rule for every shared task in the apartment.",
+        "Two roommates open a third-week kitchen-sink conversation in a frank register that surfaces the actual underlying disagreement — a broader division-of-labor question the dishes had been a surrogate for — and split the response into an immediate procedural rotation and a deferred Saturday conversation that puts the apartment\'s footing on a new register.",
+        "Two roommates dissolve their cohabitation arrangement after a contested kitchen conversation.",
+        "Two roommates discover that the kitchen sink itself is structurally flawed and request a repair.",
+      ],
+      correctIndex: 1,
+      explanation:
+        "The arc is exactly the frank-register opening, the surrogate-conversation reframe, and the procedural-plus-deferred split.",
+    },
+  ],
+};
+
+const MISSION_38_SET_1: SetReading = {
+  title: "The Legal Aid Office",
+  subtitle:
+    "A short story about a small-town legal aid attorney whose January caseload had, by mid-month, made unusually visible the language she had spent ten years refusing to use lightly.",
+  format: "Short Story",
+  readingMinutes: 4,
+  words: [
+    "impecunious",
+    "paucity",
+    "penury",
+    "meager",
+    "indigent",
+    "destitute",
+    "thrifty",
+    "frugal",
+    "pittance",
+    "miser",
+  ],
+  passage: `The Tarrend County Legal Aid Office had, in January 2026, a staff of three attorneys, one paralegal, a part-time receptionist, and a caseload that had, by the second week of the month, grown to a number the senior attorney — Hesper Olm, eleven years at the office — had not seen since the winter of 2017. The growth was not, on first inspection, attributable to any single legislative change or local economic event. It was attributable, on Hesper\'s honest read of the intake forms across the second week, to a small set of overlapping pressures — a closed regional plant, a particular landlord\'s December rent increases, and the lapse of a state utility-assistance program — that had together produced, in the office\'s waiting room, the kind of January she had spent ten years preparing for and had, in three of those ten years, actually seen.
+
+The language of legal-aid intake forms was language Hesper had thought carefully about across her career. The forms\' standard fields used four overlapping descriptors of financial hardship: **impecunious**, **indigent**, **destitute**, and the form\'s catch-all checkbox for "other limited means." Hesper had, in her own intake interviews across eleven years, refused to apply the four words interchangeably. She used **impecunious** for the temporarily cash-short — a client between paychecks, a self-employed client whose January was bad. She used **indigent** for the structurally limited — a client whose long-term resources were genuinely **meager**, on whom no single check would meaningfully change the picture. She reserved **destitute** for the small number of clients each year whose situation was, on her honest read, beyond the office\'s standard remedies and who needed, in addition to legal help, a referral the office maintained a careful list for.
+
+The January 2026 caseload required, in Hesper\'s honest read of forty-one intake interviews across two weeks, a higher proportion of the second and third labels than any January in the prior eleven years. Hesper did not, in any conversation with the office\'s board, allow the rising proportion to be reported as **paucity** of intake capacity — the office\'s capacity was, in that sense, holding — or as a fundraising opportunity the office could brand around. She characterized it, in a single careful Friday memo to the board, as a measurable shift in the kind of **penury** the office was being asked to address, and she asked the board to consider, in its February meeting, whether the office\'s standing referral list to outside services was, in 2026, adequate to the share of the caseload now needing more than the office\'s standard remedies.
+
+Hesper was, in her own personal habits, **frugal** in a way her colleagues had quietly observed across eleven years. She brought lunch from home four days of every five. She drove a car she had bought used in 2014. She declined, every December, the office\'s small holiday bonus and asked the executive director to add it to the office\'s emergency-client fund. Her frugality was not, in any of her colleagues\' descriptions, the **miser**\'s frugality of accumulation. It was the **thrifty** frugality of someone who had spent eleven years across an intake desk from people whose modest grant from the emergency-client fund — sometimes as small as the **pittance** the office\'s budget could authorize — had been, on a particular Tuesday afternoon, the difference between a manageable month and an unmanageable one.
+
+The board met on the second Friday of February. The referral list was reviewed. Two new referral partners were added by the third Friday. The January 2026 caseload was, by April, the caseload the board\'s subsequent twelve-month strategic plan had been written to address.`,
+  questions: [
+    {
+      id: 1,
+      kind: "vocab-context",
+      prompt: 'In this sentence, the word "indigent" most nearly means:',
+      quote:
+        '"She used indigent for the structurally limited — a client whose long-term resources were genuinely meager, on whom no single check would meaningfully change the picture."',
+      options: [
+        "Suffering only a brief, temporary cash shortage.",
+        "Suffering from sustained, structural poverty; lacking the long-term resources needed for ordinary living.",
+        "Reluctant to accept legal assistance.",
+        "Operating under a temporary legal restriction.",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Indigent" describes someone in sustained, structural poverty — the long-term-limited client Hesper distinguishes from the temporarily cash-short.',
+    },
+    {
+      id: 2,
+      kind: "vocab-context",
+      prompt: 'In this sentence, the word "frugal" most nearly means:',
+      quote:
+        '"Hesper was, in her own personal habits, frugal in a way her colleagues had quietly observed across eleven years."',
+      options: [
+        "Reckless or wasteful with money and resources.",
+        "Sparing or economical in the use of money or resources, especially with regard to food or daily expenses.",
+        "Suspicious of all financial transactions.",
+        "Eager to display personal wealth.",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Frugal" describes someone who is economical and sparing with money — Hesper\'s home-packed lunches and 2014 car illustrate this exactly.',
+    },
+    {
+      id: 3,
+      kind: "tone-purpose",
+      prompt:
+        'Why does the narrator dwell on Hesper\'s careful distinction among the four intake-form descriptors — impecunious, indigent, destitute, and "other limited means" — across her eleven-year practice?',
+      options: [
+        "To suggest Hesper is overly fussy about administrative paperwork.",
+        "The careful lexical practice is the structural setup for the Friday memo: when Hesper reports a measurable shift in the kind of penury the office is being asked to address, the report has the precision the board can actually act on, because the categories have not been blurred together across the prior eleven years of intake records.",
+        "To imply that Hesper distrusts her colleagues\' intake judgments.",
+        "To indicate that the intake form is poorly designed.",
+      ],
+      correctIndex: 1,
+      explanation:
+        "The careful lexical practice gives the Friday memo the precision the board can act on — categories preserved across eleven years.",
+    },
+    {
+      id: 4,
+      kind: "inference",
+      prompt:
+        "Based on the passage, what can the reader most reasonably infer about why the narrator distinguishes Hesper\'s frugality from \"the miser\'s frugality of accumulation\"?",
+      options: [
+        "Hesper is concerned about being criticized for her personal habits.",
+        "The distinction names the moral character of Hesper\'s frugality: it is the thrift of someone who has watched modest grants make and unmake months across an intake desk for eleven years — a frugality oriented toward the emergency-client fund she returns her bonus to, rather than toward personal accumulation.",
+        "Hesper is paid significantly above market rate for her work.",
+        "The office\'s board has formally questioned Hesper\'s spending.",
+      ],
+      correctIndex: 1,
+      explanation:
+        "The distinction marks the moral character of Hesper's thrift — oriented toward the emergency-client fund, not personal accumulation.",
+    },
+    {
+      id: 5,
+      kind: "substitution",
+      prompt:
+        'Which single word could replace "pittance" in the sentence below without changing its meaning?',
+      quote:
+        '"...sometimes as small as the pittance the office\'s budget could authorize..."',
+      options: [
+        "Trifle",
+        "Fortune",
+        "Salary",
+        "Inheritance",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Trifle" matches "pittance" — both describe a very small, almost negligible amount, especially of money.',
+    },
+    {
+      id: 6,
+      kind: "main-idea",
+      prompt:
+        "Which sentence best summarizes the central idea or arc of the passage?",
+      options: [
+        "A legal aid office closes after a January caseload exceeds its capacity.",
+        "A senior legal aid attorney whose eleven-year practice has carefully distinguished impecunious, indigent, and destitute clients reads the unusual January caseload through those preserved categories, files a precise Friday memo identifying a measurable shift in the kind of penury the office is being asked to address, and the board adds two new referral partners by the third Friday of February.",
+        "A senior attorney resigns over a disagreement with her board about caseload reporting.",
+        "A legal aid office is investigated by the state for misclassifying its intake forms.",
+      ],
+      correctIndex: 1,
+      explanation:
+        "The arc is exactly the careful intake categories, the precise Friday memo, and the board\'s referral-list expansion in February.",
+    },
+  ],
+};
+
+const MISSION_38_SET_2: SetReading = {
+  title: "The Nonprofit Budget",
+  subtitle:
+    "A short story about a small literacy nonprofit\'s February budget meeting and the executive director who refused, in the third hour, to recommend the cut the board had quietly assumed she would propose.",
+  format: "Short Story",
+  readingMinutes: 4,
+  words: [
+    "scanty",
+    "economical",
+    "sparing",
+    "abstemious",
+    "mendicant",
+    "privation",
+    "insolvent",
+    "stingy",
+    "stint",
+    "deplete",
+  ],
+  passage: `The Wendover Literacy Project had operated for nineteen years on a modest annual budget of approximately three hundred and forty thousand dollars, of which roughly seventy percent was program expense and the remaining thirty percent covered the office\'s small permanent staff — three full-time employees and one quarter-time bookkeeper. The Project had, in seventeen of nineteen years, ended its fiscal year between two percent above and two percent below balanced. The two exception years had been 2009 and 2020, both of which had ended in deficits the board had covered, in each case, from a small reserve the executive director at the time had — by careful **economical** practice across the prior decade — accumulated.
+
+The current executive director was Iola Hesp, who had taken the role in 2018. She had inherited the Project in a year of comfortable surplus and had, across eight years, run it in the **sparing** register her predecessor had used: salaries pegged to the lower end of the regional nonprofit range, office furniture acquired by donation rather than purchase, and a deliberate practice of **abstemious** spending on the small categories — printing, supplies, conference travel — that nonprofit budgets typically expanded on without noticing.
+
+The February 2026 budget meeting was the meeting at which the board would, in its standing practice, vote on the next fiscal year\'s budget. The board had, in three private conversations the prior month, signaled to Iola that it was inclined, in February, to approve a budget that would **deplete** the Project\'s reserve to roughly thirty percent of its current level, on the grounds that the Project\'s 2025 fundraising had been **scanty** in two of its three usual quarters and that maintaining the current program scale through 2026 would, on the board\'s honest read, require the reserve drawdown.
+
+Iola had spent the prior month preparing the budget. She had not, in the prior month, prepared the reserve-drawdown budget the board was expecting. She had prepared, instead, a budget that proposed a six-percent reduction in program scale across two of the Project\'s four standing programs, no salary changes, no office reductions, no reserve drawdown — a budget she would, in the meeting, characterize as the budget that would not **stint** the Project\'s next year\'s clients on the strength of one bad fundraising year.
+
+The meeting ran three hours. The board\'s discussion of Iola\'s proposed budget was, in its first hour, skeptical. Several board members asked, in careful sentences, whether the program reductions Iola was proposing would not, in their honest read, force two of the Project\'s clients into the kind of **privation** of services the Project had been founded in 1997 to address — and whether the reserve drawdown the board had been considering was not, in fact, the more responsible course given the Project\'s capacity to absorb a single difficult year without becoming, in any future scenario, **insolvent**.
+
+Iola did not, in her response, characterize the reserve drawdown as fiscally reckless. She characterized it, in three careful sentences, as the kind of decision the Project had taken in 2009 and 2020 — twice in nineteen years, both times in genuine emergencies — and that taking it in 2026, on the strength of a single bad fundraising year, would, in her honest read, convert a one-time emergency instrument into a recurring program-funding mechanism the Project would not, in 2027 or 2028, have available when the next genuine emergency arrived. The Project was not, she said in a fourth sentence, asking to be a **mendicant** organization; it was asking, with eight years of careful **stint**ed spending behind it, to be allowed to take the current pressure as the operating-scale question it was rather than as the reserve question the easier conversation would have made it.
+
+The board voted, in the third hour, to approve Iola\'s budget. The two program reductions were implemented in March. The 2026 fiscal year ended in November at one percent above balanced, and the reserve was preserved.`,
+  questions: [
+    {
+      id: 1,
+      kind: "vocab-context",
+      prompt: 'In this sentence, the word "abstemious" most nearly means:',
+      quote:
+        '"...a deliberate practice of abstemious spending on the small categories — printing, supplies, conference travel — that nonprofit budgets typically expanded on without noticing."',
+      options: [
+        "Generously expansive.",
+        "Sparing or moderate, especially in the consumption of small comforts or indulgences.",
+        "Forbidden by board policy.",
+        "Required by external auditors.",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Abstemious" describes a moderate, sparing approach to small consumables — exactly Iola\'s deliberate restraint on printing, supplies, and travel.',
+    },
+    {
+      id: 2,
+      kind: "vocab-context",
+      prompt: 'In this sentence, the word "stint" most nearly means:',
+      quote:
+        '"...the budget that would not stint the Project\'s next year\'s clients on the strength of one bad fundraising year."',
+      options: [
+        "Generously expand provision to.",
+        "To restrict, limit, or be sparing toward (especially in providing something needed).",
+        "To audit thoroughly.",
+        "To delay until a later quarter.",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Stint" as a verb means to restrict or be sparing toward someone — Iola\'s budget proposes not to skimp on next year\'s clients.',
+    },
+    {
+      id: 3,
+      kind: "tone-purpose",
+      prompt:
+        'Why does the narrator detail the Project\'s nineteen-year fiscal record — seventeen years balanced within ±2%, and the two specific exception years (2009 and 2020) — before the February 2026 meeting?',
+      options: [
+        "To suggest the Project is financially mismanaged.",
+        "The careful nineteen-year record is the structural anchor for Iola\'s third-hour argument: the reserve has been used twice in nineteen years for genuine emergencies, and that frequency — not the fiscal-rules question in the abstract — is what makes drawing it down for a single bad fundraising year a reframing of the instrument itself.",
+        "To imply the board is uninterested in the Project\'s history.",
+        "To indicate that the Project should expand its reserve indefinitely.",
+      ],
+      correctIndex: 1,
+      explanation:
+        "The nineteen-year record anchors Iola's third-hour argument: the reserve is a twice-in-nineteen-years emergency instrument, not an annual cushion.",
+    },
+    {
+      id: 4,
+      kind: "inference",
+      prompt:
+        "Based on the passage, what can the reader most reasonably infer about why Iola characterizes the reserve-drawdown decision as one that would \"convert a one-time emergency instrument into a recurring program-funding mechanism\"?",
+      options: [
+        "She believes the reserve will be entirely depleted within twelve months regardless.",
+        "Naming the reframing makes the cost of the easier 2026 decision visible: drawing down the reserve for a non-emergency year doesn\'t just spend the dollars, it spends the institutional understanding of what the reserve is for, leaving the Project structurally less protected against the next genuine emergency that 2027 or 2028 might bring.",
+        "She is preparing to recommend that the reserve be eliminated entirely.",
+        "Board policy already prohibits any reserve drawdown.",
+      ],
+      correctIndex: 1,
+      explanation:
+        "The reframing makes visible the institutional cost: spending the dollars also spends the understanding of what the reserve is for.",
+    },
+    {
+      id: 5,
+      kind: "substitution",
+      prompt:
+        'Which single word could replace "deplete" in the sentence below without changing its meaning?',
+      quote:
+        '"...approve a budget that would deplete the Project\'s reserve to roughly thirty percent of its current level..."',
+      options: [
+        "Exhaust",
+        "Restore",
+        "Document",
+        "Audit",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Exhaust" matches "deplete" — both describe using up or substantially reducing a supply or stock.',
+    },
+    {
+      id: 6,
+      kind: "main-idea",
+      prompt:
+        "Which sentence best summarizes the central idea or arc of the passage?",
+      options: [
+        "A nonprofit director resigns after the board votes to draw down the reserve over her objections.",
+        "A nonprofit director refuses to recommend the reserve drawdown the board had quietly assumed she would propose, presents instead a budget with two modest program reductions and no reserve change, and persuades the board in the third hour by reframing the reserve as the twice-in-nineteen-years emergency instrument it had been rather than the program-funding mechanism the easier decision would convert it into.",
+        "A nonprofit closes one of its four programs after a contested budget meeting.",
+        "A nonprofit board fires its executive director over a budget disagreement.",
+      ],
+      correctIndex: 1,
+      explanation:
+        "The arc is exactly the alternative budget, the third-hour reframing of the reserve, and the board\'s vote to approve.",
+    },
+  ],
+};
+
+const MISSION_38_SET_3: SetReading = {
+  title: "The Cooperative\'s Lender",
+  subtitle:
+    "A short story about a small farm cooperative in the high country and the lender whose terms had, by the second autumn, begun to make the cooperative\'s November meeting a different kind of meeting.",
+  format: "Short Story",
+  readingMinutes: 4,
+  words: [
+    "milk",
+    "beg",
+    "lucre",
+    "vanquished",
+    "utopian",
+    "usurp",
+    "usurious",
+    "upbraided",
+    "unwieldy",
+    "hardscrabble",
+  ],
+  passage: `The Vellren Highland Cooperative was a small farm cooperative of nine member farms in the **hardscrabble** valley above the river road, founded in 2019 on the **utopian** premise — utopian, that is, by the standards of the surrounding county\'s consolidated agriculture — that nine modest holdings could pool their equipment, their seed buying, their cool storage, and their milk distribution into a common operation that would let each farm survive on its own terms without selling to the regional consolidator that had, by 2018, absorbed eleven of the prior decade\'s family operations.
+
+The cooperative had survived its first five years. Its sixth year, 2025, was the year of the lender. The lender — Calder Reach Capital, a regional agricultural-finance firm that had, in 2024, replaced the small-town savings bank the cooperative had been with for its first five years — had, in its initial terms, presented a refinancing package the cooperative\'s elected treasurer, a forty-three-year-old dairy farmer named Mara Velken, had read across two evenings and characterized in her own working notes as "merely **unwieldy**" rather than **usurious** in any flag-raising way. The package\'s rates were higher than the savings bank\'s had been, but the rate spread itself was, on Mara\'s reading, defensible by the lending environment.
+
+By the second autumn — November 2025 — the package\'s subordinate clauses had begun to do the work the rate spread had not. The package included three covenant clauses Mara had, in her two evenings of reading, flagged as worth watching but had not, in 2024, characterized as predatory. The first clause permitted Calder Reach to **upbraid** the cooperative\'s elected board, in writing, on any covenant variance above a small percentage threshold, and to require, on the same letter, a board response within ten business days. The second clause permitted Calder Reach, on a sequence of three covenant letters within twelve months, to **usurp** the cooperative\'s standing equipment-purchase approval and route it through the lender for the remainder of the loan period. The third clause was the **lucre** clause: any equipment routed through the lender for approval would carry, in addition to the lender\'s ordinary financing, a small per-transaction fee that compounded across the loan\'s remaining term.
+
+Mara had received two covenant letters by the second week of October. She had, in both cases, responded within the ten business days. The third covenant letter arrived on the first of November. Mara did not, in the period that followed, **beg** Calder Reach for a covenant waiver of the third letter; the third letter\'s technical basis was, on her honest read, defensible on the lender\'s terms even if the substantive covenant variance was, on the cooperative\'s read, modest. She prepared, instead, the November 18 special meeting at which the cooperative\'s nine member farms would consider, with the cooperative\'s outside legal advisor present, what the second-clause activation actually meant for the next eighteen months of the cooperative\'s equipment decisions.
+
+The November 18 meeting ran four hours. The cooperative\'s outside legal advisor walked the nine member farms through, in plain language, the per-transaction fee structure the third clause would, by the third equipment purchase, **milk** out of the cooperative\'s 2026 operating margin. The farms did not, in any of the four hours, characterize themselves as **vanquished**; the meeting was not a meeting of surrender. It was a meeting of decision. The cooperative voted, in the third hour, to refinance the Calder Reach package — at unfavorable break-fees the package had also included — with a community-development financial institution Mara had identified across two months of careful canvassing. The break-fees were paid in February. The covenant clauses ceased to apply in March. The cooperative\'s 2026 equipment cycle ran through its own elected board for the first time in fourteen months.`,
+  questions: [
+    {
+      id: 1,
+      kind: "vocab-context",
+      prompt: 'In this sentence, the word "usurious" most nearly means:',
+      quote:
+        '"...characterized in her own working notes as "merely unwieldy" rather than usurious in any flag-raising way."',
+      options: [
+        "Provided as a charitable, no-interest service.",
+        "Charging an excessive, exploitatively high rate of interest.",
+        "Required by federal banking regulation.",
+        "Subject to ordinary inflation adjustments.",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Usurious" describes lending at exploitatively high interest rates — Mara\'s 2024 read was that the rate spread alone did not rise to that level.',
+    },
+    {
+      id: 2,
+      kind: "vocab-context",
+      prompt: 'In this sentence, the word "milk" most nearly means:',
+      quote:
+        '"...the per-transaction fee structure the third clause would, by the third equipment purchase, milk out of the cooperative\'s 2026 operating margin."',
+      options: [
+        "To distribute as a public service.",
+        "To extract or draw out (something of value), often gradually and exploitatively, for one\'s own benefit.",
+        "To deposit in a secured account.",
+        "To audit at year-end.",
+      ],
+      correctIndex: 1,
+      explanation:
+        'The verb "milk" here means to extract value gradually and exploitatively — the per-transaction fees would slowly drain the cooperative\'s margin.',
+    },
+    {
+      id: 3,
+      kind: "tone-purpose",
+      prompt:
+        'Why does the narrator note that Mara, in 2024, characterized the package as "merely unwieldy" rather than usurious — and that the subordinate clauses were ones she "had not, in 2024, characterized as predatory"?',
+      options: [
+        "To suggest that Mara was negligent in her review.",
+        "The careful 2024 framing is the structural setup for the second-autumn turn: the predation was structural rather than rate-based, designed to look defensible on the rate spread alone, and the November narrative shows how a covenant package can become exploitative through clauses whose individual second-evening read does not raise the flag the rate spread would have.",
+        "To imply that Mara was deceived by the lender.",
+        "To indicate that the cooperative\'s board was unsophisticated.",
+      ],
+      correctIndex: 1,
+      explanation:
+        "The 2024 framing shows how covenant packages become exploitative through clauses whose individual read doesn't raise the flag the rate spread would have.",
+    },
+    {
+      id: 4,
+      kind: "inference",
+      prompt:
+        "Based on the passage, what can the reader most reasonably infer about why the cooperative pays the unfavorable break-fees rather than continuing under the Calder Reach package and absorbing the per-transaction fees?",
+      options: [
+        "Federal regulation requires the cooperative to refinance.",
+        "Paying a one-time, defined break-fee restores the cooperative\'s elected board to its standing equipment authority and removes a compounding per-transaction fee structure that would, across the loan\'s remaining term, exceed the break-fee while permanently reshaping the cooperative\'s equipment decision-making — which is the structural cost the rate-comparison analysis alone would have missed.",
+        "The cooperative is required by the new lender to terminate the prior package.",
+        "The cooperative intends to dissolve at the end of 2026.",
+      ],
+      correctIndex: 1,
+      explanation:
+        "The defined break-fee restores governance and removes a compounding fee structure that would exceed the break-fee while reshaping the cooperative's authority.",
+    },
+    {
+      id: 5,
+      kind: "substitution",
+      prompt:
+        'Which single word could replace "usurp" in the sentence below without changing its meaning?',
+      quote:
+        '"...permitted Calder Reach...to usurp the cooperative\'s standing equipment-purchase approval and route it through the lender..."',
+      options: [
+        "Seize",
+        "Renounce",
+        "Document",
+        "Postpone",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Seize" matches "usurp" — both describe taking over a position, right, or authority by force or without proper claim.',
+    },
+    {
+      id: 6,
+      kind: "main-idea",
+      prompt:
+        "Which sentence best summarizes the central idea or arc of the passage?",
+      options: [
+        "A small farm cooperative dissolves after a single bad lending decision.",
+        "A small farm cooperative whose 2024 refinancing seemed merely unwieldy rather than usurious discovers, by the second autumn, that the package\'s subordinate clauses are structurally predatory; the elected treasurer prepares a four-hour November meeting that, with outside legal counsel, votes to refinance with a community-development institution at unfavorable break-fees and restores the cooperative\'s own equipment authority by March.",
+        "A regional lender voluntarily restructures a covenant package after a cooperative\'s objections.",
+        "A farm cooperative agrees to be acquired by a regional consolidator after refinancing fails.",
+      ],
+      correctIndex: 1,
+      explanation:
+        "The arc is exactly the second-autumn discovery, the November decision meeting, and the March restoration of the cooperative\'s equipment authority.",
+    },
+  ],
+};
+
 export const SET_READINGS: Record<string, SetReading> = {
   "1-1": MISSION_1_SET_1,
   "1-2": MISSION_1_SET_2,
@@ -14120,6 +15263,15 @@ export const SET_READINGS: Record<string, SetReading> = {
   "35-1": MISSION_35_SET_1,
   "35-2": MISSION_35_SET_2,
   "35-3": MISSION_35_SET_3,
+  "36-1": MISSION_36_SET_1,
+  "36-2": MISSION_36_SET_2,
+  "36-3": MISSION_36_SET_3,
+  "37-1": MISSION_37_SET_1,
+  "37-2": MISSION_37_SET_2,
+  "37-3": MISSION_37_SET_3,
+  "38-1": MISSION_38_SET_1,
+  "38-2": MISSION_38_SET_2,
+  "38-3": MISSION_38_SET_3,
 };
 
 export function getSetReading(day: number, group: number): SetReading | null {
