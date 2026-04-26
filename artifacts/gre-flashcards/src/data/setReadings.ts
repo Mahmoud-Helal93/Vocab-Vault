@@ -432,10 +432,416 @@ Mr. Ashworth made a small note in his ledger. He had presided over hundreds of t
   ],
 };
 
+const MISSION_2_SET_1: SetReading = {
+  title: "What the Tea Leaves Knew",
+  subtitle:
+    "A short story about a chemist, a quiet machine, and a number she was not supposed to find.",
+  format: "Short Story",
+  readingMinutes: 4,
+  words: [
+    "adulterate",
+    "advocate",
+    "aggrandize",
+    "alacrity",
+    "ambivalent",
+    "ameliorate",
+    "amenable",
+    "anachronistic",
+    "audacious",
+    "avaricious",
+  ],
+  passage: `When the contract chemist Naila Ostrowski opened the third sample box from Halverton Beverages on a Tuesday morning, she did so with her usual professional **alacrity** — gloves on, mass spectrometer humming, notebook squared with the edge of the bench. She liked Tuesdays. Tuesdays were when problems showed up small and went home solved.
+
+The samples were supposed to be a routine quality check on the company's flagship oolong blend. Within an hour she could see, in the spectrometer's quiet little graph, that they were not. Two of the three samples had been **adulterated** — cut with a cheaper black tea dust and, more disturbingly, with a colorant that was not approved for food use in the country where the tea was sold.
+
+She sat for a long time looking at the graph.
+
+The director of Halverton's lab, Henrik Voss, was a cheerful man whose office walls were covered with framed magazine spreads in which his own name appeared in slightly larger print than seemed strictly necessary. He had a habit, she had noticed, of finding ways to **aggrandize** every small success of the company into something epochal: a new flavor was a "renaissance," a packaging tweak was a "revolution." Naila had at first found this endearing. Now, reading her own results, she suspected that the same instinct that loved a renaissance might also dislike a recall.
+
+She brought the data to him after lunch. He listened with a polite, even **amenable** expression, nodded in the right places, and asked careful questions. Then he suggested, in the gentle voice people reserve for explaining things they assume you already understand, that perhaps she had been a little **audacious** in jumping to conclusions, and that "adulteration" was a rather strong, almost **anachronistic** word for what was, in his telling, a temporary supply-chain workaround inherited from a previous quarter.
+
+Naila left his office feeling **ambivalent**. On one hand, Henrik was almost certainly minimizing. On the other, she had been at Halverton barely six months, and the people she would have to embarrass — the buyers, the supplier in Fujian, possibly Henrik himself — had families and mortgages and reputations she did not enjoy threatening.
+
+She thought about her grandmother, who had spent thirty years as a public-health inspector and had once told her, over a glass of plum wine, that the truly **avaricious** were rarely the ones who looked greedy. "The dangerous ones," her grandmother had said, "are the ones who simply cannot bear to lose what they already have."
+
+That night Naila reread the country's food-safety statutes until the words stopped meaning anything, then started meaning more than they ever had. There was, she discovered, an internal-disclosure path that gave a company thirty days to **ameliorate** the issue voluntarily before the regulator was notified. It was not as dramatic as going straight to the press — and she was not, by temperament, dramatic — but it was sturdier, and it gave Henrik a real chance to do the right thing without being forced to.
+
+In the morning, she did not lecture; she did not threaten; she simply filed. Then she walked into Henrik's office, set a printed copy of the disclosure on his desk, and offered to **advocate** internally for whatever corrective plan the company chose, provided the plan was real.
+
+Henrik looked at the paper for a long time. Then, to her surprise, he reached for a pen.`,
+  questions: [
+    {
+      id: 1,
+      kind: "vocab-context",
+      prompt: 'In this sentence, the word "alacrity" most nearly means:',
+      quote:
+        '"...she did so with her usual professional alacrity — gloves on, mass spectrometer humming, notebook squared with the edge of the bench."',
+      options: [
+        "Anxious caution about the day ahead.",
+        "Brisk, cheerful readiness to begin.",
+        "Reluctant, resentful compliance.",
+        "Slow, ceremonial precision.",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Alacrity" denotes a brisk, willing readiness. The image of gloves on, machine humming, and notebook neatly squared shows eager preparation rather than hesitation.',
+    },
+    {
+      id: 2,
+      kind: "vocab-context",
+      prompt: 'In this sentence, the word "aggrandize" most nearly means:',
+      quote:
+        '"He had a habit...of finding ways to aggrandize every small success of the company into something epochal..."',
+      options: [
+        "To privately doubt or quietly criticize.",
+        "To formally award or publicly honor.",
+        "To inflate or exaggerate beyond actual importance.",
+        "To carefully record for later reference.",
+      ],
+      correctIndex: 2,
+      explanation:
+        '"Aggrandize" means to inflate something — to make it appear greater than it is. The next clause confirms this: a new flavor becomes a "renaissance," a packaging tweak a "revolution."',
+    },
+    {
+      id: 3,
+      kind: "tone-purpose",
+      prompt:
+        'Henrik calls the word "adulteration" "almost anachronistic." Why does the author have him reach for "anachronistic" rather than, say, "outdated"?',
+      options: [
+        '"Anachronistic" suggests the word belongs to an earlier era and is comically out of place now, which is exactly the dismissive frame Henrik wants to put around Naila\'s finding.',
+        '"Anachronistic" is just a more elegant synonym for "outdated" with no real difference in meaning.',
+        '"Anachronistic" implies the word is technically wrong because it has been redefined by recent legislation.',
+        '"Anachronistic" suggests the word is too modern and trendy to use in a serious laboratory.',
+      ],
+      correctIndex: 0,
+      explanation:
+        'By calling the word "anachronistic," Henrik is implying it belongs to a less sophisticated era — a polite way of suggesting Naila is overreacting using old-fashioned vocabulary.',
+    },
+    {
+      id: 4,
+      kind: "inference",
+      prompt:
+        "Naila's grandmother says \"the dangerous ones are the ones who simply cannot bear to lose what they already have.\" Based on the passage, what is the most reasonable inference about why this comes to Naila's mind?",
+      options: [
+        "She is preparing herself for a sudden physical confrontation with Henrik.",
+        "She suspects Henrik's resistance to acknowledging the problem is driven less by greed for new gain than by fear of losing his current standing.",
+        "She is reminding herself that her grandmother would have ignored the issue entirely.",
+        "She is reasoning that all corporate executives are equally untrustworthy and should be treated as enemies.",
+      ],
+      correctIndex: 1,
+      explanation:
+        "The grandmother\u2019s line reframes \"avaricious\" — the dangerous instinct is protective, not acquisitive. Naila is reading Henrik through that lens.",
+    },
+    {
+      id: 5,
+      kind: "substitution",
+      prompt:
+        'Which single word could replace "ambivalent" in the sentence below without changing its meaning?',
+      quote:
+        '"Naila left his office feeling ambivalent. On one hand, Henrik was almost certainly minimizing. On the other, she had been at Halverton barely six months..."',
+      options: [
+        "Furious",
+        "Conflicted",
+        "Indifferent",
+        "Triumphant",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Conflicted" captures the same idea: held between two opposed feelings. "Indifferent" implies no feeling either way, which is the opposite of what the next sentences describe.',
+    },
+    {
+      id: 6,
+      kind: "main-idea",
+      prompt:
+        "Which sentence best summarizes the central idea or arc of the passage?",
+      options: [
+        "A junior chemist exposes corporate fraud by leaking her findings to the national press the day after she discovers them.",
+        "A company director persuades a new chemist that her measurements are mistaken and that she should retract her concerns.",
+        "A young chemist who finds a serious safety problem chooses a measured, lawful path that gives her employer a real chance to fix the issue without being forced to.",
+        "A laboratory dispute about outdated terminology delays a routine quality check long enough that the problem resolves itself.",
+      ],
+      correctIndex: 2,
+      explanation:
+        "The passage tracks Naila's discovery, her hesitation, her grandmother's framing, and her decision to take the deliberate, statutory path rather than the dramatic one.",
+    },
+  ],
+};
+
+const MISSION_2_SET_2: SetReading = {
+  title: "A Calumny in Three Acts",
+  subtitle:
+    "A short story about a play, a venomous review, and the discipline of not answering in kind.",
+  format: "Short Story",
+  readingMinutes: 4,
+  words: [
+    "banal",
+    "benign",
+    "brazen",
+    "calumny",
+    "candid",
+    "castigate",
+    "caustic",
+    "construe",
+    "contrite",
+    "convoluted",
+  ],
+  passage: `When the review appeared in Sunday's *Tribune*, it took the playwright Aleida Romero a full hour to even pick it up. She had read enough notices in fifteen years to know that the worst ones rarely contained anything new; they merely repeated, in sharper language, the doubts she had already nursed about herself. What she had not been prepared for was that this particular notice would be less a review than a **calumny** — a detailed, almost forensic accusation that her play had been quietly plagiarized from a forgotten radio drama her own father had written in the 1970s.
+
+The critic, Lukas Verhoeven, was famous for being **caustic**. He had once called a beloved comedy "deafeningly **banal**," and a respected new tragedy a "**convoluted** apology for a story." Other writers spoke of his pen the way coastal villagers speak of certain reefs: not with hatred, exactly, but with the practical respect one owes to anything that can sink you.
+
+Aleida sat at her kitchen table for most of Sunday with the paper folded in front of her. There was a temptation, immediate and bright, to publicly **castigate** the critic — to write her own broadside, to fillet his arguments, and then to post the result, exquisitely, on every literary website she could reach by Monday morning. Her agent telephoned twice with exactly that suggestion, in increasingly **brazen** language, until Aleida unplugged the receiver and went for a walk along the canal.
+
+The truth, of course, was complicated. She had grown up in her father's study; she had heard fragments of his unfinished radio plays at the dinner table for two decades; she had absorbed, the way children absorb everything, a particular cadence and a fondness for stories about lighthouses and lost letters. To say she had been *uninfluenced* by him would have been an obvious lie — and to say she had stolen from him was a calumny of a different order, because it implied a furtive, brazen theft rather than a slow inheritance.
+
+The question was how to be **candid** about the difference without sounding either defensive or self-pitying. She knew that any reader could **construe** even the most careful explanation as a confession, if the reader had been encouraged to expect one.
+
+She thought, briefly, about her teacher Mrs. Hadwell, who had once told her that the only **benign** response to a public attack was a quiet one — not silence, exactly, but the patient publication of better work. "Anything else," Mrs. Hadwell had said, "treats your attacker as more important than he is."
+
+So Aleida did not write the broadside. Instead, she wrote a short, even letter to the *Tribune* in which she acknowledged her father's influence frankly, attached a list of the radio dramas she had grown up with, invited readers to compare them to the play, and declined to comment further. The letter contained no insult, no plea, and no apology. It was not **contrite**, because contrition implied a fault she did not believe she had committed; it was simply unhurried.
+
+The letter was printed the following Sunday. Lukas Verhoeven did not respond. The play, in its third week, sold out twice.`,
+  questions: [
+    {
+      id: 1,
+      kind: "vocab-context",
+      prompt: 'In this sentence, the word "calumny" most nearly means:',
+      quote:
+        '"...this particular notice would be less a review than a calumny — a detailed, almost forensic accusation..."',
+      options: [
+        "An overly enthusiastic, embarrassing piece of praise.",
+        "A false and damaging statement intended to harm a reputation.",
+        "A formal legal complaint filed in a public court.",
+        "A long but essentially harmless theatrical anecdote.",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Calumny" denotes a damaging, defamatory statement. The phrase "forensic accusation" of plagiarism makes the meaning unmistakable.',
+    },
+    {
+      id: 2,
+      kind: "vocab-context",
+      prompt: 'In this sentence, the word "brazen" most nearly means:',
+      quote:
+        '"...to say she had stolen from him was a calumny of a different order, because it implied a furtive, brazen theft rather than a slow inheritance."',
+      options: [
+        "Hesitant and partially apologetic.",
+        "Bold and shameless, without restraint.",
+        "Carefully polite and deferential.",
+        "Quietly accidental and unintentional.",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Brazen" means bold and shameless. It is contrasted with "slow inheritance," sharpening the difference between a shameless taking and a gradual absorption.',
+    },
+    {
+      id: 3,
+      kind: "tone-purpose",
+      prompt:
+        'The author calls the critic "caustic." Why does the author choose "caustic" rather than simply "harsh"?',
+      options: [
+        '"Caustic" and "harsh" mean exactly the same thing; the choice is purely stylistic.',
+        '"Caustic" suggests a sharpness that not only stings but actually corrodes — fitting the image of writers treating his pen like a reef that can sink them.',
+        '"Caustic" implies the critic is well-meaning but clumsy in his phrasing.',
+        '"Caustic" describes a quiet sadness in the critic\'s tone, while "harsh" would describe his volume.',
+      ],
+      correctIndex: 1,
+      explanation:
+        'The literal sense of "caustic" — capable of burning or corroding — supports the comparison to a reef. "Harsh" would be merely loud; "caustic" implies lasting damage.',
+    },
+    {
+      id: 4,
+      kind: "inference",
+      prompt:
+        "Based on the passage, what can the reader most reasonably infer about why Aleida ultimately decides not to publish her own broadside?",
+      options: [
+        "She privately agrees with the critic that her play is plagiarized and feels too guilty to defend it.",
+        "She believes that responding in kind would only treat the critic as more important than he is and would distort her own position into something it isn't.",
+        "She is afraid that her agent will fire her if she draws further attention to the controversy.",
+        "She knows the *Tribune* will refuse to print any reply she writes, no matter how careful.",
+      ],
+      correctIndex: 1,
+      explanation:
+        "Mrs. Hadwell\u2019s remembered advice — that anything but a quiet response inflates the attacker — captures her reasoning, and her measured letter follows from it.",
+    },
+    {
+      id: 5,
+      kind: "substitution",
+      prompt:
+        'Which single word could replace "contrite" in the sentence below without changing its meaning?',
+      quote:
+        '"It was not contrite, because contrition implied a fault she did not believe she had committed; it was simply unhurried."',
+      options: [
+        "Defiant",
+        "Indifferent",
+        "Apologetic",
+        "Boastful",
+      ],
+      correctIndex: 2,
+      explanation:
+        '"Apologetic" — expressing remorse for a fault — matches "contrite." The very next clause defines it: "contrition implied a fault she did not believe she had committed."',
+    },
+    {
+      id: 6,
+      kind: "main-idea",
+      prompt:
+        "Which sentence best summarizes the central idea or arc of the passage?",
+      options: [
+        "A playwright successfully sues a critic for slander after he falsely accuses her of plagiarism.",
+        "A playwright accused of plagiarism resists the urge to retaliate and instead replies with a short, candid letter that declines to escalate the fight.",
+        "A drama critic uses a baseless accusation to deliberately ruin a playwright's career, and largely succeeds.",
+        "An agent's aggressive media strategy turns a small scandal into a national debate about artistic inheritance.",
+      ],
+      correctIndex: 1,
+      explanation:
+        "The arc moves from the wound of the calumny, through the temptation to strike back, to a measured public response that lets the work speak for itself.",
+    },
+  ],
+};
+
+const MISSION_2_SET_3: SetReading = {
+  title: "The Apprentice and the Empty Frame",
+  subtitle:
+    "A short story about an art studio, a missing canvas, and a young apprentice's first real test.",
+  format: "Short Story",
+  readingMinutes: 4,
+  words: [
+    "covet",
+    "craven",
+    "decorum",
+    "deft",
+    "demur",
+    "derivative",
+    "desiccate",
+    "diatribe",
+    "incredulous",
+    "ingenuous",
+  ],
+  passage: `By the end of her first month at the Vasari Restoration Studio, Inés Crespo had learned to be **deft** with a scalpel — to lift a hundred-year-old varnish from a portrait without bruising the paint underneath — but she had not yet learned how to read the people. The studio had eleven employees, and the eleven of them seemed to communicate in a language of small glances and pauses she could not yet translate.
+
+She suspected this was deliberate. The studio's reputation depended on a kind of professional **decorum** so old-fashioned that even its silences had rules: who poured the coffee at noon, who answered the studio telephone after five, who was permitted to ask the senior conservator, Mr. Lavigne, a question about a piece in progress, and who was expected simply to wait until they were spoken to.
+
+On the Thursday of her fifth week, Inés arrived to find the long oak worktable bare except for a single empty frame.
+
+The frame had, the day before, held a small, much-loved Madonna that the studio had been quietly cleaning for a private collector. The painting was not famous, but it was the kind of work that other restorers spoke of with something close to envy — the kind of piece a younger conservator might secretly **covet**, though no one would ever say so aloud.
+
+Mr. Lavigne stood at the head of the table, hands behind his back. He did not raise his voice. He did not deliver a furious **diatribe** about the failures of modern apprentices, though Inés could tell, from the careful way he was breathing, that one was available to him if he chose. Instead he looked, slowly, at each of the eleven faces in turn, and said only: "I would like to understand what happened. I am willing to wait."
+
+The senior associate, Petra, was the first to speak. She gave a short, polished account that — Inés realized only afterward — was technically true and substantively misleading. Petra was not lying; she was merely **derivative**, repeating fragments of other people's accounts as though they were her own observations. Two others spoke next. Both were careful to **demur** when asked to assign blame, which had the convenient effect of leaving the suspicion to settle, by gravity, on the youngest person in the room.
+
+Inés felt her face grow hot. She was **incredulous** at how quickly the room had organized itself against her without ever quite naming her — a silent, almost choreographed maneuver that no one would later have to defend. The **craven** thing, she knew, would be to cry, to apologize for nothing, to let the suspicion **desiccate** her first month into a long, dry humiliation she would never recover from.
+
+Instead she did something she had not planned. "I have not yet been trusted with the keys to the south cabinet," she said clearly. "I have never been alone in this room overnight. Mr. Lavigne, the sign-out book is in the second drawer of your desk. I would like you to read aloud who signed the painting out yesterday."
+
+There was a long silence.
+
+Mr. Lavigne did not move toward the drawer immediately. He looked at her — not, she realized later, with surprise, but with the small, careful smile of someone who has been waiting all month to see whether his newest apprentice was as **ingenuous** as she had first appeared, or whether something steadier lived underneath.
+
+He opened the drawer.`,
+  questions: [
+    {
+      id: 1,
+      kind: "vocab-context",
+      prompt: 'In this sentence, the word "covet" most nearly means:',
+      quote:
+        '"...the kind of piece a younger conservator might secretly covet, though no one would ever say so aloud."',
+      options: [
+        "To formally request through proper channels.",
+        "To eagerly desire something that belongs to another.",
+        "To loan out for safekeeping.",
+        "To restore to its original condition.",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Covet" means to long for something — especially something not yours. The qualifier "though no one would ever say so aloud" emphasizes the private, slightly improper longing.',
+    },
+    {
+      id: 2,
+      kind: "vocab-context",
+      prompt: 'In this sentence, the word "ingenuous" most nearly means:',
+      quote:
+        '"...he had been waiting all month to see whether his newest apprentice was as ingenuous as she had first appeared, or whether something steadier lived underneath."',
+      options: [
+        "Cleverly and dishonestly resourceful.",
+        "Innocent and unsuspecting in a childlike way.",
+        "Aggressively self-promoting and ambitious.",
+        "Deeply learned in classical technique.",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Ingenuous" means innocent and unguarded. The contrast — "or whether something steadier lived underneath" — confirms that ingenuousness is being weighed against composure.',
+    },
+    {
+      id: 3,
+      kind: "tone-purpose",
+      prompt:
+        'The narrator describes the studio\'s "professional decorum so old-fashioned that even its silences had rules." Why use "decorum" rather than just "etiquette"?',
+      options: [
+        '"Decorum" and "etiquette" are exact synonyms; the choice is purely decorative.',
+        '"Decorum" implies the studio is rude to outsiders, while "etiquette" would suggest hospitality.',
+        '"Decorum" carries a sense of dignified, almost moral conduct — fitting a studio whose silences are themselves rule-governed, and whose authority can be wielded by who speaks and who waits.',
+        '"Decorum" specifies dress codes and physical posture, while "etiquette" refers only to spoken language.',
+      ],
+      correctIndex: 2,
+      explanation:
+        '"Decorum" carries a weightier, almost moral sense of proper conduct — well suited to a studio whose hierarchy is enforced through silences as much as speech.',
+    },
+    {
+      id: 4,
+      kind: "inference",
+      prompt:
+        "Based on the passage, what can the reader most reasonably infer about why Inés decides to ask Mr. Lavigne to read the sign-out book aloud?",
+      options: [
+        "She is angry at Petra and wants to humiliate her in front of the studio.",
+        "She has identified the actual culprit and intends to expose them by name.",
+        "She recognizes that the room is quietly arranging the suspicion to fall on her, and the sign-out book is the one piece of evidence that cannot be reframed by a careful retelling.",
+        "She has read in a manual that the sign-out book is always the first thing a senior conservator consults in such situations.",
+      ],
+      correctIndex: 2,
+      explanation:
+        "The passage explicitly contrasts careful retellings — Petra's, the others' demurrals — with a single piece of unargued evidence: the signed record.",
+    },
+    {
+      id: 5,
+      kind: "substitution",
+      prompt:
+        'Which single word could replace "deft" in the sentence below without changing its meaning?',
+      quote:
+        '"...Inés Crespo had learned to be deft with a scalpel — to lift a hundred-year-old varnish from a portrait without bruising the paint underneath..."',
+      options: [
+        "Reckless",
+        "Hesitant",
+        "Adroit",
+        "Indifferent",
+      ],
+      correctIndex: 2,
+      explanation:
+        '"Adroit" — neatly skillful — captures the same idea as "deft." The other options describe the opposite (or simply unrelated) qualities.',
+    },
+    {
+      id: 6,
+      kind: "main-idea",
+      prompt:
+        "Which sentence best summarizes the central idea or arc of the passage?",
+      options: [
+        "A new apprentice is fired from a restoration studio after being unjustly accused of stealing a small Madonna.",
+        "An apprentice gradually realizes that her colleagues have been gossiping about her behind her back and decides to leave the profession.",
+        "A young apprentice, faced with a quietly orchestrated suspicion, refuses the meek response her colleagues expect and reframes the question with a single piece of unanswerable evidence.",
+        "A senior conservator stages a fake theft each year to test whether his apprentices have the courage to accuse him of negligence.",
+      ],
+      correctIndex: 2,
+      explanation:
+        "The story turns on Inés recognizing the choreography of the room and replying not with protest but with a fact — the sign-out book — that the room cannot retell.",
+    },
+  ],
+};
+
 export const SET_READINGS: Record<string, SetReading> = {
   "1-1": MISSION_1_SET_1,
   "1-2": MISSION_1_SET_2,
   "1-3": MISSION_1_SET_3,
+  "2-1": MISSION_2_SET_1,
+  "2-2": MISSION_2_SET_2,
+  "2-3": MISSION_2_SET_3,
 };
 
 export function getSetReading(day: number, group: number): SetReading | null {
