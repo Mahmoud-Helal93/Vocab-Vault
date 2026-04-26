@@ -6,19 +6,13 @@ import { shuffleArray } from "@/lib/srs";
 import { themeClass } from "@/lib/missionThemes";
 import {
   ArrowLeft, CheckCircle2, XCircle, ChevronLeft, ChevronRight,
-  RotateCcw, Trophy, Target, BookOpenText, Pencil, Clock,
+  RotateCcw, Trophy, Target, BookOpenText, Pencil,
   BookOpen, Flame, Star, Flag, TrendingUp, HelpCircle,
   Lightbulb, Zap, RefreshCw, BarChart3, Bookmark, Filter,
   ChevronDown, ExternalLink,
 } from "lucide-react";
 
 type Difficulty = "easy" | "medium" | "hard";
-
-function formatDuration(totalSec: number): string {
-  const m = Math.floor(totalSec / 60);
-  const s = totalSec % 60;
-  return `${m}:${s.toString().padStart(2, "0")}`;
-}
 
 interface SetTestProps {
   onBack: () => void;
@@ -98,7 +92,7 @@ function SectionIcon({ q, size = 14 }: { q: Question; size?: number }) {
 }
 
 function SetTestInner({ onBack, missionDay, group }: SetTestProps) {
-  const { words, streak, gamification, isBookmarked, toggleBookmark, globalThemeId: themeId } = useApp();
+  const { words, streak, isBookmarked, toggleBookmark, globalThemeId: themeId } = useApp();
 
   const setWords = useMemo(
     () => words.filter((w) => w.day === missionDay && w.group === group),
@@ -118,17 +112,9 @@ function SetTestInner({ onBack, missionDay, group }: SetTestProps) {
   const [fitbInput, setFitbInput] = useState<Record<number, string>>({});
   const [submitted, setSubmitted] = useState(false);
   const [reviewIdx, setReviewIdx] = useState(0);
-  const [timerEnabled, setTimerEnabled] = useState(false);
-  const [elapsedSec, setElapsedSec] = useState(0);
   const [difficulty, setDifficulty] = useState<Difficulty>("medium");
   const [reviewFilter, setReviewFilter] = useState<"all" | "incorrect">("all");
   const [showAllReview, setShowAllReview] = useState(false);
-
-  useEffect(() => {
-    if (!timerEnabled || submitted) return;
-    const id = window.setInterval(() => setElapsedSec((s) => s + 1), 1000);
-    return () => window.clearInterval(id);
-  }, [timerEnabled, submitted]);
 
   const q = questions[currentIdx];
   const totalAnswered = Object.values(answers).filter((a) => a !== null && a !== "").length;
@@ -177,7 +163,6 @@ function SetTestInner({ onBack, missionDay, group }: SetTestProps) {
     setSubmitted(false);
     setReviewIdx(0);
     setSeed((s) => s + 1);
-    setElapsedSec(0);
   }, []);
 
   if (setWords.length === 0) {
@@ -717,112 +702,74 @@ function SetTestInner({ onBack, missionDay, group }: SetTestProps) {
     : 0;
 
   return (
-    <div className={`min-h-screen bg-gradient-to-br from-violet-50 via-white to-blue-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 flex flex-col ${themeClass(themeId)}`}>
-      {/* ===== Sticky header ===== */}
-      <div className="sticky top-0 z-10 bg-white/80 dark:bg-gray-900/80 backdrop-blur border-b border-border">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 grid grid-cols-[1fr_auto_1fr] items-center gap-3">
-          {/* Left: back + breadcrumb */}
-          <div className="flex items-center gap-2 min-w-0">
-            <button
-              onClick={onBack}
-              aria-label="Back"
-              className="p-2 rounded-xl hover:bg-muted transition-colors text-muted-foreground shrink-0"
-            >
-              <ArrowLeft size={18} />
-            </button>
-            <nav aria-label="Breadcrumb" className="min-w-0">
-              <ol className="flex items-center gap-1 text-sm text-muted-foreground truncate">
-                <li className="truncate">Mission {missionDay}</li>
-                <li className="text-muted-foreground/50">›</li>
-                <li className="truncate">Set {group}</li>
-                <li className="text-muted-foreground/50">›</li>
-                <li className="truncate text-violet-600 dark:text-violet-400 font-medium">Test</li>
-              </ol>
-            </nav>
-          </div>
+    <div className={`min-h-screen bg-background flex flex-col ${themeClass(themeId)}`}>
+      {/* ===== Top breadcrumb bar ===== */}
+      <div className="max-w-7xl mx-auto w-full px-4 sm:px-6 pt-4 pb-3 flex items-center gap-2">
+        <button
+          onClick={onBack}
+          aria-label="Back"
+          className="p-2 rounded-xl hover:bg-muted transition-colors text-muted-foreground shrink-0"
+        >
+          <ArrowLeft size={18} />
+        </button>
+        <nav aria-label="Breadcrumb" className="min-w-0">
+          <ol className="flex items-center gap-1.5 text-sm text-muted-foreground truncate">
+            <li className="truncate">Mission {missionDay}</li>
+            <li className="text-muted-foreground/50">/</li>
+            <li className="truncate">Set {group}</li>
+            <li className="text-muted-foreground/50">/</li>
+            <li className="truncate text-orange-500 font-semibold">Test</li>
+          </ol>
+        </nav>
+      </div>
 
-          {/* Center: page title */}
-          <h1 className="font-bold text-lg text-foreground inline-flex items-center gap-2 whitespace-nowrap">
-            <BookOpen size={20} className="text-violet-600 dark:text-violet-400" />
-            Set Test
-          </h1>
-
-          {/* Right: streak | xp | timer */}
-          <div className="flex items-center justify-end gap-2 sm:gap-3">
-            <div
-              className="inline-flex items-center gap-1.5 text-foreground"
-              title={`${streak.currentStreak}-day study streak`}
-            >
-              <Flame size={16} className="text-orange-500" />
-              <div className="flex flex-col leading-tight">
-                <span className="text-sm font-bold tabular-nums">{streak.currentStreak}</span>
-                <span className="text-[10px] text-muted-foreground -mt-0.5 hidden sm:block">Streak</span>
-              </div>
+      {/* ===== Header card with title + progress ===== */}
+      <div className="max-w-7xl mx-auto w-full px-4 sm:px-6 pb-5">
+        <div className="rounded-2xl border border-orange-200/70 dark:border-orange-500/20 bg-orange-50/70 dark:bg-orange-500/5 px-6 py-5 flex flex-col md:flex-row md:items-center gap-5">
+          <div className="flex items-center gap-4 min-w-0 flex-1">
+            <div className="w-12 h-12 rounded-xl bg-white dark:bg-card border border-orange-100 dark:border-orange-500/20 flex items-center justify-center shrink-0">
+              <BookOpen size={22} className="text-orange-500" />
             </div>
-            <div
-              className="inline-flex items-center gap-1.5 text-foreground"
-              title={`${gamification.totalXp} total XP`}
-            >
-              <Star size={16} className="text-amber-400 fill-amber-400" />
-              <div className="flex flex-col leading-tight">
-                <span className="text-sm font-bold tabular-nums">{gamification.totalXp}</span>
-                <span className="text-[10px] text-muted-foreground -mt-0.5 hidden sm:block">XP</span>
-              </div>
+            <div className="min-w-0">
+              <h1 className="text-xl sm:text-2xl font-extrabold text-foreground leading-tight">
+                Set Test
+              </h1>
+              <p className="text-sm text-muted-foreground mt-0.5">
+                Answer each question and review your mistakes at the end.
+              </p>
             </div>
-            <button
-              onClick={() => {
-                if (timerEnabled) {
-                  setTimerEnabled(false);
-                  setElapsedSec(0);
-                } else {
-                  setTimerEnabled(true);
-                }
-              }}
-              title={timerEnabled ? "Stop timer" : "Start timer"}
-              aria-pressed={timerEnabled}
-              className={`inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-full text-sm font-semibold tabular-nums transition-colors border ${
-                timerEnabled
-                  ? "bg-violet-50 dark:bg-violet-900/20 text-violet-700 dark:text-violet-300 border-violet-200 dark:border-violet-800"
-                  : "bg-transparent text-muted-foreground border-border hover:bg-muted hover:text-foreground"
-              }`}
-            >
-              <Clock size={14} />
-              <span>{timerEnabled ? formatDuration(elapsedSec) : "Timer"}</span>
-            </button>
           </div>
-        </div>
-
-        {/* Animated progress bar + labels */}
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 pb-3">
-          <div className="h-1.5 bg-muted rounded-full overflow-hidden">
-            <motion.div
-              className="h-full bg-violet-500 rounded-full"
-              animate={{ width: `${progress}%` }}
-              transition={{ duration: 0.3 }}
-            />
-          </div>
-          <div className="mt-1.5 flex justify-between text-xs text-muted-foreground tabular-nums">
-            <span>{completionPct}% Complete</span>
-            <span>{currentIdx + 1} / {questions.length}</span>
+          <div className="flex flex-col gap-1.5 w-full md:w-72 shrink-0">
+            <div className="h-1.5 bg-orange-100 dark:bg-orange-500/15 rounded-full overflow-hidden">
+              <motion.div
+                className="h-full bg-orange-500 rounded-full"
+                animate={{ width: `${progress}%` }}
+                transition={{ duration: 0.3 }}
+              />
+            </div>
+            <div className="flex justify-between text-xs text-muted-foreground tabular-nums">
+              <span>{completionPct}% Complete</span>
+              <span>{currentIdx + 1} / {questions.length}</span>
+            </div>
           </div>
         </div>
       </div>
 
       {/* ===== Two-column main ===== */}
-      <div className="max-w-7xl mx-auto w-full px-4 sm:px-6 py-6 grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_320px] gap-6 items-start">
+      <div className="max-w-7xl mx-auto w-full px-4 sm:px-6 grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_320px] gap-5 items-start">
         {/* --- Main column: question card --- */}
         <div className="min-w-0">
           <AnimatePresence mode="wait">
             <motion.div
               key={currentIdx}
-              initial={{ opacity: 0, y: 16 }}
+              initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -16 }}
+              exit={{ opacity: 0, y: -12 }}
               transition={{ duration: 0.18 }}
-              className="rounded-[20px] border border-border bg-card shadow-lg shadow-violet-500/5 p-6 sm:p-8"
+              className="rounded-2xl border border-border bg-card shadow-sm p-6 sm:p-7"
             >
-              <div className="flex items-center justify-between mb-6">
-                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-violet-100 dark:bg-violet-900/30 text-violet-700 dark:text-violet-300 text-xs font-semibold">
+              <div className="flex items-center justify-between mb-5">
+                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-orange-100 dark:bg-orange-500/15 text-orange-700 dark:text-orange-300 text-xs font-semibold">
                   <SectionIcon q={q} size={12} /> {getSection(q)}
                 </span>
                 <button
@@ -853,11 +800,11 @@ function SetTestInner({ onBack, missionDay, group }: SetTestProps) {
               )}
 
               {/* Action buttons inside the card */}
-              <div className="mt-6 pt-5 border-t border-border flex items-center justify-between gap-3">
+              <div className="mt-6 flex items-center justify-between gap-3">
                 <button
                   onClick={() => setCurrentIdx((i) => Math.max(0, i - 1))}
                   disabled={currentIdx === 0}
-                  className="flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-card border border-border text-sm font-medium hover:bg-muted transition-colors disabled:opacity-30"
+                  className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-full bg-card border border-border text-sm font-semibold text-foreground hover:bg-muted transition-colors disabled:opacity-30"
                 >
                   <ChevronLeft size={16} /> Previous
                 </button>
@@ -865,7 +812,7 @@ function SetTestInner({ onBack, missionDay, group }: SetTestProps) {
                 {currentIdx < questions.length - 1 ? (
                   <button
                     onClick={() => setCurrentIdx((i) => i + 1)}
-                    className="flex items-center gap-1.5 px-5 py-2.5 rounded-xl bg-violet-500 hover:bg-violet-600 text-white text-sm font-semibold transition-colors shadow-sm shadow-violet-500/30"
+                    className="inline-flex items-center gap-1.5 px-6 py-2.5 rounded-full bg-orange-500 hover:bg-orange-600 text-white text-sm font-semibold transition-colors shadow-sm"
                   >
                     Next <ChevronRight size={16} />
                   </button>
@@ -873,7 +820,7 @@ function SetTestInner({ onBack, missionDay, group }: SetTestProps) {
                   <button
                     onClick={() => setSubmitted(true)}
                     disabled={!allAnswered}
-                    className="flex items-center gap-1.5 px-5 py-2.5 rounded-xl bg-green-600 hover:bg-green-700 disabled:bg-muted disabled:text-muted-foreground text-white text-sm font-bold transition-colors"
+                    className="inline-flex items-center gap-1.5 px-6 py-2.5 rounded-full bg-orange-500 hover:bg-orange-600 disabled:bg-muted disabled:text-muted-foreground text-white text-sm font-bold transition-colors"
                   >
                     <Trophy size={16} /> Submit Test
                   </button>
@@ -884,27 +831,27 @@ function SetTestInner({ onBack, missionDay, group }: SetTestProps) {
         </div>
 
         {/* --- Sidebar: Your Progress --- */}
-        <aside className="rounded-[20px] border border-border bg-card shadow-sm p-5 lg:sticky lg:top-[120px]">
+        <aside className="rounded-2xl border border-border bg-card shadow-sm p-5 lg:sticky lg:top-4">
           <h2 className="text-sm font-bold text-foreground inline-flex items-center gap-2 mb-4">
-            <TrendingUp size={16} className="text-violet-600 dark:text-violet-400" />
+            <TrendingUp size={16} className="text-orange-500" />
             Your Progress
           </h2>
 
           <div className="flex items-center gap-4 mb-5">
-            <Donut value={completionPct} />
+            <Donut value={completionPct} color="orange" />
             <div>
-              <div className="text-xl font-extrabold text-foreground tabular-nums">
+              <div className="text-2xl font-extrabold text-foreground tabular-nums leading-none">
                 {totalAnswered} <span className="text-muted-foreground font-bold">/ {questions.length}</span>
               </div>
-              <div className="text-xs text-muted-foreground leading-tight mt-0.5">
+              <div className="text-xs text-muted-foreground leading-tight mt-1.5">
                 Questions<br />Answered
               </div>
             </div>
           </div>
 
           <div className="border-t border-border pt-4 mb-4">
-            <h3 className="text-xs font-semibold text-foreground inline-flex items-center gap-1.5 mb-2">
-              <BarChart3 size={13} className="text-violet-600 dark:text-violet-400" />
+            <h3 className="text-sm font-bold text-foreground inline-flex items-center gap-1.5 mb-3">
+              <BarChart3 size={14} className="text-orange-500" />
               Difficulty
             </h3>
             <div className="grid grid-cols-3 gap-1.5" role="radiogroup" aria-label="Difficulty">
@@ -919,7 +866,7 @@ function SetTestInner({ onBack, missionDay, group }: SetTestProps) {
                     aria-checked={active}
                     className={`px-2 py-1.5 rounded-full text-xs font-semibold transition-colors border ${
                       active
-                        ? "bg-violet-100 dark:bg-violet-900/30 text-violet-700 dark:text-violet-300 border-violet-300 dark:border-violet-700"
+                        ? "bg-orange-100 dark:bg-orange-500/15 text-orange-700 dark:text-orange-300 border-orange-300 dark:border-orange-500/40"
                         : "bg-transparent text-muted-foreground border-border hover:bg-muted"
                     }`}
                   >
@@ -931,25 +878,25 @@ function SetTestInner({ onBack, missionDay, group }: SetTestProps) {
           </div>
 
           <div className="border-t border-border pt-4">
-            <h3 className="text-xs font-semibold text-foreground inline-flex items-center gap-1.5 mb-3">
-              <HelpCircle size={13} className="text-violet-600 dark:text-violet-400" />
+            <h3 className="text-sm font-bold text-foreground inline-flex items-center gap-1.5 mb-3">
+              <HelpCircle size={14} className="text-orange-500" />
               How it works
             </h3>
             <ul className="space-y-2.5 text-xs text-muted-foreground">
               <li className="flex items-center gap-2">
-                <Pencil size={13} className="text-violet-500 shrink-0" />
+                <Pencil size={13} className="text-orange-500 shrink-0" />
                 <span>Type the missing word</span>
               </li>
               <li className="flex items-center gap-2">
-                <Lightbulb size={13} className="text-violet-500 shrink-0" />
+                <Lightbulb size={13} className="text-orange-500 shrink-0" />
                 <span>Use hints if you're stuck</span>
               </li>
               <li className="flex items-center gap-2">
-                <Zap size={13} className="text-violet-500 shrink-0" />
+                <Zap size={13} className="text-orange-500 shrink-0" />
                 <span>Get instant feedback</span>
               </li>
               <li className="flex items-center gap-2">
-                <RefreshCw size={13} className="text-violet-500 shrink-0" />
+                <RefreshCw size={13} className="text-orange-500 shrink-0" />
                 <span>Review mistakes at the end</span>
               </li>
             </ul>
@@ -958,8 +905,8 @@ function SetTestInner({ onBack, missionDay, group }: SetTestProps) {
       </div>
 
       {/* ===== Question Navigation card ===== */}
-      <div className="max-w-7xl mx-auto w-full px-4 sm:px-6">
-        <div className="rounded-[20px] border border-border bg-card shadow-sm px-5 py-4 flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4">
+      <div className="max-w-7xl mx-auto w-full px-4 sm:px-6 mt-5 mb-8">
+        <div className="rounded-2xl border border-border bg-card shadow-sm px-5 py-4 flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4">
           <span className="text-sm font-semibold text-foreground shrink-0">
             Question Navigation
           </span>
@@ -982,12 +929,12 @@ function SetTestInner({ onBack, missionDay, group }: SetTestProps) {
                   title={`Question ${i + 1} · ${getSection(qq)} · ${status}`}
                   aria-label={`Go to question ${i + 1}, ${status}`}
                   aria-current={isCurrent ? "step" : undefined}
-                  className={`min-w-[36px] h-9 px-2.5 rounded-full text-xs font-bold transition-all border-2 inline-flex items-center justify-center tabular-nums ${
+                  className={`w-9 h-9 rounded-full text-xs font-bold transition-all border inline-flex items-center justify-center tabular-nums ${
                     isCurrent
-                      ? "border-violet-500 bg-violet-500 text-white shadow-sm shadow-violet-500/30 scale-105"
+                      ? "border-orange-500 bg-orange-500 text-white shadow-sm"
                       : isAnswered
                       ? "border-green-400 bg-transparent text-green-600 dark:text-green-400 hover:bg-green-50 dark:hover:bg-green-900/20"
-                      : "border-border bg-transparent text-muted-foreground hover:border-violet-300 hover:text-foreground"
+                      : "border-border bg-transparent text-muted-foreground hover:border-orange-300 hover:text-foreground"
                   }`}
                 >
                   {i + 1}
@@ -997,7 +944,7 @@ function SetTestInner({ onBack, missionDay, group }: SetTestProps) {
           </div>
           <div className="flex flex-wrap items-center gap-3 text-xs text-muted-foreground shrink-0">
             <span className="inline-flex items-center gap-1.5">
-              <span className="w-2 h-2 rounded-full bg-violet-500" /> Current
+              <span className="w-2 h-2 rounded-full bg-orange-500" /> Current
             </span>
             <span className="inline-flex items-center gap-1.5">
               <span className="w-2 h-2 rounded-full bg-green-500" /> Answered
@@ -1008,34 +955,6 @@ function SetTestInner({ onBack, missionDay, group }: SetTestProps) {
           </div>
         </div>
       </div>
-
-      {/* ===== Encouragement banner ===== */}
-      {totalAnswered >= 3 && (
-        <div className="max-w-7xl mx-auto w-full px-4 sm:px-6 mt-4 mb-6">
-          <div className="rounded-[20px] border border-violet-200 dark:border-violet-800 bg-violet-50/70 dark:bg-violet-900/20 px-5 py-4 flex flex-col sm:flex-row sm:items-center gap-3">
-            <div className="flex items-center gap-3 flex-1 min-w-0">
-              <div className="w-10 h-10 rounded-full bg-violet-100 dark:bg-violet-900/50 flex items-center justify-center shrink-0">
-                <Trophy size={18} className="text-violet-600 dark:text-violet-400" />
-              </div>
-              <div className="min-w-0">
-                <p className="text-sm font-semibold text-foreground">
-                  Keep it up! You're on a {totalAnswered}-question streak! 🔥
-                </p>
-                <p className="text-xs text-muted-foreground">
-                  Focus + Consistency = Mastery
-                </p>
-              </div>
-            </div>
-            <button
-              type="button"
-              className="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl bg-card border border-border text-xs font-semibold text-foreground hover:bg-muted transition-colors shrink-0 self-start sm:self-auto"
-              title="View detailed stats (coming soon)"
-            >
-              <BarChart3 size={13} /> View Stats
-            </button>
-          </div>
-        </div>
-      )}
     </div>
   );
 }
@@ -1046,17 +965,26 @@ function Donut({
   stroke = 7,
   label,
   sublabel,
+  color = "violet",
 }: {
   value: number;
   size?: number;
   stroke?: number;
   label?: string;
   sublabel?: string;
+  color?: "violet" | "orange";
 }) {
   const r = (size - stroke) / 2;
   const circ = 2 * Math.PI * r;
   const dash = (Math.max(0, Math.min(100, value)) / 100) * circ;
   const isLarge = size >= 100;
+  const trackCls = color === "orange"
+    ? "stroke-orange-100 dark:stroke-orange-500/15"
+    : "stroke-violet-100 dark:stroke-violet-900/40";
+  const fillCls = color === "orange" ? "stroke-orange-500" : "stroke-violet-500";
+  const textCls = color === "orange"
+    ? "text-orange-600 dark:text-orange-400"
+    : "text-violet-700 dark:text-violet-300";
   return (
     <div className="relative shrink-0" style={{ width: size, height: size }}>
       <svg width={size} height={size} className="-rotate-90">
@@ -1065,7 +993,7 @@ function Donut({
           cy={size / 2}
           r={r}
           fill="none"
-          className="stroke-violet-100 dark:stroke-violet-900/40"
+          className={trackCls}
           strokeWidth={stroke}
         />
         <motion.circle
@@ -1073,7 +1001,7 @@ function Donut({
           cy={size / 2}
           r={r}
           fill="none"
-          className="stroke-violet-500"
+          className={fillCls}
           strokeWidth={stroke}
           strokeLinecap="round"
           strokeDasharray={circ}
@@ -1082,7 +1010,7 @@ function Donut({
           transition={{ duration: 0.6 }}
         />
       </svg>
-      <div className="absolute inset-0 flex flex-col items-center justify-center text-violet-700 dark:text-violet-300 tabular-nums leading-tight">
+      <div className={`absolute inset-0 flex flex-col items-center justify-center ${textCls} tabular-nums leading-tight`}>
         <span className={`font-extrabold ${isLarge ? "text-2xl" : "text-xs"}`}>
           {value}%
         </span>
@@ -1102,23 +1030,23 @@ function MCQView({
 }: { q: MCQQuestion; answer?: string; onAnswer: (a: string) => void }) {
   return (
     <div>
-      <p className="text-xs uppercase tracking-widest text-muted-foreground mb-1 font-semibold">
+      <p className="text-[11px] uppercase tracking-widest text-muted-foreground mb-1 font-semibold">
         Word
       </p>
-      <p className="text-2xl font-extrabold text-foreground mb-1 leading-tight">
+      <p className="text-3xl font-extrabold text-foreground mb-1 leading-tight">
         {q.word.word.charAt(0).toUpperCase() + q.word.word.slice(1)}
       </p>
-      <p className="text-xs italic text-violet-600 dark:text-violet-400 mb-5">{q.word.pos}</p>
-      <p className="text-sm text-muted-foreground mb-3">Which definition matches this word?</p>
+      <p className="text-sm italic text-orange-500 mb-5">{q.word.pos}</p>
+      <p className="text-sm text-muted-foreground mb-4">Which definition matches this word?</p>
       <div className="grid grid-cols-1 gap-2.5">
         {q.choices.map((c) => (
           <button
             key={c}
             onClick={() => onAnswer(c)}
-            className={`px-4 py-3 rounded-xl border-2 text-sm font-medium text-left transition-all leading-snug ${
+            className={`px-4 py-3 rounded-xl border text-sm font-medium text-left transition-all leading-snug ${
               answer === c
-                ? "border-violet-500 bg-violet-50 dark:bg-violet-900/20 text-violet-700 dark:text-violet-300"
-                : "border-border bg-background hover:border-violet-300 hover:bg-violet-50/50 text-foreground"
+                ? "border-orange-500 bg-orange-50 dark:bg-orange-500/10 text-foreground"
+                : "border-border bg-background hover:border-orange-300 hover:bg-orange-50/50 dark:hover:bg-orange-500/5 text-foreground"
             }`}
           >
             {c}
