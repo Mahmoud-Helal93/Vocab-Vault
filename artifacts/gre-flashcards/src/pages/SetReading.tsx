@@ -15,6 +15,7 @@ import {
 } from "lucide-react";
 import { getSetReading, type ReadingQuestion } from "@/data/setReadings";
 import { useApp } from "@/context/AppContext";
+import { recordAttempt } from "@/lib/storyAttempts";
 
 interface SetReadingProps {
   onBack: () => void;
@@ -200,7 +201,16 @@ export default function SetReading({
     setCurrentQ((i) => Math.min(totalQuestions - 1, i + 1));
 
   const submit = () => {
-    if (!allAnswered) return;
+    if (!allAnswered || !reading) return;
+    const finalScore = reading.questions.reduce(
+      (acc, qq) => acc + (answers[qq.id] === qq.correctIndex ? 1 : 0),
+      0,
+    );
+    recordAttempt(missionDay, group, {
+      score: finalScore,
+      total: reading.questions.length,
+      attemptedAt: Date.now(),
+    });
     setSubmitted(true);
     requestAnimationFrame(() => {
       readyCtaRef.current?.scrollIntoView({

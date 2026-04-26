@@ -10,9 +10,18 @@ import {
   ChevronRight,
   X,
   Sparkles,
+  CheckCircle2,
+  AlertCircle,
+  CircleDashed,
 } from "lucide-react";
 import { SET_READINGS, type SetReading } from "@/data/setReadings";
 import { TOTAL_DAYS, GROUPS_PER_DAY } from "@/data/words";
+import {
+  getAllAttempts,
+  statusForAttempt,
+  type StoryAttempt,
+  type StoryStatus,
+} from "@/lib/storyAttempts";
 
 interface StoryLibraryProps {
   onBack: () => void;
@@ -25,6 +34,8 @@ interface StoryEntry {
   group: number;
   reading: SetReading;
 }
+
+type StatusFilter = "all" | StoryStatus;
 
 function buildEntries(): StoryEntry[] {
   const entries: StoryEntry[] = [];
@@ -66,10 +77,12 @@ export default function StoryLibrary({
   onNavigate,
 }: StoryLibraryProps) {
   const allEntries = useMemo(() => buildEntries(), []);
+  const attempts = useMemo(() => getAllAttempts(), []);
 
   const [query, setQuery] = useState("");
   const [missionFilter, setMissionFilter] = useState<number | "all">("all");
   const [setFilter, setSetFilter] = useState<number | "all">("all");
+  const [statusFilter, setStatusFilter] = useState<StatusFilter>("all");
 
   const availableMissions = useMemo(() => {
     const set = new Set<number>();
@@ -88,25 +101,44 @@ export default function StoryLibrary({
       if (missionFilter !== "all" && e.missionDay !== missionFilter)
         return false;
       if (setFilter !== "all" && e.group !== setFilter) return false;
+      if (statusFilter !== "all") {
+        const st = statusForAttempt(attempts[e.key]);
+        if (st !== statusFilter) return false;
+      }
       if (!entryMatchesSearch(e, query)) return false;
       return true;
     });
-  }, [allEntries, query, missionFilter, setFilter]);
+  }, [allEntries, attempts, query, missionFilter, setFilter, statusFilter]);
 
   const totalStories = allEntries.length;
   const totalMissionsCovered = availableMissions.length;
   const totalSetsCovered = totalStories;
   const totalCurriculumSets = TOTAL_DAYS * GROUPS_PER_DAY;
 
+  const statusCounts = useMemo(() => {
+    let mastered = 0;
+    let needsReview = 0;
+    let unpracticed = 0;
+    for (const e of allEntries) {
+      const st = statusForAttempt(attempts[e.key]);
+      if (st === "mastered") mastered++;
+      else if (st === "needs-review") needsReview++;
+      else unpracticed++;
+    }
+    return { mastered, needsReview, unpracticed };
+  }, [allEntries, attempts]);
+
   const hasActiveFilter =
     query.trim().length > 0 ||
     missionFilter !== "all" ||
-    setFilter !== "all";
+    setFilter !== "all" ||
+    statusFilter !== "all";
 
   const clearFilters = () => {
     setQuery("");
     setMissionFilter("all");
     setSetFilter("all");
+    setStatusFilter("all");
   };
 
   const openStory = (entry: StoryEntry) => {
@@ -172,6 +204,19 @@ export default function StoryLibrary({
                 </span>
                 <span className="text-muted-foreground/80">
                   {totalSetsCovered} of {totalCurriculumSets} sets
+                </span>
+              </div>
+              <div className="flex flex-wrap items-center gap-2 pt-2 text-[11px] font-bold uppercase tracking-wider">
+                <span className="inline-flex items-center gap-1.5 px-2 py-1 rounded-md bg-emerald-100 text-emerald-700 dark:bg-emerald-500/20 dark:text-emerald-300">
+                  <CheckCircle2 size={12} /> {statusCounts.mastered} mastered
+                </span>
+                <span className="inline-flex items-center gap-1.5 px-2 py-1 rounded-md bg-amber-100 text-amber-700 dark:bg-amber-500/20 dark:text-amber-300">
+                  <AlertCircle size={12} /> {statusCounts.needsReview} needs
+                  review
+                </span>
+                <span className="inline-flex items-center gap-1.5 px-2 py-1 rounded-md bg-muted text-muted-foreground">
+                  <CircleDashed size={12} /> {statusCounts.unpracticed} not
+                  practiced
                 </span>
               </div>
             </div>
@@ -258,6 +303,24 @@ export default function StoryLibrary({
               </select>
             </label>
 
+            <label className="inline-flex items-center gap-2 text-sm">
+              <span className="text-xs font-semibold text-muted-foreground">
+                Practice
+              </span>
+              <select
+                value={statusFilter}
+                onChange={(e) =>
+                  setStatusFilter(e.target.value as StatusFilter)
+                }
+                className="px-3 py-1.5 rounded-lg border border-border bg-background text-sm text-foreground font-semibold focus:outline-none focus:ring-2 focus:ring-orange-300 dark:focus:ring-orange-500/40 transition"
+              >
+                <option value="all">All statuses</option>
+                <option value="unpracticed">Not yet practiced</option>
+                <option value="needs-review">Needs review (&lt; 80%)</option>
+                <option value="mastered">Mastered (≥ 80%)</option>
+              </select>
+            </label>
+
             {hasActiveFilter && (
               <button
                 type="button"
@@ -305,6 +368,7 @@ export default function StoryLibrary({
               <StoryCard
                 key={entry.key}
                 entry={entry}
+                attempt={attempts[entry.key] ?? null}
                 searchQuery={query.trim()}
                 onOpen={() => openStory(entry)}
               />
@@ -318,11 +382,12 @@ export default function StoryLibrary({
 
 interface StoryCardProps {
   entry: StoryEntry;
+  attempt: StoryAttempt | null;
   searchQuery: string;
   onOpen: () => void;
 }
 
-function StoryCard({ entry, searchQuery, onOpen }: StoryCardProps) {
+function StoryCard({ entry, attempt, searchQuery, onOpen }: StoryCardProps) {
   const { reading, missionDay, group } = entry;
   const needle = searchQuery.toLowerCase();
   const matchedWords =
@@ -332,6 +397,11 @@ function StoryCard({ entry, searchQuery, onOpen }: StoryCardProps) {
   const wordsToShow =
     matchedWords.length > 0 ? matchedWords.slice(0, 4) : reading.words.slice(0, 4);
   const remaining = reading.words.length - wordsToShow.length;
+  const status = statusForAttempt(attempt);
+  const pct =
+    attempt && attempt.total > 0
+      ? Math.round((attempt.score / attempt.total) * 100)
+      : null;
 
   return (
     <button
@@ -347,6 +417,16 @@ function StoryCard({ entry, searchQuery, onOpen }: StoryCardProps) {
           <span className="inline-flex items-center text-[10px] font-bold uppercase tracking-wider px-2 py-1 rounded-md bg-muted text-muted-foreground">
             Set {group}
           </span>
+          {status === "mastered" && (
+            <span className="inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-wider px-2 py-1 rounded-md bg-emerald-100 text-emerald-700 dark:bg-emerald-500/20 dark:text-emerald-300">
+              <CheckCircle2 size={10} /> Mastered
+            </span>
+          )}
+          {status === "needs-review" && (
+            <span className="inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-wider px-2 py-1 rounded-md bg-amber-100 text-amber-700 dark:bg-amber-500/20 dark:text-amber-300">
+              <AlertCircle size={10} /> Review
+            </span>
+          )}
         </div>
         <span className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground shrink-0">
           {reading.format}
@@ -385,13 +465,28 @@ function StoryCard({ entry, searchQuery, onOpen }: StoryCardProps) {
         )}
       </div>
 
-      <div className="flex items-center justify-between pt-3 border-t border-border text-xs">
+      <div className="flex items-center justify-between pt-3 border-t border-border text-xs gap-3">
         <span className="inline-flex items-center gap-1.5 text-muted-foreground font-semibold">
           <Clock size={12} /> {reading.readingMinutes} min read
         </span>
-        <span className="inline-flex items-center gap-1 text-orange-600 dark:text-orange-400 font-bold group-hover:gap-2 transition-all">
-          Read story <ChevronRight size={12} />
-        </span>
+        {attempt && pct !== null ? (
+          <span
+            className={`inline-flex items-center gap-1 font-bold ${
+              status === "mastered"
+                ? "text-emerald-600 dark:text-emerald-400"
+                : "text-amber-600 dark:text-amber-400"
+            }`}
+            title={`Last attempted ${new Date(
+              attempt.attemptedAt,
+            ).toLocaleDateString()}`}
+          >
+            Last: {attempt.score}/{attempt.total} · {pct}%
+          </span>
+        ) : (
+          <span className="inline-flex items-center gap-1 text-muted-foreground font-semibold">
+            <CircleDashed size={12} /> Not practiced
+          </span>
+        )}
       </div>
     </button>
   );
