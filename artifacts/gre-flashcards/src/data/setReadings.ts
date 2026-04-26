@@ -5647,6 +5647,1171 @@ She had not been **subservient** to the offer. She had not, equally, held her bo
   ],
 };
 
+const MISSION_15_SET_1: SetReading = {
+  title: "The Town Hall Debate",
+  subtitle:
+    "A short story about a rainy Tuesday hearing, four hours of testimony, and the chair who would rather a town disagreed precisely than agreed by accident.",
+  format: "Short Story",
+  readingMinutes: 4,
+  words: [
+    "alienate",
+    "apathy",
+    "apropos",
+    "apt",
+    "cloak",
+    "consensus",
+    "distort",
+    "divergent",
+    "elated",
+    "enchant",
+  ],
+  passage: `When the small town of Calderbridge convened its first public hearing on the proposed waterfront redevelopment, the council chair, an unflappable woman named Rhona Fell, knew within the first ten minutes that the evening would not produce **consensus**. The hall was full — a fact that, in Calderbridge, was itself remarkable, because municipal **apathy** had been the town's prevailing mood for at least a decade. Tonight, three hundred residents had walked through the rain to be heard, and their views, when they began to be expressed, were sharply **divergent**.
+
+The first speaker, a young woman who ran a small bakery on the harbor, was **elated** by the redevelopment plan and said so. The waterfront, she argued, had been allowed to decline so far that any honest improvement would be a kindness; the new design, with its mix of housing and small commerce, would, she believed, **enchant** visitors and residents alike. She spoke for four minutes. She received polite applause from roughly half the room.
+
+The second speaker, a retired ferry captain who had lived three blocks from the harbor for fifty-one years, was less pleased. He did not, he said carefully, wish to **alienate** the bakery owner — he had bought bread from her father — but he wanted the council to know that several of the renderings the developer had circulated did not, in his view, **distort** the waterfront so much as replace it with a different waterfront altogether. The piers in the renderings were not, he pointed out, the piers that were actually there. He held up a photograph. Several heads in the audience nodded.
+
+What followed was four hours of testimony. A planner accused the developer of using **apt** but ultimately misleading visualizations to **cloak** a denser project than the one publicly described. A developer's representative responded that the planner was reading the documents in bad faith. A schoolteacher, almost **apropos** of nothing, said that her students would benefit from a public dock; another teacher, immediately afterward, said that the same students already had a public dock, three blocks east, that the council had failed to maintain for years.
+
+Rhona did not interrupt. She had learned, over fifteen years of chairing meetings of this kind, that the only way to surface the actual disagreement was to let it speak in its own voice. By 10:15 she had taken nine pages of notes and identified, beneath the surface, four distinct positions — three of them held by groups of residents who had not realized, when they came in, that they substantially agreed with each other.
+
+She did not announce a vote. She announced, instead, that the council would publish a single document the following Monday: a plain, side-by-side summary of every claim made on either side, with sources, photographs, and the specific paragraphs of the developer's filings the testimony referred to. Residents would have two weeks to comment in writing. The council would meet again at the end of the month with that record in front of it.
+
+The room, which had been preparing to be angry about an outcome, was briefly disarmed by being asked, instead, to wait for one. Several residents thanked her on the way out. One councilman, less generously, accused her in the parking lot of "trying to enchant people into agreeing with each other." She did not argue. She said only that she would rather the town disagree precisely than agree by accident, and went home to begin drafting the summary.`,
+  questions: [
+    {
+      id: 1,
+      kind: "vocab-context",
+      prompt: 'In this sentence, the word "consensus" most nearly means:',
+      quote:
+        '"...the council chair...knew within the first ten minutes that the evening would not produce consensus."',
+      options: [
+        "A formal legal contract.",
+        "General agreement among a group.",
+        "A unanimous show of hands.",
+        "A request for further information.",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Consensus" denotes general agreement reached by a group. The hall full of sharply divergent views is exactly what makes consensus impossible that evening.',
+    },
+    {
+      id: 2,
+      kind: "vocab-context",
+      prompt: 'In this sentence, the word "cloak" most nearly means:',
+      quote:
+        '"A planner accused the developer of using apt but ultimately misleading visualizations to cloak a denser project than the one publicly described."',
+      options: [
+        "Promote openly and aggressively.",
+        "Conceal or disguise behind something else.",
+        "Print on a large public banner.",
+        "Submit for formal regulatory review.",
+      ],
+      correctIndex: 1,
+      explanation:
+        'To "cloak" something is to hide it under a covering. The planner\'s charge is that attractive renderings were being used to conceal the project\'s true density.',
+    },
+    {
+      id: 3,
+      kind: "tone-purpose",
+      prompt:
+        'The narrator describes the residents\' views as "divergent" rather than simply "different." Why?',
+      options: [
+        '"Divergent" implies the views are slowly converging into agreement.',
+        '"Divergent" specifies that the views are actively moving apart in different directions, capturing the structure of a hall in which sharply opposed positions are being expressed in turn — a precision "different" would not carry.',
+        '"Divergent" and "different" mean exactly the same thing in this context.',
+        '"Divergent" implies the views are mathematically related.',
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Divergent" emphasizes that the positions actively pull apart in opposite directions. That structural picture fits the back-and-forth testimony better than the merely descriptive "different."',
+    },
+    {
+      id: 4,
+      kind: "inference",
+      prompt:
+        "Based on the passage, what can the reader most reasonably infer about why Rhona refused to call a vote that night and instead promised a written summary?",
+      options: [
+        "She had no legal authority to call a vote on the redevelopment.",
+        "She believed the testimony had revealed several positions that the room itself had not yet recognized; a written, side-by-side record would let residents see the actual disagreement before being asked to decide on it.",
+        "She was hoping the developer would withdraw the proposal before the next meeting.",
+        "She wanted to delay the vote until after a council election.",
+      ],
+      correctIndex: 1,
+      explanation:
+        'The text states explicitly that she had identified, beneath the surface, "four distinct positions — three of them held by groups of residents who had not realized...that they substantially agreed with each other." The summary makes that newly visible structure shareable.',
+    },
+    {
+      id: 5,
+      kind: "substitution",
+      prompt:
+        'Which single word could replace "apathy" in the sentence below without changing its meaning?',
+      quote:
+        '"...because municipal apathy had been the town\'s prevailing mood for at least a decade."',
+      options: [
+        "Enthusiasm",
+        "Indifference",
+        "Confusion",
+        "Anger",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Indifference" — a lack of interest or concern — captures the same meaning as "apathy." The contrast with the unusually full hall confirms the reading.',
+    },
+    {
+      id: 6,
+      kind: "main-idea",
+      prompt:
+        "Which sentence best summarizes the central idea or arc of the passage?",
+      options: [
+        "A council chair manipulates a public hearing to ensure the developer's preferred outcome is adopted.",
+        "An angry public meeting forces the cancellation of a controversial waterfront redevelopment.",
+        "A patient council chair lets a divided hearing speak in its own voice, then converts the testimony into a written record that allows residents to see — and to refine — the disagreement before any vote is taken.",
+        "A developer concedes defeat after a single resident produces a photograph contradicting his renderings.",
+      ],
+      correctIndex: 2,
+      explanation:
+        "The arc moves from the apathetic baseline, through the divergent testimony, to Rhona's decision to publish a side-by-side summary rather than rush to a vote — embodying her closing line about precise disagreement.",
+    },
+  ],
+};
+
+const MISSION_15_SET_2: SetReading = {
+  title: "The Botanist Who Said No",
+  subtitle:
+    "A short story about a remote highland survey, a clause in the appendix, and the standing an offer was meant to borrow.",
+  format: "Short Story",
+  readingMinutes: 4,
+  words: [
+    "entrenched",
+    "exotic",
+    "exploitative",
+    "foreseeable",
+    "forsake",
+    "gratify",
+    "heed",
+    "judicious",
+    "lucid",
+    "pertinent",
+  ],
+  passage: `When the offer arrived from Halberd Cosmetics, Dr. Yusra Ammari read it three times before she answered. Halberd was an **entrenched** name in the global beauty industry, and the project they were proposing — a six-month expedition to catalogue rare botanical species in a remote highland region — had been designed, in their initial pitch, to sound almost academic. They wanted a botanist of her standing to lend the project its scientific credibility. The compensation was generous. The science, on first reading, was reasonable.
+
+It was the second reading that troubled her. Buried in the appendix was a section — written in legal rather than scientific language — that specified Halberd's exclusive commercial rights to any **exotic** compound the expedition identified. Dr. Ammari, who had spent twenty-two years working with field communities in three continents, recognized the structure immediately. The expedition was not an academic survey with a commercial side benefit. It was a commercial survey with an academic disguise.
+
+She did not write back the same day. She wanted to be sure she was not being **judicious** to the point of paranoia. She read the appendix again, the next morning, with her coffee. The compensation structure for the local communities who had cultivated and protected these plants for generations was, she calculated, less than three percent of the projected commercial value. The phrase the contract used was "consultation honoraria." The phrase that came to her own mind was less neutral: the arrangement was, in her view, openly **exploitative**.
+
+She wrote a long, **lucid** letter declining the offer. She did not lecture. She did not, in her own phrase, "**forsake** civility for emphasis." She simply itemized the four specific clauses she found objectionable, attached the **pertinent** comparison data from a similar expedition the year before, and noted that she would be available, if Halberd wished to revise the terms substantially, to discuss a different project on different terms.
+
+Halberd's reply was polite and unmoved. The terms, the project director wrote, were standard. The compensation to local communities was, in fact, "above market." He did not address any of her four specific clauses. He did, however, mention — apropos of nothing — that several other senior botanists had already accepted similar terms on previous projects. The implication was clear. So was the **foreseeable** consequence of refusing: she would not be approached again.
+
+She refused anyway. She did not pretend, even to herself, that the decision did not cost her something. The expedition would have funded a year of her own postdoctoral students; the data would, in a different framing, have been genuinely valuable. But she had spent two decades arguing — in lectures, in committee meetings, in conferences in five languages — that the scientific community owed indigenous knowledge holders more than honoraria. To **gratify** Halberd by signing a contract that contradicted her own published positions would have been to lose, in a single afternoon, the standing the offer was meant to borrow.
+
+She published, six months later, a short essay on the ethics of plant prospecting. It did not name Halberd. It did, however, describe in clean detail the kind of contract she had refused, and recommended specific revisions any community-engaged researcher should request before signing. The essay was widely read. It cost her, by her own count, two further commercial offers. It also produced, more slowly, three smaller and more honest collaborations she had not expected — collaborations in which, she would say later, the local communities had the standing to **heed** her advice or politely ignore it, which is what she had wanted in the first place.`,
+  questions: [
+    {
+      id: 1,
+      kind: "vocab-context",
+      prompt: 'In this sentence, the word "exploitative" most nearly means:',
+      quote:
+        '"...the arrangement was, in her view, openly exploitative."',
+      options: [
+        "Generously compensating all parties involved.",
+        "Taking unfair advantage of others, especially for one\'s own gain.",
+        "Educational in purpose and method.",
+        "Highly experimental and risky.",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Exploitative" describes an arrangement that takes unfair advantage. A 3% share of projected commercial value going to communities who cultivated the plants is the textbook example.',
+    },
+    {
+      id: 2,
+      kind: "vocab-context",
+      prompt: 'In this sentence, the word "entrenched" most nearly means:',
+      quote:
+        '"Halberd was an entrenched name in the global beauty industry..."',
+      options: [
+        "New and unknown.",
+        "Firmly established and difficult to dislodge.",
+        "Specifically European in origin.",
+        "Recently bankrupt.",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Entrenched" describes something firmly established, dug in like a fortified position. A long-dominant industry name fits the word exactly.',
+    },
+    {
+      id: 3,
+      kind: "tone-purpose",
+      prompt:
+        'The narrator describes Yusra\'s letter as "lucid" rather than simply "clear." Why?',
+      options: [
+        '"Lucid" carries a sense of intellectual clarity — transparently reasoned, easy to follow on its merits — fitting a letter that itemizes specific clauses and attaches comparison data, rather than the merely visual clarity "clear" might imply.',
+        '"Lucid" means the letter was very long.',
+        '"Lucid" and "clear" mean exactly the same thing here.',
+        '"Lucid" implies the letter contained dreams or fantasy.',
+      ],
+      correctIndex: 0,
+      explanation:
+        '"Lucid" emphasizes intellectual transparency — reasoning that can be followed step by step. The letter\'s itemized structure is exactly what makes it lucid in that sense.',
+    },
+    {
+      id: 4,
+      kind: "inference",
+      prompt:
+        "Based on the passage, what can the reader most reasonably infer about why Yusra refused the offer despite the foreseeable cost to her future commercial work?",
+      options: [
+        "She had been offered a more lucrative contract by a competing cosmetics firm earlier that week.",
+        "Accepting a contract that contradicted her own published positions would have undermined the very scientific standing the offer was relying on — losing in a single afternoon the credibility built over two decades.",
+        "Her institution\'s ethics board had specifically forbidden her from signing.",
+        "She had a personal grievance against the project director.",
+      ],
+      correctIndex: 1,
+      explanation:
+        'The text spells this out: signing "would have been to lose, in a single afternoon, the standing the offer was meant to borrow." Her credibility was the very asset Halberd was paying for.',
+    },
+    {
+      id: 5,
+      kind: "substitution",
+      prompt:
+        'Which single word could replace "heed" in the sentence below without changing its meaning?',
+      quote:
+        '"...the local communities had the standing to heed her advice or politely ignore it..."',
+      options: [
+        "Disregard",
+        "Notice",
+        "Mock",
+        "Compose",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Notice" — pay attention to and act on — captures the same meaning as "heed." "Disregard" is the opposite, which is the alternative the sentence already names separately ("politely ignore").',
+    },
+    {
+      id: 6,
+      kind: "main-idea",
+      prompt:
+        "Which sentence best summarizes the central idea or arc of the passage?",
+      options: [
+        "A senior botanist accepts a lucrative commercial expedition despite reservations about its ethics.",
+        "A botanist turns down a generous but exploitative contract because signing it would have contradicted the very scientific principles her standing was built on, and finds, more slowly, smaller and more honest collaborations on the other side of the refusal.",
+        "A cosmetics company is forced to abandon its expedition after every senior botanist in the field refuses to participate.",
+        "A botanist publishes a damaging exposé naming the cosmetics firm whose contract she refused.",
+      ],
+      correctIndex: 1,
+      explanation:
+        "The arc moves from the entrenched offer, through her lucid refusal, to the published essay and the three honest collaborations that eventually followed.",
+    },
+  ],
+};
+
+const MISSION_15_SET_3: SetReading = {
+  title: "The Society Columnist",
+  subtitle:
+    "A short story about a thirty-year column, four anonymous accusations, and the part of the record that remained open.",
+  format: "Short Story",
+  readingMinutes: 4,
+  words: [
+    "propriety",
+    "scintillating",
+    "sensational",
+    "sophisticated",
+    "strife",
+    "understated",
+    "unscrupulous",
+    "veracity",
+    "virulent",
+    "volatile",
+  ],
+  passage: `For thirty years, Adelheid Ivers wrote the society column for *The Quayside Observer*, and in all that time she had built her reputation on a single principle: she would print nothing she could not personally verify. The column was, in tone, **understated** — never flashy, almost never gossipy, attentive to small social details that more **sensational** writers would have ignored. Her readers, who included most of the city's older money and a careful selection of its newer money, trusted her as much for what she did not print as for what she did.
+
+In her thirty-first year, the city was visited by a brief and **virulent** scandal. A prominent investor, recently married to a member of an old Quayside family, was the subject of a series of anonymous accusations: financial misconduct, an undisclosed earlier marriage, a possible criminal investigation in another country. Three other papers ran the accusations within days, dressing them up in **scintillating** prose and citing "sources close to the family." A national magazine offered Adelheid a substantial fee to write the same story under her byline, citing the borrowed authority of her thirty-year column.
+
+She declined the fee. She did, however, begin, in her own quiet way, to verify what could be verified. Over six weeks she made fourteen phone calls, read three sets of public filings, and met privately with two members of the family, neither of whom was the bride or the groom. By the end of those six weeks she had established that two of the accusations were demonstrably false; one was true but minor; one — the most lurid — could not be settled either way on the available evidence.
+
+Her column, when it appeared, was characteristically restrained. It did not name the investor in its headline. It described, in plain language, the **veracity** of each of the four accusations one at a time: which were false, which were true, which could not yet be known. It did not editorialize. It did not, in a phrase her readers would later quote, "trade in **strife** for circulation." It merely set the record where it could be set and identified, with a single sentence, the part of the record that remained open.
+
+The reaction was mixed. The two papers that had run the lurid version did not retract; they simply moved on. The investor, through his lawyer, sent Adelheid a long and aggrieved letter accusing her of having damaged his reputation by even partially confirming the minor misconduct. She did not reply. The bride's family sent a much shorter letter thanking her for the **propriety** with which she had treated a **volatile** situation. She filed the second letter and binned the first.
+
+A younger reporter, writing about the affair in a national journal a year later, contrasted Adelheid's handling of the story with that of a more **unscrupulous** competitor whose paper had since had to settle two defamation suits. The article praised Adelheid's column as a kind of journalism that "still believed verification was a writer's first duty." Adelheid, when a friend mentioned the piece, allowed herself one dry observation. "It is not," she said, "a particularly **sophisticated** position. It is only the old one. I have simply outlived most of the people who held it with me."
+
+She wrote her column for another four years. When she retired, the paper did not replace her. Her readers, perhaps because they had been trained over three decades, did not entirely forgive the paper for that.`,
+  questions: [
+    {
+      id: 1,
+      kind: "vocab-context",
+      prompt: 'In this sentence, the word "veracity" most nearly means:',
+      quote:
+        '"It described, in plain language, the veracity of each of the four accusations one at a time..."',
+      options: [
+        "The popularity of an idea among readers.",
+        "The truthfulness or accuracy of a claim.",
+        "The legal consequences of a statement.",
+        "The emotional impact of a story.",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Veracity" means truthfulness or accuracy. Reporting on each accusation\'s veracity means assessing whether each one is true.',
+    },
+    {
+      id: 2,
+      kind: "vocab-context",
+      prompt: 'In this sentence, the word "virulent" most nearly means:',
+      quote:
+        '"...the city was visited by a brief and virulent scandal."',
+      options: [
+        "Quiet and uncontroversial.",
+        "Extremely severe, hostile, or rapidly damaging.",
+        "Limited to a single neighborhood.",
+        "Of no consequence to the public.",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Virulent" describes something extremely severe and damaging — the word evokes a fast, harmful spread, exactly the texture of a scandal that brings out four major accusations at once.',
+    },
+    {
+      id: 3,
+      kind: "tone-purpose",
+      prompt:
+        'The narrator describes Adelheid\'s tone as "understated" rather than simply "calm." Why?',
+      options: [
+        '"Understated" specifies a deliberate restraint of effect — saying less than the material would permit, by craft — which captures Adelheid\'s discipline of attending to small details and refusing to dress them up, in a way "calm" would only describe an emotional state.',
+        '"Understated" implies the column was poorly written.',
+        '"Understated" suggests the column was published in secret.',
+        '"Understated" and "calm" mean the same thing in this context.',
+      ],
+      correctIndex: 0,
+      explanation:
+        '"Understated" describes the deliberate craft of saying less than one might. That is exactly Adelheid\'s discipline — and the contrast with "scintillating" and "sensational" later in the passage makes it sharper.',
+    },
+    {
+      id: 4,
+      kind: "inference",
+      prompt:
+        "Based on the passage, what can the reader most reasonably infer about why Adelheid declined the magazine\'s lucrative offer to write the scandal under her byline?",
+      options: [
+        "The magazine\'s editor had personally offended her in an earlier dispute.",
+        "The offer was paying for the borrowed authority of her thirty-year column — and writing an unverified story under her byline would have spent that authority for a one-time fee, exactly the trade her thirty-year practice had been built to refuse.",
+        "She was contractually forbidden from writing for any other publication.",
+        "She believed the scandal was not interesting enough to be worth her time.",
+      ],
+      correctIndex: 1,
+      explanation:
+        "The text emphasizes the magazine was citing 'the borrowed authority of her thirty-year column.' Spending that authority on an unverified story would have permanently damaged the asset that made her byline valuable in the first place.",
+    },
+    {
+      id: 5,
+      kind: "substitution",
+      prompt:
+        'Which single word could replace "propriety" in the sentence below without changing its meaning?',
+      quote:
+        '"The bride\'s family sent a much shorter letter thanking her for the propriety with which she had treated a volatile situation."',
+      options: [
+        "Recklessness",
+        "Decorum",
+        "Indifference",
+        "Curiosity",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Decorum" — appropriate conduct and judgment in delicate circumstances — captures the same meaning as "propriety." The other choices reverse or distort the sense.',
+    },
+    {
+      id: 6,
+      kind: "main-idea",
+      prompt:
+        "Which sentence best summarizes the central idea or arc of the passage?",
+      options: [
+        "A society columnist destroys an investor\'s reputation by uncritically printing anonymous accusations against him.",
+        "A society columnist refuses both the easy money of writing a sensational scandal and the easy silence of ignoring it, choosing instead to verify each accusation individually and publish only what the evidence will support.",
+        "A national magazine successfully buys out a respected columnist and adopts her byline for sensational stories.",
+        "A society columnist retires in protest after her newspaper refuses to run her honest scandal coverage.",
+      ],
+      correctIndex: 1,
+      explanation:
+        "The arc moves from Adelheid's understated practice, through her six weeks of verification, to the careful column that ran each accusation by its veracity — and the colleague\'s retrospective tribute years later.",
+    },
+  ],
+};
+
+const MISSION_16_SET_1: SetReading = {
+  title: "The Archivist and the Forged Letter",
+  subtitle:
+    "A short story about a watermark, a leaked memo, and the section that distinguished what the evidence showed from what it did not.",
+  format: "Short Story",
+  readingMinutes: 4,
+  words: [
+    "antedate",
+    "banish",
+    "bridle",
+    "comply",
+    "crestfallen",
+    "curtail",
+    "elucidate",
+    "evade",
+    "feckless",
+    "fester",
+  ],
+  passage: `When Petra Krenz, senior archivist at the Lindgren Foundation, first examined the disputed letter, she understood within ten minutes that something was wrong. The letter — purportedly written in 1894 by the foundation's founder to a young chemist whose later patent had built half the foundation's endowment — had surfaced suddenly in the estate of a private collector who hoped to sell it for a substantial sum. The collector's lawyer claimed the letter would **antedate**, by nearly a year, the documented beginning of the founder's correspondence with the chemist. If genuine, it would resolve a long-standing scholarly dispute. If forged, it would do considerable damage to anyone who had paid for it.
+
+Petra was not a forensic specialist; she was an archivist with thirty years of experience, which is a different kind of expertise. Her first concern was the paper. The watermark, on close examination, was correct for the period; the paper itself, however, had a faint mechanical regularity in its laid lines that did not, in her professional judgment, match the founder's known stationery. Her second concern was the ink. Her third concern was the handwriting itself, which was confident, flowing, and — in three small details — wrong.
+
+She did not announce her doubts immediately. She wanted, before she did anything public, to **elucidate** the case clearly enough that her conclusions would survive a hostile cross-examination. She wrote a long internal memo: each anomaly catalogued, each photographed, each compared against three confirmed letters in the foundation's own collection. She did not, in the memo, accuse the collector of forgery. She simply set out the evidence, side by side, and let the reader draw the conclusion.
+
+The memo was leaked. Petra did not know, and never learned, by whom. Within a week the collector's lawyer had threatened to sue the foundation for defamation. The foundation's general counsel, a younger man who was determined not to **evade** the institution's legal exposure, asked Petra whether she could **curtail** her conclusions. She said she could not. She offered, however, to add a section to the memo distinguishing what the evidence showed (anomalies inconsistent with the period) from what it did not show (active forgery).
+
+She added the section. The general counsel was not entirely satisfied; he had hoped she would, in his own phrase, **comply** with a softer version of the truth. She did not **bridle** at the request, exactly, but she also did not move beyond the addition she had already made. The memo, in its revised form, was provided to the collector's lawyer.
+
+The lawyer did not, in the end, sue. A second specialist — an independent paper historian Petra had quietly recommended — confirmed her analysis within a month. The collector, **crestfallen** in a way that suggested he had not been entirely surprised, withdrew the letter from sale. He did not, as far as anyone could establish, **fester** in resentment toward Petra; he sent her, a year later, a brief and dignified note acknowledging that her work had probably saved him from a worse outcome than embarrassment.
+
+The foundation never publicized the affair. The disputed letter was returned to its envelope and stored, along with Petra's memo, in a drawer she still occasionally consulted when training new staff. She did not **banish** the case from her teaching examples. She used it, instead, as her standard illustration of why **feckless** documentation, however cleverly produced, cannot survive an archivist who is willing to take her time and write down what she sees.`,
+  questions: [
+    {
+      id: 1,
+      kind: "vocab-context",
+      prompt: 'In this sentence, the word "antedate" most nearly means:',
+      quote:
+        '"The collector\'s lawyer claimed the letter would antedate, by nearly a year, the documented beginning of the founder\'s correspondence with the chemist."',
+      options: [
+        "Be dated later than another document.",
+        "Precede in time; come before the existing earliest record.",
+        "Be authenticated by a notary.",
+        "Be misfiled under the wrong year.",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Antedate" means to come before in time — to be earlier than something else. The lawyer\'s claim is that the letter would push the start of the correspondence a year earlier.',
+    },
+    {
+      id: 2,
+      kind: "vocab-context",
+      prompt: 'In this sentence, the word "elucidate" most nearly means:',
+      quote:
+        '"She wanted, before she did anything public, to elucidate the case clearly enough that her conclusions would survive a hostile cross-examination."',
+      options: [
+        "Conceal under specialist jargon.",
+        "Make clear by explanation; lay out so the reasoning can be followed.",
+        "Translate from another language.",
+        "Submit to a panel of experts for approval.",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Elucidate" means to make clear by explanation. Petra\'s side-by-side memo is exactly that — laying out the evidence so the reasoning can be followed and tested.',
+    },
+    {
+      id: 3,
+      kind: "tone-purpose",
+      prompt:
+        'The narrator calls the documentation "feckless" rather than simply "false" in the closing sentence. Why?',
+      options: [
+        '"Feckless" specifies a kind of incompetence — careless, ineffective, lacking the rigor to withstand scrutiny — fitting a forgery that looks clever at a glance but cannot survive a careful archivist, in a way "false" would not capture.',
+        '"Feckless" and "false" mean the same thing in this context.',
+        '"Feckless" implies the documentation was government-issued.',
+        '"Feckless" suggests the documentation was emotionally moving.',
+      ],
+      correctIndex: 0,
+      explanation:
+        '"Feckless" describes a careless, ineffective effort. The closing line\'s point is that even cleverly produced forgery is, at bottom, careless work that a patient archivist will see through.',
+    },
+    {
+      id: 4,
+      kind: "inference",
+      prompt:
+        "Based on the passage, what can the reader most reasonably infer about why Petra agreed to add the new section but refused to soften her conclusions further?",
+      options: [
+        "She was hoping to be promoted to general counsel herself.",
+        "Adding a section that distinguished what the evidence showed from what it did not show preserved her honest analysis while addressing the legal exposure — softening the conclusions further would have crossed from precision into actually misrepresenting what she had found.",
+        "Her contract with the foundation forbade her from changing internal memos.",
+        "She wanted to provoke the collector into suing the foundation.",
+      ],
+      correctIndex: 1,
+      explanation:
+        "The added section gave the counsel what he legitimately needed (a sharper line between inference and accusation) without crossing into untruth — exactly the boundary the passage shows Petra holding.",
+    },
+    {
+      id: 5,
+      kind: "substitution",
+      prompt:
+        'Which single word could replace "comply" in the sentence below without changing its meaning?',
+      quote:
+        '"...he had hoped she would, in his own phrase, comply with a softer version of the truth."',
+      options: [
+        "Resist",
+        "Conform",
+        "Publish",
+        "Translate",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Conform" — go along with, accommodate — captures the same meaning as "comply." "Resist" is the opposite.',
+    },
+    {
+      id: 6,
+      kind: "main-idea",
+      prompt:
+        "Which sentence best summarizes the central idea or arc of the passage?",
+      options: [
+        "An archivist destroys an honest collector\'s reputation by publicly accusing him of forgery without sufficient evidence.",
+        "A foundation suppresses an archivist\'s findings to avoid an embarrassing legal dispute with a collector.",
+        "A senior archivist patiently documents the anomalies in a probably-forged letter, refuses to soften her conclusions under legal pressure, and quietly resolves the case in a way that protects both the foundation and the collector from a worse outcome.",
+        "An archivist resigns from a foundation that has been infiltrated by forgers.",
+      ],
+      correctIndex: 2,
+      explanation:
+        "The arc moves from the suspicious letter, through Petra's careful memo, to the added clarifying section and the quietly resolved case — embodying her closing observation about feckless documentation and patient archival work.",
+    },
+  ],
+};
+
+const MISSION_16_SET_2: SetReading = {
+  title: "The Iconoclastic Architect",
+  subtitle:
+    "A short story about a competition brief, a quiet building, and the most accurate review the architect ever received.",
+  format: "Short Story",
+  readingMinutes: 4,
+  words: [
+    "iconoclastic",
+    "immure",
+    "improvise",
+    "inhibit",
+    "inscrutable",
+    "lionize",
+    "monotonous",
+    "peculiar",
+    "premeditate",
+    "profligate",
+  ],
+  passage: `When Tova Halsen submitted her competition entry for the new municipal library of Oresund, she did not expect to win. Her practice, after twenty-five years, had a reputation that local juries tended to call **iconoclastic** — a polite way of saying that her buildings refused to do the things municipal buildings were expected to do. Her libraries had no atriums. Her museums had no ceremonial staircases. Her schools had small, asymmetric windows in places that violated three of the prevailing design assumptions about daylight in classrooms. Critics had alternately **lionized** her and dismissed her, sometimes in the same review.
+
+The Oresund brief, on first reading, called for the kind of building she most disliked: a "civic landmark" whose photographs would, the brief said outright, "anchor the city's tourism brochures for a generation." Tova read the brief twice. She submitted, on the deadline, a building that did not, in any obvious way, comply with the brief's tourism objective. The building was small. It was **peculiar** in plan. It was, in elevation, almost **inscrutable** from the street — a low, dignified mass that did not declare itself as anything in particular.
+
+She had not designed the building to **inhibit** the city's tourism photographs. She had designed it, she said in her one-page accompanying note, to serve readers. Photographs, she added, would arrive in their own time.
+
+The jury was divided. Three of its seven members wanted to award the prize to a more **profligate** entry — a glittering, fountain-fronted building from a much larger firm, whose renderings had already appeared in two industry magazines. Two members were uncertain. The remaining two, including the chair, argued for Tova's design on the grounds that the city had quite enough monumental architecture already and could afford, for once, to commission a building that would teach its visitors patience.
+
+After three days of deliberation, the jury voted four to three for Tova. The losing firm, when the result was announced, issued a statement so measured that it was almost **monotonous** in its restraint, and then, less publicly, lobbied the city council to overturn the decision. The council did not. Construction began the following spring.
+
+Tova did not **premeditate** any particular response to the lobbying. She did not, in fact, mention it. She did, however, **improvise** several small revisions to the design during construction, in response to actual site conditions, that made the building better than the competition drawings had been. The contractor, a man who had worked on three of her previous projects, said later that her instinct for what to change in the field was, in his thirty years of experience, the most disciplined he had ever encountered.
+
+The library opened on a Tuesday in October. The opening ceremony was small. The mayor spoke for three minutes; Tova for one. The room, which had been prepared to be polite about a building it expected to be difficult, was instead surprised into something closer to gratitude. Within a year the city's main bookshop reported a measurable rise in casual reading among the under-thirties — a correlation no one could prove was caused by the building, and that no one, including Tova, was tempted to claim.
+
+The building was photographed eventually. The photographs, when they appeared, were not the kind the brief had imagined. They were quieter, smaller, less inclined to **immure** the building in its own monumentality. Tova kept one of them, in a plain frame, on the wall of her office. It was, she said, the most accurate review the building had received.`,
+  questions: [
+    {
+      id: 1,
+      kind: "vocab-context",
+      prompt: 'In this sentence, the word "iconoclastic" most nearly means:',
+      quote:
+        '"Her practice, after twenty-five years, had a reputation that local juries tended to call iconoclastic — a polite way of saying that her buildings refused to do the things municipal buildings were expected to do."',
+      options: [
+        "Strictly traditional and reverent of established forms.",
+        "Attacking or rejecting cherished beliefs or established conventions.",
+        "Specializing in religious imagery.",
+        "Producing identical copies of historical buildings.",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Iconoclastic" describes work that breaks with established conventions. The author\'s own gloss — buildings that refuse to do what civic buildings are expected to do — is exactly that.',
+    },
+    {
+      id: 2,
+      kind: "vocab-context",
+      prompt: 'In this sentence, the word "profligate" most nearly means:',
+      quote:
+        '"Three of its seven members wanted to award the prize to a more profligate entry — a glittering, fountain-fronted building from a much larger firm..."',
+      options: [
+        "Restrained and economical in its means.",
+        "Recklessly extravagant in its use of resources or display.",
+        "Specifically designed for libraries.",
+        "Written in classical Latin.",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Profligate" describes recklessly lavish display or expenditure. A glittering, fountain-fronted building is the textbook architectural example.',
+    },
+    {
+      id: 3,
+      kind: "tone-purpose",
+      prompt:
+        'The narrator describes the building as "inscrutable" rather than simply "plain." Why?',
+      options: [
+        '"Inscrutable" specifies a quality of being hard to read or interpret — refusing to declare itself as any one thing — which captures Tova\'s deliberate refusal to make the building legible as a "landmark," in a way "plain" would not.',
+        '"Inscrutable" implies the building is invisible.',
+        '"Inscrutable" and "plain" mean the same thing in this context.',
+        '"Inscrutable" suggests the building is decorated with mysterious symbols.',
+      ],
+      correctIndex: 0,
+      explanation:
+        '"Inscrutable" describes something whose meaning resists immediate reading. The whole point of Tova\'s elevation is its refusal to advertise itself — exactly the quality the word names.',
+    },
+    {
+      id: 4,
+      kind: "inference",
+      prompt:
+        "Based on the passage, what can the reader most reasonably infer about why the contractor described Tova\'s field improvisation as the most disciplined he had ever encountered?",
+      options: [
+        "He had worked with very few architects in his career and had no real basis for comparison.",
+        "Her revisions, though made on the fly, were not arbitrary departures from the design — they were small, considered adjustments that improved the building in response to actual conditions, exactly the kind of judgment most field improvisation lacks.",
+        "She refused to allow any changes to the design once construction had begun.",
+        "She delegated all field decisions to him without supervision.",
+      ],
+      correctIndex: 1,
+      explanation:
+        "The text describes the revisions as making the building better than the competition drawings had been — i.e., disciplined improvisation that improves rather than compromises the design.",
+    },
+    {
+      id: 5,
+      kind: "substitution",
+      prompt:
+        'Which single word could replace "lionized" in the sentence below without changing its meaning?',
+      quote:
+        '"Critics had alternately lionized her and dismissed her, sometimes in the same review."',
+      options: [
+        "Belittled",
+        "Celebrated",
+        "Ignored",
+        "Hired",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Celebrated" — given high public praise — captures the same meaning as "lionized." "Belittled" and "dismissed" are the opposite, which is the alternative the sentence already names.',
+    },
+    {
+      id: 6,
+      kind: "main-idea",
+      prompt:
+        "Which sentence best summarizes the central idea or arc of the passage?",
+      options: [
+        "An iconoclastic architect designs a small, deliberately understated municipal library against the brief\'s call for a tourism landmark — and is vindicated when the building is quietly received with gratitude rather than the monumentality everyone expected.",
+        "A municipal jury selects the wrong entry for a library competition and is forced to reverse its decision under industry pressure.",
+        "An architect compromises her style under city council pressure and produces a building she would later regret.",
+        "A famous architecture firm successfully overturns a competition result it had lost.",
+      ],
+      correctIndex: 0,
+      explanation:
+        "The arc moves from Tova's iconoclastic submission, through the divided jury, to the quietly received building and the small photograph she kept in her office.",
+    },
+  ],
+};
+
+const MISSION_16_SET_3: SetReading = {
+  title: "The Watchmaker's Apprentice",
+  subtitle:
+    "A short story about six months of work an apprentice thought was wasted, a clever escapement sketch, and the more interesting test.",
+  format: "Short Story",
+  readingMinutes: 4,
+  words: [
+    "reconcile",
+    "refine",
+    "relinquish",
+    "ruminate",
+    "skittish",
+    "superfluous",
+    "synoptic",
+    "thorough",
+    "visionary",
+    "vociferous",
+  ],
+  passage: `When Hugo Marcheval took on his first apprentice in twenty-two years, he warned her, on her first morning, that she would not enjoy the next three years. The young woman, Lina Verbist, had arrived from a top engineering school with a portfolio of clever student work and a reputation, among her professors, as something of a **visionary**. Hugo, who had built his small Geneva atelier on the principle that visionary apprentices were the most likely to fail, was not impressed by the portfolio. He was impressed, however, by the way she set down her tools.
+
+"You will spend the first six months doing work you will think is **superfluous**," he told her. "It is not superfluous. You will spend the next year doing work you will think is monotonous. It is not monotonous. You will spend the third year doing work you will, at last, recognize as the work I hired you to do. We will have, between now and then, perhaps four arguments. I expect you to win one of them."
+
+Lina, who had been warned by her professors that Hugo was a **vociferous** traditionalist, was prepared for sermons. She received instead instructions: dismantle this movement, document it, reassemble it; do the same with the next; do the same with the next. Hugo did not lecture. He corrected. His corrections were **thorough** in a way she had not previously encountered — small, exact, repeatedly defensible — and they accumulated, over weeks, into a discipline she could not have learned from any book.
+
+In her sixth month she began to **ruminate**, in her notebook at night, on a small modification to the escapement of one of the older movements. The modification was clever. It would, she thought, **refine** the mechanism's performance under temperature variation. She showed Hugo the sketch, expecting either dismissal or qualified praise. He gave her neither. He gave her, instead, a **synoptic** lecture, twenty minutes long and entirely without raising his voice, in which he traced every previous attempt to make the same modification over the past hundred and forty years, the precise reasons each had failed, and the one specific subtlety her sketch had missed.
+
+She did not, at first, **reconcile** herself to having been wrong. She sat with the lecture for three days. She redrew the sketch four times. By the fourth attempt, she had to admit that the subtlety Hugo had named was real, that her original modification would have introduced a new failure mode for every old failure mode it removed, and that the proper response was not to defend her sketch but to put it aside.
+
+Hugo did not gloat. He had not expected her to be right; he had expected her to take the correction seriously. He told her, over coffee that afternoon, that her willingness to **relinquish** the sketch was the more interesting test. Cleverness, he said, was common in apprentices. The capacity to be wrong without being **skittish** about future ideas was the rare trait.
+
+She finished the apprenticeship in two years and ten months — slightly faster than Hugo's average. She did not, at the end of it, replace him. She set up her own small atelier in Antwerp. The first watch she signed under her own name contained no visionary modification at all. It contained, instead, a movement of such restrained, classical correctness that two of Hugo's older clients, on examining it, said quietly that they thought he had probably trained her well.`,
+  questions: [
+    {
+      id: 1,
+      kind: "vocab-context",
+      prompt: 'In this sentence, the word "synoptic" most nearly means:',
+      quote:
+        '"He gave her, instead, a synoptic lecture, twenty minutes long and entirely without raising his voice, in which he traced every previous attempt to make the same modification over the past hundred and forty years..."',
+      options: [
+        "Heated and emotionally charged.",
+        "Providing a comprehensive overview that brings together multiple sources or examples.",
+        "Composed entirely of personal anecdotes.",
+        "Limited to a single specific case.",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Synoptic" describes a survey-like view that brings many sources or instances together. Tracing every previous attempt over 140 years is exactly that kind of comprehensive overview.',
+    },
+    {
+      id: 2,
+      kind: "vocab-context",
+      prompt: 'In this sentence, the word "superfluous" most nearly means:',
+      quote:
+        '"You will spend the first six months doing work you will think is superfluous. It is not superfluous."',
+      options: [
+        "Absolutely essential and irreplaceable.",
+        "Beyond what is needed; unnecessary or excess.",
+        "Highly creative and original.",
+        "Performed in collaboration with others.",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Superfluous" means unnecessary, beyond what is needed. The point of Hugo\'s warning is that the apprentice will misjudge essential foundational work as if it were excess.',
+    },
+    {
+      id: 3,
+      kind: "tone-purpose",
+      prompt:
+        'The narrator describes Hugo as a "vociferous" traditionalist according to Lina\'s professors. Why use that word?',
+      options: [
+        '"Vociferous" specifies someone who voices their views loudly and insistently — fitting the reputation a traditionalist would have among engineering professors who disagreed with him — even though, as the passage immediately shows, Hugo himself does not actually lecture.',
+        '"Vociferous" means silent and unobtrusive.',
+        '"Vociferous" and "traditional" mean the same thing.',
+        '"Vociferous" implies Hugo was a frequent television guest.',
+      ],
+      correctIndex: 0,
+      explanation:
+        '"Vociferous" describes loud, insistent voicing of one\'s views. The contrast between his reputation and his actual quiet, corrective style is one of the early surprises of the story.',
+    },
+    {
+      id: 4,
+      kind: "inference",
+      prompt:
+        "Based on the passage, what can the reader most reasonably infer about why Hugo regarded Lina\'s willingness to relinquish her sketch as more important than the cleverness of the sketch itself?",
+      options: [
+        "He was personally offended by the sketch and wanted her to abandon it.",
+        "Cleverness alone produces apprentices who defend their early ideas past the point of usefulness; the rare ability to release a clever idea once it has been honestly refuted is what allows an apprentice to grow rather than to harden.",
+        "The sketch was so similar to his own work that he suspected plagiarism.",
+        "He believed that all modifications to escapements were inherently a bad idea.",
+      ],
+      correctIndex: 1,
+      explanation:
+        'The text spells this out: "Cleverness, he said, was common in apprentices. The capacity to be wrong without being skittish about future ideas was the rare trait."',
+    },
+    {
+      id: 5,
+      kind: "substitution",
+      prompt:
+        'Which single word could replace "thorough" in the sentence below without changing its meaning?',
+      quote:
+        '"His corrections were thorough in a way she had not previously encountered — small, exact, repeatedly defensible..."',
+      options: [
+        "Cursory",
+        "Exhaustive",
+        "Indifferent",
+        "Improvised",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Exhaustive" — complete, leaving nothing out — captures the same meaning as "thorough." "Cursory" and "indifferent" are the opposite.',
+    },
+    {
+      id: 6,
+      kind: "main-idea",
+      prompt:
+        "Which sentence best summarizes the central idea or arc of the passage?",
+      options: [
+        "A watchmaker drives away a talented apprentice by refusing to consider any of her ideas.",
+        "A reputedly traditionalist watchmaker turns out to be a tireless self-promoter who lectures his apprentice constantly.",
+        "A demanding watchmaker takes on a clever apprentice whose real test, when it comes, is not whether her sketch is right but whether she can release it gracefully — a discipline that eventually produces, in her own atelier, work of restrained classical correctness.",
+        "An apprentice rejects her teacher\'s correction and goes on to revolutionize watchmaking with her escapement modification.",
+      ],
+      correctIndex: 2,
+      explanation:
+        "The arc moves from Hugo's warning, through the rumination on the escapement, to the synoptic correction and the closing line about the restrained watch she would later sign.",
+    },
+  ],
+};
+
+const MISSION_17_SET_1: SetReading = {
+  title: "The Whistleblower at the Foundation",
+  subtitle:
+    "A short story about a quiet pattern in eleven small grants, a circumscribed memo, and the wrong thing made unmistakably visible.",
+  format: "Short Story",
+  readingMinutes: 4,
+  words: [
+    "acclaim",
+    "ascertain",
+    "assertive",
+    "bogus",
+    "cataclysmic",
+    "circumscribe",
+    "complementary",
+    "contentious",
+    "disingenuous",
+    "divulge",
+  ],
+  passage: `When Marisol Reyna joined the Vandermere Foundation as its new director of programs, she arrived with substantial **acclaim**. Her previous foundation had, under her direction, won three sector prizes for its work on rural literacy; her appointment was widely interpreted as a signal that Vandermere intended to professionalize. Within four months, however, Marisol had begun to find, in her routine review of the foundation's grant files, a pattern that was harder to explain.
+
+The pattern was not, on its face, **cataclysmic**. Several of the grants — small ones, distributed across three program areas — had been awarded to organizations whose paperwork was, on close inspection, partially **bogus**. Some of the documented "site visits" had not, by the testimony of the local partners she eventually contacted, taken place. Several of the partner organizations were, in fact, **complementary** in a way that suggested, on careful reading, that they were operated by overlapping people. None of this was illegal. All of it was — to use a word she would later regret using too freely — **disingenuous**.
+
+She did not, at first, raise the issue publicly. She wanted, before she did anything she could not undo, to **ascertain** the extent of the pattern with as much precision as her own access allowed. She spent six weeks reviewing files, comparing addresses, and quietly verifying which of the recent grants had landed where the foundation thought they had. By the end of that six weeks she had identified eleven grants — small, distributed, totaling slightly under two percent of the year's giving — that did not appear to be reaching their stated beneficiaries.
+
+She wrote a long, careful, deliberately **circumscribed** memo. She did not, in the memo, accuse anyone of fraud. She did not name individuals. She listed the eleven grants, the specific anomalies in each, and the verification methods she had used. She sent the memo to the foundation's audit committee on a Friday and to the foundation's chair, separately, the same afternoon.
+
+The chair's response was **contentious** in a way she had not anticipated. He asked, in a phone call the following Monday, whether she truly intended to **divulge** the contents of the memo to the full board. She said she did. He pointed out, with what she came to recognize as practiced patience, that small percentage discrepancies of this kind were "not unusual" in a foundation of Vandermere's scale, and that an **assertive** new director might be wise to consider the institutional cost of pursuing them in her first year.
+
+Marisol thanked him for the call. She did not, in any sense he would later be able to point to, defy him. She did, however, send the memo to the full audit committee at five o'clock the same afternoon, with no further commentary. Two members of the committee — including its chair, a retired federal auditor who had, Marisol learned later, been waiting for a reason to use his expertise — opened a quiet investigation by the end of the week.
+
+The investigation took five months. Three of the eleven grants were found to have been awarded irregularly enough to require recovery; two of those involved an officer who quietly left the foundation. The remaining eight were found to have been the result of administrative carelessness rather than misconduct. The foundation did not, as the chair had implied it would, suffer any institutional damage. Marisol, who had braced for considerable retaliation, received instead a quiet promotion the following spring.
+
+She did not interpret the promotion as vindication. She interpreted it as a reminder that institutions, like individuals, occasionally do exactly the right thing when it is made unmistakably clear what the wrong thing would look like instead.`,
+  questions: [
+    {
+      id: 1,
+      kind: "vocab-context",
+      prompt: 'In this sentence, the word "disingenuous" most nearly means:',
+      quote:
+        '"All of it was — to use a word she would later regret using too freely — disingenuous."',
+      options: [
+        "Sincerely honest and forthright.",
+        "Insincere or misleading, especially while pretending to be candid.",
+        "Composed in a foreign language.",
+        "Required by federal regulation.",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Disingenuous" describes conduct that is not as candid or honest as it pretends to be. Paperwork that masks overlapping operators behind separate organizations is exactly that.',
+    },
+    {
+      id: 2,
+      kind: "vocab-context",
+      prompt: 'In this sentence, the word "circumscribed" most nearly means:',
+      quote:
+        '"She wrote a long, careful, deliberately circumscribed memo. She did not, in the memo, accuse anyone of fraud."',
+      options: [
+        "Wide-ranging and unrestrained in its conclusions.",
+        "Carefully limited or bounded in scope.",
+        "Decorated with ornamental flourishes.",
+        "Written in shorthand.",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Circumscribed" means bounded, deliberately limited in scope. The memo\'s refusal to accuse anyone of fraud, while still listing every anomaly precisely, is the bounded discipline the word names.',
+    },
+    {
+      id: 3,
+      kind: "tone-purpose",
+      prompt:
+        'The narrator describes the chair\'s response as "contentious" rather than simply "negative." Why?',
+      options: [
+        '"Contentious" specifies an actively argumentative response — one designed to dispute and resist rather than simply to disagree — which fits a chair who tries, with practiced patience, to talk her out of escalating.',
+        '"Contentious" implies the chair was deeply pleased with the memo.',
+        '"Contentious" and "negative" mean exactly the same thing.',
+        '"Contentious" suggests the chair offered a financial settlement.',
+      ],
+      correctIndex: 0,
+      explanation:
+        '"Contentious" denotes an actively argumentative posture. The chair\'s call is not a passive dislike of the memo — it is an attempt to argue her out of it.',
+    },
+    {
+      id: 4,
+      kind: "inference",
+      prompt:
+        "Based on the passage, what can the reader most reasonably infer about why Marisol sent the memo to the full audit committee even after the chair signaled disapproval?",
+      options: [
+        "She wanted the chair to be embarrassed in front of the board.",
+        "Withholding the memo at the chair\'s informal request would have effectively let his preference override the foundation\'s formal oversight process — converting an institutional matter into a private negotiation she had no authority to make.",
+        "Her contract required her to circulate every memo within forty-eight hours.",
+        "She had been promised a promotion in advance if she pushed the issue.",
+      ],
+      correctIndex: 1,
+      explanation:
+        "Her thanks-but-no-thanks response shows the structural point: the audit committee, not the chair, is the legitimate recipient of the memo. Honoring his request would have been a quiet override of the oversight process itself.",
+    },
+    {
+      id: 5,
+      kind: "substitution",
+      prompt:
+        'Which single word could replace "ascertain" in the sentence below without changing its meaning?',
+      quote:
+        '"...to ascertain the extent of the pattern with as much precision as her own access allowed."',
+      options: [
+        "Guess",
+        "Determine",
+        "Exaggerate",
+        "Hide",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Determine" — establish with certainty through inquiry — captures the same meaning as "ascertain." The other choices reverse or distort the sense.',
+    },
+    {
+      id: 6,
+      kind: "main-idea",
+      prompt:
+        "Which sentence best summarizes the central idea or arc of the passage?",
+      options: [
+        "A new program director quietly identifies a pattern of irregular small grants, sends a deliberately circumscribed memo through the proper channel despite informal pressure to bury it, and is eventually promoted when the foundation does the right thing.",
+        "A new program director destroys a respected foundation by exaggerating routine administrative discrepancies into a scandal.",
+        "A foundation chair successfully prevents a new director from raising concerns about grant irregularities and forces her to resign.",
+        "An audit committee invents irregularities in order to remove a foundation officer it dislikes.",
+      ],
+      correctIndex: 0,
+      explanation:
+        "The arc moves from Marisol's careful verification, through her circumscribed memo and the chair's contentious call, to the audit committee\'s investigation — and the closing reflection on institutions doing the right thing when the wrong thing is made unmistakably clear.",
+    },
+  ],
+};
+
+const MISSION_17_SET_2: SetReading = {
+  title: "The Debate Coach",
+  subtitle:
+    "A short story about a list of seven fallacies, a season of losing well, and twelve teenagers learning how to think with people who disagree with them.",
+  format: "Short Story",
+  readingMinutes: 4,
+  words: [
+    "dogmatic",
+    "fallacious",
+    "foolhardy",
+    "hinder",
+    "impair",
+    "impugn",
+    "incessant",
+    "inclined",
+    "inveterate",
+    "miserly",
+  ],
+  passage: `When Marcus Olin took over the debate team at North Hollow High School, he inherited a tradition he did not particularly admire. The previous coach, a charismatic former lawyer, had built the team's success on a single technique: aggressive cross-examination. His debaters had been trained to **impugn** the credibility of opposing speakers as a matter of routine, to interrupt as often as the rules allowed, and to treat any concession as a tactical mistake. The team had won a great many trophies. It had also produced, over a decade, very few graduates who went on to be **inclined** toward genuine intellectual debate after high school.
+
+Marcus had been hired, in part, to change this. He did not, on his first day, deliver a sermon. He did not, in fact, name his predecessor. He did, however, post on the team's bulletin board a single sheet of paper listing the seven most common types of **fallacious** argument his team had been using to win rounds — every one of them documented from transcripts of the previous season's tournaments. He invited his debaters, over the first month, to argue with him about the list.
+
+They did. The discussions were, at first, **incessant** and frequently uncomfortable. Several senior members of the team — students who had been trained to be **dogmatic** about the tradition they had inherited — argued that the list was an attack on the program's identity. Marcus did not, at any point, withdraw the list. He did, however, refuse to be drawn into the kind of personal exchange his predecessor had specialized in. When a senior accused him, in a particularly heated session, of being an "**inveterate** purist who would rather lose well than win," he said only that he did not see the choice as binary, and asked the student to find one transcript, from any tournament in the past three years, in which the team had won a round without using at least one of the seven techniques on the list. The student tried for a week. He could not.
+
+The transition was not painless. The team's first tournament under Marcus's coaching produced their worst performance in nine seasons. He did not panic. He did, however, sit down with each of the team's twelve members individually and ask them, in plain terms, what they thought the team was for. Their answers, when he wrote them down, were less uniform than he had expected. Three students said winning. Four said preparation for college. Two said community. Two said "I don't know." One said, with surprising directness, "to learn how to think with people who disagree with me."
+
+Marcus did not allow the team to become **miserly** with its standards. He did not relax the seven-fallacy list. He did, however, build, over the following season, a parallel system of internal scoring that rewarded cleanly constructed arguments as much as winning rounds. The team's tournament performance recovered slowly — by the end of the second year, they were winning roughly as many trophies as before. By the end of the third year, two graduating seniors had won small national awards in policy writing, a category the team had never before entered.
+
+Marcus did not announce the changes as a victory. He did not, in his coaching style, tend toward such announcements. He did, however, observe quietly to a colleague that the most useful change had not been the list of fallacies. It had been the simple discovery, made together with twelve teenagers, that arguing well did not have to **impair** the chance of arguing fairly, and that the older approach — however **foolhardy** in retrospect — had been allowed for years to **hinder** the very intellectual development debate was supposed to produce.`,
+  questions: [
+    {
+      id: 1,
+      kind: "vocab-context",
+      prompt: 'In this sentence, the word "impugn" most nearly means:',
+      quote:
+        '"His debaters had been trained to impugn the credibility of opposing speakers as a matter of routine..."',
+      options: [
+        "Strongly affirm or support.",
+        "Attack as false or call into question.",
+        "Translate into simpler terms.",
+        "Quote at length without commentary.",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Impugn" means to call into question or attack as false — exactly the routine cross-examination technique the passage describes.',
+    },
+    {
+      id: 2,
+      kind: "vocab-context",
+      prompt: 'In this sentence, the word "fallacious" most nearly means:',
+      quote:
+        '"...listing the seven most common types of fallacious argument his team had been using to win rounds..."',
+      options: [
+        "Logically valid and well supported.",
+        "Based on a mistaken or deceptive form of reasoning.",
+        "Limited to a single specific topic.",
+        "Original and previously unused.",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Fallacious" describes reasoning that contains a logical error or deception. A list of recognized argumentative errors is exactly such a list.',
+    },
+    {
+      id: 3,
+      kind: "tone-purpose",
+      prompt:
+        'The narrator describes some senior students as "dogmatic" about the program\'s old tradition. Why use that word rather than "loyal"?',
+      options: [
+        '"Dogmatic" specifies an unyielding, almost ideological adherence to a position — closing off questioning, rather than the warm allegiance "loyal" implies — and that closed quality is precisely what made the seniors treat the new list as an "attack on the program\'s identity."',
+        '"Dogmatic" implies the students were religious.',
+        '"Dogmatic" and "loyal" mean exactly the same thing.',
+        '"Dogmatic" suggests the students were eager to abandon the tradition.',
+      ],
+      correctIndex: 0,
+      explanation:
+        '"Dogmatic" describes an unyielding, often closed-minded adherence to a doctrine. The seniors\' refusal to question their inherited technique is exactly that posture.',
+    },
+    {
+      id: 4,
+      kind: "inference",
+      prompt:
+        "Based on the passage, what can the reader most reasonably infer about why Marcus introduced an internal scoring system rewarding clean argument construction in addition to tournament winning?",
+      options: [
+        "He wanted to abolish tournaments altogether.",
+        "An internal score that rewarded cleanly constructed arguments allowed the team to keep practicing the standards he believed in even during the painful first season when their tournament results were down — preserving the new discipline while the wins recovered.",
+        "He needed a way to inflate the team\'s record without actually winning more rounds.",
+        "The school administration required all teams to keep two parallel scores.",
+      ],
+      correctIndex: 1,
+      explanation:
+        "The internal score gives the team a way to be rewarded for the right behaviors before the external rewards (trophies) catch up. That is exactly the structural problem the new system solves.",
+    },
+    {
+      id: 5,
+      kind: "substitution",
+      prompt:
+        'Which single word could replace "hinder" in the sentence below without changing its meaning?',
+      quote:
+        '"...the older approach...had been allowed for years to hinder the very intellectual development debate was supposed to produce."',
+      options: [
+        "Accelerate",
+        "Obstruct",
+        "Celebrate",
+        "Advertise",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Obstruct" — get in the way of, impede — captures the same meaning as "hinder." "Accelerate" is the opposite.',
+    },
+    {
+      id: 6,
+      kind: "main-idea",
+      prompt:
+        "Which sentence best summarizes the central idea or arc of the passage?",
+      options: [
+        "A debate coach abandons all standards in order to make his team feel better about losing.",
+        "A new debate coach introduces a documented list of fallacies, accepts a painful first season, and over three years builds a program that wins as much as before while also producing students capable of arguing fairly.",
+        "A team of high-school debaters successfully forces their new coach to return to the previous coach\'s aggressive techniques.",
+        "A school administration replaces a debate coach who has lost too many tournaments in his first season.",
+      ],
+      correctIndex: 1,
+      explanation:
+        "The arc moves from Marcus's posted list, through the rough first tournament and individual conversations, to the parallel scoring system and the recovery — embodying his closing observation that arguing well need not impair arguing fairly.",
+    },
+  ],
+};
+
+const MISSION_17_SET_3: SetReading = {
+  title: "The Editor and the Apology",
+  subtitle:
+    "A short story about a hasty front-page story, a dignified letter from a councilman, and the most expensive lesson an editor ever learned about a single skipped phone call.",
+  format: "Short Story",
+  readingMinutes: 4,
+  words: [
+    "patent",
+    "petulant",
+    "pithy",
+    "pliant",
+    "sanctimonious",
+    "sound",
+    "tarnish",
+    "tepid",
+    "upbraid",
+    "vexation",
+  ],
+  passage: `When the *Bramley Gazette* published a hasty front-page story accusing a local councilman of accepting an undisclosed gift, the consequences arrived faster than the editor, Felix Tarn, had been prepared for. The councilman, who had not been called for comment before publication, demonstrated within forty-eight hours that the alleged gift had, in fact, been a routine reimbursement disclosed in the council's own minutes a year earlier. The reporter who had written the story was a young man on his fourth byline. The editor who had cleared it for the front page was Felix himself.
+
+The councilman did not, as one might have expected, demand a **petulant** retraction. He sent, instead, a short and dignified letter to the paper requesting only that the correction appear with the same prominence as the original story. The letter was firm. It was not vindictive. The error, the councilman wrote, was **patent** to anyone who had read the council's minutes, and he did not propose to **upbraid** the reporter further than the facts already had.
+
+Felix considered, briefly, the kind of **tepid** correction the paper had occasionally run in similar circumstances over the years — a small box on page seven, a few cautious sentences, no editorial comment. He decided against it almost immediately. The original story had run as the lead item of the front page. The correction, he concluded, would have to do the same.
+
+He drafted the correction himself. He did not, in the draft, attempt to share blame; he did not attempt to soften the error with caveats; he did not, in his own phrase later, "produce a **sanctimonious** apology that pretended the failure had been anyone's but the paper's." The draft was **pithy**: four short paragraphs that named the original error, named the editor responsible (himself), and stated, plainly, what the paper would change in its verification protocols to avoid a repetition. It ran on the front page the following morning.
+
+The reaction was instructive. Several readers wrote in to thank the paper for the correction; a few cancelled their subscriptions; one rival editor in a neighboring town wrote a private note suggesting that Felix had been "more **pliant** than principle required." Felix did not respond to the last of these. He did, however, write back briefly to the readers who had thanked him, and called the councilman personally to apologize.
+
+The councilman accepted the apology with the same dignity he had brought to the original letter. He did, in their conversation, raise one specific concern: that the original story, even after the correction, would in some quiet way **tarnish** his standing with the small portion of the electorate who would never read past a headline. Felix acknowledged the concern. He could not undo it. He could, however, offer to write a longer profile of the councilman's actual record over the following months, on the strict condition that the councilman trust him to write it honestly. The councilman accepted, with the dry observation that he was not in a strong position to refuse.
+
+The profile, when it appeared six weeks later, was neither flattering nor harsh. It was **sound** in the old journalistic sense: carefully reported, evenly written, attentive to the councilman's failures as well as his successes. The councilman, on reading it, sent Felix a final note. "You have done," he wrote, "exactly what you said you would do, which is more than I had any right to expect." Felix kept the note in his desk drawer for the rest of his career.
+
+He did not, in the years that followed, claim the episode as a credit. He did mention it once, at a small training session for younger editors, as the most expensive lesson he had ever learned about the **vexation** that follows skipping a single phone call before publication.`,
+  questions: [
+    {
+      id: 1,
+      kind: "vocab-context",
+      prompt: 'In this sentence, the word "patent" most nearly means:',
+      quote:
+        '"The error, the councilman wrote, was patent to anyone who had read the council\'s minutes..."',
+      options: [
+        "Confidential and accessible only to specialists.",
+        "Obvious; clearly visible to anyone who looks.",
+        "Officially registered as an invention.",
+        "Difficult to detect even on close reading.",
+      ],
+      correctIndex: 1,
+      explanation:
+        'As an adjective, "patent" means obvious or clearly visible. The error was self-evident to anyone willing to consult the public minutes.',
+    },
+    {
+      id: 2,
+      kind: "vocab-context",
+      prompt: 'In this sentence, the word "tepid" most nearly means:',
+      quote:
+        '"Felix considered, briefly, the kind of tepid correction the paper had occasionally run in similar circumstances over the years — a small box on page seven, a few cautious sentences, no editorial comment."',
+      options: [
+        "Bold and emphatically prominent.",
+        "Lukewarm; lacking energy, conviction, or force.",
+        "Required by libel law in similar cases.",
+        "Written in a foreign language.",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Tepid" describes a lukewarm, half-hearted response. A small box on page seven with no editorial comment is exactly that lukewarm gesture.',
+    },
+    {
+      id: 3,
+      kind: "tone-purpose",
+      prompt:
+        'The narrator emphasizes that Felix\'s correction was not "sanctimonious." Why use that specific word?',
+      options: [
+        '"Sanctimonious" specifies a self-righteous, moralizing tone — pretending to greater virtue than one has — which Felix is at pains to avoid because the failure was the paper\'s, and any high-toned apology would only have made the apology itself look like a performance.',
+        '"Sanctimonious" implies the apology was insincere on its face.',
+        '"Sanctimonious" and "honest" mean exactly the same thing.',
+        '"Sanctimonious" specifies that the apology was published in a religious newspaper.',
+      ],
+      correctIndex: 0,
+      explanation:
+        '"Sanctimonious" describes a self-righteous, moralizing posture. Felix\'s correction is bare-bones precisely so that the apology does the work, not the tone of the apology.',
+    },
+    {
+      id: 4,
+      kind: "inference",
+      prompt:
+        "Based on the passage, what can the reader most reasonably infer about why Felix offered to write a longer profile of the councilman\'s actual record?",
+      options: [
+        "He hoped the offer would distract the councilman from pursuing legal action.",
+        "He recognized that even a front-page correction could not undo the headline-only damage to the councilman\'s standing — and a fair, sound profile, written under the councilman\'s trust, was the closest thing to a meaningful repair the paper could offer.",
+        "The newspaper was contractually required to publish a follow-up profile.",
+        "He was hoping to receive a favor from the councilman in return.",
+      ],
+      correctIndex: 1,
+      explanation:
+        "The councilman raises the headline-only damage explicitly, and Felix\'s response is the only kind of repair the paper can actually deliver: a long, fair piece of journalism written on terms of trust.",
+    },
+    {
+      id: 5,
+      kind: "substitution",
+      prompt:
+        'Which single word could replace "vexation" in the sentence below without changing its meaning?',
+      quote:
+        '"...the most expensive lesson he had ever learned about the vexation that follows skipping a single phone call before publication."',
+      options: [
+        "Pleasure",
+        "Annoyance",
+        "Boredom",
+        "Reward",
+      ],
+      correctIndex: 1,
+      explanation:
+        '"Annoyance" — irritation or trouble — captures the same meaning as "vexation." The other choices reverse or are unrelated.',
+    },
+    {
+      id: 6,
+      kind: "main-idea",
+      prompt:
+        "Which sentence best summarizes the central idea or arc of the passage?",
+      options: [
+        "A newspaper editor refuses to correct a front-page error and is forced out of his job by the offended councilman.",
+        "An editor responds to his own front-page error with a prominent, plain-spoken correction and a longer follow-up profile written on the councilman\'s terms — turning a serious mistake into a measured repair without softening any of the responsibility.",
+        "A councilman uses a defamation threat to extract a flattering profile from a local newspaper.",
+        "A young reporter is dismissed from a newspaper after his story turns out to be inaccurate.",
+      ],
+      correctIndex: 1,
+      explanation:
+        "The arc moves from the hasty story, through the dignified letter, to the front-page correction and the sound follow-up profile — and the closing line about the most expensive lesson Felix ever learned.",
+    },
+  ],
+};
+
 export const SET_READINGS: Record<string, SetReading> = {
   "1-1": MISSION_1_SET_1,
   "1-2": MISSION_1_SET_2,
@@ -5690,6 +6855,15 @@ export const SET_READINGS: Record<string, SetReading> = {
   "14-1": MISSION_14_SET_1,
   "14-2": MISSION_14_SET_2,
   "14-3": MISSION_14_SET_3,
+  "15-1": MISSION_15_SET_1,
+  "15-2": MISSION_15_SET_2,
+  "15-3": MISSION_15_SET_3,
+  "16-1": MISSION_16_SET_1,
+  "16-2": MISSION_16_SET_2,
+  "16-3": MISSION_16_SET_3,
+  "17-1": MISSION_17_SET_1,
+  "17-2": MISSION_17_SET_2,
+  "17-3": MISSION_17_SET_3,
 };
 
 export function getSetReading(day: number, group: number): SetReading | null {
