@@ -396,11 +396,16 @@ export default function TestMode({ onBack, onNavigate }: TestModeProps) {
       setResults(finalResults);
     }
 
-    // 2) Commit results into the spaced-repetition engine.
+    // 2) Commit results into the spaced-repetition engine, including the
+    //    per-question kind and time-to-answer so the adaptive mastery model
+    //    can react to slow-vs-fast correct answers and per-type performance.
     finalResults.forEach((r) => {
       const correct = isAnswerCorrect(r.q, r.response);
       const quality = correct ? 5 : r.response === null ? 0 : 1;
-      markWordReviewed(r.q.word.id, quality);
+      markWordReviewed(r.q.word.id, quality, {
+        questionKind: r.q.kind,
+        responseTimeMs: r.timeSpentMs,
+      });
     });
 
     // 3) Persist a TestHistoryRecord locally so analytics can pull from it.

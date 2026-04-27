@@ -1,5 +1,22 @@
 import { WORD_ROOTS } from "@/data/wordRoots";
 
+export type MasteryLevel =
+  | "new"
+  | "learning"
+  | "weak"
+  | "improving"
+  | "strong"
+  | "mastered";
+
+export type ConfidenceTag = "knew" | "guessed" | "forgot";
+
+export interface PerformanceByType {
+  attempts: number;
+  correct: number;
+  wrong: number;
+  avgMs: number;
+}
+
 export interface Word {
   id: string;
   word: string;
@@ -22,9 +39,68 @@ export interface Word {
   qualityHistory: number[];
   root?: string;
   wordFamily?: string[];
+
+  // ─── Phase 7: adaptive mastery & spaced repetition ──────────────────────
+  /** Total times the word has been answered (correct + wrong). */
+  totalAttempts: number;
+  /** Lifetime correct attempts (mirrors correctCount). */
+  correctAttempts: number;
+  /** Lifetime wrong attempts (mirrors incorrectCount). */
+  wrongAttempts: number;
+  /** Cached accuracy 0..1 (correctAttempts / totalAttempts). */
+  accuracy: number;
+  /** ISO timestamp of the most recent practice attempt of any kind. */
+  lastPracticed: string | null;
+  /** ISO timestamp of the most recent wrong attempt. */
+  lastIncorrect: string | null;
+  /** Rolling average response time across all attempts, in ms. */
+  avgResponseTimeMs: number;
+  /** Number of timed samples that contributed to avgResponseTimeMs. */
+  responseTimeSamples: number;
+  /** Recent confidence ratings (most recent last), capped at 10. */
+  confidenceHistory: ConfidenceTag[];
+  /** Lifetime mistake count (mirrors wrongAttempts; kept for clarity). */
+  mistakeCount: number;
+  /** True when the word has shown a difficult pattern (wrong-heavy or marked). */
+  isDifficult: boolean;
+  /** Adaptive mastery level used by the UI and study planning. */
+  masteryLevel: MasteryLevel;
+  /** Mirror of nextReview as a friendly alias. */
+  nextReviewDate: string | null;
+  /** Per-question-kind performance breakdown. */
+  performanceByType: Record<string, PerformanceByType>;
 }
 
-export const RAW_WORDS: Omit<Word, "id" | "difficulty" | "lastReviewed" | "nextReview" | "status" | "interval" | "easeFactor" | "repetitions" | "correctCount" | "incorrectCount" | "qualityHistory" | "root" | "wordFamily">[] = [
+export const RAW_WORDS: Omit<
+  Word,
+  | "id"
+  | "difficulty"
+  | "lastReviewed"
+  | "nextReview"
+  | "status"
+  | "interval"
+  | "easeFactor"
+  | "repetitions"
+  | "correctCount"
+  | "incorrectCount"
+  | "qualityHistory"
+  | "root"
+  | "wordFamily"
+  | "totalAttempts"
+  | "correctAttempts"
+  | "wrongAttempts"
+  | "accuracy"
+  | "lastPracticed"
+  | "lastIncorrect"
+  | "avgResponseTimeMs"
+  | "responseTimeSamples"
+  | "confidenceHistory"
+  | "mistakeCount"
+  | "isDifficult"
+  | "masteryLevel"
+  | "nextReviewDate"
+  | "performanceByType"
+>[] = [
   // Day 1 Group 1
   {
     word: "abound",
@@ -4410,6 +4486,20 @@ export function buildWords(): Word[] {
       qualityHistory: [],
       root: rootData.root,
       wordFamily: rootData.wordFamily,
+      totalAttempts: 0,
+      correctAttempts: 0,
+      wrongAttempts: 0,
+      accuracy: 0,
+      lastPracticed: null,
+      lastIncorrect: null,
+      avgResponseTimeMs: 0,
+      responseTimeSamples: 0,
+      confidenceHistory: [],
+      mistakeCount: 0,
+      isDifficult: false,
+      masteryLevel: "new" as const,
+      nextReviewDate: null,
+      performanceByType: {},
     };
   });
 }

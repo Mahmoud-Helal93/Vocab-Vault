@@ -8,7 +8,7 @@ import {
   loadStreak, updateStreak, loadPlan, savePlan, loadCrunch, saveCrunch,
   loadBookmarks, saveBookmarks,
 } from "@/lib/storage";
-import { calculateNextReview } from "@/lib/srs";
+import { calculateNextReview, type ReviewContext } from "@/lib/srs";
 import {
   GamificationState, loadGamification, saveGamification,
   XP_REWARDS, evaluateBadges, BadgeDef,
@@ -28,7 +28,11 @@ interface AppContextType {
   newlyUnlockedBadges: BadgeDef[];
   dismissBadgeToasts: () => void;
   updateWord: (id: string, updates: Partial<Word>) => void;
-  markWordReviewed: (id: string, quality: number) => void;
+  markWordReviewed: (
+    id: string,
+    quality: number,
+    context?: ReviewContext,
+  ) => void;
   updateSettings: (updates: Partial<Settings>) => void;
   updatePlan: (updates: Partial<PlanSettings>) => void;
   updateCrunch: (updates: Partial<CrunchState>) => void;
@@ -113,7 +117,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
   }, []);
 
   const markWordReviewed = useCallback(
-    (id: string, quality: number) => {
+    (id: string, quality: number, context: ReviewContext = {}) => {
       let updatedWords: Word[] = [];
       let prevStatus: Word["status"] | null = null;
       let newStatus: Word["status"] | null = null;
@@ -122,7 +126,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
         const word = prev.find((w) => w.id === id);
         if (!word) { updatedWords = prev; return prev; }
         prevStatus = word.status;
-        const updates = calculateNextReview(word, quality);
+        const updates = calculateNextReview(word, quality, context);
         newStatus = (updates.status as Word["status"]) ?? word.status;
         const updated = prev.map((w) => (w.id === id ? { ...w, ...updates } : w));
         saveWords(updated);
@@ -197,13 +201,27 @@ export function AppProvider({ children }: { children: ReactNode }) {
         difficulty: 0,
         lastReviewed: null as null,
         nextReview: null as null,
+        nextReviewDate: null as null,
         status: "new" as const,
+        masteryLevel: "new" as const,
         interval: 0,
         easeFactor: 2.5,
         repetitions: 0,
         correctCount: 0,
         incorrectCount: 0,
+        correctAttempts: 0,
+        wrongAttempts: 0,
+        totalAttempts: 0,
+        accuracy: 0,
         qualityHistory: [],
+        confidenceHistory: [],
+        avgResponseTimeMs: 0,
+        responseTimeSamples: 0,
+        mistakeCount: 0,
+        isDifficult: false,
+        lastPracticed: null as null,
+        lastIncorrect: null as null,
+        performanceByType: {},
       }));
       saveWords(fresh);
       return fresh;

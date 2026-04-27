@@ -351,7 +351,10 @@ export default function PracticeMode({
       const finalCorrect =
         r.finalCorrect ?? r.firstCorrect ?? false;
       const quality = confidenceToQuality(conf, finalCorrect);
-      markWordReviewed(q.word.id, quality);
+      markWordReviewed(q.word.id, quality, {
+        confidence: conf,
+        questionKind: q.kind,
+      });
       setResponse(q.id, (prev) => ({ ...prev, confidence: conf }));
     },
     [markWordReviewed, responses, setResponse],

@@ -1,4 +1,5 @@
 import { Word, buildWords } from "@/data/words";
+import { backfillMasteryFields } from "@/lib/srs";
 
 // All localStorage keys prefixed with gre_
 export const STORAGE_KEYS = {
@@ -213,13 +214,17 @@ export function loadWords(): Word[] {
       const fresh = buildWords();
       const storedIds = new Set(parsed.map((w) => w.id));
       const newWords = fresh.filter((w) => !storedIds.has(w.id));
-      // Migrate: add missing qualityHistory field
-      const migrated = parsed.map((w) => ({
-        ...w,
-        qualityHistory: w.qualityHistory ?? [],
-        root: w.root ?? fresh.find((f) => f.id === w.id)?.root,
-        wordFamily: w.wordFamily ?? fresh.find((f) => f.id === w.id)?.wordFamily,
-      }));
+      // Migrate: backfill missing fields (qualityHistory, root family, and the
+      // Phase 7 adaptive-mastery fields).
+      const migrated = parsed.map((w) =>
+        backfillMasteryFields({
+          ...w,
+          qualityHistory: w.qualityHistory ?? [],
+          root: w.root ?? fresh.find((f) => f.id === w.id)?.root,
+          wordFamily:
+            w.wordFamily ?? fresh.find((f) => f.id === w.id)?.wordFamily,
+        }),
+      );
       return [...migrated, ...newWords];
     }
   } catch { /* ignore */ }
