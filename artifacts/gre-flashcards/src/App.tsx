@@ -17,7 +17,6 @@ import Bookmarks from "@/pages/Bookmarks";
 import MissionDetail from "@/pages/MissionDetail";
 import SetReading from "@/pages/SetReading";
 import StoryLibrary from "@/pages/StoryLibrary";
-import QuickTen from "@/components/QuickTen";
 import SidebarSearch from "@/components/SidebarSearch";
 import BadgeToast from "@/components/BadgeToast";
 import GlobalStatsBar from "@/components/GlobalStatsBar";
@@ -47,7 +46,6 @@ function MainApp() {
   const [page, setPage] = useState<Page>("dashboard");
   const [pageParams, setPageParams] = useState<Record<string, unknown>>({});
   const [history, setHistory] = useState<HistoryEntry[]>([]);
-  const [quickTenOpen, setQuickTenOpen] = useState(false);
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
 
@@ -339,11 +337,6 @@ function MainApp() {
           {renderPage()}
         </main>
       </div>
-
-      {/* Quick Ten overlay */}
-      <AnimatePresence>
-        {quickTenOpen && <QuickTen onClose={() => setQuickTenOpen(false)} />}
-      </AnimatePresence>
 
       {/* Badge unlock toasts */}
       <BadgeToast />
