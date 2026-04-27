@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import { useApp } from "@/context/AppContext";
 import { getDueWords, getDifficultWords, getProgress } from "@/lib/srs";
@@ -6,7 +6,8 @@ import { TOTAL_DAYS, GROUPS_PER_DAY } from "@/data/words";
 import { BADGES, levelFromXp } from "@/lib/gamification";
 import {
   Target, Flame, Sparkles, Check, Lock, ChevronRight,
-  CalendarDays, TrendingUp, Zap, Trophy,
+  CalendarDays, TrendingUp, Zap, Trophy, Play, Clock,
+  ChevronDown, ChevronUp,
 } from "lucide-react";
 
 interface DashboardProps {
@@ -343,6 +344,102 @@ export default function Dashboard({ onNavigate }: DashboardProps) {
   const nextDay = dayProgress.find((d) => d.pct < 100) ?? dayProgress[0];
   const resumeMission = dueWords.length > 0 ? null : nextDay?.day ?? null;
 
+  // ── Next-best-action computation for the "Today's Main Mission" hero ──
+  const trueDueReviews = useMemo(
+    () => dueWords.filter((w) => w.status !== "new"),
+    [dueWords],
+  );
+
+  const inProgressSet = useMemo(() => {
+    for (let d = 1; d <= TOTAL_DAYS; d++) {
+      for (let g = 1; g <= GROUPS_PER_DAY; g++) {
+        const sw = words.filter((w) => w.day === d && w.group === g);
+        if (sw.length === 0) continue;
+        const hasProgress = sw.some((w) => w.status !== "new");
+        const allMastered = sw.every((w) => w.status === "mastered");
+        if (hasProgress && !allMastered) {
+          return {
+            day: d,
+            group: g,
+            mastered: sw.filter((w) => w.status === "mastered").length,
+            total: sw.length,
+          };
+        }
+      }
+    }
+    return null;
+  }, [words]);
+
+  const isNewUser = useMemo(
+    () => words.length > 0 && words.every((w) => w.status === "new"),
+    [words],
+  );
+
+  const nextAction = useMemo(() => {
+    if (isNewUser) {
+      return {
+        title: "Start Mission 1",
+        sub: "Begin your first set of vocabulary — build the foundation.",
+        cta: "Begin Training",
+        icon: <Sparkles size={28} className="text-white" strokeWidth={2.5} />,
+        action: () => onNavigate("mission-detail", { missionDay: 1 }),
+      };
+    }
+    if (inProgressSet) {
+      return {
+        title: `Continue Mission ${inProgressSet.day} · Set ${inProgressSet.group}`,
+        sub: `${inProgressSet.mastered} of ${inProgressSet.total} words mastered in this set — pick up where you left off.`,
+        cta: "Continue Set",
+        icon: (
+          <Play
+            size={26}
+            className="text-white"
+            strokeWidth={2.5}
+            fill="white"
+          />
+        ),
+        action: () =>
+          onNavigate("mission-detail", { missionDay: inProgressSet.day }),
+      };
+    }
+    if (trueDueReviews.length > 0) {
+      return {
+        title: `Review ${trueDueReviews.length} due word${
+          trueDueReviews.length === 1 ? "" : "s"
+        }`,
+        sub: "Spaced-repetition reviews are ready — keep your memory sharp.",
+        cta: "Start Review",
+        icon: <Clock size={26} className="text-white" strokeWidth={2.5} />,
+        action: () => onNavigate("review"),
+      };
+    }
+    if (nextDay && nextDay.pct < 100) {
+      return {
+        title: `Start Mission ${nextDay.day}`,
+        sub: `${nextDay.total - nextDay.mastered} new words ready to learn.`,
+        cta: "Start Mission",
+        icon: <Sparkles size={28} className="text-white" strokeWidth={2.5} />,
+        action: () =>
+          onNavigate("mission-detail", { missionDay: nextDay.day }),
+      };
+    }
+    return {
+      title: "All missions complete!",
+      sub: "You've mastered every set. Browse the Story Library or revisit reviews.",
+      cta: "Open Library",
+      icon: <Trophy size={28} className="text-white" strokeWidth={2.5} />,
+      action: () => onNavigate("story-library"),
+    };
+  }, [isNewUser, inProgressSet, trueDueReviews, nextDay, onNavigate]);
+
+  const [showAllBelts, setShowAllBelts] = useState(false);
+  const visibleBeltsForGrid = useMemo(() => {
+    const all = beltStats.filter((b) => b.totalDays > 0);
+    if (showAllBelts) return all;
+    const cur = beltStats[currentBeltIdx];
+    return cur && cur.totalDays > 0 ? [cur] : all.slice(0, 1);
+  }, [beltStats, showAllBelts, currentBeltIdx]);
+
   const agenda = [
     {
       time: "Now",
@@ -508,6 +605,39 @@ export default function Dashboard({ onNavigate }: DashboardProps) {
           </div>
         </button>
       </div>
+
+      {/* ── Today's Main Mission (next-best-action hero) ── */}
+      <section className="rounded-2xl border border-orange-200 dark:border-orange-900/40 overflow-hidden shadow-sm relative mb-6 bg-card">
+        <div
+          className="absolute inset-0 pointer-events-none"
+          style={{
+            background:
+              "linear-gradient(135deg, rgba(249,115,22,0.18) 0%, rgba(245,158,11,0.10) 45%, transparent 100%)",
+          }}
+        />
+        <div className="relative z-10 p-5 sm:p-7 flex flex-col sm:flex-row items-start sm:items-center gap-5 sm:gap-6">
+          <div className="w-16 h-16 rounded-2xl bg-orange-500 flex items-center justify-center shrink-0 shadow-lg shadow-orange-500/30">
+            {nextAction.icon}
+          </div>
+          <div className="flex-1 min-w-0">
+            <div className="text-[11px] font-extrabold uppercase tracking-wider text-orange-600 dark:text-orange-400 mb-1.5 inline-flex items-center gap-1.5">
+              <Target size={11} strokeWidth={3} /> Today's Main Mission
+            </div>
+            <h2 className="text-xl sm:text-2xl font-extrabold text-foreground leading-tight">
+              {nextAction.title}
+            </h2>
+            <p className="text-sm text-muted-foreground font-medium mt-1.5 leading-relaxed">
+              {nextAction.sub}
+            </p>
+          </div>
+          <button
+            onClick={nextAction.action}
+            className="btn-brand inline-flex items-center justify-center gap-2 text-sm font-bold px-6 py-3 rounded-xl shrink-0 shadow-md whitespace-nowrap w-full sm:w-auto"
+          >
+            {nextAction.cta} <ChevronRight size={16} />
+          </button>
+        </div>
+      </section>
 
       {/* ── Belt Journey Track ── */}
       <BeltJourneyTrack
@@ -719,16 +849,32 @@ export default function Dashboard({ onNavigate }: DashboardProps) {
                 </div>
               </div>
             </div>
-            <button
-              onClick={() => onNavigate("study")}
-              className="text-[11px] font-extrabold text-orange-600 hover:text-orange-700 uppercase tracking-wider"
-            >
-              All Missions →
-            </button>
+            <div className="flex items-center gap-3">
+              <button
+                onClick={() => setShowAllBelts((s) => !s)}
+                className="inline-flex items-center gap-1 text-[11px] font-extrabold text-muted-foreground hover:text-foreground uppercase tracking-wider transition-colors"
+              >
+                {showAllBelts ? (
+                  <>
+                    <ChevronUp size={12} strokeWidth={3} /> Current belt only
+                  </>
+                ) : (
+                  <>
+                    <ChevronDown size={12} strokeWidth={3} /> View all belts
+                  </>
+                )}
+              </button>
+              <button
+                onClick={() => onNavigate("study")}
+                className="text-[11px] font-extrabold text-orange-600 hover:text-orange-700 uppercase tracking-wider"
+              >
+                All Missions →
+              </button>
+            </div>
           </div>
 
           <div className="p-5 flex flex-col gap-6 relative z-10">
-            {beltStats.map((belt) => {
+            {visibleBeltsForGrid.map((belt) => {
               if (belt.totalDays === 0) return null;
               return (
                 <div key={belt.idx} className="flex flex-col md:flex-row gap-4 items-start">
