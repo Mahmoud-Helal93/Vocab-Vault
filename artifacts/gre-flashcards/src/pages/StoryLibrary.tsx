@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import {
   ArrowLeft,
@@ -8,11 +8,13 @@ import {
   Library,
   Filter,
   ChevronRight,
+  ChevronDown,
   X,
   Sparkles,
   CheckCircle2,
   AlertCircle,
   CircleDashed,
+  Eye,
 } from "lucide-react";
 import { SET_READINGS, type SetReading } from "@/data/setReadings";
 import { TOTAL_DAYS, GROUPS_PER_DAY } from "@/data/words";
@@ -35,7 +37,21 @@ interface StoryEntry {
   reading: SetReading;
 }
 
-type StatusFilter = "all" | StoryStatus;
+type StatusFilter = "all" | StoryStatus | "read";
+
+const BELTS = [
+  { num: 1, name: "White Belt" },
+  { num: 2, name: "Yellow Belt" },
+  { num: 3, name: "Green Belt" },
+  { num: 4, name: "Blue Belt" },
+  { num: 5, name: "Purple Belt" },
+  { num: 6, name: "Black Belt" },
+];
+
+const beltForMission = (day: number) =>
+  Math.min(BELTS.length, Math.floor((day - 1) / 7) + 1);
+
+const PAGE_SIZE = 12;
 
 function buildEntries(): StoryEntry[] {
   const entries: StoryEntry[] = [];
@@ -80,9 +96,11 @@ export default function StoryLibrary({
   const attempts = useMemo(() => getAllAttempts(), []);
 
   const [query, setQuery] = useState("");
+  const [beltFilter, setBeltFilter] = useState<number | "all">("all");
   const [missionFilter, setMissionFilter] = useState<number | "all">("all");
   const [setFilter, setSetFilter] = useState<number | "all">("all");
   const [statusFilter, setStatusFilter] = useState<StatusFilter>("all");
+  const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
 
   const availableMissions = useMemo(() => {
     const set = new Set<number>();
@@ -96,19 +114,56 @@ export default function StoryLibrary({
     return Array.from(set).sort((a, b) => a - b);
   }, [allEntries]);
 
+  // Cascade belt → mission: if belt changes and current mission isn't in it, reset.
+  useEffect(() => {
+    if (beltFilter === "all" || missionFilter === "all") return;
+    if (beltForMission(missionFilter) !== beltFilter) {
+      setMissionFilter("all");
+    }
+  }, [beltFilter, missionFilter]);
+
+  // Mission options narrow to selected belt.
+  const visibleMissionOptions = useMemo(
+    () =>
+      beltFilter === "all"
+        ? availableMissions
+        : availableMissions.filter((m) => beltForMission(m) === beltFilter),
+    [availableMissions, beltFilter],
+  );
+
   const filtered = useMemo(() => {
     return allEntries.filter((e) => {
+      if (beltFilter !== "all" && beltForMission(e.missionDay) !== beltFilter)
+        return false;
       if (missionFilter !== "all" && e.missionDay !== missionFilter)
         return false;
       if (setFilter !== "all" && e.group !== setFilter) return false;
       if (statusFilter !== "all") {
         const st = statusForAttempt(attempts[e.key]);
-        if (st !== statusFilter) return false;
+        if (statusFilter === "read") {
+          // "Read" = any attempt exists (umbrella for needs-review + mastered).
+          if (st === "unpracticed") return false;
+        } else if (st !== statusFilter) {
+          return false;
+        }
       }
       if (!entryMatchesSearch(e, query)) return false;
       return true;
     });
-  }, [allEntries, attempts, query, missionFilter, setFilter, statusFilter]);
+  }, [
+    allEntries,
+    attempts,
+    query,
+    beltFilter,
+    missionFilter,
+    setFilter,
+    statusFilter,
+  ]);
+
+  // Reset pagination whenever the active result set changes.
+  useEffect(() => {
+    setVisibleCount(PAGE_SIZE);
+  }, [query, beltFilter, missionFilter, setFilter, statusFilter]);
 
   const totalStories = allEntries.length;
   const totalMissionsCovered = availableMissions.length;
@@ -130,12 +185,14 @@ export default function StoryLibrary({
 
   const hasActiveFilter =
     query.trim().length > 0 ||
+    beltFilter !== "all" ||
     missionFilter !== "all" ||
     setFilter !== "all" ||
     statusFilter !== "all";
 
   const clearFilters = () => {
     setQuery("");
+    setBeltFilter("all");
     setMissionFilter("all");
     setSetFilter("all");
     setStatusFilter("all");
@@ -148,6 +205,9 @@ export default function StoryLibrary({
       libraryMode: true,
     });
   };
+
+  const visible = filtered.slice(0, visibleCount);
+  const hasMore = visibleCount < filtered.length;
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-amber-50/40 via-background to-orange-50/40 dark:from-gray-900 dark:via-gray-900 dark:to-gray-900">
@@ -215,8 +275,7 @@ export default function StoryLibrary({
                   review
                 </span>
                 <span className="inline-flex items-center gap-1.5 px-2 py-1 rounded-md bg-muted text-muted-foreground">
-                  <CircleDashed size={12} /> {statusCounts.unpracticed} not
-                  practiced
+                  <CircleDashed size={12} /> {statusCounts.unpracticed} unread
                 </span>
               </div>
             </div>
@@ -234,7 +293,7 @@ export default function StoryLibrary({
               type="text"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
-              placeholder="Search by title, theme, mission, set, or vocabulary word…"
+              placeholder="Search by title or vocabulary word…"
               className="w-full pl-9 pr-9 py-2.5 rounded-xl border border-border bg-background text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-orange-300 dark:focus:ring-orange-500/40 focus:border-orange-300 dark:focus:border-orange-500/40 transition"
               aria-label="Search stories"
             />
@@ -257,6 +316,31 @@ export default function StoryLibrary({
 
             <label className="inline-flex items-center gap-2 text-sm">
               <span className="text-xs font-semibold text-muted-foreground">
+                Belt
+              </span>
+              <select
+                value={beltFilter === "all" ? "all" : String(beltFilter)}
+                onChange={(e) =>
+                  setBeltFilter(
+                    e.target.value === "all"
+                      ? "all"
+                      : parseInt(e.target.value, 10),
+                  )
+                }
+                className="px-3 py-1.5 rounded-lg border border-border bg-background text-sm text-foreground font-semibold focus:outline-none focus:ring-2 focus:ring-orange-300 dark:focus:ring-orange-500/40 transition"
+                data-testid="select-belt"
+              >
+                <option value="all">All belts</option>
+                {BELTS.map((b) => (
+                  <option key={b.num} value={b.num}>
+                    {b.name}
+                  </option>
+                ))}
+              </select>
+            </label>
+
+            <label className="inline-flex items-center gap-2 text-sm">
+              <span className="text-xs font-semibold text-muted-foreground">
                 Mission
               </span>
               <select
@@ -268,10 +352,12 @@ export default function StoryLibrary({
                       : parseInt(e.target.value, 10),
                   )
                 }
-                className="px-3 py-1.5 rounded-lg border border-border bg-background text-sm text-foreground font-semibold focus:outline-none focus:ring-2 focus:ring-orange-300 dark:focus:ring-orange-500/40 transition"
+                className="px-3 py-1.5 rounded-lg border border-border bg-background text-sm text-foreground font-semibold focus:outline-none focus:ring-2 focus:ring-orange-300 dark:focus:ring-orange-500/40 transition disabled:opacity-50"
+                disabled={visibleMissionOptions.length === 0}
+                data-testid="select-mission"
               >
                 <option value="all">All missions</option>
-                {availableMissions.map((m) => (
+                {visibleMissionOptions.map((m) => (
                   <option key={m} value={m}>
                     Mission {m}
                   </option>
@@ -293,6 +379,7 @@ export default function StoryLibrary({
                   )
                 }
                 className="px-3 py-1.5 rounded-lg border border-border bg-background text-sm text-foreground font-semibold focus:outline-none focus:ring-2 focus:ring-orange-300 dark:focus:ring-orange-500/40 transition"
+                data-testid="select-set"
               >
                 <option value="all">All sets</option>
                 {availableSets.map((s) => (
@@ -305,7 +392,7 @@ export default function StoryLibrary({
 
             <label className="inline-flex items-center gap-2 text-sm">
               <span className="text-xs font-semibold text-muted-foreground">
-                Practice
+                Status
               </span>
               <select
                 value={statusFilter}
@@ -313,11 +400,13 @@ export default function StoryLibrary({
                   setStatusFilter(e.target.value as StatusFilter)
                 }
                 className="px-3 py-1.5 rounded-lg border border-border bg-background text-sm text-foreground font-semibold focus:outline-none focus:ring-2 focus:ring-orange-300 dark:focus:ring-orange-500/40 transition"
+                data-testid="select-status"
               >
                 <option value="all">All statuses</option>
-                <option value="unpracticed">Not yet practiced</option>
-                <option value="needs-review">Needs review (&lt; 80%)</option>
-                <option value="mastered">Mastered (≥ 80%)</option>
+                <option value="unpracticed">Unread</option>
+                <option value="read">Read</option>
+                <option value="needs-review">Needs Review</option>
+                <option value="mastered">Mastered</option>
               </select>
             </label>
 
@@ -334,8 +423,15 @@ export default function StoryLibrary({
 
           <div className="text-xs text-muted-foreground">
             Showing{" "}
-            <span className="font-bold text-foreground">{filtered.length}</span>{" "}
-            of {totalStories} stor{totalStories === 1 ? "y" : "ies"}
+            <span className="font-bold text-foreground">{visible.length}</span>{" "}
+            of {filtered.length} match
+            {filtered.length === 1 ? "" : "es"}
+            {filtered.length !== totalStories && (
+              <span className="text-muted-foreground/80">
+                {" "}
+                · {totalStories} stories total
+              </span>
+            )}
           </div>
         </div>
 
@@ -363,17 +459,40 @@ export default function StoryLibrary({
             )}
           </div>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {filtered.map((entry) => (
-              <StoryCard
-                key={entry.key}
-                entry={entry}
-                attempt={attempts[entry.key] ?? null}
-                searchQuery={query.trim()}
-                onOpen={() => openStory(entry)}
-              />
-            ))}
-          </div>
+          <>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3">
+              {visible.map((entry) => (
+                <StoryCard
+                  key={entry.key}
+                  entry={entry}
+                  attempt={attempts[entry.key] ?? null}
+                  searchQuery={query.trim()}
+                  onOpen={() => openStory(entry)}
+                />
+              ))}
+            </div>
+
+            {hasMore && (
+              <div className="flex justify-center pt-1">
+                <button
+                  type="button"
+                  onClick={() =>
+                    setVisibleCount((n) =>
+                      Math.min(filtered.length, n + PAGE_SIZE),
+                    )
+                  }
+                  className="inline-flex items-center gap-1.5 text-sm font-bold px-5 py-2.5 rounded-xl border border-border bg-card text-foreground hover:bg-muted hover:border-orange-300 dark:hover:border-orange-500/40 transition shadow-sm"
+                  data-testid="button-show-more"
+                >
+                  Show more
+                  <span className="text-xs font-semibold text-muted-foreground tabular-nums">
+                    ({filtered.length - visibleCount} left)
+                  </span>
+                  <ChevronDown size={14} />
+                </button>
+              </div>
+            )}
+          </>
         )}
       </div>
     </div>
@@ -395,7 +514,7 @@ function StoryCard({ entry, attempt, searchQuery, onOpen }: StoryCardProps) {
       ? reading.words.filter((w) => w.toLowerCase().includes(needle))
       : [];
   const wordsToShow =
-    matchedWords.length > 0 ? matchedWords.slice(0, 4) : reading.words.slice(0, 4);
+    matchedWords.length > 0 ? matchedWords.slice(0, 3) : reading.words.slice(0, 3);
   const remaining = reading.words.length - wordsToShow.length;
   const status = statusForAttempt(attempt);
   const pct =
@@ -403,52 +522,64 @@ function StoryCard({ entry, attempt, searchQuery, onOpen }: StoryCardProps) {
       ? Math.round((attempt.score / attempt.total) * 100)
       : null;
 
+  const statusBadge =
+    status === "mastered"
+      ? {
+          label: pct !== null ? `Mastered ${pct}%` : "Mastered",
+          cls: "bg-emerald-100 text-emerald-700 dark:bg-emerald-500/20 dark:text-emerald-300",
+          icon: <CheckCircle2 size={10} />,
+        }
+      : status === "needs-review"
+        ? {
+            label: pct !== null ? `Review ${pct}%` : "Needs Review",
+            cls: "bg-amber-100 text-amber-700 dark:bg-amber-500/20 dark:text-amber-300",
+            icon: <AlertCircle size={10} />,
+          }
+        : {
+            label: "Unread",
+            cls: "bg-muted text-muted-foreground",
+            icon: <CircleDashed size={10} />,
+          };
+
   return (
     <button
       type="button"
       onClick={onOpen}
-      className="group text-left rounded-2xl border border-border bg-card p-5 shadow-sm hover:shadow-md hover:border-orange-300 dark:hover:border-orange-500/40 transition-all flex flex-col gap-3 min-h-[220px]"
+      className="group text-left rounded-xl border border-border bg-card p-3.5 shadow-sm hover:shadow-md hover:border-orange-300 dark:hover:border-orange-500/40 transition-all flex flex-col gap-2.5 min-h-[156px]"
+      data-testid={`button-story-${missionDay}-${group}`}
+      title={`Mission ${missionDay} · Set ${group} — ${reading.title}`}
     >
-      <div className="flex items-start justify-between gap-3">
-        <div className="flex items-center gap-2 flex-wrap">
-          <span className="inline-flex items-center text-[10px] font-bold uppercase tracking-wider px-2 py-1 rounded-md bg-orange-100 text-orange-700 dark:bg-orange-500/20 dark:text-orange-300">
-            Mission {missionDay}
+      {/* Top row: mission/set + status */}
+      <div className="flex items-center justify-between gap-2">
+        <div className="flex items-center gap-1.5 min-w-0">
+          <span className="inline-flex items-center text-[10px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded bg-orange-100 text-orange-700 dark:bg-orange-500/20 dark:text-orange-300 tabular-nums">
+            M{missionDay}
           </span>
-          <span className="inline-flex items-center text-[10px] font-bold uppercase tracking-wider px-2 py-1 rounded-md bg-muted text-muted-foreground">
-            Set {group}
+          <span className="inline-flex items-center text-[10px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded bg-muted text-muted-foreground tabular-nums">
+            S{group}
           </span>
-          {status === "mastered" && (
-            <span className="inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-wider px-2 py-1 rounded-md bg-emerald-100 text-emerald-700 dark:bg-emerald-500/20 dark:text-emerald-300">
-              <CheckCircle2 size={10} /> Mastered
-            </span>
-          )}
-          {status === "needs-review" && (
-            <span className="inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-wider px-2 py-1 rounded-md bg-amber-100 text-amber-700 dark:bg-amber-500/20 dark:text-amber-300">
-              <AlertCircle size={10} /> Review
-            </span>
-          )}
         </div>
-        <span className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground shrink-0">
-          {reading.format}
+        <span
+          className={`inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded shrink-0 ${statusBadge.cls}`}
+        >
+          {statusBadge.icon} {statusBadge.label}
         </span>
       </div>
 
-      <h3 className="text-base font-extrabold text-foreground leading-snug line-clamp-2 group-hover:text-orange-700 dark:group-hover:text-orange-300 transition-colors">
+      {/* Title */}
+      <h3 className="text-sm font-extrabold text-foreground leading-snug line-clamp-2 group-hover:text-orange-700 dark:group-hover:text-orange-300 transition-colors">
         {reading.title}
       </h3>
 
-      <p className="text-xs text-muted-foreground leading-relaxed line-clamp-3 flex-1">
-        {reading.subtitle}
-      </p>
-
-      <div className="flex flex-wrap gap-1.5">
+      {/* Words preview */}
+      <div className="flex flex-wrap gap-1">
         {wordsToShow.map((w) => {
           const isMatch =
             needle.length > 0 && w.toLowerCase().includes(needle);
           return (
             <span
               key={w}
-              className={`text-[11px] font-semibold px-2 py-0.5 rounded-full border transition-colors ${
+              className={`text-[10px] font-semibold px-1.5 py-0.5 rounded-full border ${
                 isMatch
                   ? "border-orange-400 bg-orange-50 text-orange-700 dark:bg-orange-500/15 dark:border-orange-500/40 dark:text-orange-300"
                   : "border-border bg-background text-muted-foreground"
@@ -459,34 +590,28 @@ function StoryCard({ entry, attempt, searchQuery, onOpen }: StoryCardProps) {
           );
         })}
         {remaining > 0 && (
-          <span className="text-[11px] font-semibold px-2 py-0.5 rounded-full border border-border bg-background text-muted-foreground">
-            +{remaining} more
+          <span className="text-[10px] font-semibold px-1.5 py-0.5 rounded-full border border-border bg-background text-muted-foreground">
+            +{remaining}
           </span>
         )}
       </div>
 
-      <div className="flex items-center justify-between pt-3 border-t border-border text-xs gap-3">
-        <span className="inline-flex items-center gap-1.5 text-muted-foreground font-semibold">
-          <Clock size={12} /> {reading.readingMinutes} min read
+      {/* Bottom row: time + read button */}
+      <div className="flex items-center justify-between gap-2 mt-auto pt-2 border-t border-border">
+        <span className="inline-flex items-center gap-1 text-[11px] text-muted-foreground font-semibold">
+          <Clock size={11} /> {reading.readingMinutes} min
         </span>
-        {attempt && pct !== null ? (
-          <span
-            className={`inline-flex items-center gap-1 font-bold ${
-              status === "mastered"
-                ? "text-emerald-600 dark:text-emerald-400"
-                : "text-amber-600 dark:text-amber-400"
-            }`}
-            title={`Last attempted ${new Date(
-              attempt.attemptedAt,
-            ).toLocaleDateString()}`}
-          >
-            Last: {attempt.score}/{attempt.total} · {pct}%
-          </span>
-        ) : (
-          <span className="inline-flex items-center gap-1 text-muted-foreground font-semibold">
-            <CircleDashed size={12} /> Not practiced
-          </span>
-        )}
+        <span className="inline-flex items-center gap-1 text-[11px] font-bold px-2.5 py-1 rounded-md bg-orange-100 text-orange-700 dark:bg-orange-500/20 dark:text-orange-300 group-hover:bg-orange-500 group-hover:text-white transition-colors">
+          {status === "unpracticed" ? (
+            <>
+              Read <ChevronRight size={11} strokeWidth={2.75} />
+            </>
+          ) : (
+            <>
+              <Eye size={11} /> Re-read
+            </>
+          )}
+        </span>
       </div>
     </button>
   );
