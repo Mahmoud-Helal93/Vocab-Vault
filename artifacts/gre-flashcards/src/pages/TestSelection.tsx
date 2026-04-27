@@ -15,6 +15,10 @@ import {
   ChevronRight,
   CheckCircle2,
   Circle,
+  ListChecks,
+  Minus,
+  Plus,
+  AlertCircle,
 } from "lucide-react";
 import { useApp } from "@/context/AppContext";
 import { TOTAL_DAYS } from "@/data/words";
@@ -38,6 +42,23 @@ import {
   selectWords,
   setsForMission,
 } from "@/lib/wordSelection";
+import {
+  ALL_TEST_QUESTION_TYPES,
+  EMPTY_AVAILABILITY,
+  TEST_QUESTION_GROUP_ORDER,
+  TEST_QUESTION_TYPE_META,
+  questionTypesByGroup,
+  type AvailabilityByType,
+  type CountsByType,
+  type TestQuestionGroup,
+  type TestQuestionType,
+} from "@/lib/testTypes";
+import { getQuestionAvailability } from "@/lib/testQuestionBank";
+import {
+  generatePracticeSession,
+  isStartable,
+  sumCounts,
+} from "@/lib/testSelection";
 
 interface TestSelectionProps {
   onBack: () => void;
@@ -251,8 +272,12 @@ function CustomPracticePanel({
   // Filters + options
   const [filters, setFilters] = useState<Filters>({});
   const [shuffle, setShuffle] = useState<boolean>(true);
-  const [limitEnabled, setLimitEnabled] = useState<boolean>(true);
-  const [limit, setLimit] = useState<number>(20);
+
+  // Per-type question counts (the new replacement for the word limit).
+  const [counts, setCounts] = useState<CountsByType>({});
+  const [enabledTypes, setEnabledTypes] = useState<Set<TestQuestionType>>(
+    () => new Set(ALL_TEST_QUESTION_TYPES),
+  );
 
   // For the mission picker we let the user filter by belt without changing
   // the scope kind.
@@ -281,27 +306,59 @@ function CustomPracticePanel({
     rangeTo,
   ]);
 
+  // Words actually in scope (filters applied, no limit).
+  const scopeWords = useMemo(
+    () => selectWords(words, { scope, filters, shuffle: false }),
+    [words, scope, filters],
+  );
+  const totalScopeWords = scopeWords.length;
+
+  // Live availability of each question type for the current scope.
+  const availability: AvailabilityByType = useMemo(() => {
+    if (totalScopeWords === 0) return { ...EMPTY_AVAILABILITY };
+    return getQuestionAvailability(scopeWords, words);
+  }, [scopeWords, totalScopeWords, words]);
+
+  // Realised counts honour both availability and the type enabled flag.
+  const effectiveCounts: CountsByType = useMemo(() => {
+    const out: CountsByType = {};
+    for (const t of ALL_TEST_QUESTION_TYPES) {
+      if (!enabledTypes.has(t)) continue;
+      const want = Math.max(0, Math.floor(counts[t] ?? 0));
+      const have = availability[t];
+      out[t] = Math.min(want, have);
+    }
+    return out;
+  }, [counts, enabledTypes, availability]);
+
+  const totalQuestions = sumCounts(effectiveCounts);
+  const startable = isStartable(effectiveCounts);
+
   const request: SelectionRequest = useMemo(
     () => ({
       scope,
       filters,
       shuffle,
-      limit: limitEnabled ? limit : undefined,
     }),
-    [scope, filters, shuffle, limitEnabled, limit],
+    [scope, filters, shuffle],
   );
 
-  const totalBeforeLimit = useMemo(
-    () => countSelection(words, { scope, filters }),
-    [words, scope, filters],
-  );
+  const previewSample = scopeWords.slice(0, 12);
 
-  const finalSelection = useMemo(
-    () => selectWords(words, request),
-    [words, request],
-  );
-
-  const previewSample = finalSelection.slice(0, 12);
+  const start = () => {
+    if (!startable) return;
+    const result = generatePracticeSession({
+      scopeWords,
+      pool: words,
+      counts: effectiveCounts,
+      shuffle,
+    });
+    if (result.questions.length === 0) return;
+    onNavigate("practice", {
+      questions: result.questions,
+      sessionTitle: "Custom Practice",
+    });
+  };
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
@@ -358,26 +415,28 @@ function CustomPracticePanel({
           <FilterToggles value={filters} onChange={setFilters} />
         </Section>
 
-        {/* Options */}
+        {/* Question Types */}
         <Section
-          icon={<SlidersHorizontal size={16} />}
-          title="Options"
-          subtitle="Order and size of the session."
+          icon={<ListChecks size={16} />}
+          title="Question Types & Counts"
+          subtitle="Pick how many of each type to include. Each row caps at the live availability."
         >
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <QuestionTypeCounts
+            availability={availability}
+            counts={counts}
+            onCountsChange={setCounts}
+            enabledTypes={enabledTypes}
+            onEnabledChange={setEnabledTypes}
+            totalScopeWords={totalScopeWords}
+          />
+
+          <div className="mt-4 pt-4 border-t border-border">
             <ToggleRow
               icon={<Shuffle size={14} />}
-              label="Shuffle words"
-              description="Randomize the order each session."
+              label="Shuffle questions"
+              description="Mix the question order across types each session."
               value={shuffle}
               onChange={setShuffle}
-            />
-            <LimitField
-              enabled={limitEnabled}
-              limit={limit}
-              max={Math.max(totalBeforeLimit, 1)}
-              onEnabledChange={setLimitEnabled}
-              onLimitChange={setLimit}
             />
           </div>
         </Section>
@@ -388,18 +447,25 @@ function CustomPracticePanel({
         <div className="lg:sticky lg:top-4 space-y-4">
           <SelectionSummary
             request={request}
-            totalBeforeLimit={totalBeforeLimit}
-            finalCount={finalSelection.length}
+            totalScopeWords={totalScopeWords}
+            counts={effectiveCounts}
+            totalQuestions={totalQuestions}
           />
-          <PreviewList sample={previewSample} total={finalSelection.length} />
+          <AvailabilityPanel
+            availability={availability}
+            totalScopeWords={totalScopeWords}
+          />
+          <PreviewList sample={previewSample} total={totalScopeWords} />
           <StartButton
             fullWidth
-            disabled={finalSelection.length === 0}
-            onClick={() =>
-              onNavigate("practice", {
-                wordIds: finalSelection.map((w) => w.id),
-                sessionTitle: "Custom Practice",
-              })
+            disabled={!startable}
+            onClick={start}
+            label={
+              totalQuestions > 0
+                ? `Start · ${totalQuestions} question${
+                    totalQuestions === 1 ? "" : "s"
+                  }`
+                : "Start practice"
             }
           />
         </div>
@@ -989,65 +1055,333 @@ function ToggleRow({
   );
 }
 
-// ─── Limit field ────────────────────────────────────────────────────────────
+// ─── Question type counts ───────────────────────────────────────────────────
 
-function LimitField({
-  enabled,
-  limit,
-  max,
+const GROUP_SUBTITLES: Record<TestQuestionGroup, string> = {
+  MCQ: "Multiple choice — pick the right answer.",
+  "Fill in the Blank": "Type the missing word.",
+  "Synonym Pairing": "Pick every word that matches.",
+  "True / False": "Decide whether a statement holds.",
+};
+
+function QuestionTypeCounts({
+  availability,
+  counts,
+  onCountsChange,
+  enabledTypes,
   onEnabledChange,
-  onLimitChange,
+  totalScopeWords,
 }: {
-  enabled: boolean;
-  limit: number;
-  max: number;
-  onEnabledChange: (v: boolean) => void;
-  onLimitChange: (n: number) => void;
+  availability: AvailabilityByType;
+  counts: CountsByType;
+  onCountsChange: (next: CountsByType) => void;
+  enabledTypes: Set<TestQuestionType>;
+  onEnabledChange: (next: Set<TestQuestionType>) => void;
+  totalScopeWords: number;
 }) {
+  const groups = useMemo(() => questionTypesByGroup(), []);
+
+  const setCount = (t: TestQuestionType, n: number) => {
+    const max = availability[t];
+    const clamped = Math.max(0, Math.min(Math.floor(n), max));
+    onCountsChange({ ...counts, [t]: clamped });
+  };
+  const toggleType = (t: TestQuestionType) => {
+    const next = new Set(enabledTypes);
+    if (next.has(t)) next.delete(t);
+    else next.add(t);
+    onEnabledChange(next);
+  };
+
+  const fillSuggested = () => {
+    const next: CountsByType = {};
+    for (const t of ALL_TEST_QUESTION_TYPES) {
+      if (!enabledTypes.has(t)) continue;
+      const meta = TEST_QUESTION_TYPE_META[t];
+      const suggested = Math.min(meta.perWord * totalScopeWords, availability[t]);
+      next[t] = Math.max(0, Math.min(suggested, availability[t]));
+    }
+    onCountsChange(next);
+  };
+
+  const fillMaxAll = () => {
+    const next: CountsByType = {};
+    for (const t of ALL_TEST_QUESTION_TYPES) {
+      if (!enabledTypes.has(t)) continue;
+      next[t] = availability[t];
+    }
+    onCountsChange(next);
+  };
+
+  const clearAll = () => onCountsChange({});
+
+  return (
+    <div className="space-y-4">
+      <div className="flex flex-wrap items-center justify-between gap-2 -mt-1">
+        <p className="text-[11px] text-muted-foreground">
+          {totalScopeWords > 0
+            ? `${totalScopeWords.toLocaleString()} word${totalScopeWords === 1 ? "" : "s"} in scope.`
+            : "No words in scope yet — pick a source above."}
+        </p>
+        <div className="flex flex-wrap items-center gap-1.5">
+          <button
+            type="button"
+            onClick={fillSuggested}
+            disabled={totalScopeWords === 0}
+            className="text-[11px] font-bold px-2.5 py-1 rounded-lg bg-muted hover:bg-muted/70 text-foreground/80 disabled:opacity-40 disabled:cursor-not-allowed"
+          >
+            Suggested
+          </button>
+          <button
+            type="button"
+            onClick={fillMaxAll}
+            disabled={totalScopeWords === 0}
+            className="text-[11px] font-bold px-2.5 py-1 rounded-lg bg-muted hover:bg-muted/70 text-foreground/80 disabled:opacity-40 disabled:cursor-not-allowed"
+          >
+            All available
+          </button>
+          <button
+            type="button"
+            onClick={clearAll}
+            className="text-[11px] font-bold px-2.5 py-1 rounded-lg bg-muted hover:bg-muted/70 text-foreground/80"
+          >
+            Clear
+          </button>
+        </div>
+      </div>
+
+      {TEST_QUESTION_GROUP_ORDER.map((group) => (
+        <div key={group}>
+          <div className="flex items-baseline justify-between mb-2">
+            <h4 className="text-[11px] font-extrabold uppercase tracking-wider text-foreground/80">
+              {group}
+            </h4>
+            <p className="text-[11px] text-muted-foreground">
+              {GROUP_SUBTITLES[group]}
+            </p>
+          </div>
+          <div className="space-y-2">
+            {groups[group].map((t) => (
+              <QuestionTypeRow
+                key={t}
+                type={t}
+                enabled={enabledTypes.has(t)}
+                count={counts[t] ?? 0}
+                available={availability[t]}
+                onToggle={() => toggleType(t)}
+                onCountChange={(n) => setCount(t, n)}
+              />
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+function QuestionTypeRow({
+  type,
+  enabled,
+  count,
+  available,
+  onToggle,
+  onCountChange,
+}: {
+  type: TestQuestionType;
+  enabled: boolean;
+  count: number;
+  available: number;
+  onToggle: () => void;
+  onCountChange: (n: number) => void;
+}) {
+  const meta = TEST_QUESTION_TYPE_META[type];
+  const unavailable = available === 0;
+  const dim = !enabled || unavailable;
   return (
     <div
-      className={`flex items-start gap-3 px-3 py-2.5 rounded-xl border ${
-        enabled
+      className={`flex items-center gap-3 px-3 py-2.5 rounded-xl border transition-colors ${
+        enabled && !unavailable
           ? "bg-orange-50 dark:bg-orange-500/10 border-orange-300 dark:border-orange-500/40"
           : "bg-card border-border"
       }`}
     >
       <button
         type="button"
-        onClick={() => onEnabledChange(!enabled)}
-        className={`w-7 h-7 rounded-lg flex items-center justify-center shrink-0 ${
-          enabled
-            ? "bg-orange-500 text-white"
-            : "bg-muted text-muted-foreground"
-        }`}
-        aria-label="Toggle limit"
+        onClick={onToggle}
+        disabled={unavailable}
+        className="shrink-0"
+        aria-label={`Toggle ${meta.label}`}
       >
-        <ListOrdered size={14} />
+        {enabled && !unavailable ? (
+          <CheckCircle2 size={18} className="text-orange-500" />
+        ) : (
+          <Circle size={18} className="text-muted-foreground" />
+        )}
       </button>
       <div className="min-w-0 flex-1">
-        <div className="text-xs font-extrabold text-foreground">
-          Limit number of words
+        <div className="flex items-center gap-2">
+          <div
+            className={`text-xs font-extrabold ${
+              dim ? "text-foreground/60" : "text-foreground"
+            }`}
+          >
+            {meta.label}
+          </div>
+          {meta.conditional && (
+            <span className="text-[10px] font-bold uppercase tracking-wide text-muted-foreground">
+              optional
+            </span>
+          )}
         </div>
-        <div className="mt-1.5 flex items-center gap-2">
-          <input
-            type="number"
-            min={1}
-            max={Math.max(1, max)}
-            value={limit}
-            disabled={!enabled}
-            onChange={(e) => {
-              const n = Number(e.target.value);
-              if (!Number.isFinite(n) || n < 1) return;
-              onLimitChange(Math.min(n, Math.max(1, max)));
-            }}
-            className="w-20 px-2 py-1 rounded-lg border border-border bg-background text-sm font-bold text-foreground disabled:opacity-50 focus:outline-none focus:ring-2 focus:ring-orange-300 dark:focus:ring-orange-500/40"
-          />
-          <span className="text-[11px] text-muted-foreground">
-            of {max.toLocaleString()} available
-          </span>
+        <div
+          className={`text-[11px] mt-0.5 ${
+            dim ? "text-muted-foreground/70" : "text-muted-foreground"
+          }`}
+        >
+          {meta.description}
         </div>
       </div>
+      <div className="shrink-0 flex items-center gap-2">
+        <CountStepper
+          value={count}
+          max={available}
+          disabled={!enabled || unavailable}
+          onChange={onCountChange}
+        />
+        <span
+          className={`text-[10px] font-bold tabular-nums tracking-wide whitespace-nowrap ${
+            unavailable ? "text-muted-foreground/70" : "text-muted-foreground"
+          }`}
+        >
+          {unavailable ? "n/a" : `/ ${available}`}
+        </span>
+      </div>
     </div>
+  );
+}
+
+function CountStepper({
+  value,
+  max,
+  disabled,
+  onChange,
+}: {
+  value: number;
+  max: number;
+  disabled?: boolean;
+  onChange: (n: number) => void;
+}) {
+  const safeMax = Math.max(0, Math.floor(max));
+  const dec = () => onChange(Math.max(0, value - 1));
+  const inc = () => onChange(Math.min(safeMax, value + 1));
+  return (
+    <div
+      className={`inline-flex items-center rounded-lg border ${
+        disabled
+          ? "border-border bg-muted/40 opacity-60"
+          : "border-border bg-background"
+      }`}
+    >
+      <button
+        type="button"
+        onClick={dec}
+        disabled={disabled || value === 0}
+        className="w-7 h-7 grid place-items-center text-foreground/70 hover:text-foreground disabled:opacity-40 disabled:cursor-not-allowed"
+        aria-label="Decrease"
+      >
+        <Minus size={12} />
+      </button>
+      <input
+        type="number"
+        min={0}
+        max={safeMax}
+        value={value}
+        disabled={disabled}
+        onChange={(e) => {
+          const n = Number(e.target.value);
+          if (!Number.isFinite(n)) return;
+          onChange(Math.max(0, Math.min(safeMax, Math.floor(n))));
+        }}
+        className="w-12 text-center text-xs font-extrabold tabular-nums bg-transparent text-foreground focus:outline-none disabled:cursor-not-allowed"
+      />
+      <button
+        type="button"
+        onClick={inc}
+        disabled={disabled || value >= safeMax}
+        className="w-7 h-7 grid place-items-center text-foreground/70 hover:text-foreground disabled:opacity-40 disabled:cursor-not-allowed"
+        aria-label="Increase"
+      >
+        <Plus size={12} />
+      </button>
+    </div>
+  );
+}
+
+// ─── Availability panel ────────────────────────────────────────────────────
+
+function AvailabilityPanel({
+  availability,
+  totalScopeWords,
+}: {
+  availability: AvailabilityByType;
+  totalScopeWords: number;
+}) {
+  const grandTotal = ALL_TEST_QUESTION_TYPES.reduce(
+    (sum, t) => sum + availability[t],
+    0,
+  );
+  return (
+    <section className="rounded-2xl border border-border bg-card shadow-sm p-5">
+      <div className="flex items-center gap-2 mb-3">
+        <ListChecks size={16} className="text-orange-500" />
+        <h3 className="text-sm font-extrabold text-foreground">
+          Available questions
+        </h3>
+      </div>
+      {totalScopeWords === 0 ? (
+        <p className="text-xs text-muted-foreground">
+          Pick a source to see how many questions of each type can be generated.
+        </p>
+      ) : (
+        <>
+          <p className="text-[11px] text-muted-foreground mb-3">
+            From {totalScopeWords.toLocaleString()} word
+            {totalScopeWords === 1 ? "" : "s"} ·{" "}
+            <span className="font-extrabold text-foreground">
+              {grandTotal.toLocaleString()}
+            </span>{" "}
+            possible questions.
+          </p>
+          <ul className="space-y-1">
+            {ALL_TEST_QUESTION_TYPES.map((t) => {
+              const meta = TEST_QUESTION_TYPE_META[t];
+              const v = availability[t];
+              return (
+                <li
+                  key={t}
+                  className="flex items-center justify-between text-[11px]"
+                >
+                  <span
+                    className={`truncate ${
+                      v === 0 ? "text-muted-foreground/70" : "text-foreground/80 font-medium"
+                    }`}
+                  >
+                    {meta.short}
+                  </span>
+                  <span
+                    className={`tabular-nums font-extrabold shrink-0 ml-2 ${
+                      v === 0 ? "text-muted-foreground/70" : "text-foreground"
+                    }`}
+                  >
+                    {v.toLocaleString()}
+                  </span>
+                </li>
+              );
+            })}
+          </ul>
+        </>
+      )}
+    </section>
   );
 }
 
@@ -1055,13 +1389,18 @@ function LimitField({
 
 function SelectionSummary({
   request,
-  totalBeforeLimit,
-  finalCount,
+  totalScopeWords,
+  counts,
+  totalQuestions,
 }: {
   request: SelectionRequest;
-  totalBeforeLimit: number;
-  finalCount: number;
+  totalScopeWords: number;
+  counts: CountsByType;
+  totalQuestions: number;
 }) {
+  const selectedTypes = ALL_TEST_QUESTION_TYPES.filter(
+    (t) => (counts[t] ?? 0) > 0,
+  );
   return (
     <section className="rounded-2xl border border-border bg-card shadow-sm p-5">
       <div className="flex items-center gap-2 mb-3">
@@ -1085,18 +1424,46 @@ function SelectionSummary({
           value={request.shuffle ? "Shuffled" : "Original"}
         />
         <SummaryRow
-          label="Words matching"
-          value={`${totalBeforeLimit.toLocaleString()}`}
+          label="Words in scope"
+          value={`${totalScopeWords.toLocaleString()}`}
           strong
         />
-        {request.limit !== undefined && (
-          <SummaryRow
-            label="Session size"
-            value={`${finalCount.toLocaleString()} (limited from ${totalBeforeLimit.toLocaleString()})`}
-            strong
-          />
-        )}
+        <SummaryRow
+          label="Total questions"
+          value={`${totalQuestions.toLocaleString()}`}
+          strong
+        />
       </dl>
+      {selectedTypes.length > 0 && (
+        <div className="mt-3 pt-3 border-t border-border">
+          <p className="text-[10px] font-extrabold uppercase tracking-wider text-muted-foreground mb-1.5">
+            Type breakdown
+          </p>
+          <ul className="space-y-1">
+            {selectedTypes.map((t) => (
+              <li
+                key={t}
+                className="flex items-center justify-between text-[11px]"
+              >
+                <span className="truncate text-foreground/80">
+                  {TEST_QUESTION_TYPE_META[t].short}
+                </span>
+                <span className="tabular-nums font-extrabold text-foreground shrink-0 ml-2">
+                  {counts[t]}
+                </span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+      {totalQuestions === 0 && totalScopeWords > 0 && (
+        <div className="mt-3 pt-3 border-t border-border flex items-start gap-2 text-[11px] text-muted-foreground">
+          <AlertCircle size={14} className="text-orange-500 shrink-0 mt-0.5" />
+          <span>
+            Set at least one question type count above 0 to start practice.
+          </span>
+        </div>
+      )}
     </section>
   );
 }
@@ -1189,11 +1556,13 @@ function StartButton({
   small,
   disabled,
   onClick,
+  label,
 }: {
   fullWidth?: boolean;
   small?: boolean;
   disabled?: boolean;
   onClick: () => void;
+  label?: string;
 }) {
   return (
     <div
@@ -1205,12 +1574,12 @@ function StartButton({
         type="button"
         disabled={disabled}
         onClick={onClick}
-        title={disabled ? "No words match this selection." : "Start practice"}
+        title={disabled ? "Pick a source and at least one question type." : "Start practice"}
         className={`inline-flex items-center justify-center gap-1.5 rounded-xl font-extrabold transition-colors btn-brand disabled:opacity-50 disabled:cursor-not-allowed disabled:shadow-none ${
           fullWidth ? "w-full px-4 py-3 text-sm" : "px-3.5 py-2 text-xs"
         }`}
       >
-        Start practice
+        {label ?? "Start practice"}
         <ChevronRight size={small ? 14 : 16} />
       </button>
       {!small && (

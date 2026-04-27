@@ -143,6 +143,11 @@ const KIND_META: Record<
     short: "Antonym",
     icon: <RefreshCw size={13} />,
   },
+  "synonym-pair": {
+    label: "Select All Synonyms",
+    short: "Pair",
+    icon: <Sparkles size={13} />,
+  },
   "tf-definition": {
     label: "T/F · Definition",
     short: "T/F Def",

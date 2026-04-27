@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, type ComponentProps } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { AppProvider, useApp } from "@/context/AppContext";
 import Dashboard from "@/pages/Dashboard";
@@ -96,6 +96,11 @@ function MainApp() {
           <PracticeMode
             onBack={() => goBack(() => setPage("test"))}
             onNavigate={navigate}
+            questions={
+              pageParams.questions as ComponentProps<
+                typeof PracticeMode
+              >["questions"]
+            }
             wordIds={pageParams.wordIds as string[] | undefined}
             sessionTitle={pageParams.sessionTitle as string | undefined}
             initialKinds={pageParams.initialKinds as undefined}

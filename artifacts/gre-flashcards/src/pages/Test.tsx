@@ -1,6 +1,5 @@
 import { motion } from "framer-motion";
 import {
-  Zap,
   SlidersHorizontal,
   GraduationCap,
   History,
@@ -29,27 +28,6 @@ interface SectionCard {
 
 export default function Test({ onNavigate }: TestProps) {
   const sections: SectionCard[] = [
-    {
-      id: "quick-practice",
-      title: "Quick Practice",
-      subtitle: "Jump straight into focused drills",
-      description:
-        "Spin up a short session built from the words that matter most right now — new vocabulary, mistakes, difficult words, today's review, or a random refresher.",
-      icon: <Zap size={22} className="text-white" strokeWidth={2.5} />,
-      accentClass:
-        "from-orange-500/15 via-orange-500/5 to-transparent dark:from-orange-500/20",
-      iconBgClass: "bg-gradient-to-br from-orange-500 to-pink-500",
-      items: [
-        "New words",
-        "Mistake words",
-        "Difficult words",
-        "Today's review",
-        "Random review",
-      ],
-      cta: "Pick a preset",
-      status: "available",
-      onClick: () => onNavigate("test-selection", { mode: "quick" }),
-    },
     {
       id: "custom-practice",
       title: "Custom Practice",

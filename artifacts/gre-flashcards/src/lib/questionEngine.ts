@@ -9,6 +9,7 @@ export type QuestionKind =
   | "fill-blank"
   | "synonym-mcq"
   | "antonym-mcq"
+  | "synonym-pair"
   | "tf-definition"
   | "tf-synonym"
   | "tf-antonym"
@@ -58,7 +59,18 @@ export interface TrueFalseQuestion extends BaseQuestion {
   candidate: string;
 }
 
-export type Question = MCQQuestion | FillBlankQuestion | TrueFalseQuestion;
+export interface SynonymPairQuestion extends BaseQuestion {
+  kind: "synonym-pair";
+  options: string[];
+  /** All correct synonyms the user must select. */
+  correctAnswers: string[];
+}
+
+export type Question =
+  | MCQQuestion
+  | FillBlankQuestion
+  | TrueFalseQuestion
+  | SynonymPairQuestion;
 
 export interface GeneratorOptions {
   /** Word pool to draw distractors from. Defaults to `[targetWord]` only — pass the full bank for best results. */
@@ -345,14 +357,21 @@ export function generateFillBlank(
 /* 4. Synonym matching MCQ                                                    */
 /* -------------------------------------------------------------------------- */
 
+export interface SynonymMCQOptions extends GeneratorOptions {
+  /** When set, use this exact synonym as the correct answer (must be one of the word's synonyms). */
+  forceSynonym?: string;
+}
+
 export function generateSynonymMCQ(
   word: Word,
-  options: GeneratorOptions = {},
+  options: SynonymMCQOptions = {},
 ): MCQQuestion | null {
-  const { pool = [word], numChoices = DEFAULT_NUM_CHOICES, rng } = options;
+  const { pool = [word], numChoices = DEFAULT_NUM_CHOICES, rng, forceSynonym } = options;
   const synonyms: string[] = (word.synonyms as unknown as string[] | undefined) ?? [];
   if (synonyms.length === 0) return null;
-  const correct = synonyms[Math.floor((rng ?? Math.random)() * synonyms.length)];
+  const correct = forceSynonym && synonyms.includes(forceSynonym)
+    ? forceSynonym
+    : synonyms[Math.floor((rng ?? Math.random)() * synonyms.length)];
   const need = Math.max(1, numChoices - 1);
 
   // Distractors must NOT be one of the target's own synonyms.
@@ -383,6 +402,87 @@ export function generateSynonymMCQ(
     choices,
     correct,
     correctIndex: choices.indexOf(correct),
+    explanation: `${word.word} ≈ ${synonyms.join(", ")}.`,
+  };
+}
+
+/**
+ * Build one MCQ per available synonym (e.g. a word with 3 synonyms produces 3
+ * questions). Each question tests a different synonym in the correct slot.
+ */
+export function generateAllSynonymMCQs(
+  word: Word,
+  options: GeneratorOptions = {},
+): MCQQuestion[] {
+  const synonyms: string[] = (word.synonyms as unknown as string[] | undefined) ?? [];
+  const out: MCQQuestion[] = [];
+  for (const syn of synonyms) {
+    const q = generateSynonymMCQ(word, { ...options, forceSynonym: syn });
+    if (q) out.push(q);
+  }
+  return out;
+}
+
+/**
+ * Build one fill-in-the-blank per example sentence the word has.
+ */
+export function generateAllFillBlanks(
+  word: Word,
+  options: GeneratorOptions = {},
+): FillBlankQuestion[] {
+  const examples: string[] = (word.examples as unknown as string[] | undefined) ?? [];
+  const out: FillBlankQuestion[] = [];
+  for (let i = 0; i < examples.length; i++) {
+    const q = generateFillBlank(word, { ...options, exampleIndex: i });
+    if (q) out.push(q);
+  }
+  return out;
+}
+
+/* -------------------------------------------------------------------------- */
+/* 4b. Synonym pairing — Select All Synonyms                                  */
+/* -------------------------------------------------------------------------- */
+
+export interface SynonymPairOptions extends GeneratorOptions {
+  /** Total number of options shown (default 6). */
+  numOptions?: number;
+}
+
+export function generateSynonymPair(
+  word: Word,
+  options: SynonymPairOptions = {},
+): SynonymPairQuestion | null {
+  const { pool = [word], numOptions = 6, rng } = options;
+  const synonyms: string[] = (word.synonyms as unknown as string[] | undefined) ?? [];
+  if (synonyms.length === 0) return null;
+
+  const targetSynSet = new Set(synonyms.map(normalizeText));
+  const safeExtract = (w: Word): string[] => {
+    const out: string[] = [];
+    for (const s of w.synonyms ?? []) {
+      if (!targetSynSet.has(normalizeText(s))) out.push(s);
+    }
+    return out;
+  };
+
+  const need = Math.max(1, numOptions - synonyms.length);
+  const distractors = pickDistractorStrings(
+    word,
+    pool,
+    synonyms[0],
+    need,
+    safeExtract,
+    rng,
+  );
+  if (distractors.length === 0) return null;
+  const options_ = rngShuffle([...synonyms, ...distractors], rng);
+  return {
+    id: makeId("synonym-pair", word),
+    kind: "synonym-pair",
+    word,
+    prompt: `Select ALL words that are synonyms of "${word.word}".`,
+    options: options_,
+    correctAnswers: [...synonyms],
     explanation: `${word.word} ≈ ${synonyms.join(", ")}.`,
   };
 }
@@ -764,13 +864,21 @@ export function buildAllForWord(
 /** Verify whether a user's response is correct for a given question. */
 export function isAnswerCorrect(
   q: Question,
-  response: string | boolean | null | undefined,
+  response: string | boolean | string[] | null | undefined,
 ): boolean {
   if (response === null || response === undefined) return false;
   if (q.kind === "fill-blank") {
     if (typeof response !== "string") return false;
     const norm = normalizeText(response);
     return q.acceptableAnswers.some((a) => normalizeText(a) === norm);
+  }
+  if (q.kind === "synonym-pair") {
+    if (!Array.isArray(response)) return false;
+    const want = new Set(q.correctAnswers.map(normalizeText));
+    const got = new Set(response.map(normalizeText));
+    if (want.size !== got.size) return false;
+    for (const v of want) if (!got.has(v)) return false;
+    return true;
   }
   if (
     q.kind === "tf-definition" ||

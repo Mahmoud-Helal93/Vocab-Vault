@@ -15,14 +15,13 @@ import {
   BookOpenText,
   Pencil,
   ToggleLeft,
-  Layers,
   Target,
   Brain,
   Lock,
   Languages,
-  Smile,
   Plus,
   Check,
+  ListChecks,
 } from "lucide-react";
 import { useApp } from "@/context/AppContext";
 import { type Word } from "@/data/words";
@@ -33,9 +32,11 @@ import {
   type MCQQuestion,
   type FillBlankQuestion,
   type TrueFalseQuestion,
+  type SynonymPairQuestion,
   buildAllForWord,
   isAnswerCorrect,
 } from "@/lib/questionEngine";
+import { rebuildSessionFromQuestions } from "@/lib/testSelection";
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Props
@@ -44,9 +45,14 @@ import {
 interface PracticeModeProps {
   onBack: () => void;
   onNavigate: (page: string, params?: Record<string, unknown>) => void;
+  /**
+   * Pre-built question list (preferred path — comes from the new Custom
+   * Practice setup). When supplied, takes precedence over `wordIds`.
+   */
+  questions?: Question[];
   wordIds?: string[];
   sessionTitle?: string;
-  /** Optional initial set of question kinds. Defaults to all. */
+  /** Optional initial set of question kinds. Defaults to all (legacy path). */
   initialKinds?: QuestionKind[];
 }
 
@@ -81,6 +87,11 @@ const KIND_META: Record<
     short: "Antonym",
     icon: <RefreshCw size={13} />,
   },
+  "synonym-pair": {
+    label: "Select All Synonyms",
+    short: "Pair",
+    icon: <ListChecks size={13} />,
+  },
   "tf-definition": {
     label: "T/F · Definition",
     short: "T/F Def",
@@ -101,24 +112,30 @@ const KIND_META: Record<
     short: "T/F AR",
     icon: <Languages size={13} />,
   },
+  // Tone questions are no longer surfaced via Custom Practice; the kind
+  // remains in the engine for legacy callers but is never rendered here.
   "tf-tone": {
     label: "T/F · Tone",
     short: "T/F Tone",
-    icon: <Smile size={13} />,
+    icon: <ToggleLeft size={13} />,
   },
 };
 
+/**
+ * Active kinds for the legacy `wordIds` fallback path. Tone questions are
+ * intentionally excluded — Custom Practice no longer surfaces them.
+ */
 const ALL_KINDS: QuestionKind[] = [
   "word-to-def",
   "def-to-word",
   "fill-blank",
   "synonym-mcq",
   "antonym-mcq",
+  "synonym-pair",
   "tf-definition",
   "tf-synonym",
   "tf-antonym",
   "tf-arabic",
-  "tf-tone",
 ];
 
 // ─── Confidence ────────────────────────────────────────────────────────────
@@ -159,8 +176,8 @@ function confidenceToQuality(conf: Confidence, correct: boolean): number {
 // ─── Per-question state ────────────────────────────────────────────────────
 
 interface ResponseState {
-  /** Final response (after retries). null = unanswered. */
-  response: string | boolean | null;
+  /** Final response (after retries). null = unanswered. Arrays are used for synonym-pair. */
+  response: string | boolean | string[] | null;
   /** Was the FIRST attempt correct? */
   firstCorrect: boolean | null;
   /** Was the FINAL response correct? */
@@ -219,43 +236,68 @@ function uniqId() {
 
 export default function PracticeMode({
   onBack,
+  questions,
   wordIds,
   sessionTitle,
   initialKinds,
 }: PracticeModeProps) {
   const { words, updateWord, markWordReviewed } = useApp();
 
-  // Session words (preserve TestSelection's order; if no ids passed, fall back to all).
+  const usingPrebuiltQueue = Array.isArray(questions) && questions.length > 0;
+
+  // Session words — used by the legacy `wordIds` queue builder and by the
+  // wrong-rationale helper so it can look up other words by definition.
   const sessionWords = useMemo<Word[]>(() => {
+    if (usingPrebuiltQueue) {
+      const seen = new Set<string>();
+      const out: Word[] = [];
+      for (const q of questions!) {
+        if (seen.has(q.word.id)) continue;
+        seen.add(q.word.id);
+        out.push(q.word);
+      }
+      return out;
+    }
     if (!wordIds || wordIds.length === 0) return words.slice(0, 20);
     const byId = new Map(words.map((w) => [w.id, w]));
     return wordIds.map((id) => byId.get(id)).filter(Boolean) as Word[];
-  }, [wordIds, words]);
+  }, [usingPrebuiltQueue, questions, wordIds, words]);
 
-  // Selected question kinds — chip toolbar.
-  const [selectedKinds, setSelectedKinds] = useState<Set<QuestionKind>>(
+  // For the legacy wordIds path the user used to flip kinds via a chip
+  // toolbar. Kinds are now chosen up-front in Test Selection, so we just keep
+  // the state as a default-all set used by `buildQueue`.
+  const [selectedKinds] = useState<Set<QuestionKind>>(
     () => new Set(initialKinds && initialKinds.length > 0 ? initialKinds : ALL_KINDS),
   );
 
-  // Bump this when the user wants a fresh queue (kinds change, restart, etc).
+  // Bump this when the user wants a fresh queue (restart-with-wrong-only, etc).
   const [queueSeed, setQueueSeed] = useState<string>(uniqId());
+  // Optional override that replaces the queue (used by "Retry wrong only").
+  const [queueOverride, setQueueOverride] = useState<Question[] | null>(null);
 
-  const queue = useMemo<Question[]>(
-    () =>
-      buildQueue(
-        sessionWords,
-        Array.from(selectedKinds).filter((k) => ALL_KINDS.includes(k)),
-      ),
+  const queue = useMemo<Question[]>(() => {
+    if (queueOverride) return queueOverride;
+    if (usingPrebuiltQueue) return questions!;
+    return buildQueue(
+      sessionWords,
+      Array.from(selectedKinds).filter((k) => ALL_KINDS.includes(k)),
+    );
     // queueSeed is included intentionally to allow forced rebuilds
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [sessionWords, selectedKinds, queueSeed],
-  );
+  }, [
+    queueOverride,
+    usingPrebuiltQueue,
+    questions,
+    sessionWords,
+    selectedKinds,
+    queueSeed,
+  ]);
 
   const [currentIdx, setCurrentIdx] = useState(0);
   const [responses, setResponses] = useState<Record<string, ResponseState>>({});
   const [finished, setFinished] = useState(false);
 
-  // If the queue shrinks (e.g. user toggles off all kinds), clamp the cursor.
+  // If the queue shrinks, clamp the cursor.
   useEffect(() => {
     setCurrentIdx((i) => Math.min(i, Math.max(0, queue.length - 1)));
   }, [queue.length]);
@@ -278,24 +320,39 @@ export default function PracticeMode({
   // ─── Answer handler (immediate feedback) ─────────────────────────────────
 
   const submitAnswer = useCallback(
-    (q: Question, value: string | boolean) => {
+    (q: Question, value: string | boolean | string[]) => {
       const correct = isAnswerCorrect(q, value);
+      // Synonym-pair is one-shot — there is no meaningful retry once the user
+      // submits their full selection.
+      if (q.kind === "synonym-pair") {
+        setResponse(q.id, (prev) => {
+          if (prev.finalCorrect !== null) return prev;
+          return {
+            ...prev,
+            response: value,
+            firstCorrect: correct,
+            finalCorrect: correct,
+          };
+        });
+        return;
+      }
+      const tracked = Array.isArray(value)
+        ? value.join("|")
+        : String(value);
       setResponse(q.id, (prev) => {
         // Already finalized — no-op.
         if (prev.finalCorrect !== null && prev.iDontKnow === false) return prev;
         // Already wrong-once but retry path:
         if (prev.firstCorrect === false && !correct) {
-          // Track the new wrong attempt (don't finalize — let user retry once more).
           return {
             ...prev,
             response: value,
-            wrongTried: prev.wrongTried.includes(String(value))
+            wrongTried: prev.wrongTried.includes(tracked)
               ? prev.wrongTried
-              : [...prev.wrongTried, String(value)],
+              : [...prev.wrongTried, tracked],
           };
         }
         if (prev.firstCorrect === false && correct) {
-          // Got it on retry.
           return {
             ...prev,
             response: value,
@@ -307,8 +364,8 @@ export default function PracticeMode({
           ...prev,
           response: value,
           firstCorrect: correct,
-          finalCorrect: correct ? true : null, // null = pending retry decision
-          wrongTried: correct ? prev.wrongTried : [String(value)],
+          finalCorrect: correct ? true : null,
+          wrongTried: correct ? prev.wrongTried : [tracked],
         };
       });
     },
@@ -388,8 +445,38 @@ export default function PracticeMode({
     setResponses({});
     setCurrentIdx(0);
     setFinished(false);
+    setQueueOverride(null);
     setQueueSeed(uniqId());
   }, []);
+
+  /** Re-run only the questions the user got wrong / skipped. */
+  const retryWrongOnly = useCallback(() => {
+    const wrong: Question[] = [];
+    for (const q of queue) {
+      const r = responses[q.id];
+      if (!r) continue;
+      const finalCorrect = r.finalCorrect === true;
+      if (!finalCorrect) wrong.push(q);
+    }
+    if (wrong.length === 0) return;
+    const fresh = rebuildSessionFromQuestions(wrong, words, true);
+    if (fresh.length === 0) return;
+    setQueueOverride(fresh);
+    setResponses({});
+    setCurrentIdx(0);
+    setFinished(false);
+  }, [queue, responses, words]);
+
+  /** Re-enter the session as a read-only review of every question. */
+  const reviewIncorrect = useCallback(() => {
+    setFinished(false);
+    // Jump to the first wrong/skipped question if any, otherwise to start.
+    const firstWrongIdx = queue.findIndex((q) => {
+      const r = responses[q.id];
+      return r && r.finalCorrect !== true;
+    });
+    setCurrentIdx(firstWrongIdx >= 0 ? firstWrongIdx : 0);
+  }, [queue, responses]);
 
   // ─── Stats for the header ────────────────────────────────────────────────
 
@@ -422,25 +509,10 @@ export default function PracticeMode({
 
   if (queue.length === 0) {
     return (
-      <Shell
-        onBack={onBack}
-        title={sessionTitle ?? "Practice"}
-        stats={null}
-        toolbar={
-          <KindToolbar
-            selected={selectedKinds}
-            onChange={(s) => {
-              setSelectedKinds(s);
-              setResponses({});
-              setCurrentIdx(0);
-              setFinished(false);
-            }}
-          />
-        }
-      >
+      <Shell onBack={onBack} title={sessionTitle ?? "Practice"} stats={null}>
         <EmptyCard
           title="No questions can be built from these words"
-          body="Try enabling more question types — for example, T/F Antonym only works for words that have antonyms."
+          body="Head back to Test Selection and pick at least one question type with available questions."
         />
       </Shell>
     );
@@ -460,10 +532,8 @@ export default function PracticeMode({
           queue={queue}
           responses={responses}
           onRestart={restart}
-          onReview={() => {
-            setFinished(false);
-            setCurrentIdx(0);
-          }}
+          onReview={reviewIncorrect}
+          onRetryWrong={retryWrongOnly}
           onExit={onBack}
         />
       </Shell>
@@ -477,19 +547,8 @@ export default function PracticeMode({
       onBack={onBack}
       title={sessionTitle ?? "Practice"}
       stats={stats}
-      toolbar={
-        <KindToolbar
-          selected={selectedKinds}
-          onChange={(s) => {
-            setSelectedKinds(s);
-            setResponses({});
-            setCurrentIdx(0);
-            setFinished(false);
-          }}
-        />
-      }
     >
-      <ProgressBar value={(currentIdx / queue.length) * 100} />
+      <ProgressBar current={currentIdx + 1} total={queue.length} />
 
       <AnimatePresence mode="wait">
         <motion.div
@@ -622,13 +681,28 @@ function StatChip({
   );
 }
 
-function ProgressBar({ value }: { value: number }) {
+function ProgressBar({ current, total }: { current: number; total: number }) {
+  const safeTotal = Math.max(1, total);
+  const safeCurrent = Math.max(0, Math.min(current, safeTotal));
+  // Visualise "you have completed N of M" using a 1-indexed current.
+  const pct = ((safeCurrent - 1) / safeTotal) * 100;
   return (
-    <div className="h-1.5 w-full bg-muted rounded-full overflow-hidden">
-      <div
-        className="h-full bg-brand-gradient rounded-full transition-all"
-        style={{ width: `${Math.max(0, Math.min(100, value))}%` }}
-      />
+    <div className="space-y-1.5">
+      <div className="flex items-center justify-between text-[11px] font-extrabold">
+        <span className="uppercase tracking-wider text-muted-foreground">
+          Progress
+        </span>
+        <span className="tabular-nums text-foreground">
+          {safeCurrent}
+          <span className="text-muted-foreground"> / {safeTotal}</span>
+        </span>
+      </div>
+      <div className="h-2 w-full bg-muted rounded-full overflow-hidden">
+        <div
+          className="h-full bg-brand-gradient rounded-full transition-all"
+          style={{ width: `${Math.max(0, Math.min(100, pct))}%` }}
+        />
+      </div>
     </div>
   );
 }
@@ -645,69 +719,6 @@ function EmptyCard({ title, body }: { title: string; body: string }) {
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
-// Kind toolbar
-// ─────────────────────────────────────────────────────────────────────────────
-
-function KindToolbar({
-  selected,
-  onChange,
-}: {
-  selected: Set<QuestionKind>;
-  onChange: (next: Set<QuestionKind>) => void;
-}) {
-  const allOn = ALL_KINDS.every((k) => selected.has(k));
-  return (
-    <section className="rounded-2xl border border-border bg-card shadow-sm p-3.5">
-      <div className="flex items-center justify-between mb-2">
-        <div className="flex items-center gap-1.5">
-          <Layers size={14} className="text-muted-foreground" />
-          <span className="text-[11px] font-extrabold uppercase tracking-wider text-muted-foreground">
-            Question types
-          </span>
-        </div>
-        <button
-          type="button"
-          onClick={() =>
-            onChange(allOn ? new Set([ALL_KINDS[0]]) : new Set(ALL_KINDS))
-          }
-          className="text-[11px] font-bold text-orange-600 hover:text-orange-700 dark:text-orange-400"
-        >
-          {allOn ? "Only first" : "All on"}
-        </button>
-      </div>
-      <div className="flex flex-wrap gap-1.5">
-        {ALL_KINDS.map((k) => {
-          const active = selected.has(k);
-          const meta = KIND_META[k];
-          return (
-            <button
-              key={k}
-              type="button"
-              onClick={() => {
-                const next = new Set(selected);
-                if (next.has(k)) next.delete(k);
-                else next.add(k);
-                if (next.size === 0) next.add(k); // never zero
-                onChange(next);
-              }}
-              className={`inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl text-[11px] font-bold transition-colors ${
-                active
-                  ? "bg-orange-100 text-orange-700 dark:bg-orange-500/20 dark:text-orange-300"
-                  : "bg-muted text-muted-foreground hover:bg-muted/70 hover:text-foreground"
-              }`}
-              title={meta.label}
-            >
-              {meta.icon}
-              {meta.short}
-            </button>
-          );
-        })}
-      </div>
-    </section>
-  );
-}
-
-// ─────────────────────────────────────────────────────────────────────────────
 // Question card (dispatches by kind)
 // ─────────────────────────────────────────────────────────────────────────────
 
@@ -715,7 +726,7 @@ interface QuestionCardProps {
   q: Question;
   response: ResponseState;
   pool: Word[];
-  onAnswer: (value: string | boolean) => void;
+  onAnswer: (value: string | boolean | string[]) => void;
   onRetry: () => void;
   onIDontKnow: () => void;
   onAddDifficult: () => void;
@@ -826,8 +837,7 @@ function PromptBlock({ q }: { q: Question }) {
     q.kind === "tf-definition" ||
     q.kind === "tf-synonym" ||
     q.kind === "tf-antonym" ||
-    q.kind === "tf-arabic" ||
-    q.kind === "tf-tone"
+    q.kind === "tf-arabic"
   ) {
     const tf = q as TrueFalseQuestion;
     return (
@@ -837,6 +847,22 @@ function PromptBlock({ q }: { q: Question }) {
         </p>
         <p className="mt-2 text-lg sm:text-xl font-bold text-foreground leading-relaxed">
           {tf.statement}
+        </p>
+      </>
+    );
+  }
+  if (q.kind === "synonym-pair") {
+    const sp = q as SynonymPairQuestion;
+    return (
+      <>
+        <p className="text-xs font-bold uppercase tracking-wider text-muted-foreground">
+          Select all synonyms of
+        </p>
+        <p className="mt-2 text-lg sm:text-xl font-bold text-foreground leading-relaxed">
+          {sp.word.word}
+        </p>
+        <p className="mt-1 text-[11px] text-muted-foreground">
+          Pick every option that matches. Submit when you’re done.
         </p>
       </>
     );
@@ -871,8 +897,7 @@ function AnswerArea(props: QuestionCardProps) {
     q.kind === "tf-definition" ||
     q.kind === "tf-synonym" ||
     q.kind === "tf-antonym" ||
-    q.kind === "tf-arabic" ||
-    q.kind === "tf-tone"
+    q.kind === "tf-arabic"
   ) {
     const tf = q as TrueFalseQuestion;
     const userPick =
@@ -910,6 +935,10 @@ function AnswerArea(props: QuestionCardProps) {
         })}
       </div>
     );
+  }
+
+  if (q.kind === "synonym-pair") {
+    return <SynonymPairPicker {...props} />;
   }
 
   if (q.kind === "fill-blank") {
@@ -989,6 +1018,114 @@ function ChoiceButton({
         <span className="flex-1">{label}</span>
       </span>
     </button>
+  );
+}
+
+function SynonymPairPicker(props: QuestionCardProps) {
+  const { q, response, onAnswer } = props;
+  const sp = q as SynonymPairQuestion;
+  const isAnswered =
+    response.finalCorrect !== null || response.iDontKnow === true;
+  const finalSelection: string[] = Array.isArray(response.response)
+    ? response.response
+    : [];
+  const correctSet = useMemo(
+    () => new Set(sp.correctAnswers.map((c) => c.toLowerCase())),
+    [sp.correctAnswers],
+  );
+  const [picked, setPicked] = useState<Set<string>>(() => new Set());
+
+  // Reset on retry / new question.
+  useEffect(() => {
+    if (response.response === null) setPicked(new Set());
+  }, [response.response, q.id]);
+
+  const toggle = (choice: string) => {
+    if (isAnswered) return;
+    setPicked((prev) => {
+      const next = new Set(prev);
+      if (next.has(choice)) next.delete(choice);
+      else next.add(choice);
+      return next;
+    });
+  };
+
+  const submit = () => {
+    if (isAnswered) return;
+    onAnswer(Array.from(picked));
+  };
+
+  return (
+    <div className="space-y-2.5">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+        {sp.options.map((choice) => {
+          const isPicked = isAnswered
+            ? finalSelection
+                .map((s) => s.toLowerCase())
+                .includes(choice.toLowerCase())
+            : picked.has(choice);
+          const isCorrectChoice = correctSet.has(choice.toLowerCase());
+          let state: "default" | "correct" | "wrong" | "picked" = "default";
+          if (isAnswered) {
+            if (isCorrectChoice) state = "correct";
+            else if (isPicked) state = "wrong";
+          } else if (isPicked) {
+            state = "picked";
+          }
+          const cls =
+            state === "correct"
+              ? "border-emerald-300 dark:border-emerald-500/50 bg-emerald-50 dark:bg-emerald-500/10 text-emerald-900 dark:text-emerald-100"
+              : state === "wrong"
+                ? "border-rose-300 dark:border-rose-500/50 bg-rose-50 dark:bg-rose-500/10 text-rose-900 dark:text-rose-100"
+                : state === "picked"
+                  ? "border-orange-300 dark:border-orange-500/50 bg-orange-50 dark:bg-orange-500/10 text-orange-900 dark:text-orange-100"
+                  : "border-border bg-card text-foreground hover:bg-muted/60";
+          return (
+            <button
+              key={choice}
+              type="button"
+              onClick={() => toggle(choice)}
+              disabled={isAnswered}
+              className={`w-full text-left px-3.5 py-3 rounded-xl border-2 text-sm font-bold transition-colors disabled:cursor-not-allowed ${cls}`}
+            >
+              <span className="flex items-center gap-2">
+                {state === "correct" && (
+                  <CheckCircle2 size={16} className="text-emerald-600 shrink-0" />
+                )}
+                {state === "wrong" && (
+                  <XCircle size={16} className="text-rose-600 shrink-0" />
+                )}
+                {state === "picked" && (
+                  <Check size={16} className="text-orange-600 shrink-0" />
+                )}
+                <span className="flex-1">{choice}</span>
+              </span>
+            </button>
+          );
+        })}
+      </div>
+      {!isAnswered && (
+        <div className="flex items-center justify-between gap-2">
+          <p className="text-[11px] text-muted-foreground">
+            Selected{" "}
+            <span className="font-extrabold text-foreground">
+              {picked.size}
+            </span>{" "}
+            of {sp.correctAnswers.length} correct synonym
+            {sp.correctAnswers.length === 1 ? "" : "s"}.
+          </p>
+          <button
+            type="button"
+            onClick={submit}
+            disabled={picked.size === 0}
+            className="inline-flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-xl text-sm font-extrabold btn-brand disabled:opacity-50 disabled:cursor-not-allowed disabled:shadow-none"
+          >
+            Submit
+            <ChevronRight size={14} />
+          </button>
+        </div>
+      )}
+    </div>
   );
 }
 
@@ -1082,9 +1219,11 @@ function HintBlock({ q }: { q: Question }) {
     lines.push(`Look for the OPPOSITE.`);
   } else if (q.kind === "tf-arabic") {
     lines.push(`"${q.word.word}" means: ${q.word.definition}`);
-  } else if (q.kind === "tf-tone") {
+  } else if (q.kind === "synonym-pair") {
+    const sp = q as SynonymPairQuestion;
+    lines.push(`"${q.word.word}" means: ${q.word.definition}`);
     lines.push(
-      `Think about the connotation: is "${q.word.word}" praising, criticizing, or neutral?`,
+      `There ${sp.correctAnswers.length === 1 ? "is" : "are"} ${sp.correctAnswers.length} correct synonym${sp.correctAnswers.length === 1 ? "" : "s"} hiding among the options.`,
     );
   }
   if (enrichment?.mnemonic) lines.push(`Mnemonic: ${enrichment.mnemonic}`);
@@ -1262,8 +1401,7 @@ function CorrectAnswerLine({ q }: { q: Question }) {
     q.kind === "tf-definition" ||
     q.kind === "tf-synonym" ||
     q.kind === "tf-antonym" ||
-    q.kind === "tf-arabic" ||
-    q.kind === "tf-tone"
+    q.kind === "tf-arabic"
   ) {
     const tf = q as TrueFalseQuestion;
     return (
@@ -1281,6 +1419,19 @@ function CorrectAnswerLine({ q }: { q: Question }) {
       <p className="text-sm">
         <span className="text-muted-foreground font-bold">Correct: </span>
         <span className="font-extrabold text-foreground">{fb.answer}</span>
+      </p>
+    );
+  }
+  if (q.kind === "synonym-pair") {
+    const sp = q as SynonymPairQuestion;
+    return (
+      <p className="text-sm">
+        <span className="text-muted-foreground font-bold">
+          Correct synonyms:{" "}
+        </span>
+        <span className="font-extrabold text-foreground">
+          {sp.correctAnswers.join(", ")}
+        </span>
       </p>
     );
   }
@@ -1427,13 +1578,35 @@ function buildWrongRationale(
     q.kind === "tf-definition" ||
     q.kind === "tf-synonym" ||
     q.kind === "tf-antonym" ||
-    q.kind === "tf-arabic" ||
-    q.kind === "tf-tone"
+    q.kind === "tf-arabic"
   ) {
     const tf = q as TrueFalseQuestion;
     return tf.answer
       ? `The statement was true — the candidate really does match "${q.word.word}".`
       : `The statement was false — the candidate doesn't match "${q.word.word}".`;
+  }
+  if (q.kind === "synonym-pair") {
+    const sp = q as SynonymPairQuestion;
+    const picked = Array.isArray(r.response) ? r.response : [];
+    const correctSet = new Set(sp.correctAnswers.map((s) => s.toLowerCase()));
+    const wrongPicks = picked.filter(
+      (p) => !correctSet.has(p.toLowerCase()),
+    );
+    const missed = sp.correctAnswers.filter(
+      (c) => !picked.map((p) => p.toLowerCase()).includes(c.toLowerCase()),
+    );
+    const parts: string[] = [];
+    if (wrongPicks.length > 0) {
+      parts.push(
+        `${wrongPicks.length === 1 ? "This option isn't" : "These options aren't"} a synonym of "${q.word.word}": ${wrongPicks.join(", ")}.`,
+      );
+    }
+    if (missed.length > 0) {
+      parts.push(
+        `${missed.length === 1 ? "You missed" : "You missed"}: ${missed.join(", ")}.`,
+      );
+    }
+    return parts.length > 0 ? parts.join(" ") : null;
   }
   return null;
 }
@@ -1448,6 +1621,7 @@ function SessionSummary({
   responses,
   onRestart,
   onReview,
+  onRetryWrong,
   onExit,
 }: {
   stats: { answered: number; correct: number; firstTryCorrect: number; total: number };
@@ -1455,6 +1629,7 @@ function SessionSummary({
   responses: Record<string, ResponseState>;
   onRestart: () => void;
   onReview: () => void;
+  onRetryWrong: () => void;
   onExit: () => void;
 }) {
   const accuracy =
@@ -1505,22 +1680,38 @@ function SessionSummary({
         </div>
 
         <div className="flex flex-wrap justify-center gap-2 mt-5">
+          {wrongCount > 0 && (
+            <button
+              type="button"
+              onClick={onRetryWrong}
+              className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl text-sm font-extrabold btn-brand"
+            >
+              <RotateCcw size={14} />
+              Retry wrong only ({wrongCount})
+            </button>
+          )}
           <button
             type="button"
             onClick={onRestart}
-            className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl text-sm font-extrabold btn-brand"
+            className={`inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl text-sm font-extrabold ${
+              wrongCount > 0
+                ? "bg-card text-foreground border border-border hover:bg-muted/60"
+                : "btn-brand"
+            }`}
           >
             <RefreshCw size={14} />
             Practice again
           </button>
-          <button
-            type="button"
-            onClick={onReview}
-            className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl text-sm font-extrabold bg-card text-foreground border border-border hover:bg-muted/60"
-          >
-            <RotateCcw size={14} />
-            Review answers
-          </button>
+          {wrongCount > 0 && (
+            <button
+              type="button"
+              onClick={onReview}
+              className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl text-sm font-extrabold bg-card text-foreground border border-border hover:bg-muted/60"
+            >
+              <BookOpenText size={14} />
+              Review incorrect
+            </button>
+          )}
           <button
             type="button"
             onClick={onExit}
