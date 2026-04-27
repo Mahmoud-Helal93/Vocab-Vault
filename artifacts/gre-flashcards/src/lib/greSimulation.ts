@@ -9,6 +9,7 @@
 
 import { type Word } from "@/data/words";
 import { shuffleArray } from "@/lib/srs";
+import { type TestQuestionRecord } from "@/lib/storage";
 
 // ─── Types ──────────────────────────────────────────────────────────────────
 
@@ -415,6 +416,81 @@ export function isGREAnswerCorrect(q: GREQuestion, response: GREResponse | null)
     return q.correctPair.every((s) => got.has(s.toLowerCase()));
   }
   return false;
+}
+
+/**
+ * Translate a single graded GRE-simulation question into one or more
+ * TestQuestionRecord entries — the same schema the timed-test analytics use.
+ *
+ * - Text Completion → one record per blank, each tied to that blank's target
+ *   word so per-word and per-mission rollups stay accurate. The kind is
+ *   `text-completion`. Time spent is split evenly across the blanks.
+ * - Sentence Equivalence → one record tied to the target word, kind
+ *   `sentence-equivalence`. The user's pair and the correct pair are joined
+ *   with a separator for display.
+ */
+export function recordsForGREQuestion(
+  q: GREQuestion,
+  response: GREResponse | null,
+  totalTimeSpentMs: number,
+): TestQuestionRecord[] {
+  if (q.kind === "text-completion") {
+    const r =
+      response?.kind === "text-completion"
+        ? response
+        : { kind: "text-completion" as const, selected: q.blanks.map(() => null as string | null) };
+    const perBlankTime = Math.round(totalTimeSpentMs / Math.max(1, q.blanks.length));
+    return q.blanks.map((b, i) => {
+      const userPick = r.selected[i] ?? "";
+      const answered = !!userPick;
+      const correct = answered && userPick === b.correct;
+      const blankSuffix = q.numBlanks === 1 ? "" : ` (blank ${i + 1})`;
+      return {
+        questionId: `${q.id}#${i}`,
+        kind: "text-completion",
+        wordId: b.targetWord.id,
+        word: b.targetWord.word,
+        day: b.targetWord.day,
+        group: b.targetWord.group,
+        pos: b.targetWord.pos,
+        prompt: `${q.passage}${blankSuffix}`,
+        userAnswer: userPick || "(skipped)",
+        correctAnswer: b.correct,
+        correct,
+        answered,
+        flagged: false,
+        timeSpentMs: perBlankTime,
+      };
+    });
+  }
+
+  // Sentence Equivalence
+  const r =
+    response?.kind === "sentence-equivalence"
+      ? response
+      : { kind: "sentence-equivalence" as const, selected: [] as string[] };
+  const correct = isGREAnswerCorrect(q, r);
+  const target = q.targetWord;
+  const userJoined =
+    r.selected.length === 0 ? "(skipped)" : r.selected.join(" + ");
+  return [
+    {
+      questionId: q.id,
+      kind: "sentence-equivalence",
+      wordId: target.id,
+      word: target.word,
+      day: target.day,
+      group: target.group,
+      pos: target.pos,
+      prompt: q.sentence,
+      userAnswer: userJoined,
+      correctAnswer: q.correctPair.join(" + "),
+      correct,
+      answered: r.selected.length > 0,
+      flagged: false,
+      timeSpentMs: totalTimeSpentMs,
+    },
+  ];
 }
 
 /**

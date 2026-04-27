@@ -27,7 +27,13 @@ import {
   buildGRESimulation,
   isGREAnswerCorrect,
   isGREResponseComplete,
+  recordsForGREQuestion,
 } from "@/lib/greSimulation";
+import {
+  type TestHistoryRecord,
+  type TestQuestionRecord,
+  addTestHistoryRecord,
+} from "@/lib/storage";
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Props & local types
@@ -35,6 +41,7 @@ import {
 
 interface GRESimulationProps {
   onBack: () => void;
+  onNavigate: (page: string, params?: Record<string, unknown>) => void;
 }
 
 type Phase = "setup" | "taking" | "results";
@@ -85,7 +92,7 @@ function formatClock(secs: number): string {
 // Main component
 // ─────────────────────────────────────────────────────────────────────────────
 
-export default function GRESimulation({ onBack }: GRESimulationProps) {
+export default function GRESimulation({ onBack, onNavigate }: GRESimulationProps) {
   const { words } = useApp();
 
   // ── Setup state ────────────────────────────────────────────────────────────
@@ -102,7 +109,31 @@ export default function GRESimulation({ onBack }: GRESimulationProps) {
   const [startedAtMs, setStartedAtMs] = useState<number | null>(null);
   const [endedAtMs, setEndedAtMs] = useState<number | null>(null);
   const [nowMs, setNowMs] = useState<number>(() => Date.now());
+  const [savedHistoryId, setSavedHistoryId] = useState<string | null>(null);
   const containerRef = useRef<HTMLDivElement | null>(null);
+
+  // Accumulated time spent on each question (keyed by question id). The clock
+  // starts ticking when a question becomes current and stops when the learner
+  // moves to a different question or submits.
+  const timePerQuestionRef = useRef<Record<string, number>>({});
+  const questionEnteredAtRef = useRef<number | null>(null);
+
+  // (Re)start the per-question timer whenever the current question changes
+  // while in the taking phase.
+  useEffect(() => {
+    if (phase !== "taking") return;
+    questionEnteredAtRef.current = Date.now();
+    return () => {
+      const enteredAt = questionEnteredAtRef.current;
+      const q = questions[currentIdx];
+      if (enteredAt !== null && q) {
+        const elapsed = Date.now() - enteredAt;
+        timePerQuestionRef.current[q.id] =
+          (timePerQuestionRef.current[q.id] ?? 0) + Math.max(0, elapsed);
+      }
+      questionEnteredAtRef.current = null;
+    };
+  }, [phase, currentIdx, questions]);
 
   // ── Tick the clock once per second while taking the test ───────────────────
   useEffect(() => {
@@ -133,6 +164,9 @@ export default function GRESimulation({ onBack }: GRESimulationProps) {
     setCurrentIdx(0);
     setStartedAtMs(Date.now());
     setEndedAtMs(null);
+    setSavedHistoryId(null);
+    timePerQuestionRef.current = {};
+    questionEnteredAtRef.current = null;
     setPhase("taking");
   }, [mode, count, words]);
 
@@ -187,9 +221,78 @@ export default function GRESimulation({ onBack }: GRESimulationProps) {
 
   // ── Submit ─────────────────────────────────────────────────────────────────
   const submit = useCallback(() => {
-    setEndedAtMs(Date.now());
+    // Make sure the in-flight question's elapsed time is folded in before we
+    // serialize the run. The "taking" useEffect cleanup also fires on phase
+    // change but order-of-operations matters when we read the ref below.
+    const enteredAt = questionEnteredAtRef.current;
+    const liveQ = questions[currentIdx];
+    if (enteredAt !== null && liveQ) {
+      timePerQuestionRef.current[liveQ.id] =
+        (timePerQuestionRef.current[liveQ.id] ?? 0) +
+        Math.max(0, Date.now() - enteredAt);
+      questionEnteredAtRef.current = null;
+    }
+
+    const endedMs = Date.now();
+    const startedMs = startedAtMs ?? endedMs;
+
+    // Translate every GRE question into one or more TestQuestionRecord entries
+    // and persist a TestHistoryRecord so the result rolls into the analytics
+    // shown on the Test History page.
+    const allRecords: TestQuestionRecord[] = [];
+    let itemsCorrect = 0;
+    for (const q of questions) {
+      const r = responses[q.id] ?? null;
+      const elapsed = timePerQuestionRef.current[q.id] ?? 0;
+      const recs = recordsForGREQuestion(q, r, elapsed);
+      allRecords.push(...recs);
+      if (isGREAnswerCorrect(q, r)) itemsCorrect += 1;
+    }
+
+    if (questions.length > 0) {
+      const numQuestions = allRecords.length;
+      const numCorrect = allRecords.filter((q) => q.correct).length;
+      const numWrong = allRecords.filter((q) => q.answered && !q.correct).length;
+      const numUnanswered = allRecords.filter((q) => !q.answered).length;
+      const accuracy =
+        numQuestions === 0 ? 0 : Math.round((numCorrect / numQuestions) * 100);
+      const modeLabel =
+        mode === "text-completion"
+          ? "Text Completion"
+          : mode === "sentence-equivalence"
+            ? "Sentence Equivalence"
+            : "Mixed";
+      const blankCount = allRecords.filter((q) => q.kind === "text-completion").length;
+      const seCount = allRecords.filter((q) => q.kind === "sentence-equivalence").length;
+      const detail = [
+        `${itemsCorrect}/${questions.length} items`,
+        blankCount > 0 ? `${blankCount} blank${blankCount === 1 ? "" : "s"}` : null,
+        seCount > 0 ? `${seCount} SE pair${seCount === 1 ? "" : "s"}` : null,
+      ]
+        .filter(Boolean)
+        .join(" · ");
+      const selectedKinds = Array.from(new Set(allRecords.map((r) => r.kind)));
+      const record: TestHistoryRecord = {
+        id: `gre-sim-${endedMs}-${Math.random().toString(36).slice(2, 8)}`,
+        startedAt: new Date(startedMs).toISOString(),
+        endedAt: new Date(endedMs).toISOString(),
+        durationMs: Math.max(0, endedMs - startedMs),
+        scopeLabel: `GRE Simulation · ${modeLabel} · ${detail}`,
+        selectedKinds,
+        numQuestions,
+        numCorrect,
+        numWrong,
+        numUnanswered,
+        accuracy,
+        questions: allRecords,
+      };
+      addTestHistoryRecord(record);
+      setSavedHistoryId(record.id);
+    }
+
+    setEndedAtMs(endedMs);
     setPhase("results");
-  }, []);
+  }, [currentIdx, mode, questions, responses, startedAtMs]);
 
   useEffect(() => {
     if (remainingSec === 0 && phase === "taking") submit();
@@ -295,8 +398,10 @@ export default function GRESimulation({ onBack }: GRESimulationProps) {
       numCorrect={numCorrect}
       accuracy={accuracy}
       durationMs={(endedAtMs ?? Date.now()) - (startedAtMs ?? Date.now())}
+      savedHistoryId={savedHistoryId}
       onRestart={() => setPhase("setup")}
       onBack={onBack}
+      onViewHistory={() => onNavigate("test-history")}
     />
   );
 }
@@ -795,8 +900,10 @@ interface ResultsScreenProps {
   numCorrect: number;
   accuracy: number;
   durationMs: number;
+  savedHistoryId: string | null;
   onRestart: () => void;
   onBack: () => void;
+  onViewHistory: () => void;
 }
 
 function ResultsScreen({
@@ -806,8 +913,10 @@ function ResultsScreen({
   numCorrect,
   accuracy,
   durationMs,
+  savedHistoryId,
   onRestart,
   onBack,
+  onViewHistory,
 }: ResultsScreenProps) {
   const minutes = Math.floor(durationMs / 60000);
   const seconds = Math.floor((durationMs % 60000) / 1000);
@@ -845,6 +954,16 @@ function ResultsScreen({
             <RotateCcw size={14} />
             New simulation
           </button>
+          {savedHistoryId && (
+            <button
+              type="button"
+              onClick={onViewHistory}
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 text-sm font-bold text-slate-700 dark:text-slate-200 hover:border-slate-500 dark:hover:border-slate-500 transition-colors"
+            >
+              <Trophy size={14} />
+              View Test History
+            </button>
+          )}
           <button
             type="button"
             onClick={onBack}
@@ -854,6 +973,12 @@ function ResultsScreen({
             Back to Test Center
           </button>
         </div>
+        {savedHistoryId && (
+          <p className="mt-4 text-xs font-medium text-slate-500 dark:text-slate-400">
+            Saved to your test history. Per-blank and per-pair results feed your
+            analytics breakdown alongside Practice and Test Mode sessions.
+          </p>
+        )}
       </header>
 
       {/* Per-question review */}

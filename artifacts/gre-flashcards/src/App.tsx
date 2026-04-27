@@ -117,7 +117,10 @@ function MainApp() {
         );
       case "gre-simulation":
         return (
-          <GRESimulation onBack={() => goBack(() => setPage("test"))} />
+          <GRESimulation
+            onBack={() => goBack(() => setPage("test"))}
+            onNavigate={navigate}
+          />
         );
       case "analytics":
         return <Analytics onBack={() => goBack(() => setPage("dashboard"))} onStudyWord={(id) => navigate("study", { wordId: id })} />;

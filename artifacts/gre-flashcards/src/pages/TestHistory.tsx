@@ -21,6 +21,7 @@ import {
   Flag,
   RotateCcw,
   History,
+  Brain,
 } from "lucide-react";
 import {
   loadTestHistory,
@@ -158,6 +159,13 @@ export default function TestHistory({ onBack, onNavigate }: TestHistoryProps) {
           <ArrowLeft size={14} /> Back
         </button>
         <div className="flex items-center gap-2">
+          <button
+            type="button"
+            onClick={() => onNavigate("gre-simulation")}
+            className="inline-flex items-center gap-1 px-3 py-2 rounded-xl border border-border bg-card text-xs font-bold text-foreground hover-elevate"
+          >
+            <Brain size={14} /> GRE Sim
+          </button>
           <button
             type="button"
             onClick={() => onNavigate("test-mode")}
