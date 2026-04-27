@@ -13,6 +13,7 @@ import Bookmarks from "@/pages/Bookmarks";
 import MissionDetail from "@/pages/MissionDetail";
 import SetReading from "@/pages/SetReading";
 import StoryLibrary from "@/pages/StoryLibrary";
+import Test from "@/pages/Test";
 import SidebarSearch from "@/components/SidebarSearch";
 import BadgeToast from "@/components/BadgeToast";
 import GlobalStatsBar from "@/components/GlobalStatsBar";
@@ -21,14 +22,15 @@ import vocabNinjaLogo from "@assets/Gemini_Generated_Image_tgtyf7tgtyf7tgty_1776
 import {
   LayoutDashboard, BookOpen, Settings, Moon, Sun,
   CalendarDays, GitFork, BarChart3, TrendingUp, Zap, Menu,
-  Trophy, Bookmark, Library,
+  Trophy, Bookmark, Library, FlaskConical,
 } from "lucide-react";
 
-type Page = "dashboard" | "study" | "settings" | "analytics" | "progress" | "achievements" | "mission-test" | "set-test" | "bookmarks" | "mission-detail" | "set-reading" | "story-library";
+type Page = "dashboard" | "study" | "test" | "settings" | "analytics" | "progress" | "achievements" | "mission-test" | "set-test" | "bookmarks" | "mission-detail" | "set-reading" | "story-library";
 
 const NAV_ITEMS: Array<{ id: Page; icon: React.ReactNode; label: string }> = [
   { id: "dashboard",     icon: <LayoutDashboard size={18} />, label: "Home" },
   { id: "study",         icon: <BookOpen size={18} />,        label: "Learn" },
+  { id: "test",          icon: <FlaskConical size={18} />,    label: "Test" },
   { id: "story-library", icon: <Library size={18} />,         label: "Story Library" },
   { id: "bookmarks",     icon: <Bookmark size={18} />,        label: "Bookmarks" },
   { id: "achievements",  icon: <Trophy size={18} />,          label: "Achievements" },
@@ -74,6 +76,8 @@ function MainApp() {
         return <Dashboard onNavigate={navigate} />;
       case "study":
         return <StudyMode onBack={() => goBack(() => setPage("dashboard"))} onNavigate={navigate} initialDay={pageParams.day as number | undefined} initialWordId={pageParams.wordId as string | undefined} />;
+      case "test":
+        return <Test onNavigate={navigate} />;
       case "analytics":
         return <Analytics onBack={() => goBack(() => setPage("dashboard"))} onStudyWord={(id) => navigate("study", { wordId: id })} />;
       case "progress":

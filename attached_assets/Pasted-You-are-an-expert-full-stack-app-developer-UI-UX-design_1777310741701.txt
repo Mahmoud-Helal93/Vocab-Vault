@@ -1,0 +1,423 @@
+You are an expert full-stack app developer, UI/UX designer, English vocabulary-learning specialist, and GRE verbal test designer.
+
+I have a vocabulary learning app called Vocab Ninja. I want you to build a complete Test tab for the app, but because I have limited Replit Agent quota, you must work in small, safe, modular chunks.
+
+IMPORTANT WORKFLOW RULES:
+1. First inspect the existing project structure, routing, components, styling system, data format, and state management.
+2. Do not rewrite the whole app.
+3. Do not redesign unrelated pages.
+4. Preserve the current visual identity and design language of the app.
+5. Make the smallest clean changes needed for each phase.
+6. Avoid unnecessary dependencies.
+7. Do not generate thousands of static questions manually.
+8. Use reusable question-generator logic instead of hardcoding every question.
+9. After each implementation phase, stop and give me:
+   - files changed
+   - what was implemented
+   - what still needs to be done
+   - whether the app runs successfully
+10. Do not continue to the next phase unless I ask.
+
+APP VOCABULARY STRUCTURE:
+The app has 1260 vocabulary words.
+They are organized as:
+- 6 belts
+- each belt has 7 missions
+- each mission has 3 sets
+- each set has 10 words
+
+The Test tab must allow users to practice vocabulary from:
+- a specific set
+- a specific mission
+- a specific belt
+- all vocabulary randomly
+- a custom range
+- a mix of selected sets
+- a mix of selected missions
+- new words only
+- difficult words only
+- mistake words only
+- shuffled words
+
+CORE TEST TAB STRUCTURE:
+Create the Test tab with four main sections:
+
+1. Quick Practice
+   - New words
+   - Mistake words
+   - Difficult words
+   - Today’s review
+   - Random review
+
+2. Custom Practice
+   - Choose belt, mission, set, range, or mixed selection
+   - Choose question types
+   - Choose number of questions
+   - Toggle shuffle on/off
+   - Toggle hints on/off where appropriate
+
+3. GRE Simulation
+   - Text Completion
+   - Sentence Equivalence
+   - Mixed GRE-style vocabulary test
+   - Timed mode
+   - Difficulty level
+
+4. Test History / Analytics
+   - Previous test results
+   - Accuracy by question type
+   - Accuracy by belt/mission/set
+   - Weakest words
+   - Slowest correct answers
+   - Mistake words
+   - Suggested next practice session
+
+QUESTION TYPES TO IMPLEMENT:
+
+A. Foundational Questions
+
+1. Multiple Choice Questions
+Create two formats:
+- Word-to-Definition Recall:
+  The word is shown. Four definitions appear. User chooses the correct definition.
+- Definition-to-Word Recall:
+  The definition is shown. Four words appear. User chooses the correct word.
+
+Add a toggle:
+- Answer with term
+- Answer with definition
+
+Distractor rules:
+- Wrong options must not be random.
+- Use same part of speech when possible.
+- Use similar difficulty level when possible.
+- Prefer words from the same belt/mission/set when possible.
+- Avoid obviously wrong distractors.
+- Avoid duplicate or near-identical options.
+
+2. Fill-in-the-Blank
+For each word, create up to three fill-in-the-blank questions.
+Each question must use one of the three example sentences already associated with the word in the Learn page.
+Do not use external sentences.
+Only remove the target word.
+The user types the correct vocabulary word.
+There are no answer choices.
+
+Acceptance rules:
+- Ignore capitalization.
+- Ignore extra spaces.
+- Allow reasonable inflected forms only when grammatically appropriate.
+- If the user enters a synonym instead of the exact target word, mark it incorrect but show a helpful explanation.
+
+3. Matching Synonyms / Antonyms
+The target word is shown.
+Six option words appear.
+The user selects all correct synonyms or all correct antonyms.
+There should be a toggle:
+- Synonyms
+- Antonyms
+
+Use only synonyms and antonyms already stored in the Learn page data.
+Do not invent new synonyms/antonyms unless the existing data is missing and the code clearly falls back safely.
+
+Scoring:
+- Practice Mode may show partial feedback.
+- Test Mode gives no partial credit.
+
+4. True / False
+True/False questions can test:
+- definition
+- synonym
+- antonym
+- Arabic translation
+- emotional tone if available
+
+Use True/False lightly because guessing chance is high.
+In Practice Mode, show explanation after answering.
+
+B. GRE Simulation Questions
+
+1. Text Completion
+Create simulated GRE-style Text Completion questions.
+
+Requirements:
+- Passage length: 1 to 5 sentences
+- Number of blanks: 1 to 3
+- Single blank: 5 answer choices
+- Multi-blank: 3 answer choices per blank
+- Each blank has one unique correct answer
+- Answer choices for different blanks function independently
+- No partial credit in Test Mode
+
+Question quality:
+- The sentence or passage should test logic, not only memorization.
+- Include context clues such as contrast, cause/effect, continuation, tone, or shift.
+- Examples of clue words: however, although, despite, therefore, because, yet, nevertheless, moreover.
+
+2. Sentence Equivalence
+Create simulated GRE-style Sentence Equivalence questions.
+
+Requirements:
+- One sentence
+- One blank
+- Six answer choices
+- User must select two correct answers
+- The two correct answers must create equivalent meanings in the sentence
+- They do not need to be perfect synonyms in every context
+- No partial credit in Test Mode
+
+Important:
+If the current set does not contain a strong equivalent pair, the generator may pull one correct option from previously learned words or from the same belt, but it must avoid making the question feel forced.
+
+TEST MODES:
+
+1. Practice Mode
+Practice Mode should be educational and supportive.
+
+Requirements:
+- No timer by default
+- Immediate feedback after every question
+- Show whether the answer is correct or wrong
+- Show the correct answer
+- Show a short explanation
+- Explain why the correct answer works
+- Explain why the selected answer is wrong when possible
+- Show the related example sentence
+- Allow retry for wrong answers where appropriate
+- Include optional hint button
+- Include “I don’t know” button
+- Include “Add to difficult words” option
+- Optionally ask confidence after answering:
+  - I knew it
+  - I guessed
+  - I forgot it
+
+2. Test Mode
+Test Mode should feel more serious and exam-like.
+
+Requirements:
+- User chooses number of questions
+- User chooses question types
+- Questions should come from the belt level by default, not only mission or set level, so the test is more comprehensive
+- No immediate feedback after each question
+- Feedback appears only after the end of the test
+- Timer for the whole test
+- Track time per question
+- Do not repeat the same question type for the same word in one session
+- Use remaining question slots for other words
+- Add flag-for-review button
+- Add review screen before final submit
+- Show answered, unanswered, and flagged questions
+- Allow user to return to previous questions before submitting
+
+POST-TEST RESULTS:
+After a test, show a detailed report:
+- total score
+- percentage accuracy
+- correct/incorrect count
+- time spent
+- average time per question
+- accuracy by question type
+- accuracy by belt/mission/set
+- weak words
+- difficult words
+- mistake words
+- slow correct answers
+- fast wrong answers
+- recommended next review
+- suggested next practice mode
+
+ADAPTIVE REVIEW SYSTEM:
+Add a mastery system for every word.
+
+Each word should track:
+- total attempts
+- correct attempts
+- wrong attempts
+- accuracy
+- last practiced date
+- last incorrect date
+- average response time
+- confidence history if available
+- mistake count
+- difficult status
+- mastery level
+- next review date
+- performance by question type
+
+Suggested mastery levels:
+- New
+- Learning
+- Weak
+- Improving
+- Strong
+- Mastered
+
+A word should not become Mastered after one correct answer.
+A word becomes Mastered only when the user:
+- answers it correctly multiple times
+- answers it correctly across multiple question types
+- answers at least one typed or context-based question correctly
+- avoids recent mistakes
+- answers within reasonable time
+
+SPACED REPETITION:
+After each answer or test session, update the word’s review schedule:
+- wrong answer → review soon
+- slow correct answer → review again soon
+- fast correct answer → review later
+- repeated correct answers → increase review interval
+- low-confidence correct answer → still needs review
+
+ANTI-GUESSING FEATURES:
+Add:
+- “I don’t know” button
+- confidence rating
+- track very fast guesses
+- do not treat low-confidence correct answers as full mastery
+- use typed and context questions to confirm mastery
+
+UI/UX REQUIREMENTS:
+The Test tab should be clean, modern, calm, and consistent with the existing app.
+
+Interface should include:
+- clear page title
+- mode selection cards
+- progress bar
+- question number
+- clean question card
+- answer choices with strong spacing
+- timer in Test Mode
+- flag button in Test Mode
+- skip or next button when appropriate
+- clear submit button
+- result summary screen
+- mobile-friendly layout
+- accessible buttons and readable font sizes
+
+GRE Simulation UI should feel more exam-like.
+Practice Mode UI should feel warmer and more supportive.
+
+DATA / ENGINE REQUIREMENTS:
+Create reusable logic for:
+- selecting words by scope
+- filtering new/difficult/mistake words
+- shuffling selected words
+- generating MCQs
+- generating fill-in-the-blank questions
+- generating synonym/antonym matching questions
+- generating true/false questions
+- generating GRE-style Text Completion questions
+- generating Sentence Equivalence questions
+- tracking answers
+- scoring sessions
+- storing test history
+- updating mastery
+- updating spaced repetition
+
+The question object should be standardized as much as possible, for example:
+- id
+- type
+- wordId or relatedWordIds
+- prompt
+- options
+- correctAnswer
+- correctAnswers
+- explanation
+- difficulty
+- beltId
+- missionId
+- setId
+- source
+- timeStarted
+- timeSpent
+- userAnswer
+- isCorrect
+
+PHASED IMPLEMENTATION PLAN:
+Because I have limited Agent quota, implement this project in phases.
+
+PHASE 1:
+Inspect the app and create the Test tab foundation only:
+- route/page for Test tab
+- main Test dashboard UI
+- Quick Practice, Custom Practice, GRE Simulation, Test History cards
+- no full question engine yet
+- preserve current style
+Stop after Phase 1.
+
+PHASE 2:
+Add vocabulary selection logic:
+- choose belt
+- choose mission
+- choose set
+- choose range
+- choose mixed sets/missions
+- filter new words, mistake words, difficult words
+- shuffle toggle
+Stop after Phase 2.
+
+PHASE 3:
+Add foundational question engine:
+- MCQ word-to-definition
+- MCQ definition-to-word
+- fill-in-the-blank from existing example sentences
+- synonym/antonym matching
+- true/false
+Stop after Phase 3.
+
+PHASE 4:
+Add Practice Mode:
+- immediate feedback
+- explanations
+- retry
+- hint
+- I don’t know
+- add to difficult words
+- confidence tracking
+Stop after Phase 4.
+
+PHASE 5:
+Add Test Mode:
+- timer
+- no immediate feedback
+- time per question
+- no repeated question type for same word in one session
+- flag for review
+- review before submit
+- final submit
+Stop after Phase 5.
+
+PHASE 6:
+Add results and analytics:
+- score report
+- accuracy by question type
+- weak words
+- mistake words
+- slow correct answers
+- suggested next practice
+- test history
+Stop after Phase 6.
+
+PHASE 7:
+Add adaptive mastery and spaced repetition:
+- mastery score
+- review status
+- next review date
+- update mastery after each answer
+- Quick Practice options use this data
+Stop after Phase 7.
+
+PHASE 8:
+Add GRE Simulation:
+- Text Completion generator
+- Sentence Equivalence generator
+- GRE-style interface
+- no partial credit
+- detailed explanations
+Stop after Phase 8.
+
+START NOW WITH PHASE 1 ONLY.
+Before editing, inspect the project and briefly explain the files/components you found that are relevant.
+Then implement Phase 1 only.
+Do not proceed to Phase 2 until I ask.
