@@ -142,6 +142,7 @@ export default function MissionDetail({ onBack, onNavigate, missionDay }: Missio
         const group = i + 1;
         const setWords = missionWords.filter((w) => w.group === group);
         const setMastered = setWords.filter((w) => w.status === "mastered").length;
+        const setStarted = setWords.some((w) => w.status !== "new");
         const setPct =
           setWords.length > 0 ? Math.round((setMastered / setWords.length) * 100) : 0;
         return {
@@ -149,6 +150,7 @@ export default function MissionDetail({ onBack, onNavigate, missionDay }: Missio
           words: setWords,
           mastered: setMastered,
           pct: setPct,
+          started: setStarted,
           complete: setWords.length > 0 && setMastered === setWords.length,
         };
       }),
@@ -161,6 +163,21 @@ export default function MissionDetail({ onBack, onNavigate, missionDay }: Missio
   const bestScore = missionScores[missionDay];
   const lastAttempt = missionAttempts[missionDay];
   const missionTestUnlocked = allSetsComplete || typeof bestScore === "number";
+
+  // Belt info derived from missionDay (each belt covers 7 missions).
+  const BELT_INFO = [
+    { name: "White Belt", subtitle: "Foundation" },
+    { name: "Yellow Belt", subtitle: "Expansion" },
+    { name: "Green Belt", subtitle: "Strength" },
+    { name: "Blue Belt", subtitle: "Precision" },
+    { name: "Purple Belt", subtitle: "Mastery" },
+    { name: "Black Belt", subtitle: "Expertise" },
+  ];
+  const beltIdx = Math.min(BELT_INFO.length - 1, Math.floor((missionDay - 1) / 7));
+  const belt = BELT_INFO[beltIdx];
+
+  // Pick the next action in the Set 1 → Set 2 → Set 3 → Mission Test chain.
+  const currentSet = sets.find((s) => !s.complete) ?? null;
 
   // Compute "mission XP" as quality-history-based estimate: each correct review = 5 XP per word for this mission
   const missionXp = useMemo(
@@ -200,6 +217,31 @@ export default function MissionDetail({ onBack, onNavigate, missionDay }: Missio
     if (!missionTestUnlocked) return;
     onNavigate("mission-test", { missionDay });
   };
+
+  const primaryAction = (() => {
+    if (allSetsComplete) {
+      return {
+        kind: "mission-test" as const,
+        label:
+          typeof bestScore === "number" ? "Retake Mission Test" : "Start Mission Test",
+        onClick: openMissionTest,
+      };
+    }
+    if (currentSet) {
+      return {
+        kind: "set" as const,
+        label: currentSet.started
+          ? `Continue Set ${currentSet.group}`
+          : `Start Set ${currentSet.group}`,
+        onClick: () => startSet(currentSet.group),
+      };
+    }
+    return {
+      kind: "study-all" as const,
+      label: "Start Learning",
+      onClick: startMission,
+    };
+  })();
 
   const quickActions = [
     {
@@ -291,12 +333,15 @@ export default function MissionDetail({ onBack, onNavigate, missionDay }: Missio
                 <div className="w-12 h-12 rounded-2xl bg-white/25 backdrop-blur-sm flex items-center justify-center shrink-0">
                   <BookOpen size={22} />
                 </div>
-                <div>
+                <div className="min-w-0">
+                  <div className="text-[11px] font-bold uppercase tracking-wider text-white/80">
+                    Mission {missionDay}
+                  </div>
                   <h2 className="text-2xl sm:text-3xl font-extrabold leading-tight">
-                    All {totalWords} Words
+                    {belt.name} {belt.subtitle}
                   </h2>
-                  <p className="text-sm text-white/90">
-                    Master this mission and earn exciting rewards!
+                  <p className="text-sm text-white/90 mt-1">
+                    {GROUPS_PER_DAY} Sets · {totalWords} Words · 1 Mission Test
                   </p>
                 </div>
               </div>
@@ -318,15 +363,26 @@ export default function MissionDetail({ onBack, onNavigate, missionDay }: Missio
                 </div>
               </div>
 
-              <div className="flex flex-wrap items-center gap-3 pt-1">
+              <div className="flex flex-wrap items-center gap-x-3 gap-y-2 pt-1">
                 <button
-                  onClick={startMission}
+                  onClick={primaryAction.onClick}
                   className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-white text-orange-600 font-bold text-sm shadow-md hover:shadow-lg hover:-translate-y-0.5 transition-all"
+                  data-testid="button-primary-action"
                 >
-                  {inProgress ? "Continue Learning" : "Start Learning"}
+                  {primaryAction.label}
                   <ChevronRight size={16} />
                 </button>
-                <div className="flex items-center gap-2 text-sm">
+                {primaryAction.kind === "set" && (
+                  <button
+                    onClick={startMission}
+                    className="inline-flex items-center gap-1.5 text-xs font-semibold text-white/90 hover:text-white underline-offset-4 hover:underline transition-colors"
+                    data-testid="button-study-all"
+                  >
+                    Study All {totalWords} Words
+                    <ChevronRight size={12} />
+                  </button>
+                )}
+                <div className="flex items-center gap-2 text-sm ml-auto">
                   <Star size={16} className="fill-yellow-300 text-yellow-300" />
                   <div className="leading-tight">
                     <div className="font-bold">+300 XP</div>
