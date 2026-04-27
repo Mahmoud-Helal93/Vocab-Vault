@@ -457,15 +457,6 @@ export default function Dashboard({ onNavigate }: DashboardProps) {
           : onNavigate("mission-detail", { missionDay: nextDay.day }),
     },
     {
-      time: "10 min",
-      label: "Quick Practice",
-      sub: "Multiple choice • 10 questions",
-      xp: 30,
-      difficulty: 1,
-      status: "not-started" as const,
-      action: () => onNavigate("practice"),
-    },
-    {
       time: "Today",
       label: difficultWords.length > 0 ? "Difficult Words" : "Confusables",
       sub:
