@@ -1,0 +1,468 @@
+You are an expert React/TypeScript developer, vocabulary learning app designer, and GRE verbal test-system architect.
+
+I am building a vocabulary app called Vocab Ninja. I want you to redesign and improve the Custom Practice system inside the Test tab.
+
+IMPORTANT:
+Work carefully and modularly. Do not rewrite the whole app. Do not redesign unrelated pages. Preserve the existing visual identity, sidebar, colors, rounded cards, gradients, spacing, and modern clean style.
+
+Main goal:
+Redesign the Custom Practice system so the user controls the exact number of questions, not just the number of words.
+
+The current issue:
+The Custom Practice setup currently has “Limit number of words.” Replace this with “Number of questions per question type.” The user should be able to decide, for example:
+
+- 5 Word → Definition MCQ
+- 5 Definition → Word MCQ
+- 3 Fill in the Blank
+- 2 True/False Definition
+- 2 Synonym Pairing
+
+The app must show how many questions are available before the user starts.
+
+# ====================================
+PART 1 — REMOVE QUICK PRACTICE
+
+Remove the Quick Practice section from the Test Center dashboard.
+
+The Test Center should focus on:
+
+1. Custom Practice
+2. Timed Test
+3. GRE Simulation
+4. Test History & Analytics
+
+Do not remove the entire Test tab. Only remove the Quick Practice card/section.
+
+Reason:
+The goal is to reduce distraction and make the flow simpler and more intentional.
+
+# ====================================
+PART 2 — CUSTOM PRACTICE SETUP REDESIGN
+
+Redesign the Custom Practice setup page to include these main sections:
+
+A. Source Selection
+Allow the user to choose vocabulary scope by:
+
+- All vocabulary
+- Belt
+- Mission
+- Set
+- Range
+- Mixed selection, if already supported
+
+Keep the existing hierarchy:
+
+- Belt → Mission → Set
+
+Show clear labels such as:
+
+- Belt 1
+- Mission 1
+- Set 1
+
+B. Question Type Selection
+Move all question type choices to the setup page.
+
+The question page should NOT show a row of question-type chips anymore.
+
+The setup page should allow selecting these question types:
+
+MCQ group:
+
+- Word → Definition
+- Definition → Word
+- Synonym Recognition
+- Antonym Recognition
+
+Fill in the Blank:
+
+- Fill in the Blank
+
+Synonym Pairing:
+
+- Select All Synonyms
+
+True / False group:
+
+- T/F Definition
+- T/F Synonym
+- T/F Antonym
+
+Remove Tone questions completely from the current test bank and setup.
+
+C. Question Availability Panel
+Before starting practice, display the total number of available questions.
+
+Show availability:
+
+- by question type
+- by selected source
+- by set
+- by mission
+- by belt
+
+Example display:
+
+- Mission 1 → Set 1
+    - Word → Definition: 10 available
+    - Definition → Word: 10 available
+    - Synonym Recognition: 30 available
+    - Antonym Recognition: 10 available
+    - Fill in the Blank: 30 available
+    - Select All Synonyms: 10 available
+    - T/F Definition: 10 available
+    - T/F Synonym: 10 available
+    - T/F Antonym: 10 available
+
+Counts must update dynamically when the user changes:
+
+- belt
+- mission
+- set
+- range
+- question type
+- filters
+- shuffle setting
+
+D. Number of Questions per Type
+Replace “Limit number of words” with a per-question-type count control.
+
+For every selected question type, show:
+
+- available count
+- number input or stepper
+- selected count
+
+Example:
+
+- Word → Definition: [5] of 10 available
+- Fill in the Blank: [12] of 30 available
+- T/F Synonym: [3] of 10 available
+
+Rules:
+
+- Do not allow the user to request more questions than available.
+- If there are 0 available questions, disable that question type.
+- If all selected counts are 0, disable the Start Practice button.
+- Show clear validation messages.
+
+E. Selection Summary
+Before the Start Practice button, show a clear summary:
+
+Example:
+“You will solve 20 questions:
+5 Word → Definition
+5 Definition → Word
+6 Fill in the Blank
+4 True/False”
+
+Also show:
+
+- selected source
+- selected belt/mission/set
+- shuffle on/off
+- total questions selected
+
+# ====================================
+PART 3 — EXACT QUESTION GENERATION RULES
+
+Create or refactor the question-generation system so each question type follows these exact rules.
+
+Use a standardized question object/discriminated union if possible.
+
+Each generated question should include:
+
+- id
+- type
+- subtype
+- wordId
+- prompt
+- options, if applicable
+- correctAnswer or correctAnswers
+- explanation
+- belt
+- mission
+- set
+- source example index if applicable
+- part of speech if useful
+
+#### Question types:
+
+1. **Multiple Choice Questions**
+    1. Word → Definition MCQ
+    For each word:
+        - create exactly 1 question
+        - show the target word
+        - show 4 definition options
+        - user chooses the correct definition
+            
+            **Distractor rules:**
+            
+            - use same part of speech when possible
+            - use same belt/mission/set when possible
+            - avoid duplicate definitions
+            - avoid obviously unrelated distractors when better ones exist
+            - do not include the correct definition more than once
+    2. Definition → Word MCQ
+    For each word:
+        - create exactly 1 question
+        - show the definition
+        - show 4 word options
+        - user chooses the correct word
+            
+            **Distractor rules:**
+            
+            - use same part of speech when possible
+            - use same belt/mission/set when possible
+            - avoid duplicate words
+            - avoid obviously unrelated distractors when better ones exist
+    3. MCQ Synonym Recognition
+    For each word:
+        - if the word has 3 synonyms, create exactly 3 questions
+        - each question tests one synonym
+        - show the target word or a prompt like:
+        “Which word is closest in meaning to ‘abound’?”
+        - show 4 options
+        - one option is the correct synonym
+        - other options should be plausible distractors
+        
+        Use only synonyms stored in the learning-page data.
+        Do not invent synonyms.
+        
+    4. MCQ Antonym Recognition
+    For each word:
+        - create exactly 1 question if the word has an antonym field/data
+        - show 4 options
+        - one option is the correct antonym
+        
+        Important:
+        If the current data does not have antonyms, do not fake them.
+        Instead:
+        
+        - create safe fallback logic
+        - disable antonym question types
+        - show “No antonym data available”
+        - leave a clear TODO comment explaining where antonym data should be added
+2. **Fill in the Blank**
+For each word:
+    - create 3 questions
+    - each question comes from one of the word’s existing example sentences
+    - do not use external examples
+    - remove only the target word
+    - user types the answer
+    - no answer choices
+    
+    **Acceptance rules:**
+    
+    - ignore capitalization
+    - ignore extra spaces
+    - allow exact target word
+    - only allow inflected forms if the sentence grammatically requires them
+    - if the user enters a synonym, mark incorrect but explain that the target word was required
+3. **Synonym Pairing / Select All Synonyms**
+For each word:
+    - create exactly 1 question
+    - show the target word
+    - show at least 6 option words
+    - user selects all correct synonyms
+    - all 3 stored synonyms should be correct answers if available
+    - no partial credit
+    - use only synonyms from the learning-page data
+    - do not invent new synonyms
+4. **True or False**
+    1. True/False Definition
+    For each word:
+        - create exactly 1 question
+        - statement tests whether a definition matches the word
+        - include explanation after answer in Practice Mode
+    2. True/False Synonym
+    For each word:
+        - create exactly 1 question
+        - statement tests whether a synonym matches the word
+        - use stored synonyms only
+    3. True/False Antonym
+    For each word:
+        - create exactly 1 question if antonym data exists
+        - if no antonym data exists, disable this type safely
+    
+    Remove:
+    
+    - T/F Tone
+        - tone-based questions
+        - any tone question chips from the question page
+
+# ====================================
+PART 4 — QUESTION AVAILABILITY PRECOMPUTATION
+
+Optimize performance.
+
+Do not generate question pools on every render.
+
+Create reusable helpers such as:
+
+- buildQuestionBank(words)
+- getQuestionsByScope(...)
+- getQuestionAvailability(...)
+- getAvailableCountByType(...)
+- generatePracticeSession(...)
+
+Suggested files:
+
+- src/lib/testQuestionBank.ts
+- src/lib/testSelection.ts
+- src/lib/testTypes.ts
+
+Precompute or memoize question pools by:
+
+- set
+- mission
+- belt
+- all vocabulary
+
+The UI should use the availability data instead of repeatedly regenerating questions.
+
+Use React useMemo where appropriate.
+
+# ====================================
+PART 5 — START PRACTICE FLOW
+
+When the user clicks Start Practice:
+
+1. Build a session using the selected source and selected question counts.
+2. Pull exactly the requested number of questions per type.
+3. Respect shuffle setting.
+4. Do not exceed available questions.
+5. If the selection is invalid, block the start and show a clear message.
+
+Example:
+If the user requests:
+
+- 5 Word → Definition
+- 3 Fill in the Blank
+- 2 T/F Synonym
+
+The session must contain exactly 10 questions:
+
+- 5 Word → Definition
+- 3 Fill in the Blank
+- 2 T/F Synonym
+
+# ==================================================
+PART 6 — QUESTION PAGE CLEANUP
+
+On the active questions page:
+
+Remove:
+
+- the question-type chip row at the top
+- “Only first” text if it is no longer relevant
+- any tone question type
+
+Add:
+
+- a clean progress bar at the top
+- current question number, for example: 3 / 10
+- visual progress fill
+- current mode label: Practice Mode
+- current question type label on the question card only
+
+Keep:
+
+- back button
+- answer card
+- hint button
+- I don’t know button
+- immediate feedback in Practice Mode
+
+The progress bar should match the app style:
+
+- clean
+- minimal
+- rounded
+- brand gradient or soft warm highlight
+- mobile responsive
+
+# ==================================================
+PART 7 — END-OF-PRACTICE IMPROVEMENTS
+
+At the end of the practice session, add:
+
+1. Results summary:
+    - total questions
+    - correct answers
+    - incorrect answers
+    - accuracy percentage
+2. Review Incorrect Answers:
+    - list only incorrect answers
+    - show user answer
+    - show correct answer
+    - show explanation
+3. Retry Wrong Questions Only:
+    - button that starts a new practice session using only the incorrect questions
+    - if no incorrect answers, show a positive message
+
+# ==================================================
+PART 8 — UI/UX REQUIREMENTS
+
+The redesigned Custom Practice system should feel:
+
+- transparent
+- flexible
+- user-controlled
+- clean
+- premium
+- not cluttered
+
+Use the existing design language:
+
+- rounded-2xl cards
+- border border-border
+- bg-card
+- shadow-sm
+- gradient accents
+- readable spacing
+- responsive grid layout
+- mobile-friendly controls
+
+Suggested layout for setup page:
+
+- Left/main column:
+    - Source Selection
+    - Question Type Selection
+    - Number of Questions per Type
+- Right/sidebar column:
+    - Live Availability
+    - Sample selected words/questions
+    - Selection Summary
+    - Start Practice button
+
+# ==================================================
+PART 9 — SAFETY AND TESTING
+
+Before finishing:
+
+- make sure the app builds
+- fix TypeScript errors
+- make sure existing pages still work
+- make sure Test tab opens
+- make sure Custom Practice opens
+- make sure question counts update correctly
+- make sure Start Practice only works with valid selections
+- make sure requested question counts are respected exactly
+- make sure no tone questions remain
+- make sure Quick Practice is removed
+
+After finishing, summarize:
+
+1. Files changed
+2. New helper files created
+3. What changed in the Custom Practice UI
+4. What question types are now supported
+5. Whether antonym questions are active or disabled because of missing data
+6. How to manually test the new flow
+7. Any remaining TODOs
+
+Do not implement GRE Simulation changes in this task.
+Do not implement spaced repetition or mastery in this task.
+Focus only on the Custom Practice redesign, question-count control, question availability, question page progress bar, incorrect review, and retry wrong questions.
