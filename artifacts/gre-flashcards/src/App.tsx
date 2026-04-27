@@ -3,10 +3,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { AppProvider, useApp } from "@/context/AppContext";
 import Dashboard from "@/pages/Dashboard";
 import StudyMode from "@/pages/StudyMode";
-import PracticeMode from "@/pages/PracticeMode";
-import ReviewMode from "@/pages/ReviewMode";
 import SettingsPage from "@/pages/Settings";
-import PlanMode from "@/pages/PlanMode";
 import Confusables from "@/pages/Confusables";
 import Analytics from "@/pages/Analytics";
 import Progress from "@/pages/Progress";
@@ -28,7 +25,7 @@ import {
   Trophy, Bookmark, Library,
 } from "lucide-react";
 
-type Page = "dashboard" | "study" | "practice" | "review" | "settings" | "plan" | "confusables" | "analytics" | "progress" | "achievements" | "mission-test" | "set-test" | "bookmarks" | "mission-detail" | "set-reading" | "story-library";
+type Page = "dashboard" | "study" | "settings" | "confusables" | "analytics" | "progress" | "achievements" | "mission-test" | "set-test" | "bookmarks" | "mission-detail" | "set-reading" | "story-library";
 
 const NAV_ITEMS: Array<{ id: Page; icon: React.ReactNode; label: string }> = [
   { id: "dashboard",     icon: <LayoutDashboard size={18} />, label: "Home" },
@@ -78,12 +75,6 @@ function MainApp() {
         return <Dashboard onNavigate={navigate} />;
       case "study":
         return <StudyMode onBack={() => goBack(() => setPage("dashboard"))} onNavigate={navigate} initialDay={pageParams.day as number | undefined} initialWordId={pageParams.wordId as string | undefined} />;
-      case "practice":
-        return <PracticeMode onBack={() => goBack(() => setPage("dashboard"))} initialSource={pageParams.source as string | undefined} />;
-      case "review":
-        return <ReviewMode onBack={() => goBack(() => setPage("dashboard"))} />;
-      case "plan":
-        return <PlanMode onBack={() => goBack(() => setPage("dashboard"))} onStartSession={() => setPage("review")} />;
       case "confusables":
         return <Confusables onBack={() => goBack(() => setPage("dashboard"))} />;
       case "analytics":

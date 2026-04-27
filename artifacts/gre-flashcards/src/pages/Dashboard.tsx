@@ -6,7 +6,7 @@ import { TOTAL_DAYS, GROUPS_PER_DAY } from "@/data/words";
 import { BADGES, levelFromXp } from "@/lib/gamification";
 import {
   Target, Flame, Sparkles, Check, Lock, ChevronRight,
-  CalendarDays, TrendingUp, Zap, Trophy, Play, Clock,
+  CalendarDays, TrendingUp, Zap, Trophy, Play,
   ChevronDown, ChevronUp,
 } from "lucide-react";
 
@@ -402,17 +402,6 @@ export default function Dashboard({ onNavigate }: DashboardProps) {
           onNavigate("mission-detail", { missionDay: inProgressSet.day }),
       };
     }
-    if (trueDueReviews.length > 0) {
-      return {
-        title: `Review ${trueDueReviews.length} due word${
-          trueDueReviews.length === 1 ? "" : "s"
-        }`,
-        sub: "Spaced-repetition reviews are ready — keep your memory sharp.",
-        cta: "Start Review",
-        icon: <Clock size={26} className="text-white" strokeWidth={2.5} />,
-        action: () => onNavigate("review"),
-      };
-    }
     if (nextDay && nextDay.pct < 100) {
       return {
         title: `Start Mission ${nextDay.day}`,
@@ -443,33 +432,21 @@ export default function Dashboard({ onNavigate }: DashboardProps) {
   const agenda = [
     {
       time: "Now",
-      label: dueWords.length > 0 ? "Daily Review" : `Mission ${nextDay.day}`,
-      sub:
-        dueWords.length > 0
-          ? `${dueWords.length} words due for review`
-          : `Continue Day ${nextDay.day} • new vocabulary`,
+      label: `Mission ${nextDay.day}`,
+      sub: `Continue Day ${nextDay.day} • new vocabulary`,
       xp: 45,
       difficulty: 2,
       status: "in-progress" as const,
-      action: () =>
-        dueWords.length > 0
-          ? onNavigate("review")
-          : onNavigate("mission-detail", { missionDay: nextDay.day }),
+      action: () => onNavigate("mission-detail", { missionDay: nextDay.day }),
     },
     {
       time: "Today",
-      label: difficultWords.length > 0 ? "Difficult Words" : "Confusables",
-      sub:
-        difficultWords.length > 0
-          ? `${difficultWords.length} words need attention`
-          : "Easily confused word pairs",
+      label: "Confusables",
+      sub: "Easily confused word pairs",
       xp: 60,
       difficulty: 3,
       status: "not-started" as const,
-      action: () =>
-        difficultWords.length > 0
-          ? onNavigate("practice", { source: "difficult" })
-          : onNavigate("confusables"),
+      action: () => onNavigate("confusables"),
     },
   ];
 
@@ -992,14 +969,6 @@ export default function Dashboard({ onNavigate }: DashboardProps) {
                       </div>
                     </div>
                   </div>
-                  {difficultWords.length > 0 && (
-                    <button
-                      onClick={() => onNavigate("practice", { source: "difficult" })}
-                      className="text-[11px] font-extrabold text-purple-600 hover:text-purple-700 uppercase tracking-wider"
-                    >
-                      Practice →
-                    </button>
-                  )}
                 </div>
                 <div className="p-4 flex flex-wrap gap-2.5 content-start relative z-10 min-h-[160px]">
                   {difficultWords.length === 0 ? (
@@ -1019,12 +988,9 @@ export default function Dashboard({ onNavigate }: DashboardProps) {
                         </button>
                       ))}
                       {difficultWords.length > 8 && (
-                        <button
-                          onClick={() => onNavigate("practice", { source: "difficult" })}
-                          className="text-xs px-3 py-1.5 rounded-md text-muted-foreground font-bold hover:text-foreground transition-colors flex items-center"
-                        >
+                        <div className="text-xs px-3 py-1.5 text-muted-foreground font-bold flex items-center">
                           +{difficultWords.length - 8} more
-                        </button>
+                        </div>
                       )}
                     </>
                   )}

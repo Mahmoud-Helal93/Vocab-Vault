@@ -8,7 +8,7 @@ import { themeClass } from "@/lib/missionThemes";
 import {
   ArrowLeft, BookOpen, Star, Award, Trophy, Lock, ChevronRight,
   Sparkles, ListChecks, Keyboard, HelpCircle, Flame, Target,
-  TrendingUp, PlayCircle, RotateCcw, Crosshair, Bookmark, Lightbulb,
+  TrendingUp, PlayCircle, Bookmark, Lightbulb,
   CheckCircle2,
 } from "lucide-react";
 
@@ -252,24 +252,6 @@ export default function MissionDetail({ onBack, onNavigate, missionDay }: Missio
       bg: "bg-violet-100 dark:bg-violet-900/30",
       iconColor: "text-violet-600 dark:text-violet-300",
       onClick: startMission,
-    },
-    {
-      id: "review",
-      label: "Review Words",
-      sub: "Review mastered words",
-      icon: <RotateCcw size={18} />,
-      bg: "bg-emerald-100 dark:bg-emerald-900/30",
-      iconColor: "text-emerald-600 dark:text-emerald-300",
-      onClick: () => onNavigate("review"),
-    },
-    {
-      id: "weak",
-      label: "Practice Weak Words",
-      sub: "Focus on words you miss",
-      icon: <Crosshair size={18} />,
-      bg: "bg-orange-100 dark:bg-orange-900/30",
-      iconColor: "text-orange-600 dark:text-orange-300",
-      onClick: () => onNavigate("practice", { source: "difficult" }),
     },
     {
       id: "vocab",
