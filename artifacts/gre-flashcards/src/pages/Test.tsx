@@ -106,8 +106,9 @@ export default function Test({ onNavigate }: TestProps) {
         "Weak / slow / mistake word lists",
         "Suggested next practice",
       ],
-      cta: "Phase 6 unlocks this",
-      status: "coming-soon",
+      cta: "Open history & analytics",
+      status: "available",
+      onClick: () => onNavigate("test-history"),
     },
   ];
 

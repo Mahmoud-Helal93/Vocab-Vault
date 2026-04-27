@@ -13,7 +13,77 @@ export const STORAGE_KEYS = {
   MISSION_TEST_SCORES: "gre_mission_test_scores",
   MISSION_TEST_ATTEMPTS: "gre_mission_test_attempts",
   BOOKMARKS: "gre_bookmarks",
+  TEST_HISTORY: "gre_test_history",
 } as const;
+
+// ─── Timed Test history ─────────────────────────────────────────────────────
+
+export interface TestQuestionRecord {
+  questionId: string;
+  kind: string;
+  wordId: string;
+  word: string;
+  day: number;
+  group: number;
+  pos: string;
+  prompt: string;
+  userAnswer: string;
+  correctAnswer: string;
+  correct: boolean;
+  answered: boolean;
+  flagged: boolean;
+  timeSpentMs: number;
+}
+
+export interface TestHistoryRecord {
+  id: string;
+  startedAt: string;
+  endedAt: string;
+  durationMs: number;
+  scopeLabel: string;
+  selectedKinds: string[];
+  numQuestions: number;
+  numCorrect: number;
+  numWrong: number;
+  numUnanswered: number;
+  accuracy: number;
+  questions: TestQuestionRecord[];
+}
+
+const MAX_TEST_HISTORY = 50;
+
+export function loadTestHistory(): TestHistoryRecord[] {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEYS.TEST_HISTORY);
+    return raw ? (JSON.parse(raw) as TestHistoryRecord[]) : [];
+  } catch {
+    return [];
+  }
+}
+
+export function saveTestHistory(records: TestHistoryRecord[]): void {
+  try {
+    localStorage.setItem(
+      STORAGE_KEYS.TEST_HISTORY,
+      JSON.stringify(records.slice(0, MAX_TEST_HISTORY)),
+    );
+  } catch {
+    /* ignore */
+  }
+}
+
+export function addTestHistoryRecord(record: TestHistoryRecord): void {
+  const all = loadTestHistory();
+  saveTestHistory([record, ...all]);
+}
+
+export function clearTestHistory(): void {
+  try {
+    localStorage.removeItem(STORAGE_KEYS.TEST_HISTORY);
+  } catch {
+    /* ignore */
+  }
+}
 
 export interface BookmarkEntry {
   wordId: string;

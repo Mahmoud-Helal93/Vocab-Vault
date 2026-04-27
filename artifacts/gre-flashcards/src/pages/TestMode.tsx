@@ -51,6 +51,31 @@ import {
   selectByScope,
 } from "@/lib/wordSelection";
 import { shuffleArray } from "@/lib/srs";
+import {
+  type TestHistoryRecord,
+  type TestQuestionRecord,
+  addTestHistoryRecord,
+  loadTestHistory,
+} from "@/lib/storage";
+import {
+  accuracyByBelt,
+  accuracyByKind,
+  accuracyByMission,
+  accuracyBySet,
+  difficultWords,
+  fastWrongAnswers,
+  flattenHistory,
+  mistakeWordsList,
+  recommendedReview,
+  rollupWordPerformance,
+  slowCorrectAnswers,
+  suggestedNextSession,
+  weakestWords,
+  type AccuracyBucket,
+  type PacingEntry,
+  type WordPerformance,
+  type SuggestedSession,
+} from "@/lib/testAnalytics";
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Props & local types
@@ -236,7 +261,7 @@ function buildableCeiling(pool: Word[], kinds: QuestionKind[]): number {
 // Main component
 // ─────────────────────────────────────────────────────────────────────────────
 
-export default function TestMode({ onBack }: TestModeProps) {
+export default function TestMode({ onBack, onNavigate }: TestModeProps) {
   const { words, markWordReviewed } = useApp();
 
   // Phase state machine
@@ -269,6 +294,33 @@ export default function TestMode({ onBack }: TestModeProps) {
     () => selectByScope(words, source.scope),
     [words, source.scope],
   );
+
+  // Human-readable label used in the test history record.
+  const scopeLabel = useMemo(() => {
+    const s = source.scope;
+    if (s.kind === "all") return "All vocabulary";
+    if (s.kind === "belt") {
+      const ids = s.beltIds ?? [];
+      if (ids.length === 0) return "No belts";
+      if (ids.length === TOTAL_BELTS) return "All belts";
+      if (ids.length === 1) return `${BELT_NAMES[ids[0] - 1]} Belt`;
+      return `${ids.length} belts`;
+    }
+    if (s.kind === "mission") {
+      const days = s.missionDays ?? [];
+      if (days.length === 1) return `Mission ${days[0]}`;
+      return `${days.length} missions`;
+    }
+    if (s.kind === "set") {
+      const sets = s.sets ?? [];
+      if (sets.length === 1) {
+        const ref = sets[0];
+        return `M${ref.day} · S${ref.group}`;
+      }
+      return `${sets.length} sets`;
+    }
+    return `Days ${s.fromDay}–${s.toDay}`;
+  }, [source.scope]);
 
   const ceiling = useMemo(
     () => buildableCeiling(sourceWords, Array.from(kinds)),
@@ -325,39 +377,50 @@ export default function TestMode({ onBack }: TestModeProps) {
   }, [limitMs, startedAtMs, nowMs]);
 
   const finalizeAndShowResults = useCallback(() => {
-    // Roll up final time on the active question, then commit results to SRS.
-    if (enteredAtRef.current !== null) {
-      const delta = Date.now() - enteredAtRef.current;
+    const endedAt = Date.now();
+
+    // 1) Attribute any time spent on the currently-open question.
+    let finalResults = results;
+    if (
+      enteredAtRef.current !== null &&
+      currentIdx >= 0 &&
+      currentIdx < results.length
+    ) {
+      const delta = endedAt - enteredAtRef.current;
       enteredAtRef.current = null;
-      setResults((prev) => {
-        if (currentIdx < 0 || currentIdx >= prev.length) return prev;
-        const next = prev.slice();
-        next[currentIdx] = {
-          ...next[currentIdx],
-          timeSpentMs: next[currentIdx].timeSpentMs + delta,
-        };
-        // Persist results into the SRS now that the test is locked in.
-        next.forEach((r) => {
-          const correct = isAnswerCorrect(r.q, r.response);
-          // Quality: 5 if correct, 1 if attempted-and-wrong, 0 if unanswered.
-          const quality = correct ? 5 : r.response === null ? 0 : 1;
-          markWordReviewed(r.q.word.id, quality);
-        });
-        return next;
-      });
-    } else {
-      setResults((prev) => {
-        prev.forEach((r) => {
-          const correct = isAnswerCorrect(r.q, r.response);
-          const quality = correct ? 5 : r.response === null ? 0 : 1;
-          markWordReviewed(r.q.word.id, quality);
-        });
-        return prev;
-      });
+      finalResults = results.map((r, i) =>
+        i === currentIdx
+          ? { ...r, timeSpentMs: r.timeSpentMs + delta }
+          : r,
+      );
+      setResults(finalResults);
     }
-    setEndedAtMs(Date.now());
+
+    // 2) Commit results into the spaced-repetition engine.
+    finalResults.forEach((r) => {
+      const correct = isAnswerCorrect(r.q, r.response);
+      const quality = correct ? 5 : r.response === null ? 0 : 1;
+      markWordReviewed(r.q.word.id, quality);
+    });
+
+    // 3) Persist a TestHistoryRecord locally so analytics can pull from it.
+    const startedIso = startedAtMs
+      ? new Date(startedAtMs).toISOString()
+      : new Date(endedAt).toISOString();
+    const record = buildTestHistoryRecord(
+      finalResults,
+      startedIso,
+      new Date(endedAt).toISOString(),
+      endedAt - (startedAtMs ?? endedAt),
+      scopeLabel,
+      Array.from(kinds),
+    );
+    addTestHistoryRecord(record);
+
+    // 4) Advance to the results phase.
+    setEndedAtMs(endedAt);
     setPhase("results");
-  }, [currentIdx, markWordReviewed]);
+  }, [results, currentIdx, markWordReviewed, startedAtMs, scopeLabel, kinds]);
 
   // Watch the timer; auto-submit when it expires.
   useEffect(() => {
@@ -584,8 +647,11 @@ export default function TestMode({ onBack }: TestModeProps) {
               results={results}
               startedAtMs={startedAtMs}
               endedAtMs={endedAtMs}
+              scopeLabel={scopeLabel}
+              words={words}
               onRestart={restart}
               onBack={onBack}
+              onNavigate={onNavigate}
             />
           </motion.div>
         )}
@@ -1819,14 +1885,20 @@ function ResultsScreen({
   results,
   startedAtMs,
   endedAtMs,
+  scopeLabel,
+  words,
   onRestart,
   onBack,
+  onNavigate,
 }: {
   results: QuestionResult[];
   startedAtMs: number | null;
   endedAtMs: number | null;
+  scopeLabel: string;
+  words: Word[];
   onRestart: () => void;
   onBack: () => void;
+  onNavigate: (page: string, params?: Record<string, unknown>) => void;
 }) {
   const total = results.length;
   const correct = results.filter((r) => isAnswerCorrect(r.q, r.response)).length;
@@ -1839,22 +1911,83 @@ function ResultsScreen({
     startedAtMs !== null && endedAtMs !== null ? endedAtMs - startedAtMs : 0;
   const avgPerQ = total === 0 ? 0 : Math.round(totalTimeMs / total);
 
-  // By-kind accuracy
-  const byKind = useMemo(() => {
-    const map = new Map<QuestionKind, { correct: number; total: number }>();
-    results.forEach((r) => {
-      const cur = map.get(r.q.kind) ?? { correct: 0, total: 0 };
-      cur.total += 1;
-      if (isAnswerCorrect(r.q, r.response)) cur.correct += 1;
-      map.set(r.q.kind, cur);
-    });
-    return Array.from(map.entries()).sort(
-      (a, b) => b[1].total - a[1].total,
-    );
-  }, [results]);
+  // Snapshot the local question records for this test (after the parent has
+  // already persisted history). We compute everything locally so the screen
+  // works even if persistence silently fails.
+  const currentRecords = useMemo<TestQuestionRecord[]>(
+    () => questionsFromResults(results),
+    [results],
+  );
+
+  // Pull all history once on mount; the latest record is index 0.
+  const allHistory = useMemo(() => loadTestHistory(), []);
+  const latestRecord = allHistory[0] ?? null;
+  const flatAll = useMemo(() => flattenHistory(allHistory), [allHistory]);
+  const allPerf = useMemo<WordPerformance[]>(
+    () => rollupWordPerformance(flatAll.questions, flatAll.timestampPerQuestion),
+    [flatAll],
+  );
+
+  const byKind = useMemo<AccuracyBucket[]>(
+    () => accuracyByKind(currentRecords),
+    [currentRecords],
+  );
+  const byBelt = useMemo<AccuracyBucket[]>(
+    () => accuracyByBelt(currentRecords),
+    [currentRecords],
+  );
+  const byMission = useMemo<AccuracyBucket[]>(
+    () => accuracyByMission(currentRecords),
+    [currentRecords],
+  );
+  const bySet = useMemo<AccuracyBucket[]>(
+    () => accuracyBySet(currentRecords),
+    [currentRecords],
+  );
+
+  const slowCorrect = useMemo<PacingEntry[]>(
+    () => slowCorrectAnswers(currentRecords, 5),
+    [currentRecords],
+  );
+  const fastWrong = useMemo<PacingEntry[]>(
+    () => fastWrongAnswers(currentRecords, 5),
+    [currentRecords],
+  );
+
+  const weakWords = useMemo<WordPerformance[]>(
+    () => weakestWords(allPerf, 8),
+    [allPerf],
+  );
+  const difficult = useMemo<Word[]>(
+    () => difficultWords(words, 8),
+    [words],
+  );
+  const mistakes = useMemo<Word[]>(
+    () => mistakeWordsList(words, 8),
+    [words],
+  );
+  const dueReview = useMemo<Word[]>(
+    () => recommendedReview(words, 12),
+    [words],
+  );
+  const suggested = useMemo<SuggestedSession | null>(
+    () => suggestedNextSession(latestRecord, allHistory, words),
+    [latestRecord, allHistory, words],
+  );
+
+  const hasMistakesInTest = wrong + unanswered > 0;
+
+  const launchPracticeFor = useCallback(
+    (wordIds: string[], sessionTitle: string) => {
+      if (wordIds.length === 0) return;
+      onNavigate("practice", { wordIds, sessionTitle });
+    },
+    [onNavigate],
+  );
 
   return (
     <div className="space-y-4">
+      {/* ─── Hero ─────────────────────────────────────────────────────── */}
       <section className="rounded-2xl border border-border bg-brand-gradient-soft px-5 py-5 shadow-sm">
         <div className="flex items-center gap-3 mb-3">
           <div className="w-12 h-12 rounded-2xl bg-brand-gradient flex items-center justify-center shadow-md">
@@ -1862,7 +1995,7 @@ function ResultsScreen({
           </div>
           <div>
             <div className="text-[10px] font-extrabold uppercase tracking-wider text-brand-gradient">
-              Test complete
+              Test complete · {scopeLabel}
             </div>
             <h2 className="text-2xl font-extrabold text-foreground">
               {accuracy}% · {correct}/{total}
@@ -1888,34 +2021,214 @@ function ResultsScreen({
         </p>
       </section>
 
-      {byKind.length > 0 && (
-        <section className="rounded-2xl border border-border bg-card shadow-sm p-4">
-          <h3 className="text-[11px] font-extrabold uppercase tracking-wider text-muted-foreground mb-3">
-            Accuracy by question type
-          </h3>
-          <ul className="space-y-2">
-            {byKind.map(([kind, agg]) => {
-              const pct = Math.round((agg.correct / agg.total) * 100);
-              return (
-                <li
-                  key={kind}
-                  className="flex items-center justify-between gap-3 text-xs"
-                >
-                  <span className="inline-flex items-center gap-1.5 font-bold text-foreground">
-                    {KIND_META[kind].icon}
-                    {KIND_META[kind].label}
-                  </span>
-                  <span className="text-muted-foreground tabular-nums font-bold">
-                    {agg.correct}/{agg.total}{" "}
-                    <span className="text-foreground">· {pct}%</span>
-                  </span>
-                </li>
-              );
-            })}
-          </ul>
+      {/* ─── Suggested next practice ──────────────────────────────────── */}
+      {suggested && suggested.wordIds.length > 0 && (
+        <section className="rounded-2xl border border-border bg-card shadow-sm p-5">
+          <div className="flex items-start gap-3">
+            <div className="w-10 h-10 rounded-xl bg-brand-gradient flex items-center justify-center shrink-0 shadow-md">
+              <Sparkles size={18} className="text-white" strokeWidth={2.5} />
+            </div>
+            <div className="flex-1 min-w-0">
+              <div className="text-[10px] font-extrabold uppercase tracking-wider text-brand-gradient">
+                Suggested next practice
+              </div>
+              <h3 className="text-base font-extrabold text-foreground mt-0.5">
+                {suggested.title}
+              </h3>
+              <p className="text-xs text-muted-foreground mt-1 leading-relaxed">
+                {suggested.rationale}
+              </p>
+              <div className="text-[11px] font-bold text-muted-foreground mt-2">
+                {suggested.wordIds.length} word
+                {suggested.wordIds.length === 1 ? "" : "s"} queued
+              </div>
+            </div>
+          </div>
+          <div className="flex justify-end mt-3">
+            <button
+              type="button"
+              onClick={() =>
+                launchPracticeFor(suggested.wordIds, suggested.title)
+              }
+              className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-sm font-extrabold btn-brand"
+            >
+              <Sparkles size={14} /> Start practice
+            </button>
+          </div>
         </section>
       )}
 
+      {/* ─── Accuracy breakdowns ──────────────────────────────────────── */}
+      {byKind.length > 0 && (
+        <BucketCard
+          title="Accuracy by question type"
+          icon={<ListChecks size={14} />}
+          buckets={byKind}
+          renderLabel={(b) => (
+            <span className="inline-flex items-center gap-1.5">
+              {KIND_META[b.key as QuestionKind]?.icon}
+              {KIND_META[b.key as QuestionKind]?.label ?? b.label}
+            </span>
+          )}
+        />
+      )}
+
+      <div className="grid sm:grid-cols-2 gap-3">
+        {byBelt.length > 0 && (
+          <BucketCard
+            title="By belt"
+            icon={<Award size={14} />}
+            buckets={byBelt}
+          />
+        )}
+        {byMission.length > 0 && (
+          <BucketCard
+            title="By mission"
+            icon={<Target size={14} />}
+            buckets={byMission}
+            collapsedAfter={5}
+          />
+        )}
+      </div>
+
+      {bySet.length > 0 && (
+        <BucketCard
+          title="By set"
+          icon={<Layers size={14} />}
+          buckets={bySet}
+          collapsedAfter={6}
+        />
+      )}
+
+      {/* ─── Pacing analysis ──────────────────────────────────────────── */}
+      {(slowCorrect.length > 0 || fastWrong.length > 0) && (
+        <div className="grid sm:grid-cols-2 gap-3">
+          {slowCorrect.length > 0 && (
+            <PacingCard
+              title="Slow correct answers"
+              subtitle="You landed it but pacing felt heavy."
+              tone="amber"
+              icon={<TimerReset size={14} />}
+              entries={slowCorrect}
+            />
+          )}
+          {fastWrong.length > 0 && (
+            <PacingCard
+              title="Fast wrong answers"
+              subtitle="Quick misses — slow down on these."
+              tone="rose"
+              icon={<AlertTriangle size={14} />}
+              entries={fastWrong}
+            />
+          )}
+        </div>
+      )}
+
+      {/* ─── Word weakness lists ──────────────────────────────────────── */}
+      <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
+        <WordListCard
+          title="Weak words"
+          subtitle="Lowest accuracy across all your tests."
+          icon={<XCircle size={14} className="text-rose-500" />}
+          empty="Take a few more tests to surface weak words."
+          items={weakWords.map((w) => ({
+            id: w.wordId,
+            primary: w.word,
+            meta: `${w.correct}/${w.attempts} · ${w.accuracy}%`,
+          }))}
+          ctaLabel="Practice these"
+          ctaWordIds={weakWords.map((w) => w.wordId)}
+          onPractice={launchPracticeFor}
+          ctaTitle="Weak words"
+        />
+        <WordListCard
+          title="Difficult words"
+          subtitle="Flagged as difficult by the SRS engine."
+          icon={<AlertTriangle size={14} className="text-amber-500" />}
+          empty="No difficult words yet."
+          items={difficult.map((w) => ({
+            id: w.id,
+            primary: w.word,
+            meta: `D${w.difficulty ?? 0} · ${w.incorrectCount} miss${w.incorrectCount === 1 ? "" : "es"}`,
+          }))}
+          ctaLabel="Practice these"
+          ctaWordIds={difficult.map((w) => w.id)}
+          onPractice={launchPracticeFor}
+          ctaTitle="Difficult words"
+        />
+        <WordListCard
+          title="Mistake words"
+          subtitle="Words you've ever gotten wrong."
+          icon={<RotateCcw size={14} className="text-brand-gradient" />}
+          empty="No mistake history yet — nice work."
+          items={mistakes.map((w) => ({
+            id: w.id,
+            primary: w.word,
+            meta: `${w.incorrectCount} miss${w.incorrectCount === 1 ? "" : "es"}`,
+          }))}
+          ctaLabel="Practice these"
+          ctaWordIds={mistakes.map((w) => w.id)}
+          onPractice={launchPracticeFor}
+          ctaTitle="Mistake words"
+        />
+      </div>
+
+      {/* ─── Recommended next review ──────────────────────────────────── */}
+      <section className="rounded-2xl border border-border bg-card shadow-sm p-5">
+        <div className="flex items-start gap-3 mb-3">
+          <div className="w-9 h-9 rounded-xl bg-emerald-100 dark:bg-emerald-500/20 flex items-center justify-center shrink-0">
+            <RefreshCw
+              size={16}
+              className="text-emerald-600 dark:text-emerald-300"
+            />
+          </div>
+          <div className="flex-1 min-w-0">
+            <h3 className="text-sm font-extrabold text-foreground">
+              Recommended next review
+            </h3>
+            <p className="text-xs text-muted-foreground mt-0.5">
+              Words your spaced-repetition schedule says are due now.
+            </p>
+          </div>
+          {dueReview.length > 0 && (
+            <button
+              type="button"
+              onClick={() =>
+                launchPracticeFor(
+                  dueReview.map((w) => w.id),
+                  "Due for review",
+                )
+              }
+              className="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg text-[11px] font-extrabold btn-brand"
+            >
+              <Sparkles size={12} /> Review now
+            </button>
+          )}
+        </div>
+        {dueReview.length === 0 ? (
+          <p className="text-xs text-muted-foreground">
+            Nothing is due right now. You're all caught up.
+          </p>
+        ) : (
+          <ul className="grid grid-cols-2 sm:grid-cols-3 gap-2">
+            {dueReview.map((w) => (
+              <li
+                key={w.id}
+                className="rounded-lg border border-border bg-muted/30 px-2.5 py-2"
+              >
+                <div className="text-xs font-extrabold text-foreground truncate">
+                  {w.word}
+                </div>
+                <div className="text-[10px] text-muted-foreground font-bold uppercase tracking-wider mt-0.5">
+                  M{w.day} · S{w.group} · {w.pos}
+                </div>
+              </li>
+            ))}
+          </ul>
+        )}
+      </section>
+
+      {/* ─── Question-by-question breakdown (existing) ────────────────── */}
       <section className="rounded-2xl border border-border bg-card shadow-sm overflow-hidden">
         <div className="px-5 sm:px-6 py-4 border-b border-border">
           <h3 className="text-base font-extrabold text-foreground">
@@ -1932,6 +2245,7 @@ function ResultsScreen({
         </ul>
       </section>
 
+      {/* ─── Footer actions ───────────────────────────────────────────── */}
       <div className="flex flex-wrap items-center justify-between gap-3">
         <button
           type="button"
@@ -1940,15 +2254,279 @@ function ResultsScreen({
         >
           <ChevronLeft size={14} /> Back to Test Center
         </button>
-        <button
-          type="button"
-          onClick={onRestart}
-          className="inline-flex items-center gap-1 px-4 py-2 rounded-xl text-sm font-extrabold btn-brand"
-        >
-          <RotateCcw size={14} /> New test
-        </button>
+        <div className="flex items-center gap-2 flex-wrap">
+          {hasMistakesInTest && (
+            <button
+              type="button"
+              onClick={() => {
+                const ids = Array.from(
+                  new Set(
+                    results
+                      .filter((r) => !isAnswerCorrect(r.q, r.response))
+                      .map((r) => r.q.word.id),
+                  ),
+                );
+                launchPracticeFor(ids, "Redo wrong + skipped");
+              }}
+              className="inline-flex items-center gap-1 px-3.5 py-2 rounded-xl border border-border bg-card text-xs font-bold text-foreground hover-elevate"
+            >
+              <RotateCcw size={14} /> Redo wrong
+            </button>
+          )}
+          <button
+            type="button"
+            onClick={() => onNavigate("test-history")}
+            className="inline-flex items-center gap-1 px-3.5 py-2 rounded-xl border border-border bg-card text-xs font-bold text-foreground hover-elevate"
+          >
+            <ListChecks size={14} /> Test history
+          </button>
+          <button
+            type="button"
+            onClick={onRestart}
+            className="inline-flex items-center gap-1 px-4 py-2 rounded-xl text-sm font-extrabold btn-brand"
+          >
+            <RotateCcw size={14} /> New test
+          </button>
+        </div>
       </div>
     </div>
+  );
+}
+
+// ─── Helpers used by the results screen ─────────────────────────────────
+
+function questionsFromResults(results: QuestionResult[]): TestQuestionRecord[] {
+  return results.map((r) => {
+    const correct = isAnswerCorrect(r.q, r.response);
+    const answered =
+      r.response !== null &&
+      (typeof r.response !== "string" || r.response.trim() !== "");
+    return {
+      questionId: r.q.id,
+      kind: r.q.kind,
+      wordId: r.q.word.id,
+      word: r.q.word.word,
+      day: r.q.word.day,
+      group: r.q.word.group,
+      pos: r.q.word.pos,
+      prompt: snippet(r.q),
+      userAnswer: formatResponse(r.response),
+      correctAnswer: correctAnswerText(r.q),
+      correct,
+      answered,
+      flagged: r.flagged,
+      timeSpentMs: r.timeSpentMs,
+    };
+  });
+}
+
+function buildTestHistoryRecord(
+  results: QuestionResult[],
+  startedAt: string,
+  endedAt: string,
+  durationMs: number,
+  scopeLabel: string,
+  selectedKinds: QuestionKind[],
+): TestHistoryRecord {
+  const questions = questionsFromResults(results);
+  const numQuestions = questions.length;
+  let numCorrect = 0;
+  let numWrong = 0;
+  let numUnanswered = 0;
+  for (const q of questions) {
+    if (q.correct) numCorrect += 1;
+    else if (q.answered) numWrong += 1;
+    else numUnanswered += 1;
+  }
+  const accuracy =
+    numQuestions === 0 ? 0 : Math.round((numCorrect / numQuestions) * 100);
+  return {
+    id: `test-${Date.parse(endedAt)}-${Math.random().toString(36).slice(2, 7)}`,
+    startedAt,
+    endedAt,
+    durationMs,
+    scopeLabel,
+    selectedKinds,
+    numQuestions,
+    numCorrect,
+    numWrong,
+    numUnanswered,
+    accuracy,
+    questions,
+  };
+}
+
+// ─── Small re-usable cards used by the results screen ───────────────────
+
+function BucketCard({
+  title,
+  icon,
+  buckets,
+  renderLabel,
+  collapsedAfter,
+}: {
+  title: string;
+  icon?: React.ReactNode;
+  buckets: AccuracyBucket[];
+  renderLabel?: (b: AccuracyBucket) => React.ReactNode;
+  collapsedAfter?: number;
+}) {
+  const [expanded, setExpanded] = useState(false);
+  const showAll = expanded || !collapsedAfter || buckets.length <= collapsedAfter;
+  const visible = showAll ? buckets : buckets.slice(0, collapsedAfter);
+  return (
+    <section className="rounded-2xl border border-border bg-card shadow-sm p-4">
+      <h3 className="text-[11px] font-extrabold uppercase tracking-wider text-muted-foreground mb-3 inline-flex items-center gap-1.5">
+        {icon}
+        {title}
+      </h3>
+      <ul className="space-y-2">
+        {visible.map((b) => {
+          const tone =
+            b.accuracy >= 80
+              ? "text-emerald-600 dark:text-emerald-300"
+              : b.accuracy >= 60
+                ? "text-foreground"
+                : "text-rose-600 dark:text-rose-300";
+          return (
+            <li
+              key={b.key}
+              className="flex items-center justify-between gap-3 text-xs"
+            >
+              <span className="inline-flex items-center gap-1.5 font-bold text-foreground min-w-0 truncate">
+                {renderLabel ? renderLabel(b) : b.label}
+              </span>
+              <span className="tabular-nums font-bold inline-flex items-center gap-1.5 shrink-0">
+                <span className="text-muted-foreground">
+                  {b.correct}/{b.total}
+                </span>
+                <span className={tone}>· {b.accuracy}%</span>
+              </span>
+            </li>
+          );
+        })}
+      </ul>
+      {!showAll && (
+        <button
+          type="button"
+          onClick={() => setExpanded(true)}
+          className="mt-2 text-[11px] font-extrabold text-brand-gradient hover-elevate rounded-md px-1.5 py-0.5"
+        >
+          Show all {buckets.length}
+        </button>
+      )}
+    </section>
+  );
+}
+
+function PacingCard({
+  title,
+  subtitle,
+  tone,
+  icon,
+  entries,
+}: {
+  title: string;
+  subtitle: string;
+  tone: "amber" | "rose";
+  icon: React.ReactNode;
+  entries: PacingEntry[];
+}) {
+  const headerCls =
+    tone === "amber"
+      ? "text-amber-600 dark:text-amber-300"
+      : "text-rose-600 dark:text-rose-300";
+  return (
+    <section className="rounded-2xl border border-border bg-card shadow-sm p-4">
+      <h3
+        className={`text-[11px] font-extrabold uppercase tracking-wider mb-1 inline-flex items-center gap-1.5 ${headerCls}`}
+      >
+        {icon}
+        {title}
+      </h3>
+      <p className="text-[11px] text-muted-foreground mb-2">{subtitle}</p>
+      <ul className="space-y-1.5">
+        {entries.map((e) => (
+          <li
+            key={e.questionId}
+            className="rounded-lg border border-border bg-muted/30 px-2.5 py-1.5"
+          >
+            <div className="flex items-center justify-between gap-2 text-xs">
+              <span className="font-extrabold text-foreground truncate">
+                {e.word}
+              </span>
+              <span className="inline-flex items-center gap-1 text-[11px] tabular-nums font-bold text-muted-foreground shrink-0">
+                <Clock size={10} /> {formatShortDuration(e.timeSpentMs)}
+              </span>
+            </div>
+            <div className="text-[10px] text-muted-foreground mt-0.5 truncate">
+              {KIND_META[e.kind as QuestionKind]?.short ?? e.kind} · M{e.day} · S
+              {e.group}
+            </div>
+          </li>
+        ))}
+      </ul>
+    </section>
+  );
+}
+
+function WordListCard({
+  title,
+  subtitle,
+  icon,
+  empty,
+  items,
+  ctaLabel,
+  ctaWordIds,
+  ctaTitle,
+  onPractice,
+}: {
+  title: string;
+  subtitle: string;
+  icon: React.ReactNode;
+  empty: string;
+  items: { id: string; primary: string; meta: string }[];
+  ctaLabel: string;
+  ctaWordIds: string[];
+  ctaTitle: string;
+  onPractice: (wordIds: string[], sessionTitle: string) => void;
+}) {
+  return (
+    <section className="rounded-2xl border border-border bg-card shadow-sm p-4 flex flex-col">
+      <h3 className="text-sm font-extrabold text-foreground inline-flex items-center gap-1.5">
+        {icon}
+        {title}
+      </h3>
+      <p className="text-[11px] text-muted-foreground mb-2">{subtitle}</p>
+      {items.length === 0 ? (
+        <p className="text-xs text-muted-foreground italic">{empty}</p>
+      ) : (
+        <ul className="space-y-1 flex-1">
+          {items.map((it) => (
+            <li
+              key={it.id}
+              className="flex items-center justify-between gap-2 text-xs rounded-md px-1.5 py-1 hover:bg-muted/40"
+            >
+              <span className="font-extrabold text-foreground truncate">
+                {it.primary}
+              </span>
+              <span className="text-[10px] tabular-nums text-muted-foreground font-bold shrink-0">
+                {it.meta}
+              </span>
+            </li>
+          ))}
+        </ul>
+      )}
+      {items.length > 0 && (
+        <button
+          type="button"
+          onClick={() => onPractice(ctaWordIds, ctaTitle)}
+          className="mt-3 inline-flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-lg text-[11px] font-extrabold border border-border bg-card text-foreground hover-elevate"
+        >
+          <Sparkles size={12} /> {ctaLabel}
+        </button>
+      )}
+    </section>
   );
 }
 
