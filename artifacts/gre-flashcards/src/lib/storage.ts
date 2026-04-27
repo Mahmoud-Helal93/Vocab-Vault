@@ -7,7 +7,6 @@ export const STORAGE_KEYS = {
   STREAK: "gre_streak",
   MISTAKES: "gre_mistakes",
   PLAN: "gre_plan",
-  CONFUSABLES: "gre_confusables",
   SESSIONS: "gre_sessions",
   CRUNCH: "gre_crunch",
   MICRO_SESSION: "gre_micro_session",
@@ -110,14 +109,6 @@ export interface PlanSettings {
   dailyStartTime: "morning" | "afternoon" | "evening";
   lastStudyDate: string | null;
   deficitDays: number;
-}
-
-export interface ConfusablePair {
-  word1: string;
-  word2: string;
-  detectedAt: string;
-  quizCorrect: number;
-  quizTotal: number;
 }
 
 export interface SessionMistake {
@@ -249,30 +240,6 @@ export function loadPlan(): PlanSettings {
 
 export function savePlan(plan: PlanSettings): void {
   try { localStorage.setItem(STORAGE_KEYS.PLAN, JSON.stringify(plan)); } catch { /* ignore */ }
-}
-
-// Confusables
-export function loadConfusables(): ConfusablePair[] {
-  try {
-    const stored = localStorage.getItem(STORAGE_KEYS.CONFUSABLES);
-    if (stored) return JSON.parse(stored) as ConfusablePair[];
-  } catch { /* ignore */ }
-  return [];
-}
-
-export function saveConfusables(pairs: ConfusablePair[]): void {
-  try { localStorage.setItem(STORAGE_KEYS.CONFUSABLES, JSON.stringify(pairs)); } catch { /* ignore */ }
-}
-
-export function mergeConfusables(
-  existing: ConfusablePair[],
-  newPairs: Array<{ word1: string; word2: string; detectedAt: string }>
-): ConfusablePair[] {
-  const existingKeys = new Set(existing.map((p) => [p.word1, p.word2].sort().join("|")));
-  const fresh: ConfusablePair[] = newPairs
-    .filter((p) => !existingKeys.has([p.word1, p.word2].sort().join("|")))
-    .map((p) => ({ ...p, quizCorrect: 0, quizTotal: 0 }));
-  return [...existing, ...fresh];
 }
 
 // Sessions

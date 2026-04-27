@@ -439,15 +439,6 @@ export default function Dashboard({ onNavigate }: DashboardProps) {
       status: "in-progress" as const,
       action: () => onNavigate("mission-detail", { missionDay: nextDay.day }),
     },
-    {
-      time: "Today",
-      label: "Confusables",
-      sub: "Easily confused word pairs",
-      xp: 60,
-      difficulty: 3,
-      status: "not-started" as const,
-      action: () => onNavigate("confusables"),
-    },
   ];
 
   const achievementIds = [

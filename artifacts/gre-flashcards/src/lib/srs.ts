@@ -160,30 +160,6 @@ export function getRecallStrength(word: Word): number {
   return accuracy * (1 - decayFactor);
 }
 
-export function detectConfusables(
-  words: Word[]
-): Array<{ word1: string; word2: string; detectedAt: string }> {
-  const candidates = words.filter((w) => w.incorrectCount > 2);
-  const others = words.filter((w) => w.incorrectCount > 1);
-  const pairs: Array<{ word1: string; word2: string; detectedAt: string }> = [];
-  const seen = new Set<string>();
-
-  for (const w1 of candidates) {
-    for (const w2 of others) {
-      if (w1.id === w2.id) continue;
-      const key = [w1.word, w2.word].sort().join("|");
-      if (seen.has(key)) continue;
-      const lev = levenshteinDistance(w1.word.toLowerCase(), w2.word.toLowerCase());
-      const samePrefix = w1.word.slice(0, 4).toLowerCase() === w2.word.slice(0, 4).toLowerCase();
-      if (lev <= 3 || samePrefix) {
-        pairs.push({ word1: w1.word, word2: w2.word, detectedAt: new Date().toISOString() });
-        seen.add(key);
-      }
-    }
-  }
-  return pairs;
-}
-
 // Compress all nextReview dates by 50% for crunch mode
 export function applyCrunchMode(words: Word[]): Word[] {
   const now = new Date();
