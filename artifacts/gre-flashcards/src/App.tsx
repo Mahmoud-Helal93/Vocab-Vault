@@ -24,7 +24,7 @@ import GlobalStatsBar from "@/components/GlobalStatsBar";
 import ThemeChip from "@/components/ThemeChip";
 import vocabNinjaLogo from "@assets/Gemini_Generated_Image_tgtyf7tgtyf7tgty_1776986903352.png";
 import {
-  LayoutDashboard, BookOpen, Target, Clock, Settings, Moon, Sun,
+  LayoutDashboard, BookOpen, Settings, Moon, Sun,
   CalendarDays, GitFork, BarChart3, TrendingUp, Zap, Menu,
   Trophy, Bookmark, Library,
 } from "lucide-react";
@@ -34,8 +34,6 @@ type Page = "dashboard" | "study" | "practice" | "review" | "settings" | "plan" 
 const NAV_ITEMS: Array<{ id: Page; icon: React.ReactNode; label: string }> = [
   { id: "dashboard",     icon: <LayoutDashboard size={18} />, label: "Home" },
   { id: "study",         icon: <BookOpen size={18} />,        label: "Learn" },
-  { id: "review",        icon: <Clock size={18} />,           label: "Review" },
-  { id: "practice",      icon: <Target size={18} />,          label: "Practice" },
   { id: "story-library", icon: <Library size={18} />,         label: "Story Library" },
   { id: "bookmarks",     icon: <Bookmark size={18} />,        label: "Bookmarks" },
   { id: "achievements",  icon: <Trophy size={18} />,          label: "Achievements" },
