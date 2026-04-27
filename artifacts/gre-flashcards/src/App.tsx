@@ -18,6 +18,7 @@ import TestSelection from "@/pages/TestSelection";
 import PracticeMode from "@/pages/PracticeMode";
 import TestMode from "@/pages/TestMode";
 import TestHistory from "@/pages/TestHistory";
+import GRESimulation from "@/pages/GRESimulation";
 import SidebarSearch from "@/components/SidebarSearch";
 import BadgeToast from "@/components/BadgeToast";
 import GlobalStatsBar from "@/components/GlobalStatsBar";
@@ -29,7 +30,7 @@ import {
   Trophy, Bookmark, Library, FlaskConical,
 } from "lucide-react";
 
-type Page = "dashboard" | "study" | "test" | "test-selection" | "practice" | "test-mode" | "test-history" | "settings" | "analytics" | "progress" | "achievements" | "mission-test" | "set-test" | "bookmarks" | "mission-detail" | "set-reading" | "story-library";
+type Page = "dashboard" | "study" | "test" | "test-selection" | "practice" | "test-mode" | "test-history" | "gre-simulation" | "settings" | "analytics" | "progress" | "achievements" | "mission-test" | "set-test" | "bookmarks" | "mission-detail" | "set-reading" | "story-library";
 
 const NAV_ITEMS: Array<{ id: Page; icon: React.ReactNode; label: string }> = [
   { id: "dashboard",     icon: <LayoutDashboard size={18} />, label: "Home" },
@@ -113,6 +114,10 @@ function MainApp() {
             onBack={() => goBack(() => setPage("test"))}
             onNavigate={navigate}
           />
+        );
+      case "gre-simulation":
+        return (
+          <GRESimulation onBack={() => goBack(() => setPage("test"))} />
         );
       case "analytics":
         return <Analytics onBack={() => goBack(() => setPage("dashboard"))} onStudyWord={(id) => navigate("study", { wordId: id })} />;

@@ -6,6 +6,7 @@ import {
   History,
   ChevronRight,
   Sparkles,
+  ScrollText,
 } from "lucide-react";
 
 interface TestProps {
@@ -88,6 +89,26 @@ export default function Test({ onNavigate }: TestProps) {
       cta: "Configure & start",
       status: "available",
       onClick: () => onNavigate("test-mode"),
+    },
+    {
+      id: "gre-simulation",
+      title: "GRE Simulation",
+      subtitle: "Text Completion · Sentence Equivalence · Mixed",
+      description:
+        "An exam-style verbal session. Choose Text Completion (1–3 blanks per passage), Sentence Equivalence (pick two equivalent answers), or a mixed run. Serious, neutral interface — no partial credit.",
+      icon: <ScrollText size={22} className="text-white" strokeWidth={2.5} />,
+      accentClass:
+        "from-slate-500/15 via-slate-500/5 to-transparent dark:from-slate-500/20",
+      iconBgClass: "bg-gradient-to-br from-slate-700 to-slate-900",
+      items: [
+        "Text Completion · 5 choices (single) or 3 per blank (multi)",
+        "Sentence Equivalence · 6 choices, 2 equivalent answers",
+        "Mixed mode for full GRE-style verbal practice",
+        "Built-in timer · all-or-nothing scoring · per-question review",
+      ],
+      cta: "Open simulation setup",
+      status: "available",
+      onClick: () => onNavigate("gre-simulation"),
     },
     {
       id: "history",
