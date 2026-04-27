@@ -15,7 +15,6 @@ import {
   ChevronRight,
   CheckCircle2,
   Circle,
-  AlertCircle,
 } from "lucide-react";
 import { useApp } from "@/context/AppContext";
 import { TOTAL_DAYS } from "@/data/words";
@@ -42,12 +41,13 @@ import {
 
 interface TestSelectionProps {
   onBack: () => void;
+  onNavigate: (page: string, params?: Record<string, unknown>) => void;
   mode: "quick" | "custom";
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
 
-export default function TestSelection({ onBack, mode }: TestSelectionProps) {
+export default function TestSelection({ onBack, onNavigate, mode }: TestSelectionProps) {
   return (
     <motion.div
       initial={{ opacity: 0, y: 8 }}
@@ -55,8 +55,11 @@ export default function TestSelection({ onBack, mode }: TestSelectionProps) {
       className="max-w-[1240px] mx-auto px-4 lg:px-6 py-6 space-y-6"
     >
       <Header mode={mode} onBack={onBack} />
-      <PhaseNotice />
-      {mode === "quick" ? <QuickPracticePanel /> : <CustomPracticePanel />}
+      {mode === "quick" ? (
+        <QuickPracticePanel onNavigate={onNavigate} />
+      ) : (
+        <CustomPracticePanel onNavigate={onNavigate} />
+      )}
     </motion.div>
   );
 }
@@ -115,29 +118,13 @@ function Header({
   );
 }
 
-function PhaseNotice() {
-  return (
-    <div className="flex items-start gap-3 rounded-xl border border-amber-200 bg-amber-50 dark:border-amber-900/40 dark:bg-amber-900/10 px-4 py-3">
-      <AlertCircle
-        size={18}
-        className="text-amber-600 dark:text-amber-400 mt-0.5 shrink-0"
-      />
-      <div className="text-sm">
-        <span className="font-bold text-amber-900 dark:text-amber-200">
-          Phase 2 — selection only.
-        </span>{" "}
-        <span className="text-amber-800 dark:text-amber-300/90">
-          Choose your words and review the live preview. The actual question
-          engine arrives in Phase 3, so the start button is currently disabled.
-        </span>
-      </div>
-    </div>
-  );
-}
-
 // ─── Quick Practice ─────────────────────────────────────────────────────────
 
-function QuickPracticePanel() {
+function QuickPracticePanel({
+  onNavigate,
+}: {
+  onNavigate: (page: string, params?: Record<string, unknown>) => void;
+}) {
   const { words } = useApp();
 
   const previews = useMemo(() => {
@@ -220,7 +207,20 @@ function QuickPracticePanel() {
                 <span className="text-[11px] text-muted-foreground font-medium inline-flex items-center gap-1">
                   <Shuffle size={12} /> Shuffled
                 </span>
-                <DisabledStartButton small />
+                <StartButton
+                  small
+                  disabled={empty}
+                  onClick={() => {
+                    const ids = selectWords(
+                      words,
+                      quickPresetRequest(preset.id),
+                    ).map((w) => w.id);
+                    onNavigate("practice", {
+                      wordIds: ids,
+                      sessionTitle: preset.label,
+                    });
+                  }}
+                />
               </div>
             </div>
           </article>
@@ -232,7 +232,11 @@ function QuickPracticePanel() {
 
 // ─── Custom Practice ────────────────────────────────────────────────────────
 
-function CustomPracticePanel() {
+function CustomPracticePanel({
+  onNavigate,
+}: {
+  onNavigate: (page: string, params?: Record<string, unknown>) => void;
+}) {
   const { words } = useApp();
 
   // Scope state — keep one piece of state per scope kind so users can switch
@@ -388,7 +392,16 @@ function CustomPracticePanel() {
             finalCount={finalSelection.length}
           />
           <PreviewList sample={previewSample} total={finalSelection.length} />
-          <DisabledStartButton fullWidth />
+          <StartButton
+            fullWidth
+            disabled={finalSelection.length === 0}
+            onClick={() =>
+              onNavigate("practice", {
+                wordIds: finalSelection.map((w) => w.id),
+                sessionTitle: "Custom Practice",
+              })
+            }
+          />
         </div>
       </aside>
     </div>
@@ -1169,14 +1182,18 @@ function PreviewList({
   );
 }
 
-// ─── Disabled start button (Phase 3 placeholder) ────────────────────────────
+// ─── Start button — kicks off Practice Mode with the resolved word IDs ─────
 
-function DisabledStartButton({
+function StartButton({
   fullWidth,
   small,
+  disabled,
+  onClick,
 }: {
   fullWidth?: boolean;
   small?: boolean;
+  disabled?: boolean;
+  onClick: () => void;
 }) {
   return (
     <div
@@ -1186,8 +1203,9 @@ function DisabledStartButton({
     >
       <button
         type="button"
-        disabled
-        title="The question engine arrives in Phase 3"
+        disabled={disabled}
+        onClick={onClick}
+        title={disabled ? "No words match this selection." : "Start practice"}
         className={`inline-flex items-center justify-center gap-1.5 rounded-xl font-extrabold transition-colors btn-brand disabled:opacity-50 disabled:cursor-not-allowed disabled:shadow-none ${
           fullWidth ? "w-full px-4 py-3 text-sm" : "px-3.5 py-2 text-xs"
         }`}
@@ -1197,7 +1215,9 @@ function DisabledStartButton({
       </button>
       {!small && (
         <p className="text-[11px] text-muted-foreground text-center">
-          Phase 3 unlocks the question engine.
+          {disabled
+            ? "Adjust your selection to enable."
+            : "Immediate feedback · hints · confidence rating."}
         </p>
       )}
     </div>

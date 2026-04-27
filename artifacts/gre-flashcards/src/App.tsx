@@ -15,6 +15,7 @@ import SetReading from "@/pages/SetReading";
 import StoryLibrary from "@/pages/StoryLibrary";
 import Test from "@/pages/Test";
 import TestSelection from "@/pages/TestSelection";
+import PracticeMode from "@/pages/PracticeMode";
 import SidebarSearch from "@/components/SidebarSearch";
 import BadgeToast from "@/components/BadgeToast";
 import GlobalStatsBar from "@/components/GlobalStatsBar";
@@ -26,7 +27,7 @@ import {
   Trophy, Bookmark, Library, FlaskConical,
 } from "lucide-react";
 
-type Page = "dashboard" | "study" | "test" | "test-selection" | "settings" | "analytics" | "progress" | "achievements" | "mission-test" | "set-test" | "bookmarks" | "mission-detail" | "set-reading" | "story-library";
+type Page = "dashboard" | "study" | "test" | "test-selection" | "practice" | "settings" | "analytics" | "progress" | "achievements" | "mission-test" | "set-test" | "bookmarks" | "mission-detail" | "set-reading" | "story-library";
 
 const NAV_ITEMS: Array<{ id: Page; icon: React.ReactNode; label: string }> = [
   { id: "dashboard",     icon: <LayoutDashboard size={18} />, label: "Home" },
@@ -83,7 +84,18 @@ function MainApp() {
         return (
           <TestSelection
             onBack={() => goBack(() => setPage("test"))}
+            onNavigate={navigate}
             mode={(pageParams.mode as "quick" | "custom") ?? "custom"}
+          />
+        );
+      case "practice":
+        return (
+          <PracticeMode
+            onBack={() => goBack(() => setPage("test"))}
+            onNavigate={navigate}
+            wordIds={pageParams.wordIds as string[] | undefined}
+            sessionTitle={pageParams.sessionTitle as string | undefined}
+            initialKinds={pageParams.initialKinds as undefined}
           />
         );
       case "analytics":

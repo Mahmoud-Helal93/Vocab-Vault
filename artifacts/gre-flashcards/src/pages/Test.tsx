@@ -6,7 +6,6 @@ import {
   History,
   ChevronRight,
   Sparkles,
-  AlertCircle,
 } from "lucide-react";
 
 interface TestProps {
@@ -138,24 +137,6 @@ export default function Test({ onNavigate }: TestProps) {
           </div>
         </div>
       </section>
-
-      {/* ── Phase notice ── */}
-      <div className="flex items-start gap-3 rounded-xl border border-amber-200 bg-amber-50 dark:border-amber-900/40 dark:bg-amber-900/10 px-4 py-3">
-        <AlertCircle
-          size={18}
-          className="text-amber-600 dark:text-amber-400 mt-0.5 shrink-0"
-        />
-        <div className="text-sm">
-          <span className="font-bold text-amber-900 dark:text-amber-200">
-            Phase 2 — selection unlocked.
-          </span>{" "}
-          <span className="text-amber-800 dark:text-amber-300/90">
-            Quick Practice and Custom Practice now let you pick the words for a
-            session. The question engine, modes, and analytics arrive in later
-            phases.
-          </span>
-        </div>
-      </div>
 
       {/* ── Section cards ── */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-5">
