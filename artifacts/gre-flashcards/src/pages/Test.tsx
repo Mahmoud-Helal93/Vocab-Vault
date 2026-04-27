@@ -28,8 +28,6 @@ interface SectionCard {
 }
 
 export default function Test({ onNavigate }: TestProps) {
-  void onNavigate;
-
   const sections: SectionCard[] = [
     {
       id: "quick-practice",
@@ -48,27 +46,29 @@ export default function Test({ onNavigate }: TestProps) {
         "Today's review",
         "Random review",
       ],
-      cta: "Phase 2 unlocks this",
-      status: "coming-soon",
+      cta: "Pick a preset",
+      status: "available",
+      onClick: () => onNavigate("test-selection", { mode: "quick" }),
     },
     {
       id: "custom-practice",
       title: "Custom Practice",
       subtitle: "Build your own session",
       description:
-        "Pick belts, missions, sets, ranges, or mixed selections. Choose question types, count, and toggles for shuffle and hints.",
+        "Pick belts, missions, sets, ranges, or mixed selections. Layer on filters for new, mistake, difficult, or due words and tune shuffle and size.",
       icon: <SlidersHorizontal size={22} className="text-white" strokeWidth={2.5} />,
       accentClass:
         "from-violet-500/15 via-violet-500/5 to-transparent dark:from-violet-500/20",
       iconBgClass: "bg-gradient-to-br from-violet-500 to-fuchsia-500",
       items: [
         "Choose belt / mission / set / range / mix",
-        "Choose question types",
-        "Choose number of questions",
-        "Shuffle & hints toggles",
+        "Filter new / mistake / difficult / due",
+        "Shuffle toggle & session size",
+        "Live preview of selected words",
       ],
-      cta: "Phase 2 unlocks this",
-      status: "coming-soon",
+      cta: "Open the builder",
+      status: "available",
+      onClick: () => onNavigate("test-selection", { mode: "custom" }),
     },
     {
       id: "gre-simulation",
@@ -147,11 +147,12 @@ export default function Test({ onNavigate }: TestProps) {
         />
         <div className="text-sm">
           <span className="font-bold text-amber-900 dark:text-amber-200">
-            Phase 1 — foundation only.
+            Phase 2 — selection unlocked.
           </span>{" "}
           <span className="text-amber-800 dark:text-amber-300/90">
-            The four sections below are scaffolded. Selection, question
-            generation, modes, and analytics arrive in later phases.
+            Quick Practice and Custom Practice now let you pick the words for a
+            session. The question engine, modes, and analytics arrive in later
+            phases.
           </span>
         </div>
       </div>

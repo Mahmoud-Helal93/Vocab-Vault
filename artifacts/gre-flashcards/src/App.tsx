@@ -14,6 +14,7 @@ import MissionDetail from "@/pages/MissionDetail";
 import SetReading from "@/pages/SetReading";
 import StoryLibrary from "@/pages/StoryLibrary";
 import Test from "@/pages/Test";
+import TestSelection from "@/pages/TestSelection";
 import SidebarSearch from "@/components/SidebarSearch";
 import BadgeToast from "@/components/BadgeToast";
 import GlobalStatsBar from "@/components/GlobalStatsBar";
@@ -25,7 +26,7 @@ import {
   Trophy, Bookmark, Library, FlaskConical,
 } from "lucide-react";
 
-type Page = "dashboard" | "study" | "test" | "settings" | "analytics" | "progress" | "achievements" | "mission-test" | "set-test" | "bookmarks" | "mission-detail" | "set-reading" | "story-library";
+type Page = "dashboard" | "study" | "test" | "test-selection" | "settings" | "analytics" | "progress" | "achievements" | "mission-test" | "set-test" | "bookmarks" | "mission-detail" | "set-reading" | "story-library";
 
 const NAV_ITEMS: Array<{ id: Page; icon: React.ReactNode; label: string }> = [
   { id: "dashboard",     icon: <LayoutDashboard size={18} />, label: "Home" },
@@ -78,6 +79,13 @@ function MainApp() {
         return <StudyMode onBack={() => goBack(() => setPage("dashboard"))} onNavigate={navigate} initialDay={pageParams.day as number | undefined} initialWordId={pageParams.wordId as string | undefined} />;
       case "test":
         return <Test onNavigate={navigate} />;
+      case "test-selection":
+        return (
+          <TestSelection
+            onBack={() => goBack(() => setPage("test"))}
+            mode={(pageParams.mode as "quick" | "custom") ?? "custom"}
+          />
+        );
       case "analytics":
         return <Analytics onBack={() => goBack(() => setPage("dashboard"))} onStudyWord={(id) => navigate("study", { wordId: id })} />;
       case "progress":
