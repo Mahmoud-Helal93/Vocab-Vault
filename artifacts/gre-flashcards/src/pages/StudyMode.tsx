@@ -358,11 +358,22 @@ export default function StudyMode({ onBack, onNavigate, initialDay, initialWordI
                       return gw.length > 0 && gw.every((w) => w.status === "mastered");
                     });
 
+                    const actionLabel = done
+                      ? "Review"
+                      : inProgress
+                      ? "Continue"
+                      : "Start";
+                    const actionColorCls = done
+                      ? "text-emerald-600 dark:text-emerald-400"
+                      : inProgress
+                      ? "text-orange-600 dark:text-orange-400"
+                      : "text-muted-foreground";
+
                     return (
                       <button
                         key={day}
                         onClick={() => openMission(day)}
-                        className={`group rounded-xl border bg-card p-3 text-left flex flex-col gap-2 min-h-[110px] transition-all hover:-translate-y-0.5 hover:shadow-md ${
+                        className={`group rounded-xl border bg-card p-3.5 text-left flex flex-col gap-2 min-h-[156px] transition-all hover:-translate-y-0.5 hover:shadow-md ${
                           done
                             ? "border-emerald-200 dark:border-emerald-900/40"
                             : inProgress
@@ -372,45 +383,63 @@ export default function StudyMode({ onBack, onNavigate, initialDay, initialWordI
                         title={`Mission ${missionNum} — Day ${day}`}
                         data-testid={`button-mission-${day}`}
                       >
-                        <div className="flex items-center justify-between">
-                          <div className="flex items-center gap-1.5">
-                            <div
-                              className="w-5 h-5 rounded-md flex items-center justify-center text-[10px] font-extrabold text-white"
-                              style={{ backgroundColor: done ? "#10B981" : belt.color }}
-                            >
-                              {done ? <Check size={11} strokeWidth={3} /> : missionNum}
-                            </div>
-                            <span className="text-xs font-bold text-foreground">M{missionNum}</span>
+                        {/* Header: belt-colored badge + Mission/Day stack */}
+                        <div className="flex items-start gap-2.5">
+                          <div
+                            className="w-8 h-8 rounded-lg flex items-center justify-center text-[12px] font-extrabold text-white shrink-0 shadow-sm"
+                            style={{ backgroundColor: done ? "#10B981" : belt.color }}
+                          >
+                            {done ? <Check size={14} strokeWidth={3} /> : missionNum}
                           </div>
-                          <span className="text-[10px] text-muted-foreground tabular-nums">D{day}</span>
+                          <div className="min-w-0 leading-tight">
+                            <div className="text-[13px] font-extrabold text-foreground truncate">
+                              Mission {missionNum}
+                            </div>
+                            <div className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider mt-0.5 tabular-nums">
+                              Day {day}
+                            </div>
+                          </div>
                         </div>
 
-                        <div className="flex items-center gap-1.5">
-                          {setStates.map((s, idx) => (
-                            <div
-                              key={idx}
-                              className="w-2 h-2 rounded-full transition-all"
-                              style={{
-                                backgroundColor: s ? belt.color : undefined,
-                                border: s ? "none" : `1.5px solid ${belt.color}55`,
-                              }}
-                            />
-                          ))}
-                          <span className="text-[10px] text-muted-foreground ml-auto tabular-nums">
-                            {mastered}/{total}
+                        {/* Meta: set dots + sets · words */}
+                        <div className="flex items-center gap-2 mt-0.5">
+                          <div className="flex items-center gap-1 shrink-0">
+                            {setStates.map((s, idx) => (
+                              <div
+                                key={idx}
+                                className="w-2 h-2 rounded-full transition-all"
+                                style={{
+                                  backgroundColor: s ? belt.color : undefined,
+                                  border: s ? "none" : `1.5px solid ${belt.color}55`,
+                                }}
+                              />
+                            ))}
+                          </div>
+                          <span className="text-[10px] font-semibold text-muted-foreground truncate">
+                            {GROUPS_PER_DAY} Sets · {total} Words
                           </span>
                         </div>
 
-                        <div className="h-1 rounded-full bg-muted overflow-hidden mt-auto">
-                          <div
-                            className="h-full transition-all"
-                            style={{ width: `${pct}%`, backgroundColor: done ? "#10B981" : belt.color }}
-                          />
+                        {/* Progress bar + percentage */}
+                        <div className="flex items-center gap-2 mt-auto">
+                          <div className="flex-1 h-1.5 rounded-full bg-muted overflow-hidden">
+                            <div
+                              className="h-full transition-all"
+                              style={{
+                                width: `${pct}%`,
+                                backgroundColor: done ? "#10B981" : belt.color,
+                              }}
+                            />
+                          </div>
+                          <span className="text-[11px] font-extrabold tabular-nums text-foreground">
+                            {pct}%
+                          </span>
                         </div>
 
-                        <div className="flex items-center justify-between">
+                        {/* Status label + Start/Continue arrow */}
+                        <div className="flex items-center justify-between gap-1">
                           <span
-                            className={`text-[10px] font-semibold ${
+                            className={`text-[10px] font-bold ${
                               done
                                 ? "text-emerald-600 dark:text-emerald-400"
                                 : inProgress
@@ -420,7 +449,12 @@ export default function StudyMode({ onBack, onNavigate, initialDay, initialWordI
                           >
                             {done ? "Complete" : inProgress ? "In progress" : "Not started"}
                           </span>
-                          <ChevronRight size={11} className="text-muted-foreground group-hover:translate-x-0.5 transition-transform" />
+                          <span
+                            className={`inline-flex items-center gap-0.5 text-[10px] font-extrabold uppercase tracking-wider ${actionColorCls} group-hover:translate-x-0.5 transition-transform`}
+                          >
+                            {actionLabel}
+                            <ChevronRight size={11} strokeWidth={3} />
+                          </span>
                         </div>
                       </button>
                     );
