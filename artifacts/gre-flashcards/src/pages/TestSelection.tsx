@@ -1347,7 +1347,7 @@ function MixRow({
 
       {/* Label + description */}
       <div className="min-w-0 flex-1">
-        <div className="text-sm font-extrabold text-foreground leading-tight">
+        <div className="text-sm font-extrabold text-foreground leading-tight whitespace-nowrap truncate">
           {meta.label}
         </div>
         <p className="text-[11.5px] text-muted-foreground leading-snug mt-1">
