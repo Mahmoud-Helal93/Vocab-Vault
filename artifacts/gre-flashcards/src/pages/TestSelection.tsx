@@ -1293,7 +1293,7 @@ function MixGroup({
         )}
       </div>
       {/* Rows */}
-      <div className="space-y-2">
+      <div className="space-y-1.5">
         {types.map((t) => (
           <MixRow
             key={t}
