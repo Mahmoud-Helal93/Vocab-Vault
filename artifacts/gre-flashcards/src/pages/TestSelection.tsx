@@ -457,10 +457,9 @@ function CustomPracticePanel({
           onRangeToChange={setRangeTo}
           totalScopeWords={totalScopeWords}
           sourceSummary={sourceSummary}
+          filters={filters}
+          onFiltersChange={setFilters}
         />
-
-        {/* Filters (kept separate from Source per design) */}
-        <FiltersCard filters={filters} onFiltersChange={setFilters} />
 
         {/* STEP 2: Question Mix (with Final Options merged at the bottom) */}
         <QuestionMixStep
@@ -528,6 +527,8 @@ function SourceStep({
   onRangeToChange,
   totalScopeWords,
   sourceSummary,
+  filters,
+  onFiltersChange,
 }: {
   scopeKind: ScopeKind;
   onScopeKindChange: (k: ScopeKind) => void;
@@ -543,6 +544,8 @@ function SourceStep({
   onRangeToChange: (n: number) => void;
   totalScopeWords: number;
   sourceSummary: string;
+  filters: Filters;
+  onFiltersChange: (f: Filters) => void;
 }) {
   const hasWords = totalScopeWords > 0;
   return (
@@ -562,7 +565,14 @@ function SourceStep({
         </div>
       </header>
 
-      <ScopeKindTabs value={scopeKind} onChange={onScopeKindChange} />
+      <div className="flex flex-wrap items-center gap-2">
+        <ScopeKindTabs value={scopeKind} onChange={onScopeKindChange} />
+        <span
+          className="hidden sm:inline-block h-5 w-px bg-border mx-1"
+          aria-hidden="true"
+        />
+        <InlineFilterChips value={filters} onChange={onFiltersChange} />
+      </div>
 
       {/* Wide selector row + stat card */}
       <div className="mt-5">
@@ -672,7 +682,7 @@ function ScopeKindTabs({
   onChange: (k: ScopeKind) => void;
 }) {
   return (
-    <div className="flex flex-wrap gap-1.5">
+    <div className="inline-flex flex-wrap gap-1.5">
       {SCOPE_KIND_TABS.map((t) => {
         const active = value === t.id;
         return (
@@ -954,7 +964,7 @@ const FILTER_CHIPS: Array<{
   { key: "dueOnly", label: "Due for review", hint: "Spaced-repetition due now." },
 ];
 
-function FilterChips({
+function InlineFilterChips({
   value,
   onChange,
 }: {
@@ -966,58 +976,41 @@ function FilterChips({
   };
   const anyOn = FILTER_CHIPS.some((c) => Boolean(value[c.key]));
   return (
-    <div>
-      <div className="flex items-center justify-between gap-2 mb-2">
-        <span className="inline-flex items-center gap-1.5 text-[11px] font-bold text-muted-foreground uppercase tracking-wide">
-          <FilterIcon size={12} />
-          Filters
-        </span>
-        {anyOn && (
+    <div className="inline-flex flex-wrap items-center gap-1.5">
+      <span className="inline-flex items-center gap-1 text-[11px] font-bold text-muted-foreground uppercase tracking-wide pr-0.5">
+        <FilterIcon size={11} />
+        Filters
+      </span>
+      {FILTER_CHIPS.map((c) => {
+        const active = Boolean(value[c.key]);
+        return (
           <button
+            key={c.key}
             type="button"
-            onClick={() => onChange({})}
-            className="text-[11px] font-bold text-orange-600 hover:text-orange-700 dark:text-orange-400"
+            onClick={() => toggle(c.key)}
+            title={c.hint}
+            aria-pressed={active}
+            className={`inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl text-[11px] font-bold border transition-colors ${
+              active
+                ? "bg-emerald-50 text-emerald-700 border-emerald-300 dark:bg-emerald-500/10 dark:text-emerald-300 dark:border-emerald-500/40"
+                : "bg-muted text-muted-foreground border-transparent hover:bg-muted/70 hover:text-foreground"
+            }`}
           >
-            Clear filters
+            {active ? <CheckCircle2 size={11} /> : <Circle size={11} />}
+            {c.label}
           </button>
-        )}
-      </div>
-      <div className="flex flex-wrap gap-1.5">
-        {FILTER_CHIPS.map((c) => {
-          const active = Boolean(value[c.key]);
-          return (
-            <button
-              key={c.key}
-              type="button"
-              onClick={() => toggle(c.key)}
-              title={c.hint}
-              className={`inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-full text-[11px] font-bold border transition-colors ${
-                active
-                  ? "bg-orange-50 dark:bg-orange-500/10 text-orange-800 dark:text-orange-200 border-orange-300 dark:border-orange-500/40"
-                  : "bg-muted/60 text-muted-foreground border-transparent hover:text-foreground"
-              }`}
-            >
-              {active ? <CheckCircle2 size={11} /> : <Circle size={11} />}
-              {c.label}
-            </button>
-          );
-        })}
-      </div>
+        );
+      })}
+      {anyOn && (
+        <button
+          type="button"
+          onClick={() => onChange({})}
+          className="text-[11px] font-bold text-orange-600 hover:text-orange-700 dark:text-orange-400 px-1.5"
+        >
+          Clear
+        </button>
+      )}
     </div>
-  );
-}
-
-function FiltersCard({
-  filters,
-  onFiltersChange,
-}: {
-  filters: Filters;
-  onFiltersChange: (f: Filters) => void;
-}) {
-  return (
-    <section className="rounded-2xl border border-border bg-card shadow-sm px-5 py-4">
-      <FilterChips value={filters} onChange={onFiltersChange} />
-    </section>
   );
 }
 

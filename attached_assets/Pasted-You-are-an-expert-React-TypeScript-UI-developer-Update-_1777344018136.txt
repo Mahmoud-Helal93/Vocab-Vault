@@ -1,0 +1,108 @@
+You are an expert React/TypeScript UI developer.
+
+Update ONLY the Custom Practice “Choose Source” and “Filters” layout.
+
+Do NOT change:
+- selection logic
+- filter logic
+- question counts
+- question generation
+- other sections
+
+Goal:
+Move the Filters controls into the same “Choose Source” card, directly next to the source tabs, especially after “Range,” so Source and Filters feel like one unified selection area.
+
+Current layout:
+- Choose Source is one card
+- Filters is a separate card below it
+
+Desired layout:
+Inside the same Choose Source card, the top control row should contain:
+
+[All] [Belt] [Mission] [Set] [Range]    [New] [Mistakes] [Difficult] [Due for review]
+
+The filter chips should appear on the same horizontal row as the source tabs when there is enough space.
+
+==================================================
+REQUIRED UI CHANGES
+==================================================
+
+1. Remove the separate Filters card completely.
+
+2. Move these filter chips into the Choose Source card:
+- New
+- Mistakes
+- Difficult
+- Due for review
+
+3. Place the filter chips after the Range tab.
+
+4. Add a subtle divider between source tabs and filter chips:
+Example:
+[All] [Belt] [Mission] [Set] [Range]  |  [New] [Mistakes] [Difficult] [Due for review]
+
+5. Add a small label before filter chips if needed:
+“Filters”
+But keep it compact.
+
+Example:
+[All] [Belt] [Mission] [Set] [Range]  |  Filters: [New] [Mistakes] [Difficult] [Due for review]
+
+6. The chips should wrap cleanly on smaller screens.
+Use:
+flex flex-wrap items-center gap-2
+
+7. Keep active states clear:
+- selected source tab = orange active style
+- selected filter = green/soft active style or current app style
+
+8. If filters are not functional yet:
+- keep them disabled or marked as coming soon
+- but still place them inside the Choose Source card
+
+9. Keep the source summary below the combined tabs/filters row:
+Example:
+“All 1,260 words across 6 belts, 42 missions and 126 sets…”
+
+10. Keep the selected scope badge below:
+Example:
+“All words · 1,260 words”
+
+==================================================
+EXPECTED FINAL STRUCTURE
+==================================================
+
+Choose Source card:
+
+Header:
+- icon
+- “1. Choose Source”
+- subtitle
+
+Combined control row:
+- Source tabs: All, Belt, Mission, Set, Range
+- Divider
+- Filter chips: New, Mistakes, Difficult, Due for review
+
+Source details/selector area:
+- summary sentence or mission/set controls depending on selected source
+
+Selected scope badge:
+- green check icon
+- selected scope text
+- word count
+
+==================================================
+DO NOT
+==================================================
+
+- Do not create a new section for filters.
+- Do not keep the old standalone Filters card.
+- Do not change the question mix section.
+- Do not change the right sidebar.
+- Do not change functionality.
+
+After finishing, summarize:
+- files changed
+- confirmation that Filters card was removed
+- confirmation that filter chips now appear inside Choose Source next to Range
