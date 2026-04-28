@@ -5,20 +5,28 @@ import {
   Zap,
   SlidersHorizontal,
   Shuffle,
-  Filter,
   Layers,
+  Globe,
+  Sparkles,
   Target,
   Boxes,
-  Globe,
   ListOrdered,
-  Sparkles,
   ChevronRight,
-  CheckCircle2,
+  ChevronLeft,
   Circle,
   ListChecks,
   Minus,
   Plus,
   AlertCircle,
+  Wand2,
+  Eye,
+  Hash,
+  Hourglass,
+  Lightbulb,
+  Gauge,
+  Filter as FilterIcon,
+  Info,
+  CheckCircle2,
 } from "lucide-react";
 import { useApp } from "@/context/AppContext";
 import { TOTAL_DAYS } from "@/data/words";
@@ -28,15 +36,11 @@ import {
   type Scope,
   type ScopeKind,
   type SetRef,
-  type SelectionRequest,
   BELT_NAMES,
   QUICK_PRESETS,
   TOTAL_BELTS,
-  allBelts,
   beltForMission,
   countSelection,
-  describeScope,
-  hasAnyFilter,
   missionsForBelt,
   quickPresetRequest,
   selectWords,
@@ -58,6 +62,8 @@ import {
   generatePracticeSession,
   isStartable,
   sumCounts,
+  DEFAULT_SESSION_CONFIG,
+  type SessionConfig,
 } from "@/lib/testSelection";
 
 interface TestSelectionProps {
@@ -102,10 +108,10 @@ function Header({
   const eyebrow = isQuick ? "Quick Practice" : "Custom Practice";
   const title = isQuick
     ? "Pick a preset and go."
-    : "Build your own session.";
+    : "Build a focused practice session.";
   const subtitle = isQuick
     ? "Each preset pulls from the words that need attention right now."
-    : "Combine belts, missions, sets and ranges with category filters and a shuffle toggle.";
+    : "Choose your words, question types, and exact question counts before you begin.";
 
   return (
     <section className="relative overflow-hidden rounded-2xl border border-border bg-brand-gradient-soft px-5 sm:px-7 py-6 shadow-sm">
@@ -251,7 +257,57 @@ function QuickPracticePanel({
   );
 }
 
-// ─── Custom Practice ────────────────────────────────────────────────────────
+// ─────────────────────────────────────────────────────────────────────────────
+// Custom Practice — guided builder (Source → Question Mix → Start)
+// ─────────────────────────────────────────────────────────────────────────────
+
+const TOTAL_MISSIONS = TOTAL_DAYS;
+const TOTAL_SETS = TOTAL_DAYS * 3;
+const TOTAL_WORDS = TOTAL_DAYS * 30;
+
+interface MixPreset {
+  id: string;
+  label: string;
+  description: string;
+  counts: Partial<Record<TestQuestionType, number>>;
+}
+
+const MIX_PRESETS: MixPreset[] = [
+  {
+    id: "quick10",
+    label: "Quick 10",
+    description: "Fast 10-question warmup mixing MCQs and a typing prompt.",
+    counts: { "word-to-def": 4, "def-to-word": 3, "fill-blank": 3 },
+  },
+  {
+    id: "balanced20",
+    label: "Balanced 20",
+    description: "All-rounder: definitions, synonyms, T/F and a typing burst.",
+    counts: {
+      "word-to-def": 5,
+      "def-to-word": 5,
+      "fill-blank": 5,
+      "synonym-pair": 3,
+      "tf-definition": 2,
+    },
+  },
+  {
+    id: "typing",
+    label: "Typing Focus",
+    description: "Recall-only: 15 fill-in-the-blank questions to lock in spelling.",
+    counts: { "fill-blank": 15 },
+  },
+  {
+    id: "mcq",
+    label: "MCQ Focus",
+    description: "Multiple choice only — 5 of each MCQ flavor.",
+    counts: {
+      "word-to-def": 5,
+      "def-to-word": 5,
+      "synonym-mcq": 5,
+    },
+  },
+];
 
 function CustomPracticePanel({
   onNavigate,
@@ -260,213 +316,218 @@ function CustomPracticePanel({
 }) {
   const { words } = useApp();
 
-  // Scope state — keep one piece of state per scope kind so users can switch
-  // tabs without losing prior selections.
+  // ─── Source state ──────────────────────────────────────────────────────
   const [scopeKind, setScopeKind] = useState<ScopeKind>("all");
-  const [selectedBelts, setSelectedBelts] = useState<number[]>([]);
-  const [selectedMissions, setSelectedMissions] = useState<number[]>([]);
-  const [selectedSets, setSelectedSets] = useState<SetRef[]>([]);
+  const [selectedBelt, setSelectedBelt] = useState<number>(1);
+  const [selectedMission, setSelectedMission] = useState<number>(1);
+  const [selectedSet, setSelectedSet] = useState<SetRef>({ day: 1, group: 1 });
   const [rangeFrom, setRangeFrom] = useState<number>(1);
   const [rangeTo, setRangeTo] = useState<number>(7);
-
-  // Filters + options
   const [filters, setFilters] = useState<Filters>({});
-  const [shuffle, setShuffle] = useState<boolean>(true);
 
-  // Per-type question counts (the new replacement for the word limit).
+  // ─── Question mix state ────────────────────────────────────────────────
   const [counts, setCounts] = useState<CountsByType>({});
-  const [enabledTypes, setEnabledTypes] = useState<Set<TestQuestionType>>(
-    () => new Set(ALL_TEST_QUESTION_TYPES),
+
+  // ─── Final options state ───────────────────────────────────────────────
+  const [sessionConfig, setSessionConfig] = useState<SessionConfig>(
+    DEFAULT_SESSION_CONFIG,
   );
 
-  // For the mission picker we let the user filter by belt without changing
-  // the scope kind.
-  const [missionPickerBelt, setMissionPickerBelt] = useState<number>(1);
-  const [setPickerMission, setSetPickerMission] = useState<number>(1);
-
+  // ─── Derived: scope → words → availability ─────────────────────────────
   const scope: Scope = useMemo(() => {
     switch (scopeKind) {
       case "all":
         return { kind: "all" };
       case "belt":
-        return { kind: "belt", beltIds: selectedBelts };
+        return { kind: "belt", beltIds: [selectedBelt] };
       case "mission":
-        return { kind: "mission", missionDays: selectedMissions };
+        return { kind: "mission", missionDays: [selectedMission] };
       case "set":
-        return { kind: "set", sets: selectedSets };
+        return { kind: "set", sets: [selectedSet] };
       case "range":
         return { kind: "range", fromDay: rangeFrom, toDay: rangeTo };
     }
   }, [
     scopeKind,
-    selectedBelts,
-    selectedMissions,
-    selectedSets,
+    selectedBelt,
+    selectedMission,
+    selectedSet,
     rangeFrom,
     rangeTo,
   ]);
 
-  // Words actually in scope (filters applied, no limit).
   const scopeWords = useMemo(
     () => selectWords(words, { scope, filters, shuffle: false }),
     [words, scope, filters],
   );
   const totalScopeWords = scopeWords.length;
 
-  // Live availability of each question type for the current scope.
   const availability: AvailabilityByType = useMemo(() => {
     if (totalScopeWords === 0) return { ...EMPTY_AVAILABILITY };
     return getQuestionAvailability(scopeWords, words);
   }, [scopeWords, totalScopeWords, words]);
 
-  // Realised counts honour both availability and the type enabled flag.
+  const totalAvailable = useMemo(
+    () =>
+      ALL_TEST_QUESTION_TYPES.reduce((sum, t) => sum + availability[t], 0),
+    [availability],
+  );
+
   const effectiveCounts: CountsByType = useMemo(() => {
     const out: CountsByType = {};
     for (const t of ALL_TEST_QUESTION_TYPES) {
-      if (!enabledTypes.has(t)) continue;
       const want = Math.max(0, Math.floor(counts[t] ?? 0));
+      if (want === 0) continue;
       const have = availability[t];
+      if (have <= 0) continue;
       out[t] = Math.min(want, have);
     }
     return out;
-  }, [counts, enabledTypes, availability]);
+  }, [counts, availability]);
 
   const totalQuestions = sumCounts(effectiveCounts);
-  const startable = isStartable(effectiveCounts);
+  const startable = isStartable(effectiveCounts) && totalScopeWords > 0;
 
-  const request: SelectionRequest = useMemo(
-    () => ({
-      scope,
-      filters,
-      shuffle,
-    }),
-    [scope, filters, shuffle],
+  const sourceSummary = useMemo(
+    () => describeSourceShort(scope),
+    [scope],
   );
 
-  const previewSample = scopeWords.slice(0, 12);
+  // ─── Helpers for presets ───────────────────────────────────────────────
+  const applyPreset = (preset: MixPreset) => {
+    const next: CountsByType = {};
+    for (const t of ALL_TEST_QUESTION_TYPES) {
+      const want = preset.counts[t] ?? 0;
+      const have = availability[t];
+      next[t] = Math.min(want, have);
+    }
+    setCounts(next);
+  };
 
+  const applyAllAvailable = () => {
+    if (
+      totalAvailable > 200 &&
+      !window.confirm(
+        `This will start a ${totalAvailable.toLocaleString()} question session. Continue?`,
+      )
+    ) {
+      return;
+    }
+    const next: CountsByType = {};
+    for (const t of ALL_TEST_QUESTION_TYPES) {
+      next[t] = availability[t];
+    }
+    setCounts(next);
+  };
+
+  const clearAll = () => setCounts({});
+
+  // ─── Disabled reason for the Start button ──────────────────────────────
+  const disabledReason: string | null = useMemo(() => {
+    if (totalScopeWords === 0)
+      return "No words match this source. Adjust the source above.";
+    if (totalAvailable === 0)
+      return "No question types are available for this source.";
+    if (totalQuestions === 0)
+      return "Pick at least one question — try a preset to get started.";
+    return null;
+  }, [totalScopeWords, totalAvailable, totalQuestions]);
+
+  // ─── Start ─────────────────────────────────────────────────────────────
   const start = () => {
     if (!startable) return;
     const result = generatePracticeSession({
       scopeWords,
       pool: words,
       counts: effectiveCounts,
-      shuffle,
+      shuffle: sessionConfig.shuffle,
     });
     if (result.questions.length === 0) return;
     onNavigate("practice", {
       questions: result.questions,
       sessionTitle: "Custom Practice",
+      sessionConfig,
     });
   };
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
-      {/* ── Left: Builder ─────────────────────────────────────── */}
+      {/* ── Left: Builder ───────────────────────────────────────────────── */}
       <div className="lg:col-span-2 space-y-5">
-        {/* Source */}
-        <Section
-          icon={<Layers size={16} />}
-          title="Source"
-          subtitle="Where to pull words from."
-        >
-          <ScopeKindTabs value={scopeKind} onChange={setScopeKind} />
-          <div className="mt-4">
-            {scopeKind === "all" && <AllScopeSummary />}
-            {scopeKind === "belt" && (
-              <BeltPicker
-                selected={selectedBelts}
-                onChange={setSelectedBelts}
-              />
-            )}
-            {scopeKind === "mission" && (
-              <MissionPicker
-                belt={missionPickerBelt}
-                onBeltChange={setMissionPickerBelt}
-                selected={selectedMissions}
-                onChange={setSelectedMissions}
-              />
-            )}
-            {scopeKind === "set" && (
-              <SetPicker
-                missionDay={setPickerMission}
-                onMissionChange={setSetPickerMission}
-                selected={selectedSets}
-                onChange={setSelectedSets}
-              />
-            )}
-            {scopeKind === "range" && (
-              <RangePicker
-                from={rangeFrom}
-                to={rangeTo}
-                onFromChange={setRangeFrom}
-                onToChange={setRangeTo}
-              />
-            )}
-          </div>
-        </Section>
+        {/* STEP 1: Source */}
+        <SourceStep
+          scopeKind={scopeKind}
+          onScopeKindChange={setScopeKind}
+          selectedBelt={selectedBelt}
+          onBeltChange={setSelectedBelt}
+          selectedMission={selectedMission}
+          onMissionChange={setSelectedMission}
+          selectedSet={selectedSet}
+          onSetChange={setSelectedSet}
+          rangeFrom={rangeFrom}
+          rangeTo={rangeTo}
+          onRangeFromChange={setRangeFrom}
+          onRangeToChange={setRangeTo}
+          filters={filters}
+          onFiltersChange={setFilters}
+          totalScopeWords={totalScopeWords}
+          sourceSummary={sourceSummary}
+        />
 
-        {/* Filters */}
-        <Section
-          icon={<Filter size={16} />}
-          title="Filters"
-          subtitle="Optional — narrow the selection by word category."
-        >
-          <FilterToggles value={filters} onChange={setFilters} />
-        </Section>
+        {/* STEP 2: Question Mix (with Final Options merged at the bottom) */}
+        <QuestionMixStep
+          availability={availability}
+          totalScopeWords={totalScopeWords}
+          counts={counts}
+          onCountsChange={setCounts}
+          onApplyPreset={applyPreset}
+          onApplyAllAvailable={applyAllAvailable}
+          onClearAll={clearAll}
+          totalAvailable={totalAvailable}
+          totalQuestions={totalQuestions}
+        />
 
-        {/* Question Types */}
-        <Section
-          icon={<ListChecks size={16} />}
-          title="Question Types & Counts"
-          subtitle="Pick how many of each type to include. Each row caps at the live availability."
-        >
-          <QuestionTypeCounts
-            availability={availability}
-            counts={counts}
-            onCountsChange={setCounts}
-            enabledTypes={enabledTypes}
-            onEnabledChange={setEnabledTypes}
-            totalScopeWords={totalScopeWords}
-          />
+        {/* Final Options — visually integrated with the question mix */}
+        <FinalOptionsCard
+          config={sessionConfig}
+          onChange={setSessionConfig}
+        />
 
-          <div className="mt-4 pt-4 border-t border-border">
-            <ToggleRow
-              icon={<Shuffle size={14} />}
-              label="Shuffle questions"
-              description="Mix the question order across types each session."
-              value={shuffle}
-              onChange={setShuffle}
-            />
-          </div>
-        </Section>
+        {/* Helper banner */}
+        <div className="rounded-2xl border border-dashed border-border bg-card/60 px-4 py-3 flex items-start gap-3 text-xs text-muted-foreground">
+          <Info size={14} className="text-orange-500 shrink-0 mt-0.5" />
+          <span>
+            Review your session on the right. Your selection saves while you
+            tweak — start whenever you’re ready.
+          </span>
+        </div>
       </div>
 
-      {/* ── Right: Live preview ───────────────────────────────── */}
+      {/* ── Right: Sticky review sidebar ────────────────────────────────── */}
       <aside className="lg:col-span-1">
         <div className="lg:sticky lg:top-4 space-y-4">
-          <SelectionSummary
-            request={request}
+          <SessionSummaryCard
+            sourceSummary={sourceSummary}
             totalScopeWords={totalScopeWords}
             counts={effectiveCounts}
             totalQuestions={totalQuestions}
+            shuffle={sessionConfig.shuffle}
           />
-          <AvailabilityPanel
+          <AvailabilityCard
             availability={availability}
-            totalScopeWords={totalScopeWords}
+            counts={effectiveCounts}
+            totalAvailable={totalAvailable}
           />
-          <PreviewList sample={previewSample} total={totalScopeWords} />
-          <StartButton
-            fullWidth
+          <SamplePreviewCard
+            sample={scopeWords.slice(0, 8)}
+            total={totalScopeWords}
+          />
+          <StartCard
+            totalQuestions={totalQuestions}
             disabled={!startable}
-            onClick={start}
-            label={
-              totalQuestions > 0
-                ? `Start · ${totalQuestions} question${
-                    totalQuestions === 1 ? "" : "s"
-                  }`
-                : "Start practice"
-            }
+            disabledReason={disabledReason}
+            onStart={start}
+            confidenceRating={sessionConfig.confidenceRating}
           />
         </div>
       </aside>
@@ -474,38 +535,101 @@ function CustomPracticePanel({
   );
 }
 
-// ─── Section wrapper ────────────────────────────────────────────────────────
+// ─────────────────────────────────────────────────────────────────────────────
+// Step 1 — Source
+// ─────────────────────────────────────────────────────────────────────────────
 
-function Section({
-  icon,
-  title,
-  subtitle,
-  children,
+function SourceStep({
+  scopeKind,
+  onScopeKindChange,
+  selectedBelt,
+  onBeltChange,
+  selectedMission,
+  onMissionChange,
+  selectedSet,
+  onSetChange,
+  rangeFrom,
+  rangeTo,
+  onRangeFromChange,
+  onRangeToChange,
+  filters,
+  onFiltersChange,
+  totalScopeWords,
+  sourceSummary,
 }: {
-  icon: React.ReactNode;
-  title: string;
-  subtitle?: string;
-  children: React.ReactNode;
+  scopeKind: ScopeKind;
+  onScopeKindChange: (k: ScopeKind) => void;
+  selectedBelt: number;
+  onBeltChange: (b: number) => void;
+  selectedMission: number;
+  onMissionChange: (m: number) => void;
+  selectedSet: SetRef;
+  onSetChange: (s: SetRef) => void;
+  rangeFrom: number;
+  rangeTo: number;
+  onRangeFromChange: (n: number) => void;
+  onRangeToChange: (n: number) => void;
+  filters: Filters;
+  onFiltersChange: (f: Filters) => void;
+  totalScopeWords: number;
+  sourceSummary: string;
 }) {
   return (
-    <section className="rounded-2xl border border-border bg-card shadow-sm p-5">
-      <header className="flex items-start gap-3 mb-4">
-        <div className="w-8 h-8 rounded-lg bg-muted text-foreground/80 flex items-center justify-center shrink-0">
-          {icon}
-        </div>
-        <div>
-          <h3 className="text-sm font-extrabold text-foreground">{title}</h3>
-          {subtitle && (
-            <p className="text-xs text-muted-foreground mt-0.5">{subtitle}</p>
-          )}
-        </div>
-      </header>
-      {children}
-    </section>
+    <Section
+      step="1"
+      icon={<Layers size={16} />}
+      title="Choose Source"
+      subtitle="Where to pull words from."
+    >
+      <ScopeKindTabs value={scopeKind} onChange={onScopeKindChange} />
+
+      <div className="mt-4">
+        {scopeKind === "all" && <AllScopeSummary />}
+        {scopeKind === "belt" && (
+          <ScopeBeltSelect value={selectedBelt} onChange={onBeltChange} />
+        )}
+        {scopeKind === "mission" && (
+          <ScopeMissionSelect
+            value={selectedMission}
+            onChange={onMissionChange}
+          />
+        )}
+        {scopeKind === "set" && (
+          <ScopeSetSelect value={selectedSet} onChange={onSetChange} />
+        )}
+        {scopeKind === "range" && (
+          <ScopeRangeSelect
+            from={rangeFrom}
+            to={rangeTo}
+            onFromChange={onRangeFromChange}
+            onToChange={onRangeToChange}
+          />
+        )}
+      </div>
+
+      {/* Compact filters */}
+      <div className="mt-5 pt-4 border-t border-border">
+        <FilterChips value={filters} onChange={onFiltersChange} />
+      </div>
+
+      {/* Source summary footer */}
+      <div className="mt-4 pt-3 border-t border-border flex items-center justify-between gap-3 text-xs">
+        <span className="text-muted-foreground">
+          <span className="font-bold text-foreground">{sourceSummary}</span>
+        </span>
+        <span
+          className={`tabular-nums font-extrabold px-2 py-1 rounded-full ${
+            totalScopeWords === 0
+              ? "bg-rose-100 text-rose-700 dark:bg-rose-500/20 dark:text-rose-200"
+              : "bg-orange-100 text-orange-700 dark:bg-orange-500/20 dark:text-orange-300"
+          }`}
+        >
+          {totalScopeWords.toLocaleString()} words
+        </span>
+      </div>
+    </Section>
   );
 }
-
-// ─── Scope kind tabs ────────────────────────────────────────────────────────
 
 const SCOPE_KIND_TABS: Array<{
   id: ScopeKind;
@@ -552,266 +676,110 @@ function ScopeKindTabs({
 
 function AllScopeSummary() {
   return (
-    <p className="text-xs text-muted-foreground">
-      Every word in the deck — all 6 belts, 42 missions, {TOTAL_DAYS} days,{" "}
-      {TOTAL_DAYS * 30} words.
-    </p>
-  );
-}
-
-// ─── Belt picker (multi-select for mixed) ───────────────────────────────────
-
-function BeltPicker({
-  selected,
-  onChange,
-}: {
-  selected: number[];
-  onChange: (next: number[]) => void;
-}) {
-  const toggle = (id: number) => {
-    onChange(
-      selected.includes(id)
-        ? selected.filter((b) => b !== id)
-        : [...selected, id].sort((a, b) => a - b),
-    );
-  };
-  const allOn = selected.length === TOTAL_BELTS;
-  return (
-    <div>
-      <div className="flex items-center justify-between mb-2">
-        <span className="text-[11px] font-bold text-muted-foreground uppercase tracking-wide">
-          Pick one or more belts
-        </span>
-        <button
-          type="button"
-          onClick={() => onChange(allOn ? [] : allBelts())}
-          className="text-[11px] font-bold text-orange-600 hover:text-orange-700 dark:text-orange-400"
-        >
-          {allOn ? "Clear" : "Select all"}
-        </button>
-      </div>
-      <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
-        {allBelts().map((b) => {
-          const active = selected.includes(b);
-          return (
-            <button
-              key={b}
-              type="button"
-              onClick={() => toggle(b)}
-              className={`flex items-center gap-2 px-3 py-2 rounded-xl border text-xs font-bold transition-colors ${
-                active
-                  ? "bg-orange-50 dark:bg-orange-500/10 border-orange-300 dark:border-orange-500/40 text-orange-800 dark:text-orange-200"
-                  : "bg-card border-border text-foreground/80 hover:bg-muted"
-              }`}
-            >
-              {active ? (
-                <CheckCircle2 size={14} className="text-orange-500 shrink-0" />
-              ) : (
-                <Circle size={14} className="text-muted-foreground shrink-0" />
-              )}
-              <span className="truncate">{BELT_NAMES[b - 1]}</span>
-            </button>
-          );
-        })}
-      </div>
+    <div className="rounded-xl border border-border bg-muted/40 px-4 py-3 text-xs text-foreground/80">
+      <span className="font-bold">All {TOTAL_WORDS.toLocaleString()} words</span>{" "}
+      across {TOTAL_BELTS} belts, {TOTAL_MISSIONS} missions and {TOTAL_SETS}{" "}
+      sets. Question availability adapts to the words you have already met.
     </div>
   );
 }
 
-// ─── Mission picker (multi-select) ──────────────────────────────────────────
+// ─── Single-select scope pickers with prev/next navigators ──────────────────
 
-function MissionPicker({
-  belt,
-  onBeltChange,
-  selected,
+function ScopeBeltSelect({
+  value,
   onChange,
 }: {
-  belt: number;
-  onBeltChange: (b: number) => void;
-  selected: number[];
-  onChange: (next: number[]) => void;
+  value: number;
+  onChange: (b: number) => void;
 }) {
-  const missions = missionsForBelt(belt);
-  const toggle = (day: number) => {
-    onChange(
-      selected.includes(day)
-        ? selected.filter((d) => d !== day)
-        : [...selected, day].sort((a, b) => a - b),
-    );
+  return (
+    <NavSelect
+      label="Belt"
+      value={value}
+      min={1}
+      max={TOTAL_BELTS}
+      onChange={onChange}
+      renderOption={(b) => (
+        <option key={b} value={b}>
+          {BELT_NAMES[b - 1]}
+        </option>
+      )}
+      options={Array.from({ length: TOTAL_BELTS }, (_, i) => i + 1)}
+    />
+  );
+}
+
+function ScopeMissionSelect({
+  value,
+  onChange,
+}: {
+  value: number;
+  onChange: (m: number) => void;
+}) {
+  const allMissions = Array.from({ length: TOTAL_MISSIONS }, (_, i) => i + 1);
+  return (
+    <NavSelect
+      label="Mission"
+      value={value}
+      min={1}
+      max={TOTAL_MISSIONS}
+      onChange={onChange}
+      renderOption={(m) => (
+        <option key={m} value={m}>
+          Mission {m} · {BELT_NAMES[beltForMission(m) - 1]}
+        </option>
+      )}
+      options={allMissions}
+    />
+  );
+}
+
+function ScopeSetSelect({
+  value,
+  onChange,
+}: {
+  value: SetRef;
+  onChange: (s: SetRef) => void;
+}) {
+  const sets = setsForMission(value.day);
+  const onMissionChange = (m: number) => {
+    const first = setsForMission(m)[0];
+    onChange(first);
   };
-  const allInBeltOn = missions.every((d) => selected.includes(d));
   return (
     <div className="space-y-3">
-      <div className="flex items-center justify-between gap-2">
-        <span className="text-[11px] font-bold text-muted-foreground uppercase tracking-wide">
-          Filter by belt
-        </span>
-        <div className="flex flex-wrap gap-1">
-          {allBelts().map((b) => (
-            <button
-              key={b}
-              type="button"
-              onClick={() => onBeltChange(b)}
-              className={`px-2 py-1 rounded-lg text-[11px] font-bold transition-colors ${
-                belt === b
-                  ? "bg-orange-100 text-orange-700 dark:bg-orange-500/20 dark:text-orange-300"
-                  : "bg-muted text-muted-foreground hover:text-foreground"
-              }`}
-            >
-              {BELT_NAMES[b - 1].replace(" Belt", "")}
-            </button>
-          ))}
-        </div>
-      </div>
-      <div className="flex items-center justify-between">
-        <span className="text-[11px] font-bold text-muted-foreground uppercase tracking-wide">
-          Missions in {BELT_NAMES[belt - 1]}
-        </span>
-        <button
-          type="button"
-          onClick={() =>
-            onChange(
-              allInBeltOn
-                ? selected.filter((d) => !missions.includes(d))
-                : Array.from(new Set([...selected, ...missions])).sort(
-                    (a, b) => a - b,
-                  ),
-            )
-          }
-          className="text-[11px] font-bold text-orange-600 hover:text-orange-700 dark:text-orange-400"
-        >
-          {allInBeltOn ? "Clear belt" : "Select belt"}
-        </button>
-      </div>
-      <div className="grid grid-cols-4 sm:grid-cols-7 gap-1.5">
-        {missions.map((day) => {
-          const active = selected.includes(day);
-          return (
-            <button
-              key={day}
-              type="button"
-              onClick={() => toggle(day)}
-              className={`px-2 py-2 rounded-lg text-xs font-bold transition-colors ${
-                active
-                  ? "bg-orange-50 dark:bg-orange-500/10 border border-orange-300 dark:border-orange-500/40 text-orange-800 dark:text-orange-200"
-                  : "bg-muted/50 border border-border text-foreground/80 hover:bg-muted"
-              }`}
-            >
-              M{day}
-            </button>
-          );
-        })}
-      </div>
-      {selected.length > 0 && (
-        <p className="text-[11px] text-muted-foreground">
-          {selected.length} mission{selected.length === 1 ? "" : "s"} selected
-          {selected.length > 1 && " (mixed)"}
-        </p>
-      )}
+      <NavSelect
+        label="Mission"
+        value={value.day}
+        min={1}
+        max={TOTAL_MISSIONS}
+        onChange={onMissionChange}
+        options={Array.from({ length: TOTAL_MISSIONS }, (_, i) => i + 1)}
+        renderOption={(m) => (
+          <option key={m} value={m}>
+            Mission {m}
+          </option>
+        )}
+      />
+      <NavSelect
+        label="Set"
+        value={value.group}
+        min={sets[0]?.group ?? 1}
+        max={sets[sets.length - 1]?.group ?? 3}
+        onChange={(g) => onChange({ day: value.day, group: g })}
+        options={sets.map((s) => s.group)}
+        renderOption={(g) => (
+          <option key={g} value={g}>
+            Set {g}
+          </option>
+        )}
+      />
     </div>
   );
 }
 
-// ─── Set picker (multi-select for mixed) ────────────────────────────────────
-
-function SetPicker({
-  missionDay,
-  onMissionChange,
-  selected,
-  onChange,
-}: {
-  missionDay: number;
-  onMissionChange: (d: number) => void;
-  selected: SetRef[];
-  onChange: (next: SetRef[]) => void;
-}) {
-  const sets = setsForMission(missionDay);
-  const isSelected = (s: SetRef) =>
-    selected.some((x) => x.day === s.day && x.group === s.group);
-  const toggle = (s: SetRef) => {
-    onChange(
-      isSelected(s)
-        ? selected.filter((x) => !(x.day === s.day && x.group === s.group))
-        : [...selected, s].sort(
-            (a, b) => a.day - b.day || a.group - b.group,
-          ),
-    );
-  };
-  const beltOfMission = beltForMission(missionDay);
-  return (
-    <div className="space-y-3">
-      <div className="flex items-center justify-between gap-3">
-        <label className="text-[11px] font-bold text-muted-foreground uppercase tracking-wide">
-          Mission
-        </label>
-        <div className="flex items-center gap-2">
-          <button
-            type="button"
-            onClick={() => onMissionChange(Math.max(1, missionDay - 1))}
-            disabled={missionDay <= 1}
-            className="px-2 py-1 rounded-lg bg-muted text-foreground/80 hover:bg-muted/70 disabled:opacity-40 text-xs font-bold"
-          >
-            −
-          </button>
-          <span className="text-sm font-extrabold text-foreground min-w-[3.5rem] text-center">
-            M{missionDay}
-          </span>
-          <button
-            type="button"
-            onClick={() =>
-              onMissionChange(Math.min(TOTAL_DAYS, missionDay + 1))
-            }
-            disabled={missionDay >= TOTAL_DAYS}
-            className="px-2 py-1 rounded-lg bg-muted text-foreground/80 hover:bg-muted/70 disabled:opacity-40 text-xs font-bold"
-          >
-            +
-          </button>
-        </div>
-      </div>
-      <p className="text-[11px] text-muted-foreground -mt-1">
-        {BELT_NAMES[beltOfMission - 1]} · {sets.length} sets
-      </p>
-      <div className="grid grid-cols-3 gap-2">
-        {sets.map((s) => {
-          const active = isSelected(s);
-          return (
-            <button
-              key={`${s.day}-${s.group}`}
-              type="button"
-              onClick={() => toggle(s)}
-              className={`px-3 py-2 rounded-xl border text-xs font-bold transition-colors ${
-                active
-                  ? "bg-orange-50 dark:bg-orange-500/10 border-orange-300 dark:border-orange-500/40 text-orange-800 dark:text-orange-200"
-                  : "bg-card border-border text-foreground/80 hover:bg-muted"
-              }`}
-            >
-              Set {s.group}
-            </button>
-          );
-        })}
-      </div>
-      {selected.length > 0 && (
-        <div className="flex items-start justify-between gap-2 pt-1">
-          <p className="text-[11px] text-muted-foreground">
-            {selected.length} set{selected.length === 1 ? "" : "s"} selected
-            {selected.length > 1 && " (mixed)"}
-          </p>
-          <button
-            type="button"
-            onClick={() => onChange([])}
-            className="text-[11px] font-bold text-orange-600 hover:text-orange-700 dark:text-orange-400"
-          >
-            Clear all
-          </button>
-        </div>
-      )}
-    </div>
-  );
-}
-
-// ─── Range picker ───────────────────────────────────────────────────────────
-
-function RangePicker({
+function ScopeRangeSelect({
   from,
   to,
   onFromChange,
@@ -822,55 +790,87 @@ function RangePicker({
   onFromChange: (n: number) => void;
   onToChange: (n: number) => void;
 }) {
-  const clamp = (n: number) => Math.max(1, Math.min(TOTAL_DAYS, n));
-  const lo = Math.min(from, to);
-  const hi = Math.max(from, to);
+  const clamp = (n: number) => Math.max(1, Math.min(TOTAL_MISSIONS, n));
   return (
-    <div className="space-y-3">
-      <div className="grid grid-cols-2 gap-3">
-        <NumberField
-          label="From mission"
-          value={from}
-          min={1}
-          max={TOTAL_DAYS}
-          onChange={(n) => onFromChange(clamp(n))}
-        />
-        <NumberField
-          label="To mission"
-          value={to}
-          min={1}
-          max={TOTAL_DAYS}
-          onChange={(n) => onToChange(clamp(n))}
-        />
-      </div>
-      <div className="flex flex-wrap gap-1.5">
-        {[
-          { label: "M1–M7 (White)", from: 1, to: 7 },
-          { label: "M8–M14 (Yellow)", from: 8, to: 14 },
-          { label: "M15–M21 (Green)", from: 15, to: 21 },
-          { label: "M22–M28 (Blue)", from: 22, to: 28 },
-          { label: "M29–M35 (Purple)", from: 29, to: 35 },
-          { label: "M36–M42 (Black)", from: 36, to: 42 },
-          { label: "All M1–M42", from: 1, to: TOTAL_DAYS },
-        ].map((preset) => (
-          <button
-            key={preset.label}
-            type="button"
-            onClick={() => {
-              onFromChange(preset.from);
-              onToChange(preset.to);
-            }}
-            className="px-2.5 py-1 rounded-lg bg-muted text-[11px] font-bold text-muted-foreground hover:text-foreground hover:bg-muted/70"
-          >
-            {preset.label}
-          </button>
-        ))}
-      </div>
-      <p className="text-[11px] text-muted-foreground">
-        Active range: missions {lo}–{hi} ({hi - lo + 1} mission
-        {hi - lo === 0 ? "" : "s"})
-      </p>
+    <div className="grid grid-cols-2 gap-3">
+      <NumberField
+        label="From mission"
+        value={from}
+        min={1}
+        max={to}
+        onChange={(n) => onFromChange(clamp(Math.min(n, to)))}
+      />
+      <NumberField
+        label="To mission"
+        value={to}
+        min={from}
+        max={TOTAL_MISSIONS}
+        onChange={(n) => onToChange(clamp(Math.max(n, from)))}
+      />
     </div>
+  );
+}
+
+function NavSelect<T extends number>({
+  label,
+  value,
+  min,
+  max,
+  options,
+  onChange,
+  renderOption,
+}: {
+  label: string;
+  value: T;
+  min: number;
+  max: number;
+  options: T[];
+  onChange: (v: T) => void;
+  renderOption: (v: T) => React.ReactNode;
+}) {
+  const idx = options.indexOf(value);
+  const prev = () => {
+    if (idx > 0) onChange(options[idx - 1]);
+  };
+  const next = () => {
+    if (idx >= 0 && idx < options.length - 1) onChange(options[idx + 1]);
+  };
+  return (
+    <label className="block">
+      <span className="text-[11px] font-bold text-muted-foreground uppercase tracking-wide">
+        {label}
+      </span>
+      <div className="mt-1 flex items-stretch gap-1.5">
+        <button
+          type="button"
+          onClick={prev}
+          disabled={idx <= 0}
+          className="px-2.5 rounded-xl bg-muted text-foreground/80 border border-border hover:bg-muted/70 disabled:opacity-40 disabled:cursor-not-allowed"
+          aria-label={`Previous ${label.toLowerCase()}`}
+        >
+          <ChevronLeft size={14} />
+        </button>
+        <select
+          value={value}
+          onChange={(e) => onChange(Number(e.target.value) as T)}
+          className="flex-1 min-w-0 px-3 py-2 rounded-xl bg-card border border-border text-sm font-bold text-foreground focus:outline-none focus:ring-2 focus:ring-orange-300/40"
+        >
+          {options.map(renderOption)}
+        </select>
+        <button
+          type="button"
+          onClick={next}
+          disabled={idx < 0 || idx >= options.length - 1}
+          className="px-2.5 rounded-xl bg-muted text-foreground/80 border border-border hover:bg-muted/70 disabled:opacity-40 disabled:cursor-not-allowed"
+          aria-label={`Next ${label.toLowerCase()}`}
+        >
+          <ChevronRight size={14} />
+        </button>
+      </div>
+      <span className="sr-only">
+        Range {min}–{max}
+      </span>
+    </label>
   );
 }
 
@@ -898,102 +898,486 @@ function NumberField({
         max={max}
         value={value}
         onChange={(e) => {
-          const n = Number(e.target.value);
-          if (!Number.isFinite(n)) return;
-          onChange(n);
+          const n = parseInt(e.target.value, 10);
+          if (!Number.isNaN(n)) onChange(n);
         }}
-        className="mt-1 w-full px-3 py-2 rounded-xl border border-border bg-background text-sm font-bold text-foreground focus:outline-none focus:ring-2 focus:ring-orange-300 dark:focus:ring-orange-500/40"
+        className="mt-1 w-full px-3 py-2 rounded-xl bg-card border border-border text-sm font-bold text-foreground focus:outline-none focus:ring-2 focus:ring-orange-300/40"
       />
     </label>
   );
 }
 
-// ─── Filter toggles ─────────────────────────────────────────────────────────
+// ─── Filter chips (compact, inline in Source) ───────────────────────────────
 
-const FILTER_OPTIONS: Array<{
-  id: keyof Filters;
+const FILTER_CHIPS: Array<{
+  key: keyof Filters;
   label: string;
-  description: string;
+  hint: string;
 }> = [
+  { key: "newOnly", label: "New", hint: "Words you have not learned yet." },
   {
-    id: "newOnly",
-    label: "New words only",
-    description: "Words you haven't started yet.",
+    key: "mistakeOnly",
+    label: "Mistakes",
+    hint: "Words you have answered wrong before.",
   },
   {
-    id: "mistakeOnly",
-    label: "Mistake words only",
-    description: "Words you've answered incorrectly at least once.",
+    key: "difficultOnly",
+    label: "Difficult",
+    hint: "Words you marked difficult.",
   },
-  {
-    id: "difficultOnly",
-    label: "Difficult words only",
-    description: "High difficulty score or repeat misses.",
-  },
-  {
-    id: "dueOnly",
-    label: "Due for review only",
-    description: "Currently scheduled by spaced repetition.",
-  },
+  { key: "dueOnly", label: "Due for review", hint: "Spaced-repetition due now." },
 ];
 
-function FilterToggles({
+function FilterChips({
   value,
   onChange,
 }: {
   value: Filters;
-  onChange: (next: Filters) => void;
+  onChange: (f: Filters) => void;
 }) {
+  const toggle = (k: keyof Filters) => {
+    onChange({ ...value, [k]: !value[k] });
+  };
+  const anyOn = FILTER_CHIPS.some((c) => Boolean(value[c.key]));
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-      {FILTER_OPTIONS.map((opt) => {
-        const active = Boolean(value[opt.id]);
-        return (
+    <div>
+      <div className="flex items-center justify-between gap-2 mb-2">
+        <span className="inline-flex items-center gap-1.5 text-[11px] font-bold text-muted-foreground uppercase tracking-wide">
+          <FilterIcon size={12} />
+          Filters
+        </span>
+        {anyOn && (
           <button
-            key={opt.id}
             type="button"
-            onClick={() => onChange({ ...value, [opt.id]: !active })}
-            className={`flex items-start gap-3 px-3 py-2.5 rounded-xl border text-left transition-colors ${
-              active
-                ? "bg-orange-50 dark:bg-orange-500/10 border-orange-300 dark:border-orange-500/40"
-                : "bg-card border-border hover:bg-muted"
-            }`}
+            onClick={() => onChange({})}
+            className="text-[11px] font-bold text-orange-600 hover:text-orange-700 dark:text-orange-400"
           >
-            {active ? (
-              <CheckCircle2
-                size={16}
-                className="text-orange-500 mt-0.5 shrink-0"
-              />
-            ) : (
-              <Circle
-                size={16}
-                className="text-muted-foreground mt-0.5 shrink-0"
-              />
-            )}
-            <div className="min-w-0">
-              <div
-                className={`text-xs font-extrabold ${
-                  active
-                    ? "text-orange-800 dark:text-orange-200"
-                    : "text-foreground"
-                }`}
-              >
-                {opt.label}
-              </div>
-              <div className="text-[11px] text-muted-foreground mt-0.5 leading-relaxed">
-                {opt.description}
-              </div>
-            </div>
+            Clear filters
           </button>
-        );
-      })}
+        )}
+      </div>
+      <div className="flex flex-wrap gap-1.5">
+        {FILTER_CHIPS.map((c) => {
+          const active = Boolean(value[c.key]);
+          return (
+            <button
+              key={c.key}
+              type="button"
+              onClick={() => toggle(c.key)}
+              title={c.hint}
+              className={`inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-full text-[11px] font-bold border transition-colors ${
+                active
+                  ? "bg-orange-50 dark:bg-orange-500/10 text-orange-800 dark:text-orange-200 border-orange-300 dark:border-orange-500/40"
+                  : "bg-muted/60 text-muted-foreground border-transparent hover:text-foreground"
+              }`}
+            >
+              {active ? <CheckCircle2 size={11} /> : <Circle size={11} />}
+              {c.label}
+            </button>
+          );
+        })}
+      </div>
     </div>
   );
 }
 
-// ─── Toggle row ─────────────────────────────────────────────────────────────
+// ─────────────────────────────────────────────────────────────────────────────
+// Step 2 — Question Mix
+// ─────────────────────────────────────────────────────────────────────────────
 
-function ToggleRow({
+const GROUP_META: Record<
+  TestQuestionGroup,
+  { letter: string; label: string; tone: string }
+> = {
+  MCQ: {
+    letter: "A",
+    label: "Multiple Choice",
+    tone: "from-violet-500 to-fuchsia-500",
+  },
+  "Fill in the Blank": {
+    letter: "B",
+    label: "Written Recall",
+    tone: "from-orange-500 to-pink-500",
+  },
+  "Synonym Pairing": {
+    letter: "C",
+    label: "Select All",
+    tone: "from-cyan-500 to-blue-500",
+  },
+  "True / False": {
+    letter: "D",
+    label: "True / False",
+    tone: "from-emerald-500 to-teal-500",
+  },
+};
+
+const TYPE_ICONS: Record<TestQuestionType, React.ReactNode> = {
+  "word-to-def": <ListChecks size={12} />,
+  "def-to-word": <ListChecks size={12} />,
+  "synonym-mcq": <Sparkles size={12} />,
+  "antonym-mcq": <Sparkles size={12} />,
+  "fill-blank": <Hash size={12} />,
+  "synonym-pair": <Boxes size={12} />,
+  "tf-definition": <CheckCircle2 size={12} />,
+  "tf-synonym": <CheckCircle2 size={12} />,
+  "tf-antonym": <CheckCircle2 size={12} />,
+};
+
+function QuestionMixStep({
+  availability,
+  totalScopeWords,
+  counts,
+  onCountsChange,
+  onApplyPreset,
+  onApplyAllAvailable,
+  onClearAll,
+  totalAvailable,
+  totalQuestions,
+}: {
+  availability: AvailabilityByType;
+  totalScopeWords: number;
+  counts: CountsByType;
+  onCountsChange: (c: CountsByType) => void;
+  onApplyPreset: (p: MixPreset) => void;
+  onApplyAllAvailable: () => void;
+  onClearAll: () => void;
+  totalAvailable: number;
+  totalQuestions: number;
+}) {
+  const setCount = (t: TestQuestionType, n: number) => {
+    const have = availability[t];
+    const next: CountsByType = { ...counts };
+    const clamped = Math.max(0, Math.min(have, Math.floor(n)));
+    if (clamped === 0) {
+      delete next[t];
+    } else {
+      next[t] = clamped;
+    }
+    onCountsChange(next);
+  };
+
+  const sourceEmpty = totalScopeWords === 0;
+
+  return (
+    <Section
+      step="2"
+      icon={<ListChecks size={16} />}
+      title="Choose Question Mix"
+      subtitle="Pick how many of each type to include. Each row caps at the live availability."
+    >
+      {/* Presets */}
+      <div className="flex flex-wrap items-center gap-1.5">
+        <span className="inline-flex items-center gap-1.5 text-[11px] font-bold text-muted-foreground uppercase tracking-wide mr-1">
+          <Wand2 size={12} />
+          Presets
+        </span>
+        {MIX_PRESETS.map((p) => (
+          <PresetButton
+            key={p.id}
+            label={p.label}
+            disabled={sourceEmpty}
+            title={p.description}
+            onClick={() => onApplyPreset(p)}
+          />
+        ))}
+        <PresetButton
+          label="All Available"
+          disabled={sourceEmpty || totalAvailable === 0}
+          title={`Add every available question (${totalAvailable.toLocaleString()})`}
+          onClick={onApplyAllAvailable}
+        />
+        <PresetButton
+          label="Clear All"
+          variant="ghost"
+          disabled={totalQuestions === 0}
+          onClick={onClearAll}
+        />
+      </div>
+
+      {/* Empty state when no words selected */}
+      {sourceEmpty ? (
+        <div className="mt-4 rounded-xl border border-dashed border-border bg-muted/30 px-4 py-6 text-center">
+          <p className="text-xs text-muted-foreground">
+            Pick a source above to see which question types are available.
+          </p>
+        </div>
+      ) : (
+        <div className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-3">
+          {TEST_QUESTION_GROUP_ORDER.map((group) => (
+            <MixGroup
+              key={group}
+              group={group}
+              counts={counts}
+              availability={availability}
+              onSetCount={setCount}
+            />
+          ))}
+        </div>
+      )}
+    </Section>
+  );
+}
+
+function PresetButton({
+  label,
+  onClick,
+  disabled,
+  variant,
+  title,
+}: {
+  label: string;
+  onClick: () => void;
+  disabled?: boolean;
+  variant?: "ghost";
+  title?: string;
+}) {
+  const base =
+    "inline-flex items-center gap-1 px-3 py-1.5 rounded-xl text-[11px] font-bold transition-colors disabled:opacity-40 disabled:cursor-not-allowed";
+  const cls =
+    variant === "ghost"
+      ? `${base} bg-transparent text-muted-foreground hover:text-foreground hover:bg-muted/60`
+      : `${base} bg-orange-50 text-orange-700 border border-orange-200 hover:bg-orange-100 dark:bg-orange-500/10 dark:text-orange-200 dark:border-orange-500/30`;
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      disabled={disabled}
+      title={title}
+      className={cls}
+    >
+      {label}
+    </button>
+  );
+}
+
+function MixGroup({
+  group,
+  counts,
+  availability,
+  onSetCount,
+}: {
+  group: TestQuestionGroup;
+  counts: CountsByType;
+  availability: AvailabilityByType;
+  onSetCount: (t: TestQuestionType, n: number) => void;
+}) {
+  const meta = GROUP_META[group];
+  const types = questionTypesByGroup()[group];
+  const groupTotal = types.reduce((sum, t) => sum + (counts[t] ?? 0), 0);
+
+  return (
+    <div className="rounded-2xl border border-border bg-muted/20 p-3 space-y-2">
+      <div className="flex items-center justify-between gap-2 px-1">
+        <div className="flex items-center gap-2 min-w-0">
+          <span
+            className={`inline-flex items-center justify-center w-5 h-5 rounded-md bg-gradient-to-br ${meta.tone} text-white text-[10px] font-extrabold shrink-0`}
+          >
+            {meta.letter}
+          </span>
+          <h4 className="text-xs font-extrabold text-foreground truncate">
+            {meta.label}
+          </h4>
+        </div>
+        <span className="text-[10px] tabular-nums font-bold text-muted-foreground">
+          {groupTotal} picked
+        </span>
+      </div>
+      <div className="space-y-1.5">
+        {types.map((t) => (
+          <MixRow
+            key={t}
+            type={t}
+            count={counts[t] ?? 0}
+            available={availability[t]}
+            onChange={(n) => onSetCount(t, n)}
+          />
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function MixRow({
+  type,
+  count,
+  available,
+  onChange,
+}: {
+  type: TestQuestionType;
+  count: number;
+  available: number;
+  onChange: (n: number) => void;
+}) {
+  const meta = TEST_QUESTION_TYPE_META[type];
+  const disabled = available === 0;
+  return (
+    <div
+      className={`rounded-xl border bg-card px-2.5 py-2 flex items-center gap-2.5 ${
+        disabled ? "opacity-60 border-dashed" : "border-border"
+      }`}
+    >
+      <span
+        className="w-6 h-6 rounded-md bg-muted text-foreground/80 flex items-center justify-center shrink-0"
+        title={meta.description}
+      >
+        {TYPE_ICONS[type]}
+      </span>
+      <div className="min-w-0 flex-1">
+        <div className="flex items-center gap-1.5">
+          <span className="text-[12px] font-extrabold text-foreground truncate">
+            {meta.short}
+          </span>
+          <span
+            className={`text-[10px] tabular-nums font-bold px-1.5 py-0.5 rounded-full ${
+              disabled
+                ? "bg-muted text-muted-foreground"
+                : "bg-emerald-100 text-emerald-700 dark:bg-emerald-500/20 dark:text-emerald-300"
+            }`}
+            title="Maximum available for current source"
+          >
+            {available} avail
+          </span>
+        </div>
+        <p className="text-[10.5px] text-muted-foreground leading-snug truncate">
+          {disabled ? "No questions available for this source." : meta.description}
+        </p>
+      </div>
+      <CountStepper
+        value={count}
+        max={available}
+        disabled={disabled}
+        onChange={onChange}
+      />
+    </div>
+  );
+}
+
+function CountStepper({
+  value,
+  max,
+  disabled,
+  onChange,
+}: {
+  value: number;
+  max: number;
+  disabled?: boolean;
+  onChange: (n: number) => void;
+}) {
+  const dec = () => onChange(Math.max(0, value - 1));
+  const inc = () => onChange(Math.min(max, value + 1));
+  const setMax = () => onChange(max);
+  return (
+    <div className="flex items-center gap-1 shrink-0">
+      <button
+        type="button"
+        onClick={dec}
+        disabled={disabled || value <= 0}
+        className="w-7 h-7 rounded-lg bg-muted text-foreground/80 border border-border hover:bg-muted/70 disabled:opacity-30 disabled:cursor-not-allowed flex items-center justify-center"
+        aria-label="Decrease count"
+      >
+        <Minus size={12} />
+      </button>
+      <input
+        type="number"
+        min={0}
+        max={max}
+        value={value}
+        disabled={disabled}
+        onChange={(e) => {
+          const n = parseInt(e.target.value, 10);
+          if (Number.isNaN(n)) return;
+          onChange(Math.max(0, Math.min(max, n)));
+        }}
+        className="w-10 text-center text-xs font-extrabold tabular-nums px-1 py-1 rounded-lg bg-card border border-border focus:outline-none focus:ring-2 focus:ring-orange-300/40 disabled:opacity-50"
+      />
+      <button
+        type="button"
+        onClick={inc}
+        disabled={disabled || value >= max}
+        className="w-7 h-7 rounded-lg bg-muted text-foreground/80 border border-border hover:bg-muted/70 disabled:opacity-30 disabled:cursor-not-allowed flex items-center justify-center"
+        aria-label="Increase count"
+      >
+        <Plus size={12} />
+      </button>
+      <button
+        type="button"
+        onClick={setMax}
+        disabled={disabled || value === max}
+        className="text-[10px] font-extrabold px-1.5 py-1 rounded-md text-orange-600 hover:bg-orange-50 dark:text-orange-300 dark:hover:bg-orange-500/10 disabled:opacity-30 disabled:cursor-not-allowed"
+        title="Set to max available"
+      >
+        Max
+      </button>
+    </div>
+  );
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Final Options — compact 4-toggle row, visually merged with Question Mix
+// ─────────────────────────────────────────────────────────────────────────────
+
+function FinalOptionsCard({
+  config,
+  onChange,
+}: {
+  config: SessionConfig;
+  onChange: (c: SessionConfig) => void;
+}) {
+  const set = <K extends keyof SessionConfig>(
+    key: K,
+    value: SessionConfig[K],
+  ) => onChange({ ...config, [key]: value });
+
+  return (
+    <section className="rounded-2xl border border-border bg-card shadow-sm p-5">
+      <header className="flex items-center justify-between gap-2 mb-3">
+        <div className="inline-flex items-center gap-2">
+          <span className="w-7 h-7 rounded-lg bg-muted text-foreground/80 flex items-center justify-center">
+            <Gauge size={14} />
+          </span>
+          <h3 className="text-sm font-extrabold text-foreground">
+            Final Options
+          </h3>
+        </div>
+        <span className="text-[11px] text-muted-foreground">
+          Tweak how this session feels.
+        </span>
+      </header>
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-2.5">
+        <OptionToggle
+          icon={<Shuffle size={14} />}
+          label="Shuffle"
+          description="Mix question order across types."
+          value={config.shuffle}
+          onChange={(v) => set("shuffle", v)}
+        />
+        <OptionToggle
+          icon={<Hourglass size={14} />}
+          label="Show Timer"
+          description="Display elapsed time in the header."
+          value={config.showTimer}
+          onChange={(v) => set("showTimer", v)}
+        />
+        <OptionToggle
+          icon={<Lightbulb size={14} />}
+          label="Hints"
+          description="Allow the in-question Hint button."
+          value={config.showHints}
+          onChange={(v) => set("showHints", v)}
+        />
+        <OptionToggle
+          icon={<Hash size={14} />}
+          label="Confidence"
+          description="Ask for confidence after each answer."
+          value={config.confidenceRating}
+          onChange={(v) => set("confidenceRating", v)}
+        />
+      </div>
+    </section>
+  );
+}
+
+function OptionToggle({
   icon,
   label,
   description,
@@ -1010,458 +1394,115 @@ function ToggleRow({
     <button
       type="button"
       onClick={() => onChange(!value)}
-      className={`flex items-start gap-3 px-3 py-2.5 rounded-xl border text-left transition-colors ${
+      aria-pressed={value}
+      className={`text-left rounded-xl border p-3 transition-colors ${
         value
           ? "bg-orange-50 dark:bg-orange-500/10 border-orange-300 dark:border-orange-500/40"
-          : "bg-card border-border hover:bg-muted"
+          : "bg-muted/40 border-border hover:bg-muted/60"
       }`}
     >
-      <span
-        className={`w-7 h-7 rounded-lg flex items-center justify-center shrink-0 ${
-          value
-            ? "bg-orange-500 text-white"
-            : "bg-muted text-muted-foreground"
-        }`}
-      >
-        {icon}
-      </span>
-      <div className="min-w-0 flex-1">
-        <div
-          className={`text-xs font-extrabold ${
+      <div className="flex items-center justify-between gap-2">
+        <span
+          className={`inline-flex items-center gap-1.5 text-xs font-extrabold ${
             value
               ? "text-orange-800 dark:text-orange-200"
-              : "text-foreground"
+              : "text-foreground/80"
           }`}
         >
+          <span
+            className={`w-6 h-6 rounded-md flex items-center justify-center ${
+              value
+                ? "bg-orange-200/80 text-orange-900 dark:bg-orange-500/30 dark:text-orange-100"
+                : "bg-card text-foreground/60 border border-border"
+            }`}
+          >
+            {icon}
+          </span>
           {label}
-        </div>
-        <div className="text-[11px] text-muted-foreground mt-0.5">
-          {description}
-        </div>
-      </div>
-      <span
-        className={`mt-0.5 inline-flex h-5 w-9 items-center rounded-full transition-colors shrink-0 ${
-          value ? "bg-orange-500" : "bg-muted"
-        }`}
-        aria-hidden
-      >
+        </span>
         <span
-          className={`inline-block h-4 w-4 transform rounded-full bg-white shadow transition-transform ${
-            value ? "translate-x-4" : "translate-x-1"
+          className={`relative inline-flex h-5 w-9 rounded-full transition-colors ${
+            value ? "bg-orange-500" : "bg-muted-foreground/30"
           }`}
-        />
-      </span>
+        >
+          <span
+            className={`absolute top-0.5 left-0.5 h-4 w-4 rounded-full bg-white shadow transition-transform ${
+              value ? "translate-x-4" : "translate-x-0"
+            }`}
+          />
+        </span>
+      </div>
+      <p className="text-[11px] text-muted-foreground mt-1.5 leading-snug">
+        {description}
+      </p>
     </button>
   );
 }
 
-// ─── Question type counts ───────────────────────────────────────────────────
+// ─────────────────────────────────────────────────────────────────────────────
+// Right sidebar cards
+// ─────────────────────────────────────────────────────────────────────────────
 
-const GROUP_SUBTITLES: Record<TestQuestionGroup, string> = {
-  MCQ: "Multiple choice — pick the right answer.",
-  "Fill in the Blank": "Type the missing word.",
-  "Synonym Pairing": "Pick every word that matches.",
-  "True / False": "Decide whether a statement holds.",
-};
-
-function QuestionTypeCounts({
-  availability,
+function SessionSummaryCard({
+  sourceSummary,
+  totalScopeWords,
   counts,
-  onCountsChange,
-  enabledTypes,
-  onEnabledChange,
-  totalScopeWords,
+  totalQuestions,
+  shuffle,
 }: {
-  availability: AvailabilityByType;
+  sourceSummary: string;
+  totalScopeWords: number;
   counts: CountsByType;
-  onCountsChange: (next: CountsByType) => void;
-  enabledTypes: Set<TestQuestionType>;
-  onEnabledChange: (next: Set<TestQuestionType>) => void;
-  totalScopeWords: number;
+  totalQuestions: number;
+  shuffle: boolean;
 }) {
-  const groups = useMemo(() => questionTypesByGroup(), []);
-
-  const setCount = (t: TestQuestionType, n: number) => {
-    const max = availability[t];
-    const clamped = Math.max(0, Math.min(Math.floor(n), max));
-    onCountsChange({ ...counts, [t]: clamped });
-  };
-  const toggleType = (t: TestQuestionType) => {
-    const next = new Set(enabledTypes);
-    if (next.has(t)) next.delete(t);
-    else next.add(t);
-    onEnabledChange(next);
-  };
-
-  const fillSuggested = () => {
-    const next: CountsByType = {};
-    for (const t of ALL_TEST_QUESTION_TYPES) {
-      if (!enabledTypes.has(t)) continue;
-      const meta = TEST_QUESTION_TYPE_META[t];
-      const suggested = Math.min(meta.perWord * totalScopeWords, availability[t]);
-      next[t] = Math.max(0, Math.min(suggested, availability[t]));
-    }
-    onCountsChange(next);
-  };
-
-  const fillMaxAll = () => {
-    const next: CountsByType = {};
-    for (const t of ALL_TEST_QUESTION_TYPES) {
-      if (!enabledTypes.has(t)) continue;
-      next[t] = availability[t];
-    }
-    onCountsChange(next);
-  };
-
-  const clearAll = () => onCountsChange({});
-
-  return (
-    <div className="space-y-4">
-      <div className="flex flex-wrap items-center justify-between gap-2 -mt-1">
-        <p className="text-[11px] text-muted-foreground">
-          {totalScopeWords > 0
-            ? `${totalScopeWords.toLocaleString()} word${totalScopeWords === 1 ? "" : "s"} in scope.`
-            : "No words in scope yet — pick a source above."}
-        </p>
-        <div className="flex flex-wrap items-center gap-1.5">
-          <button
-            type="button"
-            onClick={fillSuggested}
-            disabled={totalScopeWords === 0}
-            className="text-[11px] font-bold px-2.5 py-1 rounded-lg bg-muted hover:bg-muted/70 text-foreground/80 disabled:opacity-40 disabled:cursor-not-allowed"
-          >
-            Suggested
-          </button>
-          <button
-            type="button"
-            onClick={fillMaxAll}
-            disabled={totalScopeWords === 0}
-            className="text-[11px] font-bold px-2.5 py-1 rounded-lg bg-muted hover:bg-muted/70 text-foreground/80 disabled:opacity-40 disabled:cursor-not-allowed"
-          >
-            All available
-          </button>
-          <button
-            type="button"
-            onClick={clearAll}
-            className="text-[11px] font-bold px-2.5 py-1 rounded-lg bg-muted hover:bg-muted/70 text-foreground/80"
-          >
-            Clear
-          </button>
-        </div>
-      </div>
-
-      {TEST_QUESTION_GROUP_ORDER.map((group) => (
-        <div key={group}>
-          <div className="flex items-baseline justify-between mb-2">
-            <h4 className="text-[11px] font-extrabold uppercase tracking-wider text-foreground/80">
-              {group}
-            </h4>
-            <p className="text-[11px] text-muted-foreground">
-              {GROUP_SUBTITLES[group]}
-            </p>
-          </div>
-          <div className="space-y-2">
-            {groups[group].map((t) => (
-              <QuestionTypeRow
-                key={t}
-                type={t}
-                enabled={enabledTypes.has(t)}
-                count={counts[t] ?? 0}
-                available={availability[t]}
-                onToggle={() => toggleType(t)}
-                onCountChange={(n) => setCount(t, n)}
-              />
-            ))}
-          </div>
-        </div>
-      ))}
-    </div>
-  );
-}
-
-function QuestionTypeRow({
-  type,
-  enabled,
-  count,
-  available,
-  onToggle,
-  onCountChange,
-}: {
-  type: TestQuestionType;
-  enabled: boolean;
-  count: number;
-  available: number;
-  onToggle: () => void;
-  onCountChange: (n: number) => void;
-}) {
-  const meta = TEST_QUESTION_TYPE_META[type];
-  const unavailable = available === 0;
-  const dim = !enabled || unavailable;
-  return (
-    <div
-      className={`flex items-center gap-3 px-3 py-2.5 rounded-xl border transition-colors ${
-        enabled && !unavailable
-          ? "bg-orange-50 dark:bg-orange-500/10 border-orange-300 dark:border-orange-500/40"
-          : "bg-card border-border"
-      }`}
-    >
-      <button
-        type="button"
-        onClick={onToggle}
-        disabled={unavailable}
-        className="shrink-0"
-        aria-label={`Toggle ${meta.label}`}
-      >
-        {enabled && !unavailable ? (
-          <CheckCircle2 size={18} className="text-orange-500" />
-        ) : (
-          <Circle size={18} className="text-muted-foreground" />
-        )}
-      </button>
-      <div className="min-w-0 flex-1">
-        <div className="flex items-center gap-2">
-          <div
-            className={`text-xs font-extrabold ${
-              dim ? "text-foreground/60" : "text-foreground"
-            }`}
-          >
-            {meta.label}
-          </div>
-          {meta.conditional && (
-            <span className="text-[10px] font-bold uppercase tracking-wide text-muted-foreground">
-              optional
-            </span>
-          )}
-        </div>
-        <div
-          className={`text-[11px] mt-0.5 ${
-            dim ? "text-muted-foreground/70" : "text-muted-foreground"
-          }`}
-        >
-          {meta.description}
-        </div>
-      </div>
-      <div className="shrink-0 flex items-center gap-2">
-        <CountStepper
-          value={count}
-          max={available}
-          disabled={!enabled || unavailable}
-          onChange={onCountChange}
-        />
-        <span
-          className={`text-[10px] font-bold tabular-nums tracking-wide whitespace-nowrap ${
-            unavailable ? "text-muted-foreground/70" : "text-muted-foreground"
-          }`}
-        >
-          {unavailable ? "n/a" : `/ ${available}`}
-        </span>
-      </div>
-    </div>
-  );
-}
-
-function CountStepper({
-  value,
-  max,
-  disabled,
-  onChange,
-}: {
-  value: number;
-  max: number;
-  disabled?: boolean;
-  onChange: (n: number) => void;
-}) {
-  const safeMax = Math.max(0, Math.floor(max));
-  const dec = () => onChange(Math.max(0, value - 1));
-  const inc = () => onChange(Math.min(safeMax, value + 1));
-  return (
-    <div
-      className={`inline-flex items-center rounded-lg border ${
-        disabled
-          ? "border-border bg-muted/40 opacity-60"
-          : "border-border bg-background"
-      }`}
-    >
-      <button
-        type="button"
-        onClick={dec}
-        disabled={disabled || value === 0}
-        className="w-7 h-7 grid place-items-center text-foreground/70 hover:text-foreground disabled:opacity-40 disabled:cursor-not-allowed"
-        aria-label="Decrease"
-      >
-        <Minus size={12} />
-      </button>
-      <input
-        type="number"
-        min={0}
-        max={safeMax}
-        value={value}
-        disabled={disabled}
-        onChange={(e) => {
-          const n = Number(e.target.value);
-          if (!Number.isFinite(n)) return;
-          onChange(Math.max(0, Math.min(safeMax, Math.floor(n))));
-        }}
-        className="w-12 text-center text-xs font-extrabold tabular-nums bg-transparent text-foreground focus:outline-none disabled:cursor-not-allowed"
-      />
-      <button
-        type="button"
-        onClick={inc}
-        disabled={disabled || value >= safeMax}
-        className="w-7 h-7 grid place-items-center text-foreground/70 hover:text-foreground disabled:opacity-40 disabled:cursor-not-allowed"
-        aria-label="Increase"
-      >
-        <Plus size={12} />
-      </button>
-    </div>
-  );
-}
-
-// ─── Availability panel ────────────────────────────────────────────────────
-
-function AvailabilityPanel({
-  availability,
-  totalScopeWords,
-}: {
-  availability: AvailabilityByType;
-  totalScopeWords: number;
-}) {
-  const grandTotal = ALL_TEST_QUESTION_TYPES.reduce(
-    (sum, t) => sum + availability[t],
-    0,
-  );
+  const picked = ALL_TEST_QUESTION_TYPES.filter((t) => (counts[t] ?? 0) > 0);
   return (
     <section className="rounded-2xl border border-border bg-card shadow-sm p-5">
-      <div className="flex items-center gap-2 mb-3">
-        <ListChecks size={16} className="text-orange-500" />
-        <h3 className="text-sm font-extrabold text-foreground">
-          Available questions
-        </h3>
-      </div>
-      {totalScopeWords === 0 ? (
-        <p className="text-xs text-muted-foreground">
-          Pick a source to see how many questions of each type can be generated.
-        </p>
-      ) : (
-        <>
-          <p className="text-[11px] text-muted-foreground mb-3">
-            From {totalScopeWords.toLocaleString()} word
-            {totalScopeWords === 1 ? "" : "s"} ·{" "}
-            <span className="font-extrabold text-foreground">
-              {grandTotal.toLocaleString()}
-            </span>{" "}
-            possible questions.
+      <h3 className="text-xs font-extrabold text-foreground uppercase tracking-wider mb-3">
+        Session Summary
+      </h3>
+      <dl className="space-y-2 text-xs">
+        <SummaryRow label="Source" value={sourceSummary} strong />
+        <SummaryRow
+          label="Words in scope"
+          value={totalScopeWords.toLocaleString()}
+        />
+        <SummaryRow
+          label="Total questions"
+          value={totalQuestions.toLocaleString()}
+          strong
+        />
+        <SummaryRow label="Order" value={shuffle ? "Shuffled" : "In sequence"} />
+      </dl>
+      {picked.length > 0 && (
+        <div className="mt-3 pt-3 border-t border-border">
+          <p className="text-[11px] font-bold text-muted-foreground uppercase tracking-wider mb-2">
+            Selected mix
           </p>
-          <ul className="space-y-1">
-            {ALL_TEST_QUESTION_TYPES.map((t) => {
+          <ul className="space-y-1.5">
+            {picked.map((t) => {
               const meta = TEST_QUESTION_TYPE_META[t];
-              const v = availability[t];
               return (
                 <li
                   key={t}
-                  className="flex items-center justify-between text-[11px]"
+                  className="flex items-center justify-between gap-2 text-xs"
                 >
-                  <span
-                    className={`truncate ${
-                      v === 0 ? "text-muted-foreground/70" : "text-foreground/80 font-medium"
-                    }`}
-                  >
-                    {meta.short}
+                  <span className="inline-flex items-center gap-1.5 min-w-0">
+                    <span className="text-muted-foreground/80 shrink-0">
+                      {TYPE_ICONS[t]}
+                    </span>
+                    <span className="truncate font-bold text-foreground/80">
+                      {meta.short}
+                    </span>
                   </span>
-                  <span
-                    className={`tabular-nums font-extrabold shrink-0 ml-2 ${
-                      v === 0 ? "text-muted-foreground/70" : "text-foreground"
-                    }`}
-                  >
-                    {v.toLocaleString()}
+                  <span className="tabular-nums font-extrabold text-foreground shrink-0">
+                    {counts[t]}
                   </span>
                 </li>
               );
             })}
           </ul>
-        </>
-      )}
-    </section>
-  );
-}
-
-// ─── Selection summary ──────────────────────────────────────────────────────
-
-function SelectionSummary({
-  request,
-  totalScopeWords,
-  counts,
-  totalQuestions,
-}: {
-  request: SelectionRequest;
-  totalScopeWords: number;
-  counts: CountsByType;
-  totalQuestions: number;
-}) {
-  const selectedTypes = ALL_TEST_QUESTION_TYPES.filter(
-    (t) => (counts[t] ?? 0) > 0,
-  );
-  return (
-    <section className="rounded-2xl border border-border bg-card shadow-sm p-5">
-      <div className="flex items-center gap-2 mb-3">
-        <Sparkles size={16} className="text-orange-500" />
-        <h3 className="text-sm font-extrabold text-foreground">
-          Live preview
-        </h3>
-      </div>
-      <dl className="space-y-2 text-xs">
-        <SummaryRow label="Source" value={describeScope(request.scope)} />
-        <SummaryRow
-          label="Filters"
-          value={
-            hasAnyFilter(request.filters)
-              ? filterSummary(request.filters!)
-              : "None"
-          }
-        />
-        <SummaryRow
-          label="Order"
-          value={request.shuffle ? "Shuffled" : "Original"}
-        />
-        <SummaryRow
-          label="Words in scope"
-          value={`${totalScopeWords.toLocaleString()}`}
-          strong
-        />
-        <SummaryRow
-          label="Total questions"
-          value={`${totalQuestions.toLocaleString()}`}
-          strong
-        />
-      </dl>
-      {selectedTypes.length > 0 && (
-        <div className="mt-3 pt-3 border-t border-border">
-          <p className="text-[10px] font-extrabold uppercase tracking-wider text-muted-foreground mb-1.5">
-            Type breakdown
-          </p>
-          <ul className="space-y-1">
-            {selectedTypes.map((t) => (
-              <li
-                key={t}
-                className="flex items-center justify-between text-[11px]"
-              >
-                <span className="truncate text-foreground/80">
-                  {TEST_QUESTION_TYPE_META[t].short}
-                </span>
-                <span className="tabular-nums font-extrabold text-foreground shrink-0 ml-2">
-                  {counts[t]}
-                </span>
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
-      {totalQuestions === 0 && totalScopeWords > 0 && (
-        <div className="mt-3 pt-3 border-t border-border flex items-start gap-2 text-[11px] text-muted-foreground">
-          <AlertCircle size={14} className="text-orange-500 shrink-0 mt-0.5" />
-          <span>
-            Set at least one question type count above 0 to start practice.
-          </span>
         </div>
       )}
     </section>
@@ -1493,18 +1534,70 @@ function SummaryRow({
   );
 }
 
-function filterSummary(f: Filters): string {
-  const parts: string[] = [];
-  if (f.newOnly) parts.push("New");
-  if (f.mistakeOnly) parts.push("Mistakes");
-  if (f.difficultOnly) parts.push("Difficult");
-  if (f.dueOnly) parts.push("Due");
-  return parts.join(" + ");
+function AvailabilityCard({
+  availability,
+  counts,
+  totalAvailable,
+}: {
+  availability: AvailabilityByType;
+  counts: CountsByType;
+  totalAvailable: number;
+}) {
+  const max = Math.max(1, ...ALL_TEST_QUESTION_TYPES.map((t) => availability[t]));
+  return (
+    <section className="rounded-2xl border border-border bg-card shadow-sm p-5">
+      <h3 className="text-xs font-extrabold text-foreground uppercase tracking-wider mb-3">
+        Availability
+      </h3>
+      <ul className="space-y-2">
+        {ALL_TEST_QUESTION_TYPES.map((t) => {
+          const meta = TEST_QUESTION_TYPE_META[t];
+          const have = availability[t];
+          const used = counts[t] ?? 0;
+          const pct = max === 0 ? 0 : (have / max) * 100;
+          const usedPct = max === 0 ? 0 : (used / max) * 100;
+          return (
+            <li key={t}>
+              <div className="flex items-center justify-between gap-2 text-[11px]">
+                <span className="inline-flex items-center gap-1.5 min-w-0 text-foreground/80">
+                  <span className="text-muted-foreground/70 shrink-0">
+                    {TYPE_ICONS[t]}
+                  </span>
+                  <span className="truncate font-bold">{meta.short}</span>
+                </span>
+                <span className="tabular-nums font-extrabold text-foreground shrink-0">
+                  {used > 0 ? `${used} / ${have}` : have}
+                </span>
+              </div>
+              <div className="mt-1 h-1.5 w-full bg-muted rounded-full overflow-hidden relative">
+                <div
+                  className={`h-full ${
+                    have === 0 ? "bg-rose-300/40" : "bg-emerald-400/60"
+                  }`}
+                  style={{ width: `${pct}%` }}
+                />
+                {used > 0 && (
+                  <div
+                    className="absolute inset-y-0 left-0 h-full bg-orange-500"
+                    style={{ width: `${usedPct}%` }}
+                  />
+                )}
+              </div>
+            </li>
+          );
+        })}
+      </ul>
+      <p className="mt-3 pt-3 border-t border-border text-[11px] text-muted-foreground">
+        <span className="font-extrabold text-foreground tabular-nums">
+          {totalAvailable.toLocaleString()}
+        </span>{" "}
+        total available questions
+      </p>
+    </section>
+  );
 }
 
-// ─── Preview list ───────────────────────────────────────────────────────────
-
-function PreviewList({
+function SamplePreviewCard({
   sample,
   total,
 }: {
@@ -1514,8 +1607,12 @@ function PreviewList({
   if (total === 0) {
     return (
       <section className="rounded-2xl border border-dashed border-border bg-card/50 p-5">
-        <p className="text-xs text-muted-foreground text-center">
-          No words match this selection yet. Adjust the source or filters.
+        <h3 className="inline-flex items-center gap-1.5 text-xs font-extrabold text-foreground uppercase tracking-wider">
+          <Eye size={12} />
+          Sample
+        </h3>
+        <p className="mt-2 text-xs text-muted-foreground">
+          Adjust the source to see a preview of words you’ll practice.
         </p>
       </section>
     );
@@ -1523,11 +1620,12 @@ function PreviewList({
   return (
     <section className="rounded-2xl border border-border bg-card shadow-sm p-5">
       <div className="flex items-center justify-between mb-2">
-        <h3 className="text-xs font-extrabold text-foreground uppercase tracking-wide">
-          Sample
+        <h3 className="inline-flex items-center gap-1.5 text-xs font-extrabold text-foreground uppercase tracking-wider">
+          <Eye size={12} />
+          Sample preview
         </h3>
-        <span className="text-[11px] text-muted-foreground">
-          showing {sample.length} of {total.toLocaleString()}
+        <span className="text-[10px] text-muted-foreground tabular-nums">
+          {sample.length} of {total.toLocaleString()}
         </span>
       </div>
       <ul className="space-y-1.5">
@@ -1536,10 +1634,8 @@ function PreviewList({
             key={w.id}
             className="flex items-center justify-between gap-3 text-xs"
           >
-            <span className="font-bold text-foreground truncate">
-              {w.word}
-            </span>
-            <span className="text-muted-foreground shrink-0">
+            <span className="font-bold text-foreground truncate">{w.word}</span>
+            <span className="text-muted-foreground shrink-0 text-[10px] tabular-nums">
               M{w.day} · S{w.group}
             </span>
           </li>
@@ -1549,47 +1645,145 @@ function PreviewList({
   );
 }
 
-// ─── Start button — kicks off Practice Mode with the resolved word IDs ─────
+function StartCard({
+  totalQuestions,
+  disabled,
+  disabledReason,
+  onStart,
+  confidenceRating,
+}: {
+  totalQuestions: number;
+  disabled: boolean;
+  disabledReason: string | null;
+  onStart: () => void;
+  confidenceRating: boolean;
+}) {
+  return (
+    <section className="rounded-2xl border border-border bg-card shadow-sm p-5">
+      <button
+        type="button"
+        disabled={disabled}
+        onClick={onStart}
+        className="w-full inline-flex items-center justify-center gap-2 rounded-xl px-4 py-3 text-sm font-extrabold btn-brand disabled:opacity-50 disabled:cursor-not-allowed disabled:shadow-none"
+      >
+        {totalQuestions > 0
+          ? `Start Practice · ${totalQuestions} question${totalQuestions === 1 ? "" : "s"}`
+          : "Start Practice"}
+        <ChevronRight size={16} />
+      </button>
+      <p className="mt-2 text-[11px] text-muted-foreground text-center">
+        {disabled && disabledReason ? (
+          <span className="inline-flex items-center gap-1.5 text-amber-700 dark:text-amber-300 font-bold">
+            <AlertCircle size={11} />
+            {disabledReason}
+          </span>
+        ) : totalQuestions > 0 ? (
+          <>
+            {totalQuestions} question{totalQuestions === 1 ? "" : "s"} ready ·
+            Immediate feedback
+            {confidenceRating ? " · confidence rating" : ""}
+          </>
+        ) : (
+          "Pick a preset to get started fast."
+        )}
+      </p>
+    </section>
+  );
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Section wrapper (numbered step)
+// ─────────────────────────────────────────────────────────────────────────────
+
+function Section({
+  step,
+  icon,
+  title,
+  subtitle,
+  children,
+}: {
+  step?: string;
+  icon: React.ReactNode;
+  title: string;
+  subtitle?: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <section className="rounded-2xl border border-border bg-card shadow-sm p-5">
+      <header className="flex items-start gap-3 mb-4">
+        <div className="flex items-center gap-2 shrink-0">
+          {step && (
+            <span className="w-7 h-7 rounded-lg bg-brand-gradient text-white text-xs font-extrabold flex items-center justify-center shadow-sm">
+              {step}
+            </span>
+          )}
+          <div className="w-8 h-8 rounded-lg bg-muted text-foreground/80 flex items-center justify-center">
+            {icon}
+          </div>
+        </div>
+        <div className="min-w-0">
+          <h3 className="text-sm font-extrabold text-foreground">{title}</h3>
+          {subtitle && (
+            <p className="text-xs text-muted-foreground mt-0.5">{subtitle}</p>
+          )}
+        </div>
+      </header>
+      {children}
+    </section>
+  );
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Start button — small variant kept for Quick Practice tiles
+// ─────────────────────────────────────────────────────────────────────────────
 
 function StartButton({
-  fullWidth,
   small,
   disabled,
   onClick,
   label,
 }: {
-  fullWidth?: boolean;
   small?: boolean;
   disabled?: boolean;
   onClick: () => void;
   label?: string;
 }) {
   return (
-    <div
-      className={`${fullWidth ? "w-full" : ""} ${
-        small ? "" : "flex flex-col items-stretch gap-2"
-      }`}
+    <button
+      type="button"
+      disabled={disabled}
+      onClick={onClick}
+      title={disabled ? "No words match this preset yet." : "Start practice"}
+      className={`inline-flex items-center justify-center gap-1.5 rounded-xl font-extrabold transition-colors btn-brand disabled:opacity-50 disabled:cursor-not-allowed disabled:shadow-none px-3.5 py-2 text-xs`}
     >
-      <button
-        type="button"
-        disabled={disabled}
-        onClick={onClick}
-        title={disabled ? "Pick a source and at least one question type." : "Start practice"}
-        className={`inline-flex items-center justify-center gap-1.5 rounded-xl font-extrabold transition-colors btn-brand disabled:opacity-50 disabled:cursor-not-allowed disabled:shadow-none ${
-          fullWidth ? "w-full px-4 py-3 text-sm" : "px-3.5 py-2 text-xs"
-        }`}
-      >
-        {label ?? "Start practice"}
-        <ChevronRight size={small ? 14 : 16} />
-      </button>
-      {!small && (
-        <p className="text-[11px] text-muted-foreground text-center">
-          {disabled
-            ? "Adjust your selection to enable."
-            : "Immediate feedback · hints · confidence rating."}
-        </p>
-      )}
-    </div>
+      {label ?? "Start"}
+      <ChevronRight size={small ? 14 : 16} />
+    </button>
   );
 }
 
+// ─────────────────────────────────────────────────────────────────────────────
+// Source summary helper
+// ─────────────────────────────────────────────────────────────────────────────
+
+function describeSourceShort(scope: Scope): string {
+  switch (scope.kind) {
+    case "all":
+      return "All words";
+    case "belt": {
+      const id = scope.beltIds[0] ?? 1;
+      return `${BELT_NAMES[id - 1]} · ${missionsForBelt(id).length} missions`;
+    }
+    case "mission": {
+      const m = scope.missionDays[0] ?? 1;
+      return `Mission ${m} · ${BELT_NAMES[beltForMission(m) - 1]}`;
+    }
+    case "set": {
+      const s = scope.sets[0];
+      if (!s) return "No set";
+      return `Mission ${s.day} · Set ${s.group}`;
+    }
+    case "range":
+      return `Missions ${scope.fromDay}–${scope.toDay}`;
+  }
+}

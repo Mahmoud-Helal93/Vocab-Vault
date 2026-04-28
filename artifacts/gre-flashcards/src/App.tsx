@@ -104,6 +104,11 @@ function MainApp() {
             wordIds={pageParams.wordIds as string[] | undefined}
             sessionTitle={pageParams.sessionTitle as string | undefined}
             initialKinds={pageParams.initialKinds as undefined}
+            sessionConfig={
+              pageParams.sessionConfig as ComponentProps<
+                typeof PracticeMode
+              >["sessionConfig"]
+            }
           />
         );
       case "test-mode":

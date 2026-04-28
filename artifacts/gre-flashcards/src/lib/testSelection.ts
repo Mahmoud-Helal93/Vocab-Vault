@@ -31,6 +31,28 @@ export interface SessionResult {
 }
 
 /**
+ * Behavior toggles attached to a Custom Practice session. Forwarded from
+ * Test Selection → Practice Mode via navigation params.
+ */
+export interface SessionConfig {
+  /** When true the final question list is shuffled across types. */
+  shuffle: boolean;
+  /** When true Practice Mode shows a session timer in the header. */
+  showTimer: boolean;
+  /** When true Practice Mode exposes the per-question Hint button. */
+  showHints: boolean;
+  /** When true Practice Mode renders the post-answer confidence picker. */
+  confidenceRating: boolean;
+}
+
+export const DEFAULT_SESSION_CONFIG: SessionConfig = {
+  shuffle: true,
+  showTimer: false,
+  showHints: true,
+  confidenceRating: true,
+};
+
+/**
  * Picks exactly `counts[type]` questions per type from the scope. Never
  * exceeds availability. Returns the assembled session and the realized counts.
  */

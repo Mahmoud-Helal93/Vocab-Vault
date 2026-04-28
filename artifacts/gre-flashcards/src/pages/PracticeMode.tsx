@@ -22,6 +22,7 @@ import {
   Plus,
   Check,
   ListChecks,
+  Timer as TimerIcon,
 } from "lucide-react";
 import { useApp } from "@/context/AppContext";
 import { type Word } from "@/data/words";
@@ -36,7 +37,11 @@ import {
   buildAllForWord,
   isAnswerCorrect,
 } from "@/lib/questionEngine";
-import { rebuildSessionFromQuestions } from "@/lib/testSelection";
+import {
+  rebuildSessionFromQuestions,
+  DEFAULT_SESSION_CONFIG,
+  type SessionConfig,
+} from "@/lib/testSelection";
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Props
@@ -54,6 +59,8 @@ interface PracticeModeProps {
   sessionTitle?: string;
   /** Optional initial set of question kinds. Defaults to all (legacy path). */
   initialKinds?: QuestionKind[];
+  /** Behavior toggles forwarded from Custom Practice setup. */
+  sessionConfig?: SessionConfig;
 }
 
 // ─── Question kind metadata for the toolbar ────────────────────────────────
@@ -240,8 +247,10 @@ export default function PracticeMode({
   wordIds,
   sessionTitle,
   initialKinds,
+  sessionConfig,
 }: PracticeModeProps) {
   const { words, updateWord, markWordReviewed } = useApp();
+  const config: SessionConfig = sessionConfig ?? DEFAULT_SESSION_CONFIG;
 
   const usingPrebuiltQueue = Array.isArray(questions) && questions.length > 0;
 
@@ -547,6 +556,8 @@ export default function PracticeMode({
       onBack={onBack}
       title={sessionTitle ?? "Practice"}
       stats={stats}
+      showTimer={config.showTimer}
+      timerActive={!finished}
     >
       <ProgressBar current={currentIdx + 1} total={queue.length} />
 
@@ -562,6 +573,8 @@ export default function PracticeMode({
             q={currentQ!}
             response={currentResponse}
             pool={sessionWords}
+            showHints={config.showHints}
+            confidenceRating={config.confidenceRating}
             onAnswer={(v) => submitAnswer(currentQ!, v)}
             onRetry={() => retry(currentQ!)}
             onIDontKnow={() => iDontKnow(currentQ!)}
@@ -592,6 +605,8 @@ function Shell({
   stats,
   toolbar,
   children,
+  showTimer,
+  timerActive,
 }: {
   onBack: () => void;
   title: string;
@@ -603,6 +618,8 @@ function Shell({
   } | null;
   toolbar?: React.ReactNode;
   children: React.ReactNode;
+  showTimer?: boolean;
+  timerActive?: boolean;
 }) {
   return (
     <motion.div
@@ -628,24 +645,27 @@ function Shell({
               {title}
             </h1>
           </div>
-          {stats && (
-            <div className="flex items-center gap-2 text-xs">
-              <StatChip
-                label="Done"
-                value={`${stats.answered}/${stats.total}`}
-              />
-              <StatChip
-                label="Correct"
-                value={`${stats.correct}`}
-                tone="emerald"
-              />
-              <StatChip
-                label="First-try"
-                value={`${stats.firstTryCorrect}`}
-                tone="amber"
-              />
-            </div>
-          )}
+          <div className="flex items-center gap-2 text-xs flex-wrap">
+            {showTimer && <SessionTimer running={Boolean(timerActive)} />}
+            {stats && (
+              <>
+                <StatChip
+                  label="Done"
+                  value={`${stats.answered}/${stats.total}`}
+                />
+                <StatChip
+                  label="Correct"
+                  value={`${stats.correct}`}
+                  tone="emerald"
+                />
+                <StatChip
+                  label="First-try"
+                  value={`${stats.firstTryCorrect}`}
+                  tone="amber"
+                />
+              </>
+            )}
+          </div>
         </div>
       </header>
 
@@ -653,6 +673,25 @@ function Shell({
 
       {children}
     </motion.div>
+  );
+}
+
+function SessionTimer({ running }: { running: boolean }) {
+  const [start] = useState(() => Date.now());
+  const [now, setNow] = useState(() => Date.now());
+  useEffect(() => {
+    if (!running) return;
+    const id = window.setInterval(() => setNow(Date.now()), 1000);
+    return () => window.clearInterval(id);
+  }, [running]);
+  const elapsed = Math.max(0, Math.floor((now - start) / 1000));
+  const mm = String(Math.floor(elapsed / 60)).padStart(2, "0");
+  const ss = String(elapsed % 60).padStart(2, "0");
+  return (
+    <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-card border border-border text-foreground font-extrabold text-[11px] tabular-nums">
+      <TimerIcon size={12} className="text-orange-500" />
+      {mm}:{ss}
+    </span>
   );
 }
 
@@ -726,6 +765,10 @@ interface QuestionCardProps {
   q: Question;
   response: ResponseState;
   pool: Word[];
+  /** When false the Hint button is hidden. Defaults to true. */
+  showHints?: boolean;
+  /** When false the post-answer confidence picker is hidden. Defaults to true. */
+  confidenceRating?: boolean;
   onAnswer: (value: string | boolean | string[]) => void;
   onRetry: () => void;
   onIDontKnow: () => void;
@@ -777,15 +820,17 @@ function QuestionCard(props: QuestionCardProps) {
       {!isAnswered && (
         <div className="px-5 sm:px-6 py-4 mt-1 border-t border-border flex flex-wrap items-center justify-between gap-2">
           <div className="flex items-center gap-2">
-            <button
-              type="button"
-              onClick={props.onHint}
-              disabled={response.hintShown}
-              className="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-bold bg-amber-50 dark:bg-amber-500/10 text-amber-800 dark:text-amber-200 border border-amber-200 dark:border-amber-500/40 hover:bg-amber-100 dark:hover:bg-amber-500/20 disabled:opacity-50 disabled:cursor-not-allowed"
-            >
-              <Lightbulb size={13} />
-              {response.hintShown ? "Hint shown" : "Hint"}
-            </button>
+            {props.showHints !== false && (
+              <button
+                type="button"
+                onClick={props.onHint}
+                disabled={response.hintShown}
+                className="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-bold bg-amber-50 dark:bg-amber-500/10 text-amber-800 dark:text-amber-200 border border-amber-200 dark:border-amber-500/40 hover:bg-amber-100 dark:hover:bg-amber-500/20 disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                <Lightbulb size={13} />
+                {response.hintShown ? "Hint shown" : "Hint"}
+              </button>
+            )}
             <button
               type="button"
               onClick={props.onIDontKnow}
@@ -1251,8 +1296,18 @@ function HintBlock({ q }: { q: Question }) {
 // ─── Feedback panel ────────────────────────────────────────────────────────
 
 function FeedbackPanel(props: QuestionCardProps) {
-  const { q, response, pool, onRetry, onAddDifficult, onConfidence, onNext, isLast } =
-    props;
+  const {
+    q,
+    response,
+    pool,
+    onRetry,
+    onAddDifficult,
+    onConfidence,
+    onNext,
+    isLast,
+    confidenceRating,
+  } = props;
+  const showConfidence = confidenceRating !== false;
   const finalCorrect =
     response.finalCorrect ?? response.firstCorrect ?? false;
   const iDontKnow = response.iDontKnow;
@@ -1346,10 +1401,12 @@ function FeedbackPanel(props: QuestionCardProps) {
         {/* Confidence + add to difficult + next — once finalized */}
         {(response.finalCorrect !== null || iDontKnow) && (
           <>
-            <ConfidenceRow
-              value={response.confidence}
-              onPick={onConfidence}
-            />
+            {showConfidence && (
+              <ConfidenceRow
+                value={response.confidence}
+                onPick={onConfidence}
+              />
+            )}
 
             <div className="flex flex-wrap items-center justify-between gap-3 pt-1">
               <button
@@ -1377,9 +1434,9 @@ function FeedbackPanel(props: QuestionCardProps) {
               <button
                 type="button"
                 onClick={onNext}
-                disabled={response.confidence === null}
+                disabled={showConfidence && response.confidence === null}
                 title={
-                  response.confidence === null
+                  showConfidence && response.confidence === null
                     ? "Pick a confidence rating to continue"
                     : ""
                 }
