@@ -1740,7 +1740,7 @@ function StartCard({
       </button>
       <p className="mt-2.5 text-[11.5px] text-muted-foreground text-center leading-snug">
         {disabled || totalQuestions === 0 ? (
-          <span className="inline-flex items-center gap-1.5 text-amber-700 dark:text-amber-300 font-bold">
+          <span className="inline-flex items-center gap-1.5 text-amber-700 dark:text-amber-300 font-bold text-[11px]">
             <AlertCircle size={11} />
             Pick at least one question — try a preset to get started.
           </span>
