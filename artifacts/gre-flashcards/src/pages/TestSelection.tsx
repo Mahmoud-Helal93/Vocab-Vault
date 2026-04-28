@@ -1326,7 +1326,7 @@ function MixRow({
   const disabled = available === 0;
   return (
     <div
-      className={`rounded-xl border px-3 py-3 min-h-[78px] flex items-center gap-3 transition-colors ${
+      className={`rounded-xl border px-3 py-2.5 flex items-center gap-3 transition-colors ${
         disabled
           ? "border-dashed border-border bg-muted/20 opacity-60"
           : "border-border bg-card hover:border-border/80"
