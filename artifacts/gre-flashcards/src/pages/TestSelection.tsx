@@ -1525,18 +1525,18 @@ function OptionToggle({
       type="button"
       onClick={() => onChange(!value)}
       aria-pressed={value}
-      className="group text-left rounded-xl border border-border bg-card px-5 py-4 min-w-[240px] flex items-center justify-between gap-4 transition-colors hover:bg-muted/40 hover:border-border/80"
+      className="group w-full text-left rounded-xl border border-border bg-card px-4 py-3 flex items-center justify-between gap-3 transition-colors hover:bg-muted/40 hover:border-border/80"
     >
-      <span className="flex items-center gap-4 flex-1 min-w-0">
+      <span className="flex items-center gap-3 flex-1 min-w-0">
         {/* Colored icon square */}
         <span
-          className={`w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0 ${palette.icon}`}
+          className={`w-11 h-11 rounded-xl flex items-center justify-center flex-shrink-0 ${palette.icon}`}
         >
           {icon}
         </span>
 
         {/* Label */}
-        <span className="text-sm font-medium text-foreground whitespace-normal break-words">
+        <span className="text-sm font-medium text-foreground leading-tight whitespace-normal break-words">
           {label}
         </span>
       </span>
