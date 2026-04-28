@@ -1150,7 +1150,7 @@ function QuestionMixStep({
           </p>
         </div>
       ) : (
-        <div className="mt-5 grid gap-4 lg:grid-cols-2 items-start">
+        <div className="mt-5 grid gap-3 lg:grid-cols-2 items-start">
           {/* Mobile order: MCQ → True/False → Written Recall → Select All */}
           {/* Desktop (2-col, row-major): MCQ | True/False  /  Select All | Written Recall */}
           <MixGroup
