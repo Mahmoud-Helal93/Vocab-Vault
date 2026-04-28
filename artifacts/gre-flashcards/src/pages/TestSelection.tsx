@@ -1438,7 +1438,7 @@ function FinalOptionsGrid({
   ) => onChange({ ...config, [key]: value });
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4">
+    <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-3">
       <OptionToggle
         icon={<Shuffle size={20} />}
         accent="orange"
