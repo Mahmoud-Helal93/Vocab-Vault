@@ -1517,7 +1517,7 @@ function OptionToggle({
       <span className="flex items-center gap-3 flex-1 min-w-0">
         {/* Colored icon square */}
         <span
-          className={`w-11 h-11 rounded-xl flex items-center justify-center flex-shrink-0 ${palette.icon}`}
+          className={`w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 ${palette.icon}`}
         >
           {icon}
         </span>
