@@ -1471,7 +1471,7 @@ function FinalOptionsGrid({
       <OptionToggle
         icon={<Lightbulb size={14} />}
         accent="amber"
-        label="Show Hints"
+        label="Hints"
         description="Allow the in-question Hint button."
         value={config.showHints}
         onChange={(v) => set("showHints", v)}
