@@ -1272,7 +1272,7 @@ function MixGroup({
 
   return (
     <div
-      className={`rounded-2xl border border-border bg-muted/20 p-4 ${className ?? ""}`}
+      className={`rounded-2xl border border-border bg-muted/20 p-3 ${className ?? ""}`}
     >
       {/* Group header */}
       <div className="flex items-center justify-between gap-2 mb-3">
