@@ -1283,7 +1283,7 @@ function MixGroup({
             {meta.letter}
           </span>
           <h4 className="text-sm font-extrabold text-foreground">
-            {meta.label}
+            Synonym Pairing
           </h4>
         </div>
         {groupTotal > 0 && (
