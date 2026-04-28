@@ -1,0 +1,165 @@
+You are an expert React/TypeScript UI developer and modern UI/UX designer.
+
+I want you to redesign ONLY the "Final Options" toggle cards in the Custom Practice page.
+
+Do NOT change:
+- functionality of toggles
+- state management
+- session config logic
+- layout of other sections
+- responsiveness behavior
+
+This is purely a UI/visual refinement.
+
+==================================================
+GOAL
+==================================================
+
+Make the Final Options section more modern, minimal, and clean by:
+
+1. Increasing icon prominence
+2. Removing cluttered text
+3. Aligning label + toggle horizontally
+4. Creating a clean “settings card” look
+
+==================================================
+REQUIRED DESIGN CHANGES
+==================================================
+
+1. ICON IMPROVEMENT
+
+- Increase icon size significantly
+  Suggested:
+  w-10 h-10 OR text-2xl / text-3xl
+
+- Keep icon inside a soft colored rounded background
+  Example:
+  rounded-xl bg-muted / bg-soft color
+
+- Icon should become the visual anchor of each card
+
+--------------------------------------------------
+
+2. REMOVE SECONDARY TEXT
+
+Currently each card has:
+- Title (Shuffle, Timer, etc.)
+- Small description text under it
+
+REMOVE the description text completely.
+
+Example:
+❌ Remove:
+"Mix the question order across types"
+"Display elapsed time..."
+etc.
+
+Keep only:
+- Icon
+- Title
+- Toggle
+
+--------------------------------------------------
+
+3. NEW LAYOUT STRUCTURE
+
+Change each card layout to a clean horizontal alignment:
+
+[ ICON ]   LABEL                [ TOGGLE ]
+
+Details:
+- Icon on the left
+- Label centered vertically
+- Toggle aligned to the far right
+
+Use:
+flex items-center justify-between
+
+Inside:
+flex items-center gap-3 for icon + label
+
+--------------------------------------------------
+
+4. LABEL STYLE
+
+- Move label to be inline with the toggle
+- Use medium weight text:
+  font-medium
+
+- Font size:
+  text-sm or text-base (slightly larger than before)
+
+--------------------------------------------------
+
+5. CARD STYLE
+
+Each option card should:
+- have consistent height
+- feel compact but premium
+- not too tall
+
+Suggested:
+- py-3 px-4
+- rounded-xl or rounded-2xl
+- border border-border
+- bg-card
+
+Hover:
+- slight background lift or border highlight
+
+--------------------------------------------------
+
+6. GRID LAYOUT
+
+Keep grid but refine spacing:
+
+Desktop:
+grid grid-cols-4 gap-4
+
+Tablet:
+grid-cols-2
+
+Mobile:
+grid-cols-1
+
+--------------------------------------------------
+
+7. TOGGLE ALIGNMENT
+
+- Toggle should be vertically centered
+- Consistent size across all cards
+- Keep existing toggle component
+
+--------------------------------------------------
+
+8. VISUAL RESULT TARGET
+
+Each card should look like:
+
+[ 🔀 ]  Shuffle              [ ON ]
+
+[ ⏱ ]  Timer                [ OFF ]
+
+[ 💡 ]  Hints               [ ON ]
+
+[ ⭐ ]  Confidence          [ ON ]
+
+Minimal, clean, aligned.
+
+--------------------------------------------------
+
+9. DO NOT BREAK LOGIC
+
+Ensure:
+- toggles still update state correctly
+- session config still works
+- no behavior change
+
+==================================================
+AFTER IMPLEMENTATION
+==================================================
+
+Summarize:
+- files modified
+- UI changes applied
+- confirm no logic was changed

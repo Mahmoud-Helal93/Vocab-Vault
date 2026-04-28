@@ -1451,36 +1451,32 @@ function FinalOptionsGrid({
   ) => onChange({ ...config, [key]: value });
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2.5">
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3">
       <OptionToggle
-        icon={<Shuffle size={14} />}
+        icon={<Shuffle size={20} />}
         accent="orange"
         label="Shuffle"
-        description="Mix the question order across types."
         value={config.shuffle}
         onChange={(v) => set("shuffle", v)}
       />
       <OptionToggle
-        icon={<Hourglass size={14} />}
+        icon={<Hourglass size={20} />}
         accent="sky"
         label="Timer"
-        description="Display elapsed time in the header."
         value={config.showTimer}
         onChange={(v) => set("showTimer", v)}
       />
       <OptionToggle
-        icon={<Lightbulb size={14} />}
+        icon={<Lightbulb size={20} />}
         accent="amber"
         label="Hints"
-        description="Allow the in-question Hint button."
         value={config.showHints}
         onChange={(v) => set("showHints", v)}
       />
       <OptionToggle
-        icon={<Hash size={14} />}
+        icon={<Hash size={20} />}
         accent="pink"
         label="Confidence"
-        description="Ask for confidence after each answer."
         value={config.confidenceRating}
         onChange={(v) => set("confidenceRating", v)}
       />
@@ -1514,14 +1510,12 @@ function OptionToggle({
   icon,
   accent,
   label,
-  description,
   value,
   onChange,
 }: {
   icon: React.ReactNode;
   accent: keyof typeof OPTION_ACCENT;
   label: string;
-  description: string;
   value: boolean;
   onChange: (v: boolean) => void;
 }) {
@@ -1531,28 +1525,21 @@ function OptionToggle({
       type="button"
       onClick={() => onChange(!value)}
       aria-pressed={value}
-      className={`text-left rounded-xl border p-3 flex items-center gap-3 transition-colors ${
-        value
-          ? "bg-card border-border hover:bg-muted/40"
-          : "bg-muted/30 border-border hover:bg-muted/50"
-      }`}
+      className="group text-left rounded-xl border border-border bg-card px-4 py-3 flex items-center justify-between gap-3 transition-colors hover:bg-muted/40 hover:border-border/80"
     >
-      {/* Colored icon square */}
-      <span
-        className={`w-9 h-9 rounded-lg flex items-center justify-center shrink-0 ${palette.icon}`}
-      >
-        {icon}
-      </span>
+      <span className="flex items-center gap-3 min-w-0">
+        {/* Colored icon square */}
+        <span
+          className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 ${palette.icon}`}
+        >
+          {icon}
+        </span>
 
-      {/* Title + description */}
-      <div className="min-w-0 flex-1">
-        <div className="text-[12.5px] font-extrabold text-foreground leading-tight truncate">
+        {/* Label */}
+        <span className="text-sm font-medium text-foreground truncate">
           {label}
-        </div>
-        <p className="text-[11px] text-muted-foreground mt-0.5 leading-snug line-clamp-2">
-          {description}
-        </p>
-      </div>
+        </span>
+      </span>
 
       {/* Switch on the right */}
       <span
