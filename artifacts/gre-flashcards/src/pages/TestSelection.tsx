@@ -483,12 +483,8 @@ function CustomPracticePanel({
           onApplyPreset={applyPreset}
           onClearAll={clearAll}
           totalQuestions={totalQuestions}
-        />
-
-        {/* Final Options — visually integrated with the question mix */}
-        <FinalOptionsCard
-          config={sessionConfig}
-          onChange={setSessionConfig}
+          sessionConfig={sessionConfig}
+          onSessionConfigChange={setSessionConfig}
         />
 
         {/* Helper banner */}
@@ -1099,6 +1095,8 @@ function QuestionMixStep({
   onApplyPreset,
   onClearAll,
   totalQuestions,
+  sessionConfig,
+  onSessionConfigChange,
 }: {
   availability: AvailabilityByType;
   totalScopeWords: number;
@@ -1107,6 +1105,8 @@ function QuestionMixStep({
   onApplyPreset: (p: MixPreset) => void;
   onClearAll: () => void;
   totalQuestions: number;
+  sessionConfig: SessionConfig;
+  onSessionConfigChange: (c: SessionConfig) => void;
 }) {
   const setCount = (t: TestQuestionType, n: number) => {
     const have = availability[t];
@@ -1204,6 +1204,40 @@ function QuestionMixStep({
           />
         </div>
       )}
+
+      {/* ─── Final Options (merged into the bottom of Question Mix) ─── */}
+      <div className="mt-6 pt-5 border-t border-border">
+        <div className="flex items-center justify-between gap-2 mb-3">
+          <div className="inline-flex items-center gap-2">
+            <span className="w-7 h-7 rounded-lg bg-muted text-foreground/80 flex items-center justify-center">
+              <Gauge size={14} />
+            </span>
+            <h4 className="text-sm font-extrabold text-foreground">
+              Final Options
+            </h4>
+          </div>
+          <span className="text-[11px] text-muted-foreground">
+            Tweak how this session feels.
+          </span>
+        </div>
+
+        <FinalOptionsGrid
+          config={sessionConfig}
+          onChange={onSessionConfigChange}
+        />
+
+        {/* Soft info banner */}
+        <div className="mt-3 rounded-xl border border-orange-200/70 dark:border-orange-500/30 bg-orange-50/70 dark:bg-orange-500/10 px-3.5 py-2.5 flex items-start gap-2.5">
+          <Info
+            size={14}
+            className="text-orange-500 dark:text-orange-300 shrink-0 mt-0.5"
+          />
+          <p className="text-[12px] leading-snug text-orange-900/90 dark:text-orange-100/90">
+            You can review incorrect answers and retry wrong questions after
+            completing the session.
+          </p>
+        </div>
+      </div>
     </section>
   );
 }
@@ -1418,7 +1452,7 @@ function CountStepper({
 // Final Options — compact 4-toggle row, visually merged with Question Mix
 // ─────────────────────────────────────────────────────────────────────────────
 
-function FinalOptionsCard({
+function FinalOptionsGrid({
   config,
   onChange,
 }: {
@@ -1431,112 +1465,122 @@ function FinalOptionsCard({
   ) => onChange({ ...config, [key]: value });
 
   return (
-    <section className="rounded-2xl border border-border bg-card shadow-sm p-5">
-      <header className="flex items-center justify-between gap-2 mb-3">
-        <div className="inline-flex items-center gap-2">
-          <span className="w-7 h-7 rounded-lg bg-muted text-foreground/80 flex items-center justify-center">
-            <Gauge size={14} />
-          </span>
-          <h3 className="text-sm font-extrabold text-foreground">
-            Final Options
-          </h3>
-        </div>
-        <span className="text-[11px] text-muted-foreground">
-          Tweak how this session feels.
-        </span>
-      </header>
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-2.5">
-        <OptionToggle
-          icon={<Shuffle size={14} />}
-          label="Shuffle"
-          description="Mix question order across types."
-          value={config.shuffle}
-          onChange={(v) => set("shuffle", v)}
-        />
-        <OptionToggle
-          icon={<Hourglass size={14} />}
-          label="Show Timer"
-          description="Display elapsed time in the header."
-          value={config.showTimer}
-          onChange={(v) => set("showTimer", v)}
-        />
-        <OptionToggle
-          icon={<Lightbulb size={14} />}
-          label="Hints"
-          description="Allow the in-question Hint button."
-          value={config.showHints}
-          onChange={(v) => set("showHints", v)}
-        />
-        <OptionToggle
-          icon={<Hash size={14} />}
-          label="Confidence"
-          description="Ask for confidence after each answer."
-          value={config.confidenceRating}
-          onChange={(v) => set("confidenceRating", v)}
-        />
-      </div>
-    </section>
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2.5">
+      <OptionToggle
+        icon={<Shuffle size={14} />}
+        accent="orange"
+        label="Shuffle Questions"
+        description="Mix the question order across types."
+        value={config.shuffle}
+        onChange={(v) => set("shuffle", v)}
+      />
+      <OptionToggle
+        icon={<Hourglass size={14} />}
+        accent="sky"
+        label="Show Timer"
+        description="Display elapsed time in the header."
+        value={config.showTimer}
+        onChange={(v) => set("showTimer", v)}
+      />
+      <OptionToggle
+        icon={<Lightbulb size={14} />}
+        accent="amber"
+        label="Show Hints"
+        description="Allow the in-question Hint button."
+        value={config.showHints}
+        onChange={(v) => set("showHints", v)}
+      />
+      <OptionToggle
+        icon={<Hash size={14} />}
+        accent="pink"
+        label="Confidence Rating"
+        description="Ask for confidence after each answer."
+        value={config.confidenceRating}
+        onChange={(v) => set("confidenceRating", v)}
+      />
+    </div>
   );
 }
 
+const OPTION_ACCENT: Record<
+  "orange" | "sky" | "amber" | "pink",
+  { icon: string; switchOn: string }
+> = {
+  orange: {
+    icon: "bg-orange-100 text-orange-600 dark:bg-orange-500/15 dark:text-orange-300",
+    switchOn: "bg-orange-500",
+  },
+  sky: {
+    icon: "bg-sky-100 text-sky-600 dark:bg-sky-500/15 dark:text-sky-300",
+    switchOn: "bg-sky-500",
+  },
+  amber: {
+    icon: "bg-amber-100 text-amber-600 dark:bg-amber-500/15 dark:text-amber-300",
+    switchOn: "bg-amber-500",
+  },
+  pink: {
+    icon: "bg-pink-100 text-pink-600 dark:bg-pink-500/15 dark:text-pink-300",
+    switchOn: "bg-pink-500",
+  },
+};
+
 function OptionToggle({
   icon,
+  accent,
   label,
   description,
   value,
   onChange,
 }: {
   icon: React.ReactNode;
+  accent: keyof typeof OPTION_ACCENT;
   label: string;
   description: string;
   value: boolean;
   onChange: (v: boolean) => void;
 }) {
+  const palette = OPTION_ACCENT[accent];
   return (
     <button
       type="button"
       onClick={() => onChange(!value)}
       aria-pressed={value}
-      className={`text-left rounded-xl border p-3 transition-colors ${
+      className={`text-left rounded-xl border p-3 flex items-center gap-3 transition-colors ${
         value
-          ? "bg-orange-50 dark:bg-orange-500/10 border-orange-300 dark:border-orange-500/40"
-          : "bg-muted/40 border-border hover:bg-muted/60"
+          ? "bg-card border-border hover:bg-muted/40"
+          : "bg-muted/30 border-border hover:bg-muted/50"
       }`}
     >
-      <div className="flex items-center justify-between gap-2">
-        <span
-          className={`inline-flex items-center gap-1.5 text-xs font-extrabold ${
-            value
-              ? "text-orange-800 dark:text-orange-200"
-              : "text-foreground/80"
-          }`}
-        >
-          <span
-            className={`w-6 h-6 rounded-md flex items-center justify-center ${
-              value
-                ? "bg-orange-200/80 text-orange-900 dark:bg-orange-500/30 dark:text-orange-100"
-                : "bg-card text-foreground/60 border border-border"
-            }`}
-          >
-            {icon}
-          </span>
+      {/* Colored icon square */}
+      <span
+        className={`w-9 h-9 rounded-lg flex items-center justify-center shrink-0 ${palette.icon}`}
+      >
+        {icon}
+      </span>
+
+      {/* Title + description */}
+      <div className="min-w-0 flex-1">
+        <div className="text-[12.5px] font-extrabold text-foreground leading-tight truncate">
           {label}
-        </span>
-        <span
-          className={`relative inline-flex h-5 w-9 rounded-full transition-colors ${
-            value ? "bg-orange-500" : "bg-muted-foreground/30"
-          }`}
-        >
-          <span
-            className={`absolute top-0.5 left-0.5 h-4 w-4 rounded-full bg-white shadow transition-transform ${
-              value ? "translate-x-4" : "translate-x-0"
-            }`}
-          />
-        </span>
+        </div>
+        <p className="text-[11px] text-muted-foreground mt-0.5 leading-snug line-clamp-2">
+          {description}
+        </p>
       </div>
-      <p className="text-[11px] text-muted-foreground mt-1.5 leading-snug">
-        {description}
-      </p>
+
+      {/* Switch on the right */}
+      <span
+        className={`relative inline-flex h-5 w-9 rounded-full transition-colors shrink-0 ${
+          value ? palette.switchOn : "bg-muted-foreground/30"
+        }`}
+        aria-hidden="true"
+      >
+        <span
+          className={`absolute top-0.5 left-0.5 h-4 w-4 rounded-full bg-white shadow transition-transform ${
+            value ? "translate-x-4" : "translate-x-0"
+          }`}
+        />
+      </span>
     </button>
   );
 }
