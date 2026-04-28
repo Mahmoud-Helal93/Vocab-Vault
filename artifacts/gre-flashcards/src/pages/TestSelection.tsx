@@ -1451,7 +1451,7 @@ function FinalOptionsGrid({
   ) => onChange({ ...config, [key]: value });
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3">
+    <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4">
       <OptionToggle
         icon={<Shuffle size={20} />}
         accent="orange"
@@ -1525,12 +1525,12 @@ function OptionToggle({
       type="button"
       onClick={() => onChange(!value)}
       aria-pressed={value}
-      className="group text-left rounded-xl border border-border bg-card px-4 py-3 flex items-center justify-between gap-3 transition-colors hover:bg-muted/40 hover:border-border/80"
+      className="group text-left rounded-xl border border-border bg-card px-5 py-4 min-w-[240px] flex items-center justify-between gap-4 transition-colors hover:bg-muted/40 hover:border-border/80"
     >
-      <span className="flex items-center gap-3 flex-1 min-w-0">
+      <span className="flex items-center gap-4 flex-1 min-w-0">
         {/* Colored icon square */}
         <span
-          className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 ${palette.icon}`}
+          className={`w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0 ${palette.icon}`}
         >
           {icon}
         </span>
