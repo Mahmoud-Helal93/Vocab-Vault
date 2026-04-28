@@ -1,0 +1,98 @@
+You are an expert React/TypeScript UI developer and UI layout designer.
+
+I want you to improve ONLY the visual balance of the “Choose Question Mix” section.
+
+Do NOT change:
+- question logic
+- question counts
+- presets
+- stepper behavior
+- selected values
+- question generation
+- any other page
+
+This is a layout and visual-balance improvement only.
+
+Current layout:
+LEFT COLUMN:
+- Multiple Choice
+- Select All
+
+RIGHT COLUMN:
+- True / False
+- Written Recall
+
+Problem:
+The two columns feel visually uneven because the left column has a tall Multiple Choice group and the right column has shorter groups with uneven spacing.
+
+Goal:
+Make both columns feel balanced, clean, and visually aligned while keeping the same question groups.
+
+==================================================
+TASK
+==================================================
+
+1. Keep the two-column desktop layout.
+
+2. Make the left and right columns use consistent vertical spacing:
+   - same gap between groups
+   - same row height for question type cards
+   - same padding inside group containers
+
+3. Make each question row/card have a consistent minimum height.
+Suggested:
+- min-h-[78px] or similar
+- align icon, text, availability, and stepper vertically centered
+
+4. Make group containers visually consistent:
+   - same border radius
+   - same border color
+   - same background
+   - same inner padding
+   - same header spacing
+
+5. Place groups so the visual weight is balanced:
+
+LEFT COLUMN:
+- Multiple Choice
+- Select All
+
+RIGHT COLUMN:
+- True / False
+- Written Recall
+
+6. If needed, make “Written Recall” appear as a compact group under True/False with the same width and row height as other groups.
+
+7. Avoid large empty gaps inside group containers.
+The right column should not have a huge empty space after Fill in the Blank.
+
+8. Do not stretch cards unnaturally just to force equal heights.
+The goal is visual balance, not fake equal height.
+
+9. On mobile, stack all groups in this order:
+- Multiple Choice
+- True / False
+- Written Recall
+- Select All
+
+==================================================
+VISUAL TARGET
+==================================================
+
+The section should look like a polished dashboard:
+- clean two-column grid
+- aligned group headers
+- balanced white space
+- consistent row heights
+- no cramped text
+- no oversized empty areas
+- selected counts remain easy to read
+
+==================================================
+AFTER FINISHING
+==================================================
+
+Summarize:
+- files modified
+- what layout balance changes were made
+- confirm no question logic or counts were changed

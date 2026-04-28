@@ -49,7 +49,6 @@ import {
 import {
   ALL_TEST_QUESTION_TYPES,
   EMPTY_AVAILABILITY,
-  TEST_QUESTION_GROUP_ORDER,
   TEST_QUESTION_TYPE_META,
   questionTypesByGroup,
   type AvailabilityByType,
@@ -1172,16 +1171,37 @@ function QuestionMixStep({
           </p>
         </div>
       ) : (
-        <div className="mt-5 grid gap-4 grid-cols-[repeat(auto-fit,minmax(320px,1fr))]">
-          {TEST_QUESTION_GROUP_ORDER.map((group) => (
-            <MixGroup
-              key={group}
-              group={group}
-              counts={counts}
-              availability={availability}
-              onSetCount={setCount}
-            />
-          ))}
+        <div className="mt-5 grid gap-4 lg:grid-cols-2 items-start">
+          {/* Mobile order: MCQ → True/False → Written Recall → Select All */}
+          {/* Desktop (2-col, row-major): MCQ | True/False  /  Select All | Written Recall */}
+          <MixGroup
+            group="MCQ"
+            counts={counts}
+            availability={availability}
+            onSetCount={setCount}
+            className="order-1 lg:order-1"
+          />
+          <MixGroup
+            group="True / False"
+            counts={counts}
+            availability={availability}
+            onSetCount={setCount}
+            className="order-2 lg:order-2"
+          />
+          <MixGroup
+            group="Fill in the Blank"
+            counts={counts}
+            availability={availability}
+            onSetCount={setCount}
+            className="order-3 lg:order-4"
+          />
+          <MixGroup
+            group="Synonym Pairing"
+            counts={counts}
+            availability={availability}
+            onSetCount={setCount}
+            className="order-4 lg:order-3"
+          />
         </div>
       )}
     </section>
@@ -1225,20 +1245,24 @@ function MixGroup({
   counts,
   availability,
   onSetCount,
+  className,
 }: {
   group: TestQuestionGroup;
   counts: CountsByType;
   availability: AvailabilityByType;
   onSetCount: (t: TestQuestionType, n: number) => void;
+  className?: string;
 }) {
   const meta = GROUP_META[group];
   const types = questionTypesByGroup()[group];
   const groupTotal = types.reduce((sum, t) => sum + (counts[t] ?? 0), 0);
 
   return (
-    <div className="space-y-2.5">
+    <div
+      className={`rounded-2xl border border-border bg-muted/20 p-4 ${className ?? ""}`}
+    >
       {/* Group header */}
-      <div className="flex items-center justify-between gap-2 px-1">
+      <div className="flex items-center justify-between gap-2 mb-3">
         <div className="flex items-center gap-2 min-w-0">
           <span
             className={`inline-flex items-center justify-center w-5 h-5 rounded-md bg-gradient-to-br ${meta.tone} text-white text-[10px] font-extrabold shrink-0`}
@@ -1290,7 +1314,7 @@ function MixRow({
   const disabled = available === 0;
   return (
     <div
-      className={`rounded-xl border px-3 py-3 flex items-start gap-3 transition-colors ${
+      className={`rounded-xl border px-3 py-3 min-h-[78px] flex items-center gap-3 transition-colors ${
         disabled
           ? "border-dashed border-border bg-muted/20 opacity-60"
           : "border-border bg-card hover:border-border/80"
