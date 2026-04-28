@@ -1275,7 +1275,7 @@ function MixGroup({
       className={`rounded-2xl border border-border bg-muted/20 p-3 ${className ?? ""}`}
     >
       {/* Group header */}
-      <div className="flex items-center justify-between gap-2 mb-3">
+      <div className="flex items-center justify-between gap-2 mb-2">
         <div className="flex items-center gap-2 min-w-0">
           <span
             className={`inline-flex items-center justify-center w-5 h-5 rounded-md bg-gradient-to-br ${meta.tone} text-white text-[10px] font-extrabold shrink-0`}
