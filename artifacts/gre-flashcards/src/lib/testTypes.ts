@@ -125,9 +125,9 @@ export const TEST_QUESTION_TYPE_META: Record<TestQuestionType, TestQuestionTypeM
 
 export const TEST_QUESTION_GROUP_ORDER: TestQuestionGroup[] = [
   "MCQ",
-  "Fill in the Blank",
-  "Synonym Pairing",
   "True / False",
+  "Synonym Pairing",
+  "Fill in the Blank",
 ];
 
 export function questionTypesByGroup(): Record<TestQuestionGroup, TestQuestionType[]> {
