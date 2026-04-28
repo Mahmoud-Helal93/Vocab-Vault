@@ -1334,7 +1334,7 @@ function MixRow({
     >
       {/* Colored icon square */}
       <span
-        className={`w-9 h-9 rounded-lg flex items-center justify-center shrink-0 ${
+        className={`w-8 h-8 rounded-lg flex items-center justify-center shrink-0 ${
           disabled
             ? "bg-muted text-muted-foreground"
             : GROUP_ICON_STYLE[group]
