@@ -1,0 +1,136 @@
+You are an expert React/TypeScript UI developer.
+
+Fix the text truncation issue in the "Final Options" section.
+
+Problem:
+The label "Confidence" is being truncated as "Confi..." due to insufficient space and/or overflow rules.
+
+Goal:
+Ensure that ALL option labels (Shuffle, Timer, Hints, Confidence) are ALWAYS fully visible and never truncated.
+
+==================================================
+REQUIRED FIXES
+==================================================
+
+1. REMOVE TRUNCATION BEHAVIOR
+
+Find any of the following on the label element:
+- truncate
+- overflow-hidden
+- text-ellipsis
+- whitespace-nowrap
+
+REMOVE them.
+
+--------------------------------------------------
+
+2. ALLOW TEXT TO EXPAND
+
+Ensure the label container uses:
+
+flex-1
+min-w-0  ← IMPORTANT for flex layouts
+
+But DO NOT combine with truncate.
+
+--------------------------------------------------
+
+3. PREVENT ICON FROM STEALING SPACE
+
+Icon container should be fixed size:
+
+flex-shrink-0
+w-10 h-10
+
+--------------------------------------------------
+
+4. ENSURE TOGGLE DOES NOT SHRINK TEXT
+
+Toggle container should be:
+
+flex-shrink-0
+
+--------------------------------------------------
+
+5. ADJUST CARD LAYOUT
+
+Each card should use:
+
+flex items-center justify-between gap-3
+
+Inside:
+
+LEFT:
+flex items-center gap-3 flex-1 min-w-0
+
+RIGHT:
+toggle (flex-shrink-0)
+
+--------------------------------------------------
+
+6. HANDLE SMALL SCREENS PROPERLY
+
+If screen becomes too narrow:
+
+DO NOT truncate text.
+
+Instead:
+- allow wrapping
+
+Add:
+
+whitespace-normal
+break-words
+
+Only if needed.
+
+--------------------------------------------------
+
+7. OPTIONAL WIDTH SAFETY
+
+If cards are too narrow causing truncation:
+
+Increase minimum width:
+
+min-w-[180px] or min-w-[200px]
+
+OR
+
+Adjust grid:
+
+grid-cols-4 → grid-cols-3 on medium screens
+
+--------------------------------------------------
+
+EXPECTED RESULT
+==================================================
+
+All labels should display fully:
+
+✔ Shuffle  
+✔ Timer  
+✔ Hints  
+✔ Confidence  
+
+No ellipsis.
+No clipping.
+No hidden text.
+
+==================================================
+DO NOT CHANGE
+==================================================
+
+- toggle logic
+- colors
+- icons
+- spacing system (unless required for fix)
+- behavior
+
+==================================================
+AFTER FIX
+==================================================
+
+Summarize:
+- what caused the truncation
+- what classes were removed
+- what layout adjustments were made

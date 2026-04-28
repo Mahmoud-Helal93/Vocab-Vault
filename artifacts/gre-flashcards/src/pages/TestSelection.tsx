@@ -1527,7 +1527,7 @@ function OptionToggle({
       aria-pressed={value}
       className="group text-left rounded-xl border border-border bg-card px-4 py-3 flex items-center justify-between gap-3 transition-colors hover:bg-muted/40 hover:border-border/80"
     >
-      <span className="flex items-center gap-3 min-w-0">
+      <span className="flex items-center gap-3 flex-1 min-w-0">
         {/* Colored icon square */}
         <span
           className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 ${palette.icon}`}
@@ -1536,7 +1536,7 @@ function OptionToggle({
         </span>
 
         {/* Label */}
-        <span className="text-sm font-medium text-foreground truncate">
+        <span className="text-sm font-medium text-foreground whitespace-normal break-words">
           {label}
         </span>
       </span>
