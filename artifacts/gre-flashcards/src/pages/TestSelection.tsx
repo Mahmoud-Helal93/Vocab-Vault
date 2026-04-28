@@ -1282,7 +1282,7 @@ function MixGroup({
           >
             {meta.letter}
           </span>
-          <h4 className="text-sm font-extrabold text-foreground">
+          <h4 className="text-sm text-foreground font-bold">
             {meta.label}
           </h4>
         </div>
@@ -1292,7 +1292,6 @@ function MixGroup({
           </span>
         )}
       </div>
-
       {/* Rows */}
       <div className="space-y-2">
         {types.map((t) => (
