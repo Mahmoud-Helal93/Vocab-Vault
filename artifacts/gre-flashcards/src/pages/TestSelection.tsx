@@ -1529,11 +1529,10 @@ function OptionToggle({
         </span>
 
         {/* Label */}
-        <span className="text-sm font-medium text-foreground leading-tight whitespace-normal break-words">
+        <span className="text-sm text-foreground leading-tight whitespace-normal break-words font-bold">
           {label}
         </span>
       </span>
-
       {/* Switch on the right */}
       <span
         className={`relative inline-flex h-5 w-9 rounded-full transition-colors shrink-0 ${
