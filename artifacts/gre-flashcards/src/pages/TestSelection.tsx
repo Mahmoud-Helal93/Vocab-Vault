@@ -1463,7 +1463,7 @@ function FinalOptionsGrid({
       <OptionToggle
         icon={<Hourglass size={14} />}
         accent="sky"
-        label="Show Timer"
+        label="Timer"
         description="Display elapsed time in the header."
         value={config.showTimer}
         onChange={(v) => set("showTimer", v)}
