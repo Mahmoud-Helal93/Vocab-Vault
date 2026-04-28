@@ -1344,17 +1344,15 @@ function MixRow({
       >
         {TYPE_ICONS[type]}
       </span>
-
       {/* Label + description */}
       <div className="min-w-0 flex-1">
-        <div className="text-sm font-extrabold text-foreground leading-tight">
+        <div className="text-sm text-foreground leading-tight font-semibold">
           {meta.label}
         </div>
         <p className="text-[11.5px] text-muted-foreground leading-snug mt-1">
           {meta.description}
         </p>
       </div>
-
       {/* Stack: available count above stepper */}
       <div className="flex flex-col items-end gap-1.5 shrink-0">
         <span
