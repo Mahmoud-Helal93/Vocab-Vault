@@ -1034,7 +1034,7 @@ const GROUP_META: Record<
   },
   "Synonym Pairing": {
     letter: "C",
-    label: "Select All",
+    label: "Synonym Pairing",
     tone: "from-cyan-500 to-blue-500",
   },
   "True / False": {
