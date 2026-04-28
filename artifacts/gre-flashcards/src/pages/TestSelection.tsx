@@ -1529,7 +1529,7 @@ function OptionToggle({
         </span>
 
         {/* Label */}
-        <span className="text-sm text-foreground leading-tight whitespace-normal break-words font-bold">
+        <span className="text-sm text-foreground leading-tight whitespace-normal break-words font-semibold">
           {label}
         </span>
       </span>
