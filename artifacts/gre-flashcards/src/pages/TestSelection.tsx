@@ -1469,7 +1469,7 @@ function FinalOptionsGrid({
       <OptionToggle
         icon={<Hash size={20} />}
         accent="pink"
-        label="Confidence"
+        label="Rating"
         value={config.confidenceRating}
         onChange={(v) => set("confidenceRating", v)}
       />
