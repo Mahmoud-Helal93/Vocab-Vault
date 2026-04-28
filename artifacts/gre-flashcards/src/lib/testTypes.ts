@@ -73,7 +73,7 @@ export const TEST_QUESTION_TYPE_META: Record<TestQuestionType, TestQuestionTypeM
   },
   "antonym-mcq": {
     id: "antonym-mcq",
-    label: "Antonym Recognition",
+    label: "Antonyms",
     short: "Antonym",
     group: "MCQ",
     description: "Pick the word that means the opposite.",
