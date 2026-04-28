@@ -79,7 +79,7 @@ export default function TestSelection({ onBack, onNavigate, mode }: TestSelectio
     <motion.div
       initial={{ opacity: 0, y: 8 }}
       animate={{ opacity: 1, y: 0 }}
-      className="max-w-[1240px] mx-auto px-4 lg:px-6 py-6 space-y-6"
+      className="max-w-[1500px] mx-auto px-6 lg:px-8 py-6 space-y-6"
     >
       <Header mode={mode} onBack={onBack} />
       {mode === "quick" ? (
@@ -451,9 +451,9 @@ function CustomPracticePanel({
   };
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
+    <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_360px] gap-6">
       {/* ── Left: Builder ───────────────────────────────────────────────── */}
-      <div className="lg:col-span-2 space-y-5">
+      <div className="min-w-0 space-y-5">
         {/* STEP 1: Source */}
         <SourceStep
           scopeKind={scopeKind}
@@ -468,11 +468,12 @@ function CustomPracticePanel({
           rangeTo={rangeTo}
           onRangeFromChange={setRangeFrom}
           onRangeToChange={setRangeTo}
-          filters={filters}
-          onFiltersChange={setFilters}
           totalScopeWords={totalScopeWords}
           sourceSummary={sourceSummary}
         />
+
+        {/* Filters (kept separate from Source per design) */}
+        <FiltersCard filters={filters} onFiltersChange={setFilters} />
 
         {/* STEP 2: Question Mix (with Final Options merged at the bottom) */}
         <QuestionMixStep
@@ -504,32 +505,26 @@ function CustomPracticePanel({
       </div>
 
       {/* ── Right: Sticky review sidebar ────────────────────────────────── */}
-      <aside className="lg:col-span-1">
-        <div className="lg:sticky lg:top-4 space-y-4">
-          <SessionSummaryCard
-            sourceSummary={sourceSummary}
-            totalScopeWords={totalScopeWords}
-            counts={effectiveCounts}
-            totalQuestions={totalQuestions}
-            shuffle={sessionConfig.shuffle}
-          />
-          <AvailabilityCard
-            availability={availability}
-            counts={effectiveCounts}
-            totalAvailable={totalAvailable}
-          />
-          <SamplePreviewCard
-            sample={scopeWords.slice(0, 8)}
-            total={totalScopeWords}
-          />
-          <StartCard
-            totalQuestions={totalQuestions}
-            disabled={!startable}
-            disabledReason={disabledReason}
-            onStart={start}
-            confidenceRating={sessionConfig.confidenceRating}
-          />
-        </div>
+      <aside className="lg:sticky lg:top-6 lg:self-start space-y-4">
+        <SessionSummaryCard
+          sourceSummary={sourceSummary}
+          totalScopeWords={totalScopeWords}
+          counts={effectiveCounts}
+          totalQuestions={totalQuestions}
+          shuffle={sessionConfig.shuffle}
+        />
+        <AvailabilityCard
+          availability={availability}
+          counts={effectiveCounts}
+          totalAvailable={totalAvailable}
+        />
+        <StartCard
+          totalQuestions={totalQuestions}
+          disabled={!startable}
+          disabledReason={disabledReason}
+          onStart={start}
+          confidenceRating={sessionConfig.confidenceRating}
+        />
       </aside>
     </div>
   );
@@ -552,8 +547,6 @@ function SourceStep({
   rangeTo,
   onRangeFromChange,
   onRangeToChange,
-  filters,
-  onFiltersChange,
   totalScopeWords,
   sourceSummary,
 }: {
@@ -569,65 +562,114 @@ function SourceStep({
   rangeTo: number;
   onRangeFromChange: (n: number) => void;
   onRangeToChange: (n: number) => void;
-  filters: Filters;
-  onFiltersChange: (f: Filters) => void;
   totalScopeWords: number;
   sourceSummary: string;
 }) {
+  const hasWords = totalScopeWords > 0;
   return (
-    <Section
-      step="1"
-      icon={<Layers size={16} />}
-      title="Choose Source"
-      subtitle="Where to pull words from."
-    >
+    <section className="rounded-2xl border border-border bg-card shadow-sm p-6">
+      {/* Custom header: small purple icon + "1. Choose Source" */}
+      <header className="flex items-center gap-3 mb-5">
+        <div className="w-9 h-9 rounded-xl bg-violet-100 dark:bg-violet-500/15 text-violet-600 dark:text-violet-300 flex items-center justify-center shrink-0">
+          <Layers size={18} />
+        </div>
+        <div className="min-w-0">
+          <h3 className="text-base font-extrabold text-foreground leading-tight">
+            1. Choose Source
+          </h3>
+          <p className="text-xs text-muted-foreground mt-0.5">
+            Where to pull words from.
+          </p>
+        </div>
+      </header>
+
       <ScopeKindTabs value={scopeKind} onChange={onScopeKindChange} />
 
+      {/* Wide selector row + stat card */}
+      <div className="mt-5">
+        {scopeKind === "all" ? (
+          <AllScopeSummary />
+        ) : (
+          <div className="flex items-stretch gap-3 rounded-xl border border-border bg-muted/30 p-3">
+            <div className="flex-1 min-w-0 flex items-stretch gap-3">
+              {scopeKind === "belt" && (
+                <div className="flex-1 min-w-0">
+                  <ScopeBeltSelect
+                    value={selectedBelt}
+                    onChange={onBeltChange}
+                  />
+                </div>
+              )}
+              {scopeKind === "mission" && (
+                <div className="flex-1 min-w-0">
+                  <ScopeMissionSelect
+                    value={selectedMission}
+                    onChange={onMissionChange}
+                  />
+                </div>
+              )}
+              {scopeKind === "set" && (
+                <ScopeSetSelect
+                  value={selectedSet}
+                  onChange={onSetChange}
+                />
+              )}
+              {scopeKind === "range" && (
+                <div className="flex-1 min-w-0">
+                  <ScopeRangeSelect
+                    from={rangeFrom}
+                    to={rangeTo}
+                    onFromChange={onRangeFromChange}
+                    onToChange={onRangeToChange}
+                  />
+                </div>
+              )}
+            </div>
+
+            {/* Vertical divider */}
+            <div className="hidden sm:block w-px bg-border self-stretch" />
+
+            {/* Stat card */}
+            <div className="w-[88px] shrink-0 rounded-xl bg-card border border-border flex flex-col items-center justify-center px-3 py-2 self-stretch">
+              <span
+                className={`text-2xl font-extrabold tabular-nums leading-none ${
+                  hasWords
+                    ? "text-foreground"
+                    : "text-rose-600 dark:text-rose-300"
+                }`}
+              >
+                {totalScopeWords.toLocaleString()}
+              </span>
+              <span className="text-[10px] font-bold uppercase text-muted-foreground tracking-wide mt-1">
+                words
+              </span>
+            </div>
+          </div>
+        )}
+      </div>
+
+      {/* Status line */}
       <div className="mt-4">
-        {scopeKind === "all" && <AllScopeSummary />}
-        {scopeKind === "belt" && (
-          <ScopeBeltSelect value={selectedBelt} onChange={onBeltChange} />
-        )}
-        {scopeKind === "mission" && (
-          <ScopeMissionSelect
-            value={selectedMission}
-            onChange={onMissionChange}
-          />
-        )}
-        {scopeKind === "set" && (
-          <ScopeSetSelect value={selectedSet} onChange={onSetChange} />
-        )}
-        {scopeKind === "range" && (
-          <ScopeRangeSelect
-            from={rangeFrom}
-            to={rangeTo}
-            onFromChange={onRangeFromChange}
-            onToChange={onRangeToChange}
-          />
+        {hasWords ? (
+          <div className="inline-flex items-center gap-2 rounded-full bg-emerald-50 dark:bg-emerald-500/10 border border-emerald-200 dark:border-emerald-500/30 px-3 py-1.5 text-xs">
+            <CheckCircle2
+              size={14}
+              className="text-emerald-600 dark:text-emerald-400"
+            />
+            <span className="font-bold text-foreground">{sourceSummary}</span>
+            <span className="text-muted-foreground">
+              · {totalScopeWords.toLocaleString()} words
+            </span>
+          </div>
+        ) : (
+          <div className="inline-flex items-center gap-2 rounded-full bg-rose-50 dark:bg-rose-500/10 border border-rose-200 dark:border-rose-500/30 px-3 py-1.5 text-xs">
+            <Info size={14} className="text-rose-600 dark:text-rose-300" />
+            <span className="font-bold text-foreground">{sourceSummary}</span>
+            <span className="text-muted-foreground">· no words</span>
+          </div>
         )}
       </div>
-
-      {/* Compact filters */}
-      <div className="mt-5 pt-4 border-t border-border">
-        <FilterChips value={filters} onChange={onFiltersChange} />
-      </div>
-
-      {/* Source summary footer */}
-      <div className="mt-4 pt-3 border-t border-border flex items-center justify-between gap-3 text-xs">
-        <span className="text-muted-foreground">
-          <span className="font-bold text-foreground">{sourceSummary}</span>
-        </span>
-        <span
-          className={`tabular-nums font-extrabold px-2 py-1 rounded-full ${
-            totalScopeWords === 0
-              ? "bg-rose-100 text-rose-700 dark:bg-rose-500/20 dark:text-rose-200"
-              : "bg-orange-100 text-orange-700 dark:bg-orange-500/20 dark:text-orange-300"
-          }`}
-        >
-          {totalScopeWords.toLocaleString()} words
-        </span>
-      </div>
-    </Section>
+    </section>
   );
 }
 
@@ -748,33 +790,38 @@ function ScopeSetSelect({
     onChange(first);
   };
   return (
-    <div className="space-y-3">
-      <NavSelect
-        label="Mission"
-        value={value.day}
-        min={1}
-        max={TOTAL_MISSIONS}
-        onChange={onMissionChange}
-        options={Array.from({ length: TOTAL_MISSIONS }, (_, i) => i + 1)}
-        renderOption={(m) => (
-          <option key={m} value={m}>
-            Mission {m}
-          </option>
-        )}
-      />
-      <NavSelect
-        label="Set"
-        value={value.group}
-        min={sets[0]?.group ?? 1}
-        max={sets[sets.length - 1]?.group ?? 3}
-        onChange={(g) => onChange({ day: value.day, group: g })}
-        options={sets.map((s) => s.group)}
-        renderOption={(g) => (
-          <option key={g} value={g}>
-            Set {g}
-          </option>
-        )}
-      />
+    <div className="flex-1 min-w-0 flex items-stretch gap-3">
+      <div className="flex-1 min-w-0">
+        <NavSelect
+          label="Mission"
+          value={value.day}
+          min={1}
+          max={TOTAL_MISSIONS}
+          onChange={onMissionChange}
+          options={Array.from({ length: TOTAL_MISSIONS }, (_, i) => i + 1)}
+          renderOption={(m) => (
+            <option key={m} value={m}>
+              Mission {m}
+            </option>
+          )}
+        />
+      </div>
+      <div className="hidden sm:block w-px bg-border self-stretch" />
+      <div className="flex-1 min-w-0">
+        <NavSelect
+          label="Set"
+          value={value.group}
+          min={sets[0]?.group ?? 1}
+          max={sets[sets.length - 1]?.group ?? 3}
+          onChange={(g) => onChange({ day: value.day, group: g })}
+          options={sets.map((s) => s.group)}
+          renderOption={(g) => (
+            <option key={g} value={g}>
+              Set {g}
+            </option>
+          )}
+        />
+      </div>
     </div>
   );
 }
@@ -978,6 +1025,20 @@ function FilterChips({
         })}
       </div>
     </div>
+  );
+}
+
+function FiltersCard({
+  filters,
+  onFiltersChange,
+}: {
+  filters: Filters;
+  onFiltersChange: (f: Filters) => void;
+}) {
+  return (
+    <section className="rounded-2xl border border-border bg-card shadow-sm px-5 py-4">
+      <FilterChips value={filters} onChange={onFiltersChange} />
+    </section>
   );
 }
 
