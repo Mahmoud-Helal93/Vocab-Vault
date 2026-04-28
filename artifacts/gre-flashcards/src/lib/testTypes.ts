@@ -65,7 +65,7 @@ export const TEST_QUESTION_TYPE_META: Record<TestQuestionType, TestQuestionTypeM
   },
   "synonym-mcq": {
     id: "synonym-mcq",
-    label: "Synonym Recognition",
+    label: "Synonyms",
     short: "Synonym",
     group: "MCQ",
     description: "Pick the word that means the same thing.",
