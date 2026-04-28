@@ -19,7 +19,6 @@ import {
   Plus,
   AlertCircle,
   Wand2,
-  Eye,
   Hash,
   Hourglass,
   Lightbulb,
@@ -421,17 +420,6 @@ function CustomPracticePanel({
 
   const clearAll = () => setCounts({});
 
-  // ─── Disabled reason for the Start button ──────────────────────────────
-  const disabledReason: string | null = useMemo(() => {
-    if (totalScopeWords === 0)
-      return "No words match this source. Adjust the source above.";
-    if (totalAvailable === 0)
-      return "No question types are available for this source.";
-    if (totalQuestions === 0)
-      return "Pick at least one question — try a preset to get started.";
-    return null;
-  }, [totalScopeWords, totalAvailable, totalQuestions]);
-
   // ─── Start ─────────────────────────────────────────────────────────────
   const start = () => {
     if (!startable) return;
@@ -514,9 +502,7 @@ function CustomPracticePanel({
         <StartCard
           totalQuestions={totalQuestions}
           disabled={!startable}
-          disabledReason={disabledReason}
           onStart={start}
-          confidenceRating={sessionConfig.confidenceRating}
         />
       </aside>
     </div>
@@ -1615,16 +1601,16 @@ function SessionSummaryCard({
           value={totalScopeWords.toLocaleString()}
         />
         <SummaryRow
-          label="Total questions"
+          label="Questions selected"
           value={totalQuestions.toLocaleString()}
           strong
         />
-        <SummaryRow label="Order" value={shuffle ? "Shuffled" : "In sequence"} />
+        <SummaryRow label="Shuffle" value={shuffle ? "On" : "Off"} />
       </dl>
       {picked.length > 0 && (
         <div className="mt-3 pt-3 border-t border-border">
           <p className="text-[11px] font-bold text-muted-foreground uppercase tracking-wider mb-2">
-            Selected mix
+            Selected Mix
           </p>
           <ul className="space-y-1.5">
             {picked.map((t) => {
@@ -1639,7 +1625,7 @@ function SessionSummaryCard({
                       {TYPE_ICONS[t]}
                     </span>
                     <span className="truncate font-bold text-foreground/80">
-                      {meta.short}
+                      {meta.label}
                     </span>
                   </span>
                   <span className="tabular-nums font-extrabold text-foreground shrink-0">
@@ -1693,7 +1679,7 @@ function AvailabilityCard({
   return (
     <section className="rounded-2xl border border-border bg-card shadow-sm p-5">
       <h3 className="text-xs font-extrabold text-foreground uppercase tracking-wider mb-3">
-        Availability
+        Availability Overview
       </h3>
       <ul className="space-y-2">
         {ALL_TEST_QUESTION_TYPES.map((t) => {
@@ -1743,66 +1729,14 @@ function AvailabilityCard({
   );
 }
 
-function SamplePreviewCard({
-  sample,
-  total,
-}: {
-  sample: ReturnType<typeof selectWords>;
-  total: number;
-}) {
-  if (total === 0) {
-    return (
-      <section className="rounded-2xl border border-dashed border-border bg-card/50 p-5">
-        <h3 className="inline-flex items-center gap-1.5 text-xs font-extrabold text-foreground uppercase tracking-wider">
-          <Eye size={12} />
-          Sample
-        </h3>
-        <p className="mt-2 text-xs text-muted-foreground">
-          Adjust the source to see a preview of words you’ll practice.
-        </p>
-      </section>
-    );
-  }
-  return (
-    <section className="rounded-2xl border border-border bg-card shadow-sm p-5">
-      <div className="flex items-center justify-between mb-2">
-        <h3 className="inline-flex items-center gap-1.5 text-xs font-extrabold text-foreground uppercase tracking-wider">
-          <Eye size={12} />
-          Sample preview
-        </h3>
-        <span className="text-[10px] text-muted-foreground tabular-nums">
-          {sample.length} of {total.toLocaleString()}
-        </span>
-      </div>
-      <ul className="space-y-1.5">
-        {sample.map((w) => (
-          <li
-            key={w.id}
-            className="flex items-center justify-between gap-3 text-xs"
-          >
-            <span className="font-bold text-foreground truncate">{w.word}</span>
-            <span className="text-muted-foreground shrink-0 text-[10px] tabular-nums">
-              M{w.day} · S{w.group}
-            </span>
-          </li>
-        ))}
-      </ul>
-    </section>
-  );
-}
-
 function StartCard({
   totalQuestions,
   disabled,
-  disabledReason,
   onStart,
-  confidenceRating,
 }: {
   totalQuestions: number;
   disabled: boolean;
-  disabledReason: string | null;
   onStart: () => void;
-  confidenceRating: boolean;
 }) {
   return (
     <section className="rounded-2xl border border-border bg-card shadow-sm p-5">
@@ -1810,27 +1744,24 @@ function StartCard({
         type="button"
         disabled={disabled}
         onClick={onStart}
-        className="w-full inline-flex items-center justify-center gap-2 rounded-xl px-4 py-3 text-sm font-extrabold btn-brand disabled:opacity-50 disabled:cursor-not-allowed disabled:shadow-none"
+        className="w-full inline-flex items-center justify-center gap-2 rounded-xl px-4 py-3.5 text-sm font-extrabold btn-brand disabled:opacity-50 disabled:cursor-not-allowed disabled:shadow-none"
       >
         {totalQuestions > 0
           ? `Start Practice · ${totalQuestions} question${totalQuestions === 1 ? "" : "s"}`
           : "Start Practice"}
         <ChevronRight size={16} />
       </button>
-      <p className="mt-2 text-[11px] text-muted-foreground text-center">
-        {disabled && disabledReason ? (
+      <p className="mt-2.5 text-[11.5px] text-muted-foreground text-center leading-snug">
+        {disabled || totalQuestions === 0 ? (
           <span className="inline-flex items-center gap-1.5 text-amber-700 dark:text-amber-300 font-bold">
             <AlertCircle size={11} />
-            {disabledReason}
+            Pick at least one question — try a preset to get started.
           </span>
-        ) : totalQuestions > 0 ? (
+        ) : (
           <>
             {totalQuestions} question{totalQuestions === 1 ? "" : "s"} ready ·
             Immediate feedback
-            {confidenceRating ? " · confidence rating" : ""}
           </>
-        ) : (
-          "Pick a preset to get started fast."
         )}
       </p>
     </section>
