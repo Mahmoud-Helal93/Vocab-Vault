@@ -482,9 +482,7 @@ function CustomPracticePanel({
           counts={counts}
           onCountsChange={setCounts}
           onApplyPreset={applyPreset}
-          onApplyAllAvailable={applyAllAvailable}
           onClearAll={clearAll}
-          totalAvailable={totalAvailable}
           totalQuestions={totalQuestions}
         />
 
@@ -1073,15 +1071,25 @@ const GROUP_META: Record<
 };
 
 const TYPE_ICONS: Record<TestQuestionType, React.ReactNode> = {
-  "word-to-def": <ListChecks size={12} />,
-  "def-to-word": <ListChecks size={12} />,
-  "synonym-mcq": <Sparkles size={12} />,
-  "antonym-mcq": <Sparkles size={12} />,
-  "fill-blank": <Hash size={12} />,
-  "synonym-pair": <Boxes size={12} />,
-  "tf-definition": <CheckCircle2 size={12} />,
-  "tf-synonym": <CheckCircle2 size={12} />,
-  "tf-antonym": <CheckCircle2 size={12} />,
+  "word-to-def": <ListChecks size={16} />,
+  "def-to-word": <ListChecks size={16} />,
+  "synonym-mcq": <Sparkles size={16} />,
+  "antonym-mcq": <Sparkles size={16} />,
+  "fill-blank": <Hash size={16} />,
+  "synonym-pair": <Boxes size={16} />,
+  "tf-definition": <CheckCircle2 size={16} />,
+  "tf-synonym": <CheckCircle2 size={16} />,
+  "tf-antonym": <CheckCircle2 size={16} />,
+};
+
+const GROUP_ICON_STYLE: Record<TestQuestionGroup, string> = {
+  MCQ: "bg-violet-100 text-violet-600 dark:bg-violet-500/15 dark:text-violet-300",
+  "Fill in the Blank":
+    "bg-orange-100 text-orange-600 dark:bg-orange-500/15 dark:text-orange-300",
+  "Synonym Pairing":
+    "bg-cyan-100 text-cyan-600 dark:bg-cyan-500/15 dark:text-cyan-300",
+  "True / False":
+    "bg-emerald-100 text-emerald-600 dark:bg-emerald-500/15 dark:text-emerald-300",
 };
 
 function QuestionMixStep({
@@ -1090,9 +1098,7 @@ function QuestionMixStep({
   counts,
   onCountsChange,
   onApplyPreset,
-  onApplyAllAvailable,
   onClearAll,
-  totalAvailable,
   totalQuestions,
 }: {
   availability: AvailabilityByType;
@@ -1100,9 +1106,7 @@ function QuestionMixStep({
   counts: CountsByType;
   onCountsChange: (c: CountsByType) => void;
   onApplyPreset: (p: MixPreset) => void;
-  onApplyAllAvailable: () => void;
   onClearAll: () => void;
-  totalAvailable: number;
   totalQuestions: number;
 }) {
   const setCount = (t: TestQuestionType, n: number) => {
@@ -1120,12 +1124,23 @@ function QuestionMixStep({
   const sourceEmpty = totalScopeWords === 0;
 
   return (
-    <Section
-      step="2"
-      icon={<ListChecks size={16} />}
-      title="Choose Question Mix"
-      subtitle="Pick how many of each type to include. Each row caps at the live availability."
-    >
+    <section className="rounded-2xl border border-border bg-card shadow-sm p-6">
+      {/* Custom header */}
+      <header className="flex items-center gap-3 mb-5">
+        <div className="w-9 h-9 rounded-xl bg-orange-100 dark:bg-orange-500/15 text-orange-600 dark:text-orange-300 flex items-center justify-center shrink-0">
+          <ListChecks size={18} />
+        </div>
+        <div className="min-w-0">
+          <h3 className="text-base font-extrabold text-foreground leading-tight">
+            2. Choose Question Mix
+          </h3>
+          <p className="text-xs text-muted-foreground mt-0.5">
+            Pick how many of each type to include. Each row caps at the live
+            availability.
+          </p>
+        </div>
+      </header>
+
       {/* Presets */}
       <div className="flex flex-wrap items-center gap-1.5">
         <span className="inline-flex items-center gap-1.5 text-[11px] font-bold text-muted-foreground uppercase tracking-wide mr-1">
@@ -1142,12 +1157,6 @@ function QuestionMixStep({
           />
         ))}
         <PresetButton
-          label="All Available"
-          disabled={sourceEmpty || totalAvailable === 0}
-          title={`Add every available question (${totalAvailable.toLocaleString()})`}
-          onClick={onApplyAllAvailable}
-        />
-        <PresetButton
           label="Clear All"
           variant="ghost"
           disabled={totalQuestions === 0}
@@ -1163,7 +1172,7 @@ function QuestionMixStep({
           </p>
         </div>
       ) : (
-        <div className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-3">
+        <div className="mt-5 grid gap-4 grid-cols-[repeat(auto-fit,minmax(320px,1fr))]">
           {TEST_QUESTION_GROUP_ORDER.map((group) => (
             <MixGroup
               key={group}
@@ -1175,7 +1184,7 @@ function QuestionMixStep({
           ))}
         </div>
       )}
-    </Section>
+    </section>
   );
 }
 
@@ -1227,7 +1236,8 @@ function MixGroup({
   const groupTotal = types.reduce((sum, t) => sum + (counts[t] ?? 0), 0);
 
   return (
-    <div className="rounded-2xl border border-border bg-muted/20 p-3 space-y-2">
+    <div className="space-y-2.5">
+      {/* Group header */}
       <div className="flex items-center justify-between gap-2 px-1">
         <div className="flex items-center gap-2 min-w-0">
           <span
@@ -1235,19 +1245,24 @@ function MixGroup({
           >
             {meta.letter}
           </span>
-          <h4 className="text-xs font-extrabold text-foreground truncate">
+          <h4 className="text-sm font-extrabold text-foreground">
             {meta.label}
           </h4>
         </div>
-        <span className="text-[10px] tabular-nums font-bold text-muted-foreground">
-          {groupTotal} picked
-        </span>
+        {groupTotal > 0 && (
+          <span className="text-[10px] tabular-nums font-bold text-muted-foreground">
+            {groupTotal} picked
+          </span>
+        )}
       </div>
-      <div className="space-y-1.5">
+
+      {/* Rows */}
+      <div className="space-y-2">
         {types.map((t) => (
           <MixRow
             key={t}
             type={t}
+            group={group}
             count={counts[t] ?? 0}
             available={availability[t]}
             onChange={(n) => onSetCount(t, n)}
@@ -1260,11 +1275,13 @@ function MixGroup({
 
 function MixRow({
   type,
+  group,
   count,
   available,
   onChange,
 }: {
   type: TestQuestionType;
+  group: TestQuestionGroup;
   count: number;
   available: number;
   onChange: (n: number) => void;
@@ -1273,42 +1290,52 @@ function MixRow({
   const disabled = available === 0;
   return (
     <div
-      className={`rounded-xl border bg-card px-2.5 py-2 flex items-center gap-2.5 ${
-        disabled ? "opacity-60 border-dashed" : "border-border"
+      className={`rounded-xl border px-3 py-3 flex items-start gap-3 transition-colors ${
+        disabled
+          ? "border-dashed border-border bg-muted/20 opacity-60"
+          : "border-border bg-card hover:border-border/80"
       }`}
     >
+      {/* Colored icon square */}
       <span
-        className="w-6 h-6 rounded-md bg-muted text-foreground/80 flex items-center justify-center shrink-0"
+        className={`w-9 h-9 rounded-lg flex items-center justify-center shrink-0 ${
+          disabled
+            ? "bg-muted text-muted-foreground"
+            : GROUP_ICON_STYLE[group]
+        }`}
         title={meta.description}
       >
         {TYPE_ICONS[type]}
       </span>
+
+      {/* Label + description */}
       <div className="min-w-0 flex-1">
-        <div className="flex items-center gap-1.5">
-          <span className="text-[12px] font-extrabold text-foreground truncate">
-            {meta.short}
-          </span>
-          <span
-            className={`text-[10px] tabular-nums font-bold px-1.5 py-0.5 rounded-full ${
-              disabled
-                ? "bg-muted text-muted-foreground"
-                : "bg-emerald-100 text-emerald-700 dark:bg-emerald-500/20 dark:text-emerald-300"
-            }`}
-            title="Maximum available for current source"
-          >
-            {available} avail
-          </span>
+        <div className="text-sm font-extrabold text-foreground leading-tight">
+          {meta.label}
         </div>
-        <p className="text-[10.5px] text-muted-foreground leading-snug truncate">
-          {disabled ? "No questions available for this source." : meta.description}
+        <p className="text-[11.5px] text-muted-foreground leading-snug mt-1">
+          {meta.description}
         </p>
       </div>
-      <CountStepper
-        value={count}
-        max={available}
-        disabled={disabled}
-        onChange={onChange}
-      />
+
+      {/* Stack: available count above stepper */}
+      <div className="flex flex-col items-end gap-1.5 shrink-0">
+        <span
+          className={`text-[10.5px] tabular-nums font-bold whitespace-nowrap ${
+            disabled
+              ? "text-muted-foreground"
+              : "text-emerald-600 dark:text-emerald-400"
+          }`}
+        >
+          {available.toLocaleString()} available
+        </span>
+        <CountStepper
+          value={count}
+          max={available}
+          disabled={disabled}
+          onChange={onChange}
+        />
+      </div>
     </div>
   );
 }
@@ -1326,17 +1353,16 @@ function CountStepper({
 }) {
   const dec = () => onChange(Math.max(0, value - 1));
   const inc = () => onChange(Math.min(max, value + 1));
-  const setMax = () => onChange(max);
   return (
     <div className="flex items-center gap-1 shrink-0">
       <button
         type="button"
         onClick={dec}
         disabled={disabled || value <= 0}
-        className="w-7 h-7 rounded-lg bg-muted text-foreground/80 border border-border hover:bg-muted/70 disabled:opacity-30 disabled:cursor-not-allowed flex items-center justify-center"
+        className="w-8 h-8 rounded-lg bg-muted text-foreground/80 border border-border hover:bg-muted/70 disabled:opacity-30 disabled:cursor-not-allowed flex items-center justify-center transition-colors"
         aria-label="Decrease count"
       >
-        <Minus size={12} />
+        <Minus size={14} />
       </button>
       <input
         type="number"
@@ -1349,25 +1375,16 @@ function CountStepper({
           if (Number.isNaN(n)) return;
           onChange(Math.max(0, Math.min(max, n)));
         }}
-        className="w-10 text-center text-xs font-extrabold tabular-nums px-1 py-1 rounded-lg bg-card border border-border focus:outline-none focus:ring-2 focus:ring-orange-300/40 disabled:opacity-50"
+        className="w-10 h-8 text-center text-sm font-extrabold tabular-nums px-1 rounded-lg bg-card border border-border focus:outline-none focus:ring-2 focus:ring-orange-300/40 disabled:opacity-50"
       />
       <button
         type="button"
         onClick={inc}
         disabled={disabled || value >= max}
-        className="w-7 h-7 rounded-lg bg-muted text-foreground/80 border border-border hover:bg-muted/70 disabled:opacity-30 disabled:cursor-not-allowed flex items-center justify-center"
+        className="w-8 h-8 rounded-lg bg-muted text-foreground/80 border border-border hover:bg-muted/70 disabled:opacity-30 disabled:cursor-not-allowed flex items-center justify-center transition-colors"
         aria-label="Increase count"
       >
-        <Plus size={12} />
-      </button>
-      <button
-        type="button"
-        onClick={setMax}
-        disabled={disabled || value === max}
-        className="text-[10px] font-extrabold px-1.5 py-1 rounded-md text-orange-600 hover:bg-orange-50 dark:text-orange-300 dark:hover:bg-orange-500/10 disabled:opacity-30 disabled:cursor-not-allowed"
-        title="Set to max available"
-      >
-        Max
+        <Plus size={14} />
       </button>
     </div>
   );
