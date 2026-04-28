@@ -1455,7 +1455,7 @@ function FinalOptionsGrid({
       <OptionToggle
         icon={<Shuffle size={14} />}
         accent="orange"
-        label="Shuffle Questions"
+        label="Shuffle"
         description="Mix the question order across types."
         value={config.shuffle}
         onChange={(v) => set("shuffle", v)}
