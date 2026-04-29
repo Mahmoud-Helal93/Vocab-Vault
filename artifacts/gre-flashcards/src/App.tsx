@@ -20,7 +20,11 @@ import TestMode from "@/pages/TestMode";
 import TestHistory from "@/pages/TestHistory";
 import GRESimulation from "@/pages/GRESimulation";
 import ReviewPage from "@/pages/ReviewPage";
-import ReviewSession, { type ReviewSessionConfig } from "@/pages/ReviewSession";
+import ReviewSession, {
+  type ReviewSessionConfig,
+  type RatingEntry,
+} from "@/pages/ReviewSession";
+import ReviewResult from "@/pages/ReviewResult";
 import SidebarSearch from "@/components/SidebarSearch";
 import BadgeToast from "@/components/BadgeToast";
 import GlobalStatsBar from "@/components/GlobalStatsBar";
@@ -32,7 +36,7 @@ import {
   Trophy, Bookmark, Library, FlaskConical, RotateCcw,
 } from "lucide-react";
 
-type Page = "dashboard" | "study" | "test" | "test-selection" | "practice" | "test-mode" | "test-history" | "gre-simulation" | "review" | "review-session" | "settings" | "analytics" | "progress" | "achievements" | "mission-test" | "set-test" | "bookmarks" | "mission-detail" | "set-reading" | "story-library";
+type Page = "dashboard" | "study" | "test" | "test-selection" | "practice" | "test-mode" | "test-history" | "gre-simulation" | "review" | "review-session" | "review-result" | "settings" | "analytics" | "progress" | "achievements" | "mission-test" | "set-test" | "bookmarks" | "mission-detail" | "set-reading" | "story-library";
 
 const NAV_ITEMS: Array<{ id: Page; icon: React.ReactNode; label: string }> = [
   { id: "dashboard",     icon: <LayoutDashboard size={18} />, label: "Home" },
@@ -148,6 +152,22 @@ function MainApp() {
                 | undefined) ?? null
             }
             onBack={() => goBack(() => setPage("review"))}
+            onNavigate={navigate}
+          />
+        );
+      case "review-result":
+        return (
+          <ReviewResult
+            ratings={(pageParams.ratings as RatingEntry[]) ?? []}
+            total={(pageParams.total as number) ?? 0}
+            elapsed={(pageParams.elapsed as number) ?? 0}
+            timerEnabled={Boolean(pageParams.timerEnabled)}
+            config={pageParams.config as ReviewSessionConfig}
+            onBack={() => {
+              setPage("review");
+              setPageParams({});
+            }}
+            onNavigate={navigate}
           />
         );
       case "analytics":

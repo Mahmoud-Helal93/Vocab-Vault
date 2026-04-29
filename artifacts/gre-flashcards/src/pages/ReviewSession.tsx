@@ -47,11 +47,20 @@ export interface ReviewSessionConfig {
   cardMode: CardMode;
   shuffleMode: ShuffleMode;
   timerEnabled: boolean;
+  /**
+   * Optional explicit word-id list. When present the session is built from
+   * exactly these words (in this order), ignoring mode/belt/filter scoping.
+   * Used by Review Result's "Review Again / Hard cards" CTAs.
+   */
+  overrideWordIds?: string[];
+  /** Optional display title override for sessions started from Review Result. */
+  overrideTitle?: string;
 }
 
 interface ReviewSessionProps {
   config: ReviewSessionConfig;
   onBack: () => void;
+  onNavigate: (page: string, params?: Record<string, unknown>) => void;
   /** When provided, restore an interrupted session instead of building a new one. */
   resume?: ResumeSessionRecord | null;
 }
@@ -181,6 +190,17 @@ function buildSessionWords(
   config: ReviewSessionConfig,
   allWords: Word[],
 ): Word[] {
+  // Override path — used when starting a focused session from Review Result.
+  if (config.overrideWordIds && config.overrideWordIds.length > 0) {
+    const byId = new Map(allWords.map((w) => [w.id, w] as const));
+    const out: Word[] = [];
+    for (const id of config.overrideWordIds) {
+      const w = byId.get(id);
+      if (w) out.push(w);
+    }
+    return out;
+  }
+
   if (config.mode === "cumulative") {
     const m = Math.max(1, Math.min(TOTAL_DAYS, config.cumulativeMission ?? 1));
     const pool = allWords.filter((w) => w.day <= m);
@@ -277,6 +297,7 @@ function formatClock(secs: number): string {
 export default function ReviewSession({
   config,
   onBack,
+  onNavigate,
   resume,
 }: ReviewSessionProps) {
   const { words } = useApp();
@@ -339,7 +360,14 @@ export default function ReviewSession({
     return counts;
   }, [ratings]);
 
-  const title = config.mode === "cumulative" ? "Cumulative Review" : "Smart Review";
+  const isOverrideSession = Boolean(
+    config.overrideWordIds && config.overrideWordIds.length > 0,
+  );
+  const title = config.overrideTitle
+    ? config.overrideTitle
+    : config.mode === "cumulative"
+      ? "Cumulative Review"
+      : "Smart Review";
   const directionLabel =
     config.cardMode === "front" ? "Word → Meaning" : "Meaning → Word";
 
@@ -484,6 +512,25 @@ export default function ReviewSession({
     }
   }, [index, sessionWords.length]);
 
+  // Navigate to the dedicated Review Result page exactly once on completion.
+  const navigatedToResultRef = useRef(false);
+  useEffect(() => {
+    if (
+      sessionWords.length > 0 &&
+      index >= sessionWords.length &&
+      !navigatedToResultRef.current
+    ) {
+      navigatedToResultRef.current = true;
+      onNavigate("review-result", {
+        ratings,
+        total: sessionWords.length,
+        elapsed,
+        timerEnabled: config.timerEnabled,
+        config,
+      });
+    }
+  }, [index, sessionWords.length, ratings, elapsed, config, onNavigate]);
+
   // ── Cumulative grouping progress ──
   const groupingProgress = useMemo(() => {
     if (config.mode !== "cumulative" || isComplete || !current) return null;
@@ -537,16 +584,16 @@ export default function ReviewSession({
   }
 
   if (isComplete) {
+    // The completion-navigation effect above is firing this same render to
+    // jump to the dedicated Review Result page. Render a tiny placeholder
+    // so we don't flash the previous card during the transition.
     return (
-      <CompletionScreen
-        title={title}
-        total={total}
-        ratings={ratings}
-        ratingCounts={ratingCounts}
-        elapsed={elapsed}
-        timerEnabled={config.timerEnabled}
-        onBack={onBack}
-      />
+      <div className="min-h-screen bg-background text-foreground flex items-center justify-center">
+        <div className="inline-flex items-center gap-2 text-sm text-muted-foreground">
+          <Sparkles size={16} />
+          Wrapping up…
+        </div>
+      </div>
     );
   }
 
@@ -573,7 +620,7 @@ export default function ReviewSession({
               <span className="text-[11px] font-semibold uppercase tracking-wide px-2 py-0.5 rounded-md bg-muted text-muted-foreground">
                 {directionLabel}
               </span>
-              {config.mode === "smart" && (
+              {config.mode === "smart" && !isOverrideSession && (
                 <>
                   <span className="text-[11px] font-semibold uppercase tracking-wide px-2 py-0.5 rounded-md bg-orange-100 text-orange-700 dark:bg-orange-500/20 dark:text-orange-300">
                     Belt {config.smartBelt} · {BELT_NAMES[(config.smartBelt ?? 1) - 1]}
@@ -584,6 +631,11 @@ export default function ReviewSession({
                     </span>
                   )}
                 </>
+              )}
+              {isOverrideSession && (
+                <span className="text-[11px] font-semibold uppercase tracking-wide px-2 py-0.5 rounded-md bg-orange-100 text-orange-700 dark:bg-orange-500/20 dark:text-orange-300">
+                  Focused list
+                </span>
               )}
             </div>
             <div className="text-xs text-muted-foreground mt-0.5 flex items-center gap-3 flex-wrap">
@@ -1021,128 +1073,3 @@ function EmptyOrComplete({
   );
 }
 
-// ─── Completion screen with rating breakdown ────────────────────────────────
-
-function CompletionScreen({
-  title,
-  total,
-  ratings,
-  ratingCounts,
-  elapsed,
-  timerEnabled,
-  onBack,
-}: {
-  title: string;
-  total: number;
-  ratings: RatingEntry[];
-  ratingCounts: Record<RatingValue, number>;
-  elapsed: number;
-  timerEnabled: boolean;
-  onBack: () => void;
-}) {
-  const rated = ratings.length;
-  const skipped = Math.max(0, total - rated);
-
-  return (
-    <div className="min-h-screen bg-background text-foreground flex flex-col">
-      <div className="sticky top-0 z-10 bg-card/80 backdrop-blur border-b border-border">
-        <div className="max-w-[1100px] mx-auto px-4 sm:px-6 lg:px-8 py-3 flex items-center gap-3">
-          <button
-            onClick={onBack}
-            aria-label="Back to Review Center"
-            className="p-2 rounded-xl hover:bg-muted text-muted-foreground shrink-0"
-          >
-            <ArrowLeft size={18} />
-          </button>
-          <h1 className="text-base sm:text-lg font-bold">{title}</h1>
-        </div>
-      </div>
-
-      <main className="flex-1 px-4 py-8 sm:py-12">
-        <div className="max-w-[640px] mx-auto">
-          {/* Hero */}
-          <div className="text-center rounded-3xl border border-border bg-card shadow-sm p-6 sm:p-8">
-            <div className="mx-auto h-12 w-12 rounded-2xl bg-brand-gradient text-white flex items-center justify-center mb-4">
-              <Sparkles size={20} />
-            </div>
-            <h2 className="text-xl sm:text-2xl font-bold">
-              Nice work — session complete
-            </h2>
-            <p className="mt-2 text-sm text-muted-foreground">
-              You rated{" "}
-              <span className="font-semibold text-foreground">{rated}</span> of{" "}
-              <span className="font-semibold text-foreground">{total}</span>{" "}
-              card{total === 1 ? "" : "s"}
-              {skipped > 0 ? (
-                <>
-                  {" "}· <span className="font-semibold">{skipped}</span> skipped
-                </>
-              ) : null}
-              {timerEnabled ? (
-                <>
-                  {" "}· <span className="font-semibold tabular-nums">{formatClock(elapsed)}</span>
-                </>
-              ) : null}
-              .
-            </p>
-          </div>
-
-          {/* Rating breakdown */}
-          <div className="mt-6 rounded-2xl border border-border bg-card shadow-sm p-5 sm:p-6">
-            <div className="flex items-center justify-between mb-4">
-              <h3 className="text-sm font-bold">Rating breakdown</h3>
-              <span className="text-[11px] text-muted-foreground">
-                Placeholder intervals
-              </span>
-            </div>
-            <ul className="space-y-2">
-              {RATINGS.map((r) => {
-                const count = ratingCounts[r.value];
-                const pct = rated > 0 ? (count / rated) * 100 : 0;
-                return (
-                  <li
-                    key={r.value}
-                    className="flex items-center gap-3 rounded-xl border border-border bg-background/50 px-3 py-2"
-                  >
-                    <span className={`h-2.5 w-2.5 rounded-full ${r.dotCls}`} />
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-center justify-between gap-2">
-                        <span className={`text-sm font-bold ${r.textCls}`}>
-                          {r.label}
-                        </span>
-                        <span className="text-xs text-muted-foreground tabular-nums">
-                          {count} · {intervalLabel(r.intervalDays)}
-                        </span>
-                      </div>
-                      <div className="mt-1.5 h-1.5 rounded-full bg-muted overflow-hidden">
-                        <div
-                          className={`h-full ${r.dotCls} rounded-full transition-all`}
-                          style={{ width: `${pct}%` }}
-                        />
-                      </div>
-                    </div>
-                  </li>
-                );
-              })}
-            </ul>
-            <div className="mt-4 rounded-xl border border-dashed border-border bg-muted/20 p-3 text-[11px] text-muted-foreground flex items-center gap-2">
-              <Sparkles size={12} className="shrink-0" />
-              The full Review Result page (with progress impact and next due
-              dates) lands in a later phase.
-            </div>
-          </div>
-
-          {/* Action */}
-          <div className="mt-6 flex justify-center">
-            <button
-              onClick={onBack}
-              className="h-11 px-5 rounded-xl text-sm font-semibold btn-brand inline-flex items-center gap-2"
-            >
-              Back to Review Center
-            </button>
-          </div>
-        </div>
-      </main>
-    </div>
-  );
-}
