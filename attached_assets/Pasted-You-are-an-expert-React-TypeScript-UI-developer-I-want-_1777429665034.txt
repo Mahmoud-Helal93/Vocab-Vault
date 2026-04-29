@@ -1,0 +1,87 @@
+You are an expert React/TypeScript UI developer.
+
+I want you to improve ONLY the base structure of the Custom Practice Question Card.
+
+Do NOT change:
+- question generation
+- scoring
+- answer validation
+- results page
+- setup page
+- header/progress if already completed
+- unrelated pages
+
+This is a visual/layout refactor only.
+
+==================================================
+GOAL
+==================================================
+
+Make all question types share one consistent premium card structure.
+
+Every question card should have:
+
+1. Top metadata row
+LEFT:
+- question type pill
+
+RIGHT:
+- source metadata, e.g. M1 · S1 · verb
+
+2. Prompt area
+- small uppercase instruction
+- main prompt in large readable text
+
+3. Answer area
+- keeps the existing question-type-specific content
+
+4. Action/helper row
+- Hint button if enabled
+- I don’t know button
+- Submit button where needed
+- helper text if needed
+
+5. Feedback area
+- should still appear after answering, but do not redesign feedback yet
+
+==================================================
+VISUAL REQUIREMENTS
+==================================================
+
+Question card:
+- rounded-2xl
+- border border-border
+- bg-card
+- shadow-sm
+- overflow-hidden if needed
+- consistent padding
+- clean spacing
+
+Question type pill:
+- small rounded pill
+- subtle background
+- icon if already available
+- readable label
+
+Prompt:
+- instruction text should be uppercase, muted, and letter-spaced
+- main prompt should be larger and clear
+
+Do not make the card too wide.
+Keep it inside the current centered page width.
+
+==================================================
+IMPORTANT
+==================================================
+
+Do not change the specific UI for MCQ, Fill in the Blank, True/False, or Select All yet.
+Only create a more consistent shared card structure around them.
+
+==================================================
+AFTER FINISHING
+==================================================
+
+Stop and summarize:
+1. Files changed
+2. Shared question card structure changes
+3. Confirmation that question behavior is unchanged

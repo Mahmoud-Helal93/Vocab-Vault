@@ -625,27 +625,27 @@ function Shell({
     <motion.div
       initial={{ opacity: 0, y: 8 }}
       animate={{ opacity: 1, y: 0 }}
-      className="max-w-[920px] mx-auto px-4 lg:px-6 py-6 space-y-5"
+      className="max-w-[1000px] mx-auto px-6 py-6 space-y-5"
     >
-      <header className="rounded-2xl border border-border bg-brand-gradient-soft px-5 py-4 shadow-sm">
-        <button
-          type="button"
-          onClick={onBack}
-          className="inline-flex items-center gap-1.5 text-xs font-bold text-muted-foreground hover:text-foreground transition-colors mb-2"
-        >
-          <ArrowLeft size={14} />
-          Back
-        </button>
-        <div className="flex flex-wrap items-center justify-between gap-3">
-          <div>
+      <header className="rounded-2xl border border-border bg-brand-gradient-soft px-5 py-3 shadow-sm">
+        <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-3">
+          <div className="min-w-0">
+            <button
+              type="button"
+              onClick={onBack}
+              className="inline-flex items-center gap-1.5 text-xs font-bold text-muted-foreground hover:text-foreground transition-colors mb-1"
+            >
+              <ArrowLeft size={14} />
+              Back
+            </button>
             <div className="text-[10px] font-extrabold uppercase tracking-wider text-brand-gradient">
               Practice Mode
             </div>
-            <h1 className="text-xl sm:text-2xl font-extrabold leading-tight text-foreground mt-0.5">
+            <h1 className="text-xl sm:text-2xl font-extrabold leading-tight text-foreground mt-0.5 truncate">
               {title}
             </h1>
           </div>
-          <div className="flex items-center gap-2 text-xs flex-wrap">
+          <div className="flex items-center gap-2 text-xs flex-wrap sm:justify-end w-full sm:w-auto">
             {showTimer && <SessionTimer running={Boolean(timerActive)} />}
             {stats && (
               <>
@@ -726,7 +726,7 @@ function ProgressBar({ current, total }: { current: number; total: number }) {
   // Visualise "you have completed N of M" using a 1-indexed current.
   const pct = ((safeCurrent - 1) / safeTotal) * 100;
   return (
-    <div className="space-y-1.5">
+    <div className="space-y-2">
       <div className="flex items-center justify-between text-[11px] font-extrabold">
         <span className="uppercase tracking-wider text-muted-foreground">
           Progress
@@ -736,9 +736,9 @@ function ProgressBar({ current, total }: { current: number; total: number }) {
           <span className="text-muted-foreground"> / {safeTotal}</span>
         </span>
       </div>
-      <div className="h-2 w-full bg-muted rounded-full overflow-hidden">
+      <div className="h-2.5 w-full bg-muted/70 rounded-full overflow-hidden">
         <div
-          className="h-full bg-brand-gradient rounded-full transition-all"
+          className="h-full bg-brand-gradient rounded-full transition-all duration-300 ease-out"
           style={{ width: `${Math.max(0, Math.min(100, pct))}%` }}
         />
       </div>

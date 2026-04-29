@@ -1,0 +1,101 @@
+You are an expert React/TypeScript UI developer and UI/UX designer.
+
+I want you to improve ONLY the Custom Practice Question Page header and progress bar.
+
+Do NOT change:
+- question generation
+- answer logic
+- feedback logic
+- results page
+- setup page
+- scoring
+- routing
+- unrelated pages
+
+This is only a UI/layout improvement for the practice question page header and progress area.
+
+==================================================
+TASK 1 — HEADER REDESIGN
+==================================================
+
+The current header includes:
+- Back button
+- PRACTICE MODE label
+- Custom Practice title
+- timer
+- Done count
+- Correct count
+- First-try count
+
+Keep all of these, but improve the layout.
+
+Desired header layout:
+
+LEFT:
+- Back button
+- PRACTICE MODE label
+- Custom Practice title
+
+RIGHT:
+- compact stat chips:
+  - timer, only if timer is enabled
+  - Done 3/12
+  - Correct 3
+  - First-try 3
+
+Visual style:
+- soft warm/pink gradient background
+- rounded-2xl
+- border border-border
+- shadow-sm
+- compact vertical padding
+- stats aligned cleanly on the right
+- on mobile, stats wrap under the title
+
+Do not remove existing data.
+
+==================================================
+TASK 2 — PROGRESS BAR REDESIGN
+==================================================
+
+Improve the progress section under the header.
+
+It should show:
+- label: PROGRESS
+- current number on the right, e.g. 3 / 12
+- full-width progress bar
+
+Progress bar design:
+- rounded-full
+- soft gray/neutral track
+- orange-to-pink gradient fill
+- smooth transition when progress changes
+
+Suggested classes:
+- h-2 or h-2.5
+- rounded-full
+- transition-all duration-300
+
+Do not change progress logic.
+
+==================================================
+LAYOUT
+==================================================
+
+Use a focused centered layout:
+- max-w-[960px] or max-w-[1000px]
+- mx-auto
+- px-6
+- py-6
+
+Keep the left sidebar unchanged.
+
+==================================================
+AFTER FINISHING
+==================================================
+
+Stop and summarize:
+1. Files changed
+2. Header layout changes
+3. Progress bar changes
+4. Confirmation that no answer/question logic was changed
