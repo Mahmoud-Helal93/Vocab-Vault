@@ -13,7 +13,6 @@ import {
   Volume2,
   Clock,
   X,
-  ChevronRight,
   RotateCw,
   Sparkles,
   AlertTriangle,
@@ -42,6 +41,102 @@ export interface ReviewSessionConfig {
 interface ReviewSessionProps {
   config: ReviewSessionConfig;
   onBack: () => void;
+}
+
+// ─── Rating model (Phase 3 placeholder intervals) ───────────────────────────
+
+export type RatingValue = 1 | 2 | 3 | 4 | 5;
+export type RatingLabel = "Again" | "Hard" | "Good" | "Easy" | "Perfect";
+
+export interface RatingEntry {
+  wordId: string;
+  rating: RatingValue;
+  label: RatingLabel;
+  reviewedAt: string; // ISO
+  cardMode: CardMode;
+  reviewMode: ReviewMode;
+}
+
+interface RatingDef {
+  value: RatingValue;
+  label: RatingLabel;
+  intervalDays: number;
+  // Tailwind classes — full strings so the JIT picks them up.
+  baseCls: string;
+  hoverCls: string;
+  ringCls: string;
+  dotCls: string;
+  textCls: string;
+  hotkey: string;
+}
+
+// Intervals are placeholder values for Phase 3. Phase 4 swaps in real SM‑2.
+const RATINGS: RatingDef[] = [
+  {
+    value: 1,
+    label: "Again",
+    intervalDays: 1,
+    baseCls:
+      "border-rose-300 bg-rose-50 dark:border-rose-800/60 dark:bg-rose-500/10",
+    hoverCls: "hover:bg-rose-100 dark:hover:bg-rose-500/20",
+    ringCls: "focus-visible:ring-rose-400",
+    dotCls: "bg-rose-500",
+    textCls: "text-rose-700 dark:text-rose-300",
+    hotkey: "1",
+  },
+  {
+    value: 2,
+    label: "Hard",
+    intervalDays: 3,
+    baseCls:
+      "border-amber-300 bg-amber-50 dark:border-amber-800/60 dark:bg-amber-500/10",
+    hoverCls: "hover:bg-amber-100 dark:hover:bg-amber-500/20",
+    ringCls: "focus-visible:ring-amber-400",
+    dotCls: "bg-amber-500",
+    textCls: "text-amber-700 dark:text-amber-300",
+    hotkey: "2",
+  },
+  {
+    value: 3,
+    label: "Good",
+    intervalDays: 6,
+    baseCls:
+      "border-sky-300 bg-sky-50 dark:border-sky-800/60 dark:bg-sky-500/10",
+    hoverCls: "hover:bg-sky-100 dark:hover:bg-sky-500/20",
+    ringCls: "focus-visible:ring-sky-400",
+    dotCls: "bg-sky-500",
+    textCls: "text-sky-700 dark:text-sky-300",
+    hotkey: "3",
+  },
+  {
+    value: 4,
+    label: "Easy",
+    intervalDays: 10,
+    baseCls:
+      "border-emerald-300 bg-emerald-50 dark:border-emerald-800/60 dark:bg-emerald-500/10",
+    hoverCls: "hover:bg-emerald-100 dark:hover:bg-emerald-500/20",
+    ringCls: "focus-visible:ring-emerald-400",
+    dotCls: "bg-emerald-500",
+    textCls: "text-emerald-700 dark:text-emerald-300",
+    hotkey: "4",
+  },
+  {
+    value: 5,
+    label: "Perfect",
+    intervalDays: 15,
+    baseCls:
+      "border-violet-300 bg-violet-50 dark:border-violet-800/60 dark:bg-violet-500/10",
+    hoverCls: "hover:bg-violet-100 dark:hover:bg-violet-500/20",
+    ringCls: "focus-visible:ring-violet-400",
+    dotCls: "bg-violet-500",
+    textCls: "text-violet-700 dark:text-violet-300",
+    hotkey: "5",
+  },
+];
+
+function intervalLabel(days: number): string {
+  if (days === 1) return "1 day";
+  return `${days} days`;
 }
 
 const SMART_FILTER_LABEL: Record<SmartFilter, string> = {
@@ -166,12 +261,20 @@ export default function ReviewSession({ config, onBack }: ReviewSessionProps) {
   const [flipped, setFlipped] = useState(false);
   const [exitOpen, setExitOpen] = useState(false);
   const [elapsed, setElapsed] = useState(0);
+  const [ratings, setRatings] = useState<RatingEntry[]>([]);
   const startedAt = useRef<number>(Date.now());
 
   const total = sessionWords.length;
   const current = sessionWords[index];
   const isLast = index >= total - 1;
   const isComplete = total === 0 || index >= total;
+
+  // Counts per rating value (1..5)
+  const ratingCounts = useMemo(() => {
+    const counts: Record<RatingValue, number> = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 };
+    for (const r of ratings) counts[r.rating] += 1;
+    return counts;
+  }, [ratings]);
 
   const title = config.mode === "cumulative" ? "Cumulative Review" : "Smart Review";
   const directionLabel =
@@ -200,15 +303,31 @@ export default function ReviewSession({ config, onBack }: ReviewSessionProps) {
     config.cardMode === "front" ? !flipped : flipped;
 
   // ── Actions ──
-  const goNext = useCallback(() => {
-    setIndex((i) => Math.min(total, i + 1));
-  }, [total]);
-
   const flip = useCallback(() => {
     setFlipped((f) => !f);
   }, []);
 
   const requestExit = useCallback(() => setExitOpen(true), []);
+
+  const submitRating = useCallback(
+    (value: RatingValue) => {
+      if (!current) return;
+      const def = RATINGS.find((r) => r.value === value);
+      if (!def) return;
+      const entry: RatingEntry = {
+        wordId: current.id,
+        rating: value,
+        label: def.label,
+        reviewedAt: new Date().toISOString(),
+        cardMode: config.cardMode,
+        reviewMode: config.mode,
+      };
+      setRatings((prev) => [...prev, entry]);
+      // Advance to next card (or to completion). Flip resets via effect on `index`.
+      setIndex((i) => Math.min(total, i + 1));
+    },
+    [current, config.cardMode, config.mode, total],
+  );
 
   // ── Keyboard shortcuts ──
   useEffect(() => {
@@ -230,11 +349,24 @@ export default function ReviewSession({ config, onBack }: ReviewSessionProps) {
       } else if (e.key === "Escape") {
         e.preventDefault();
         requestExit();
+      } else if (flipped && /^[1-5]$/.test(e.key)) {
+        // Rating keys are only active AFTER the card is flipped.
+        e.preventDefault();
+        submitRating(parseInt(e.key, 10) as RatingValue);
       }
     };
     window.addEventListener("keydown", handler);
     return () => window.removeEventListener("keydown", handler);
-  }, [flip, requestExit, wordSideVisible, current, exitOpen, isComplete]);
+  }, [
+    flip,
+    requestExit,
+    wordSideVisible,
+    current,
+    exitOpen,
+    isComplete,
+    flipped,
+    submitRating,
+  ]);
 
   // ── Cumulative grouping progress ──
   const groupingProgress = useMemo(() => {
@@ -276,11 +408,14 @@ export default function ReviewSession({ config, onBack }: ReviewSessionProps) {
 
   if (isComplete) {
     return (
-      <EmptyOrComplete
+      <CompletionScreen
         title={title}
-        message={`You've stepped through all ${total} card${total === 1 ? "" : "s"}. The full Review Result page lands in a later phase.`}
-        primaryLabel="Back to Review Center"
-        onPrimary={onBack}
+        total={total}
+        ratings={ratings}
+        ratingCounts={ratingCounts}
+        elapsed={elapsed}
+        timerEnabled={config.timerEnabled}
+        onBack={onBack}
       />
     );
   }
@@ -382,6 +517,26 @@ export default function ReviewSession({ config, onBack }: ReviewSessionProps) {
               transition={{ type: "tween", duration: 0.35 }}
             />
           </div>
+          {/* Compact rating-count strip */}
+          {ratings.length > 0 && (
+            <div className="max-w-[1100px] mx-auto mt-2 flex items-center justify-center gap-1.5 sm:gap-3 flex-wrap text-[11px]">
+              {RATINGS.map((r) => (
+                <span
+                  key={r.value}
+                  className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-md bg-muted/50 border border-border"
+                  title={`${r.label}: ${ratingCounts[r.value]} card${ratingCounts[r.value] === 1 ? "" : "s"}`}
+                >
+                  <span className={`h-1.5 w-1.5 rounded-full ${r.dotCls}`} />
+                  <span className="font-semibold text-muted-foreground">
+                    {r.label}
+                  </span>
+                  <span className="font-bold text-foreground tabular-nums">
+                    {ratingCounts[r.value]}
+                  </span>
+                </span>
+              ))}
+            </div>
+          )}
         </div>
       </div>
 
@@ -444,58 +599,79 @@ export default function ReviewSession({ config, onBack }: ReviewSessionProps) {
             </AnimatePresence>
           </div>
 
-          {/* Footer actions */}
-          <div className="mt-6 flex items-center justify-between gap-3 flex-wrap">
-            <div className="text-xs text-muted-foreground flex items-center gap-2 flex-wrap">
-              <kbd className="px-1.5 py-0.5 rounded border border-border bg-muted font-semibold">
-                Space
-              </kbd>
-              <span>Flip</span>
-              <span className="text-muted-foreground/60">·</span>
-              <kbd className="px-1.5 py-0.5 rounded border border-border bg-muted font-semibold">
-                P
-              </kbd>
-              <span>Pronounce (word side)</span>
-              <span className="text-muted-foreground/60">·</span>
-              <kbd className="px-1.5 py-0.5 rounded border border-border bg-muted font-semibold">
-                Esc
-              </kbd>
-              <span>Exit</span>
-            </div>
-
-            <div className="flex items-center gap-2">
-              <button
-                onClick={flip}
-                className="h-10 px-4 rounded-xl text-sm font-semibold border border-border bg-card hover:bg-muted flex items-center gap-2"
+          {/* Rating row — only after flip */}
+          <div className="mt-6 min-h-[88px]">
+            {flipped ? (
+              <motion.div
+                initial={{ opacity: 0, y: 6 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.2 }}
               >
-                <RotateCw size={14} />
-                Flip
-              </button>
-              <button
-                onClick={goNext}
-                disabled={!flipped}
-                title={
-                  flipped
-                    ? undefined
-                    : "Flip the card before moving on."
-                }
-                className={`h-10 px-4 rounded-xl text-sm font-semibold flex items-center gap-2 transition ${
-                  flipped
-                    ? "btn-brand"
-                    : "bg-muted text-muted-foreground cursor-not-allowed"
-                }`}
-              >
-                {isLast ? "Finish" : "Next card"}
-                <ChevronRight size={14} />
-              </button>
-            </div>
+                <div className="text-[11px] font-semibold uppercase tracking-wide text-muted-foreground text-center mb-2">
+                  How well did you recall it?
+                </div>
+                <div
+                  role="group"
+                  aria-label="Rate your recall"
+                  className="grid grid-cols-2 sm:grid-cols-5 gap-2"
+                >
+                  {RATINGS.map((r) => (
+                    <button
+                      key={r.value}
+                      onClick={() => submitRating(r.value)}
+                      aria-label={`${r.label} — next review in ${intervalLabel(r.intervalDays)} (key ${r.hotkey})`}
+                      className={`relative rounded-xl border px-3 py-3 text-center transition shadow-sm focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-1 focus-visible:ring-offset-background ${r.baseCls} ${r.hoverCls} ${r.ringCls}`}
+                    >
+                      <span className="absolute top-1.5 left-2 inline-flex items-center justify-center h-4 min-w-4 px-1 rounded text-[9px] font-bold bg-card border border-border text-muted-foreground">
+                        {r.hotkey}
+                      </span>
+                      <div className="flex items-center justify-center gap-1.5">
+                        <span className={`h-2 w-2 rounded-full ${r.dotCls}`} />
+                        <span className={`text-sm font-bold ${r.textCls}`}>
+                          {r.label}
+                        </span>
+                      </div>
+                      <div className="text-[11px] text-muted-foreground mt-0.5 tabular-nums">
+                        {intervalLabel(r.intervalDays)}
+                      </div>
+                    </button>
+                  ))}
+                </div>
+              </motion.div>
+            ) : (
+              <div className="flex items-center justify-center">
+                <button
+                  onClick={flip}
+                  className="h-11 px-5 rounded-xl text-sm font-semibold btn-brand inline-flex items-center gap-2"
+                >
+                  <RotateCw size={14} />
+                  Reveal answer
+                </button>
+              </div>
+            )}
           </div>
 
-          {/* Phase note */}
-          <div className="mt-4 rounded-xl border border-dashed border-border bg-muted/20 p-3 text-[11px] text-muted-foreground flex items-center gap-2">
-            <Sparkles size={12} className="shrink-0" />
-            Rating buttons (Again · Hard · Good · Easy · Perfect) will be added
-            in Phase 3.
+          {/* Keyboard legend */}
+          <div className="mt-5 text-xs text-muted-foreground flex items-center justify-center gap-2 flex-wrap">
+            <kbd className="px-1.5 py-0.5 rounded border border-border bg-muted font-semibold">
+              Space
+            </kbd>
+            <span>Flip</span>
+            <span className="text-muted-foreground/60">·</span>
+            <kbd className="px-1.5 py-0.5 rounded border border-border bg-muted font-semibold">
+              1–5
+            </kbd>
+            <span>Rate (after flip)</span>
+            <span className="text-muted-foreground/60">·</span>
+            <kbd className="px-1.5 py-0.5 rounded border border-border bg-muted font-semibold">
+              P
+            </kbd>
+            <span>Pronounce (word side)</span>
+            <span className="text-muted-foreground/60">·</span>
+            <kbd className="px-1.5 py-0.5 rounded border border-border bg-muted font-semibold">
+              Esc
+            </kbd>
+            <span>Exit</span>
           </div>
         </div>
       </main>
@@ -700,6 +876,132 @@ function EmptyOrComplete({
           >
             {primaryLabel}
           </button>
+        </div>
+      </main>
+    </div>
+  );
+}
+
+// ─── Completion screen with rating breakdown ────────────────────────────────
+
+function CompletionScreen({
+  title,
+  total,
+  ratings,
+  ratingCounts,
+  elapsed,
+  timerEnabled,
+  onBack,
+}: {
+  title: string;
+  total: number;
+  ratings: RatingEntry[];
+  ratingCounts: Record<RatingValue, number>;
+  elapsed: number;
+  timerEnabled: boolean;
+  onBack: () => void;
+}) {
+  const rated = ratings.length;
+  const skipped = Math.max(0, total - rated);
+
+  return (
+    <div className="min-h-screen bg-background text-foreground flex flex-col">
+      <div className="sticky top-0 z-10 bg-card/80 backdrop-blur border-b border-border">
+        <div className="max-w-[1100px] mx-auto px-4 sm:px-6 lg:px-8 py-3 flex items-center gap-3">
+          <button
+            onClick={onBack}
+            aria-label="Back to Review Center"
+            className="p-2 rounded-xl hover:bg-muted text-muted-foreground shrink-0"
+          >
+            <ArrowLeft size={18} />
+          </button>
+          <h1 className="text-base sm:text-lg font-bold">{title}</h1>
+        </div>
+      </div>
+
+      <main className="flex-1 px-4 py-8 sm:py-12">
+        <div className="max-w-[640px] mx-auto">
+          {/* Hero */}
+          <div className="text-center rounded-3xl border border-border bg-card shadow-sm p-6 sm:p-8">
+            <div className="mx-auto h-12 w-12 rounded-2xl bg-brand-gradient text-white flex items-center justify-center mb-4">
+              <Sparkles size={20} />
+            </div>
+            <h2 className="text-xl sm:text-2xl font-bold">
+              Nice work — session complete
+            </h2>
+            <p className="mt-2 text-sm text-muted-foreground">
+              You rated{" "}
+              <span className="font-semibold text-foreground">{rated}</span> of{" "}
+              <span className="font-semibold text-foreground">{total}</span>{" "}
+              card{total === 1 ? "" : "s"}
+              {skipped > 0 ? (
+                <>
+                  {" "}· <span className="font-semibold">{skipped}</span> skipped
+                </>
+              ) : null}
+              {timerEnabled ? (
+                <>
+                  {" "}· <span className="font-semibold tabular-nums">{formatClock(elapsed)}</span>
+                </>
+              ) : null}
+              .
+            </p>
+          </div>
+
+          {/* Rating breakdown */}
+          <div className="mt-6 rounded-2xl border border-border bg-card shadow-sm p-5 sm:p-6">
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="text-sm font-bold">Rating breakdown</h3>
+              <span className="text-[11px] text-muted-foreground">
+                Placeholder intervals
+              </span>
+            </div>
+            <ul className="space-y-2">
+              {RATINGS.map((r) => {
+                const count = ratingCounts[r.value];
+                const pct = rated > 0 ? (count / rated) * 100 : 0;
+                return (
+                  <li
+                    key={r.value}
+                    className="flex items-center gap-3 rounded-xl border border-border bg-background/50 px-3 py-2"
+                  >
+                    <span className={`h-2.5 w-2.5 rounded-full ${r.dotCls}`} />
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center justify-between gap-2">
+                        <span className={`text-sm font-bold ${r.textCls}`}>
+                          {r.label}
+                        </span>
+                        <span className="text-xs text-muted-foreground tabular-nums">
+                          {count} · {intervalLabel(r.intervalDays)}
+                        </span>
+                      </div>
+                      <div className="mt-1.5 h-1.5 rounded-full bg-muted overflow-hidden">
+                        <div
+                          className={`h-full ${r.dotCls} rounded-full transition-all`}
+                          style={{ width: `${pct}%` }}
+                        />
+                      </div>
+                    </div>
+                  </li>
+                );
+              })}
+            </ul>
+            <div className="mt-4 rounded-xl border border-dashed border-border bg-muted/20 p-3 text-[11px] text-muted-foreground flex items-center gap-2">
+              <Sparkles size={12} className="shrink-0" />
+              The full Review Result page (with progress impact and next due
+              dates) lands in a later phase.
+            </div>
+          </div>
+
+          {/* Action */}
+          <div className="mt-6 flex justify-center">
+            <button
+              onClick={onBack}
+              className="h-11 px-5 rounded-xl text-sm font-semibold btn-brand inline-flex items-center gap-2"
+            >
+              Back to Review Center
+            </button>
+          </div>
         </div>
       </main>
     </div>
