@@ -19,6 +19,7 @@ import PracticeMode from "@/pages/PracticeMode";
 import TestMode from "@/pages/TestMode";
 import TestHistory from "@/pages/TestHistory";
 import GRESimulation from "@/pages/GRESimulation";
+import ReviewPage from "@/pages/ReviewPage";
 import SidebarSearch from "@/components/SidebarSearch";
 import BadgeToast from "@/components/BadgeToast";
 import GlobalStatsBar from "@/components/GlobalStatsBar";
@@ -27,15 +28,16 @@ import vocabNinjaLogo from "@assets/Gemini_Generated_Image_tgtyf7tgtyf7tgty_1776
 import {
   LayoutDashboard, BookOpen, Settings, Moon, Sun,
   CalendarDays, GitFork, BarChart3, TrendingUp, Zap, Menu,
-  Trophy, Bookmark, Library, FlaskConical,
+  Trophy, Bookmark, Library, FlaskConical, RotateCcw,
 } from "lucide-react";
 
-type Page = "dashboard" | "study" | "test" | "test-selection" | "practice" | "test-mode" | "test-history" | "gre-simulation" | "settings" | "analytics" | "progress" | "achievements" | "mission-test" | "set-test" | "bookmarks" | "mission-detail" | "set-reading" | "story-library";
+type Page = "dashboard" | "study" | "test" | "test-selection" | "practice" | "test-mode" | "test-history" | "gre-simulation" | "review" | "settings" | "analytics" | "progress" | "achievements" | "mission-test" | "set-test" | "bookmarks" | "mission-detail" | "set-reading" | "story-library";
 
 const NAV_ITEMS: Array<{ id: Page; icon: React.ReactNode; label: string }> = [
   { id: "dashboard",     icon: <LayoutDashboard size={18} />, label: "Home" },
   { id: "study",         icon: <BookOpen size={18} />,        label: "Learn" },
   { id: "test",          icon: <FlaskConical size={18} />,    label: "Test" },
+  { id: "review",        icon: <RotateCcw size={18} />,       label: "Review" },
   { id: "story-library", icon: <Library size={18} />,         label: "Story Library" },
   { id: "bookmarks",     icon: <Bookmark size={18} />,        label: "Bookmarks" },
   { id: "achievements",  icon: <Trophy size={18} />,          label: "Achievements" },
@@ -132,6 +134,8 @@ function MainApp() {
             onNavigate={navigate}
           />
         );
+      case "review":
+        return <ReviewPage onNavigate={navigate} />;
       case "analytics":
         return <Analytics onBack={() => goBack(() => setPage("dashboard"))} onStudyWord={(id) => navigate("study", { wordId: id })} />;
       case "progress":
