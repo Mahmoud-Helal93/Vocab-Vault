@@ -925,9 +925,6 @@ function PromptBlock({ q }: { q: Question }) {
         <p className="mt-2 text-lg sm:text-xl font-bold text-foreground leading-relaxed">
           {sp.word.word}
         </p>
-        <p className="mt-1 text-[11px] text-muted-foreground">
-          Pick every option that matches. Submit when you’re done.
-        </p>
       </>
     );
   }
@@ -971,32 +968,41 @@ function AnswerArea(props: QuestionCardProps) {
           ? "false"
           : null;
     return (
-      <div className="grid grid-cols-2 gap-2.5">
-        {(["true", "false"] as const).map((v) => {
-          const value = v === "true";
-          const tried = response.wrongTried.includes(String(value));
-          const isUserPick = userPick === v;
-          const isCorrectChoice = tf.answer === value;
-          return (
-            <ChoiceButton
-              key={v}
-              label={v === "true" ? "True" : "False"}
-              onClick={() => onAnswer(value)}
-              disabled={isAnswered || (tried && !isUserPick)}
-              state={
-                !isAnswered
-                  ? tried
-                    ? "wrong-tried"
-                    : "default"
-                  : isCorrectChoice
-                    ? "correct"
-                    : isUserPick
-                      ? "wrong"
+      <div className="space-y-2.5">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+          {(["true", "false"] as const).map((v) => {
+            const value = v === "true";
+            const tried = response.wrongTried.includes(String(value));
+            const isUserPick = userPick === v;
+            const isCorrectChoice = tf.answer === value;
+            return (
+              <ChoiceButton
+                key={v}
+                label={v === "true" ? "True" : "False"}
+                size="lg"
+                onClick={() => onAnswer(value)}
+                disabled={isAnswered || (tried && !isUserPick)}
+                state={
+                  !isAnswered
+                    ? tried
+                      ? "wrong-tried"
                       : "default"
-              }
-            />
-          );
-        })}
+                    : isCorrectChoice
+                      ? "correct"
+                      : isUserPick
+                        ? "wrong"
+                        : "default"
+                }
+              />
+            );
+          })}
+        </div>
+        {isAnswered && userPick && (
+          <TFAnswerSummary
+            userPickedTrue={userPick === "true"}
+            correctIsTrue={tf.answer === true}
+          />
+        )}
       </div>
     );
   }
@@ -1044,40 +1050,93 @@ function AnswerArea(props: QuestionCardProps) {
   );
 }
 
+function TFAnswerSummary({
+  userPickedTrue,
+  correctIsTrue,
+}: {
+  userPickedTrue: boolean;
+  correctIsTrue: boolean;
+}) {
+  const isCorrect = userPickedTrue === correctIsTrue;
+  if (isCorrect) return null;
+  return (
+    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-[11px]">
+      <div className="rounded-lg border border-rose-200 dark:border-rose-500/40 bg-rose-50/60 dark:bg-rose-500/10 px-3 py-2">
+        <div className="uppercase tracking-wider font-extrabold text-rose-700 dark:text-rose-300">
+          Your answer
+        </div>
+        <div className="font-bold text-rose-900 dark:text-rose-100 mt-0.5">
+          {userPickedTrue ? "True" : "False"}
+        </div>
+      </div>
+      <div className="rounded-lg border border-emerald-200 dark:border-emerald-500/40 bg-emerald-50/60 dark:bg-emerald-500/10 px-3 py-2">
+        <div className="uppercase tracking-wider font-extrabold text-emerald-700 dark:text-emerald-300">
+          Correct answer
+        </div>
+        <div className="font-bold text-emerald-900 dark:text-emerald-100 mt-0.5">
+          {correctIsTrue ? "True" : "False"}
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function ChoiceButton({
   label,
   onClick,
   disabled,
   state,
   multiline,
+  size = "md",
 }: {
   label: string;
   onClick: () => void;
   disabled?: boolean;
-  state: "default" | "correct" | "wrong" | "wrong-tried";
+  state: "default" | "selected" | "correct" | "wrong" | "wrong-tried";
   multiline?: boolean;
+  size?: "md" | "lg";
 }) {
   const cls =
     state === "correct"
-      ? "border-emerald-300 dark:border-emerald-500/50 bg-emerald-50 dark:bg-emerald-500/10 text-emerald-900 dark:text-emerald-100"
+      ? "border-emerald-400 dark:border-emerald-500/60 bg-emerald-50 dark:bg-emerald-500/10 text-emerald-900 dark:text-emerald-100 shadow-sm shadow-emerald-100/50 dark:shadow-none"
       : state === "wrong"
-        ? "border-rose-300 dark:border-rose-500/50 bg-rose-50 dark:bg-rose-500/10 text-rose-900 dark:text-rose-100"
+        ? "border-rose-400 dark:border-rose-500/60 bg-rose-50 dark:bg-rose-500/10 text-rose-900 dark:text-rose-100 shadow-sm shadow-rose-100/50 dark:shadow-none"
         : state === "wrong-tried"
           ? "border-border bg-muted/60 text-muted-foreground line-through"
-          : "border-border bg-card text-foreground hover:bg-muted/60";
+          : state === "selected"
+            ? "border-orange-400 dark:border-orange-500/60 bg-orange-50 dark:bg-orange-500/10 text-orange-900 dark:text-orange-100 shadow-sm"
+            : "border-border bg-card text-foreground hover:border-orange-300 hover:bg-orange-50/50 dark:hover:border-orange-500/40 dark:hover:bg-orange-500/5";
+  const sizeCls =
+    size === "lg"
+      ? "px-4 py-4 sm:py-5 text-base sm:text-lg"
+      : "px-3.5 py-3 text-sm";
   return (
     <button
       type="button"
       onClick={onClick}
       disabled={disabled}
-      className={`w-full ${multiline ? "text-left" : "text-center"} px-3.5 py-3 rounded-xl border-2 text-sm font-bold transition-colors disabled:cursor-not-allowed ${cls}`}
+      className={`w-full ${multiline ? "text-left" : "text-center"} ${sizeCls} rounded-xl border-2 font-bold transition-all duration-150 disabled:cursor-not-allowed ${cls}`}
     >
-      <span className="flex items-center gap-2">
+      <span
+        className={`flex items-center gap-2 ${multiline ? "" : "justify-center"}`}
+      >
         {state === "correct" && (
-          <CheckCircle2 size={16} className="text-emerald-600 shrink-0" />
+          <CheckCircle2
+            size={size === "lg" ? 20 : 16}
+            className="text-emerald-600 shrink-0"
+          />
         )}
         {state === "wrong" && (
-          <XCircle size={16} className="text-rose-600 shrink-0" />
+          <XCircle
+            size={size === "lg" ? 20 : 16}
+            className="text-rose-600 shrink-0"
+          />
+        )}
+        {state === "selected" && (
+          <Check
+            size={size === "lg" ? 20 : 16}
+            className="text-orange-600 shrink-0"
+          />
         )}
         <span className="flex-1">{label}</span>
       </span>
@@ -1120,7 +1179,12 @@ function SynonymPairPicker(props: QuestionCardProps) {
   };
 
   return (
-    <div className="space-y-2.5">
+    <div className="space-y-3">
+      {!isAnswered && (
+        <p className="text-[11px] text-muted-foreground">
+          Choose all that apply, then press Submit.
+        </p>
+      )}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
         {sp.options.map((choice) => {
           const isPicked = isAnswered
@@ -1129,32 +1193,47 @@ function SynonymPairPicker(props: QuestionCardProps) {
                 .includes(choice.toLowerCase())
             : picked.has(choice);
           const isCorrectChoice = correctSet.has(choice.toLowerCase());
-          let state: "default" | "correct" | "wrong" | "picked" = "default";
+          let state:
+            | "default"
+            | "correct"
+            | "missed"
+            | "wrong"
+            | "picked" = "default";
           if (isAnswered) {
-            if (isCorrectChoice) state = "correct";
+            if (isCorrectChoice && isPicked) state = "correct";
+            else if (isCorrectChoice && !isPicked) state = "missed";
             else if (isPicked) state = "wrong";
           } else if (isPicked) {
             state = "picked";
           }
           const cls =
             state === "correct"
-              ? "border-emerald-300 dark:border-emerald-500/50 bg-emerald-50 dark:bg-emerald-500/10 text-emerald-900 dark:text-emerald-100"
-              : state === "wrong"
-                ? "border-rose-300 dark:border-rose-500/50 bg-rose-50 dark:bg-rose-500/10 text-rose-900 dark:text-rose-100"
-                : state === "picked"
-                  ? "border-orange-300 dark:border-orange-500/50 bg-orange-50 dark:bg-orange-500/10 text-orange-900 dark:text-orange-100"
-                  : "border-border bg-card text-foreground hover:bg-muted/60";
+              ? "border-emerald-400 dark:border-emerald-500/60 bg-emerald-50 dark:bg-emerald-500/10 text-emerald-900 dark:text-emerald-100 shadow-sm"
+              : state === "missed"
+                ? "border-emerald-400 border-dashed bg-emerald-50/40 dark:bg-emerald-500/5 text-emerald-900 dark:text-emerald-100"
+                : state === "wrong"
+                  ? "border-rose-400 dark:border-rose-500/60 bg-rose-50 dark:bg-rose-500/10 text-rose-900 dark:text-rose-100 shadow-sm"
+                  : state === "picked"
+                    ? "border-orange-400 dark:border-orange-500/60 bg-orange-50 dark:bg-orange-500/10 text-orange-900 dark:text-orange-100 shadow-sm"
+                    : "border-border bg-card text-foreground hover:border-orange-300 hover:bg-orange-50/50 dark:hover:border-orange-500/40 dark:hover:bg-orange-500/5";
           return (
             <button
               key={choice}
               type="button"
               onClick={() => toggle(choice)}
               disabled={isAnswered}
-              className={`w-full text-left px-3.5 py-3 rounded-xl border-2 text-sm font-bold transition-colors disabled:cursor-not-allowed ${cls}`}
+              aria-pressed={isPicked}
+              className={`w-full text-left px-3.5 py-3 rounded-xl border-2 text-sm font-bold transition-all duration-150 disabled:cursor-not-allowed ${cls}`}
             >
               <span className="flex items-center gap-2">
                 {state === "correct" && (
                   <CheckCircle2 size={16} className="text-emerald-600 shrink-0" />
+                )}
+                {state === "missed" && (
+                  <CheckCircle2
+                    size={16}
+                    className="text-emerald-600/70 shrink-0"
+                  />
                 )}
                 {state === "wrong" && (
                   <XCircle size={16} className="text-rose-600 shrink-0" />
@@ -1163,6 +1242,11 @@ function SynonymPairPicker(props: QuestionCardProps) {
                   <Check size={16} className="text-orange-600 shrink-0" />
                 )}
                 <span className="flex-1">{choice}</span>
+                {state === "missed" && (
+                  <span className="ml-auto text-[10px] font-extrabold uppercase tracking-wider text-emerald-700 dark:text-emerald-300">
+                    Missed
+                  </span>
+                )}
               </span>
             </button>
           );
@@ -1175,8 +1259,7 @@ function SynonymPairPicker(props: QuestionCardProps) {
             <span className="font-extrabold text-foreground">
               {picked.size}
             </span>{" "}
-            of {sp.correctAnswers.length} correct synonym
-            {sp.correctAnswers.length === 1 ? "" : "s"}.
+            option{picked.size === 1 ? "" : "s"}
           </p>
           <button
             type="button"
@@ -1201,6 +1284,8 @@ function FillBlankInput(props: QuestionCardProps) {
     response.finalCorrect !== null || response.iDontKnow === true;
   const allowRetry =
     !isAnswered && response.firstCorrect === false && !response.iDontKnow;
+  const showInlineHint =
+    props.showHints !== false && fb.hintSynonyms.length > 0;
 
   const inputRef = useRef<HTMLInputElement>(null);
   // Reset on retry / new question
@@ -1211,39 +1296,63 @@ function FillBlankInput(props: QuestionCardProps) {
     }
   }, [response.response, q.id]);
 
+  const inputState = isAnswered
+    ? response.finalCorrect
+      ? "correct"
+      : "wrong"
+    : "default";
+  const inputStateCls =
+    inputState === "correct"
+      ? "border-emerald-400 bg-emerald-50/40 dark:bg-emerald-500/10 text-emerald-900 dark:text-emerald-100"
+      : inputState === "wrong"
+        ? "border-rose-400 bg-rose-50/40 dark:bg-rose-500/10 text-rose-900 dark:text-rose-100"
+        : "border-border bg-background text-foreground focus:border-orange-400 hover:border-orange-300";
+
   return (
-    <div className="space-y-2">
+    <div className="space-y-3">
       <div className="flex flex-col sm:flex-row gap-2">
-        <input
-          ref={inputRef}
-          type="text"
-          value={
-            isAnswered && typeof response.response === "string"
-              ? response.response
-              : text
-          }
-          onChange={(e) => setText(e.target.value)}
-          onKeyDown={(e) => {
-            if (e.key === "Enter" && text.trim() && !isAnswered) {
-              onAnswer(text.trim());
+        <div className="relative flex-1">
+          <input
+            ref={inputRef}
+            type="text"
+            value={
+              isAnswered && typeof response.response === "string"
+                ? response.response
+                : text
             }
-          }}
-          disabled={isAnswered}
-          placeholder="Type the missing word…"
-          className="flex-1 px-3.5 py-3 rounded-xl border-2 border-border bg-background text-sm font-bold text-foreground focus:outline-none focus:border-orange-400 disabled:opacity-80"
-          autoFocus
-        />
+            onChange={(e) => setText(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter" && text.trim() && !isAnswered) {
+                onAnswer(text.trim());
+              }
+            }}
+            disabled={isAnswered}
+            placeholder="Type the missing word…"
+            className={`w-full px-4 py-3.5 sm:py-4 rounded-xl border-2 text-base font-bold focus:outline-none transition-colors disabled:opacity-90 ${inputStateCls}`}
+            autoFocus
+          />
+          {isAnswered && (
+            <span className="absolute right-3 top-1/2 -translate-y-1/2">
+              {response.finalCorrect ? (
+                <CheckCircle2 size={18} className="text-emerald-600" />
+              ) : (
+                <XCircle size={18} className="text-rose-600" />
+              )}
+            </span>
+          )}
+        </div>
         <button
           type="button"
           onClick={() => text.trim() && onAnswer(text.trim())}
           disabled={isAnswered || text.trim().length === 0}
-          className="inline-flex items-center justify-center gap-1.5 px-4 py-3 rounded-xl text-sm font-extrabold btn-brand disabled:opacity-50 disabled:cursor-not-allowed disabled:shadow-none"
+          className="inline-flex items-center justify-center gap-1.5 px-5 py-3.5 sm:py-4 rounded-xl text-sm font-extrabold btn-brand disabled:opacity-50 disabled:cursor-not-allowed disabled:shadow-none"
         >
           {allowRetry ? "Try again" : "Submit"}
           <ChevronRight size={14} />
         </button>
       </div>
-      {fb.hintSynonyms.length > 0 && (
+
+      {!isAnswered && showInlineHint && (
         <p className="text-[11px] text-muted-foreground">
           Synonyms hint:{" "}
           <span className="font-bold text-foreground/70">
@@ -1251,6 +1360,56 @@ function FillBlankInput(props: QuestionCardProps) {
           </span>
         </p>
       )}
+
+      {isAnswered && (
+        <FillBlankAnswerReveal
+          sentence={fb.sentence}
+          answer={fb.answer}
+          correct={Boolean(response.finalCorrect)}
+        />
+      )}
+    </div>
+  );
+}
+
+function FillBlankAnswerReveal({
+  sentence,
+  answer,
+  correct,
+}: {
+  sentence: string;
+  answer: string;
+  correct: boolean;
+}) {
+  // Replace the first run of underscores with the highlighted answer.
+  const parts = sentence.split(/_{2,}/);
+  return (
+    <div className="rounded-xl border border-border bg-muted/30 px-4 py-3 space-y-1.5">
+      <div className="flex items-center justify-between">
+        <span className="text-[10px] font-extrabold uppercase tracking-wider text-muted-foreground">
+          Sentence
+        </span>
+        <span
+          className={`text-[10px] font-extrabold uppercase tracking-wider ${correct ? "text-emerald-700 dark:text-emerald-300" : "text-rose-700 dark:text-rose-300"}`}
+        >
+          Answer · {answer}
+        </span>
+      </div>
+      <p className="text-sm sm:text-base text-foreground leading-relaxed">
+        {parts.length > 1 ? (
+          <>
+            {parts[0]}
+            <span
+              className={`px-1.5 py-0.5 rounded-md font-extrabold ${correct ? "bg-emerald-100 text-emerald-900 dark:bg-emerald-500/20 dark:text-emerald-100" : "bg-orange-100 text-orange-900 dark:bg-orange-500/20 dark:text-orange-100"}`}
+            >
+              {answer}
+            </span>
+            {parts.slice(1).join("")}
+          </>
+        ) : (
+          sentence
+        )}
+      </p>
     </div>
   );
 }
