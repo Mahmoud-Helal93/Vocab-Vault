@@ -17,6 +17,17 @@ import {
   Sparkles,
   AlertTriangle,
 } from "lucide-react";
+import {
+  loadReviewCards,
+  recordRating,
+  saveResumeSession,
+  clearResumeSession,
+  isDue as isCardDue,
+  isNew as isCardNew,
+  isWeak as isCardWeak,
+  type ResumeSessionRecord,
+  type ResumeRatingEntry,
+} from "@/lib/reviewSrs";
 
 // ─── Types shared with ReviewPage ────────────────────────────────────────────
 
@@ -41,6 +52,8 @@ export interface ReviewSessionConfig {
 interface ReviewSessionProps {
   config: ReviewSessionConfig;
   onBack: () => void;
+  /** When provided, restore an interrupted session instead of building a new one. */
+  resume?: ResumeSessionRecord | null;
 }
 
 // ─── Rating model (Phase 3 placeholder intervals) ───────────────────────────
@@ -196,8 +209,22 @@ function buildSessionWords(
   const beltDays = missionsForBelt(belt);
   let pool = allWords.filter((w) => beltDays.includes(w.day));
 
-  // Phase 2: full filter logic (due/new-due/weak) lands with SM-2 in Phase 3+.
-  // For now, shuffle and apply size limit only.
+  // Phase 4 — apply the Smart Review source filter using stored review state.
+  const reviewCards = loadReviewCards();
+  const now = new Date();
+  const filter = config.smartFilter ?? "due";
+  if (filter === "due") {
+    pool = pool.filter((w) => isCardDue(reviewCards[w.id], now));
+  } else if (filter === "new-due") {
+    pool = pool.filter(
+      (w) => isCardNew(reviewCards[w.id]) || isCardDue(reviewCards[w.id], now),
+    );
+  } else if (filter === "weak") {
+    pool = pool.filter((w) => isCardWeak(reviewCards[w.id]));
+  }
+  // "all" → entire belt, no filtering.
+
+  if (pool.length === 0) return [];
 
   if (config.shuffleMode === "within-mission") {
     const byDay = new Map<number, Word[]>();
@@ -247,22 +274,58 @@ function formatClock(secs: number): string {
 
 // ─── Component ───────────────────────────────────────────────────────────────
 
-export default function ReviewSession({ config, onBack }: ReviewSessionProps) {
+export default function ReviewSession({
+  config,
+  onBack,
+  resume,
+}: ReviewSessionProps) {
   const { words } = useApp();
 
+  // When resuming, rebuild the same card order from saved IDs so the user
+  // returns to the exact same card. Otherwise build a fresh session.
   const sessionWords = useMemo(
-    () => buildSessionWords(config, words),
-    // build once per mount; re-shuffling every render would be jarring
+    () => {
+      if (resume && resume.orderedWordIds.length > 0) {
+        const byId = new Map(words.map((w) => [w.id, w] as const));
+        const restored: Word[] = [];
+        for (const id of resume.orderedWordIds) {
+          const w = byId.get(id);
+          if (w) restored.push(w);
+        }
+        if (restored.length > 0) return restored;
+      }
+      return buildSessionWords(config, words);
+    },
+    // build once per mount
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [],
   );
 
-  const [index, setIndex] = useState(0);
+  const [index, setIndex] = useState(() =>
+    resume
+      ? Math.min(Math.max(0, resume.index), sessionWords.length)
+      : 0,
+  );
   const [flipped, setFlipped] = useState(false);
   const [exitOpen, setExitOpen] = useState(false);
-  const [elapsed, setElapsed] = useState(0);
-  const [ratings, setRatings] = useState<RatingEntry[]>([]);
-  const startedAt = useRef<number>(Date.now());
+  const [elapsed, setElapsed] = useState(() => resume?.elapsedAtSave ?? 0);
+  const [ratings, setRatings] = useState<RatingEntry[]>(() =>
+    resume
+      ? resume.ratings.map((r) => ({
+          wordId: r.wordId,
+          rating: r.rating,
+          label: r.label as RatingLabel,
+          reviewedAt: r.reviewedAt,
+          cardMode: r.cardMode,
+          reviewMode: r.reviewMode,
+        }))
+      : [],
+  );
+  // Anchor the timer so resumed sessions appear to continue from where they
+  // left off rather than restarting at 0.
+  const startedAt = useRef<number>(
+    resume ? Date.now() - (resume.elapsedAtSave ?? 0) * 1000 : Date.now(),
+  );
 
   const total = sessionWords.length;
   const current = sessionWords[index];
@@ -314,6 +377,14 @@ export default function ReviewSession({ config, onBack }: ReviewSessionProps) {
       if (!current) return;
       const def = RATINGS.find((r) => r.value === value);
       if (!def) return;
+      // Persist SM-2 state for this word right away. We persist for both
+      // Cumulative and Smart Review so rating history is uniform; Smart
+      // Review is the mode that consumes due dates for filtering.
+      try {
+        recordRating(current.id, value);
+      } catch {
+        /* localStorage best-effort */
+      }
       const entry: RatingEntry = {
         wordId: current.id,
         rating: value,
@@ -368,6 +439,51 @@ export default function ReviewSession({ config, onBack }: ReviewSessionProps) {
     submitRating,
   ]);
 
+  // ── Pause / Resume persistence ──
+  // Build a serialisable snapshot of the live session.
+  const buildResumeRecord = useCallback(
+    (currentElapsed: number): ResumeSessionRecord => ({
+      savedAt: new Date().toISOString(),
+      startedAt: startedAt.current,
+      elapsedAtSave: currentElapsed,
+      config: { ...config } as Record<string, unknown>,
+      orderedWordIds: sessionWords.map((w) => w.id),
+      index,
+      ratings: ratings.map(
+        (r): ResumeRatingEntry => ({
+          wordId: r.wordId,
+          rating: r.rating,
+          label: r.label,
+          reviewedAt: r.reviewedAt,
+          cardMode: r.cardMode,
+          reviewMode: r.reviewMode,
+        }),
+      ),
+    }),
+    [config, sessionWords, index, ratings],
+  );
+
+  // Persist progress whenever the user advances or rates. This snapshot drives
+  // the "Resume previous review" entry on the Review Center.
+  useEffect(() => {
+    // Don't snapshot empty sessions or completed sessions — those are handled
+    // by the dedicated branches below.
+    if (sessionWords.length === 0) return;
+    if (index >= sessionWords.length) return;
+    saveResumeSession(buildResumeRecord(elapsed));
+    // Note: `elapsed` is intentionally NOT in deps — re-saving every second
+    // when the timer is on would be wasteful. We capture the current elapsed
+    // value at each rating step via the closure above, and on exit (below).
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [index, ratings, sessionWords.length, buildResumeRecord]);
+
+  // Clear the resume snapshot the moment the session is finished.
+  useEffect(() => {
+    if (sessionWords.length > 0 && index >= sessionWords.length) {
+      clearResumeSession();
+    }
+  }, [index, sessionWords.length]);
+
   // ── Cumulative grouping progress ──
   const groupingProgress = useMemo(() => {
     if (config.mode !== "cumulative" || isComplete || !current) return null;
@@ -396,10 +512,24 @@ export default function ReviewSession({ config, onBack }: ReviewSessionProps) {
 
   // ── Empty / completion screens ──
   if (total === 0) {
+    let emptyMessage = "No words match this review configuration.";
+    if (config.mode === "smart") {
+      const f = config.smartFilter ?? "due";
+      if (f === "due") {
+        emptyMessage =
+          "No due cards in this belt today. Try New + due cards or All cards in belt.";
+      } else if (f === "weak") {
+        emptyMessage =
+          "No weak cards in this belt yet. Try Due cards or All cards in belt.";
+      } else if (f === "new-due") {
+        emptyMessage =
+          "No new or due cards in this belt. Try All cards in belt.";
+      }
+    }
     return (
       <EmptyOrComplete
         title={title}
-        message="No words match this review configuration."
+        message={emptyMessage}
         primaryLabel="Back to Review Center"
         onPrimary={onBack}
       />
@@ -681,6 +811,15 @@ export default function ReviewSession({ config, onBack }: ReviewSessionProps) {
         <ExitConfirm
           onCancel={() => setExitOpen(false)}
           onConfirm={() => {
+            // Capture the most recent timer reading on the way out so Resume
+            // continues from the right elapsed time.
+            if (sessionWords.length > 0 && index < sessionWords.length) {
+              try {
+                saveResumeSession(buildResumeRecord(elapsed));
+              } catch {
+                /* best-effort */
+              }
+            }
             setExitOpen(false);
             onBack();
           }}

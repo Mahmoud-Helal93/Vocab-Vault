@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useMemo, useState, useEffect, useCallback } from "react";
 import { motion } from "framer-motion";
 import { useApp } from "@/context/AppContext";
 import {
@@ -22,6 +22,7 @@ import {
   ListOrdered,
   AlertTriangle,
   X,
+  Trash2,
 } from "lucide-react";
 import type {
   ReviewSessionConfig,
@@ -31,6 +32,15 @@ import type {
   SmartFilter,
   SmartSize,
 } from "@/pages/ReviewSession";
+import {
+  loadReviewCards,
+  loadResumeSession,
+  clearResumeSession,
+  isDue as isCardDue,
+  isNew as isCardNew,
+  isWeak as isCardWeak,
+  type ResumeSessionRecord,
+} from "@/lib/reviewSrs";
 
 interface ReviewPageProps {
   onNavigate: (page: string, params?: Record<string, unknown>) => void;
@@ -93,6 +103,35 @@ export default function ReviewPage({ onNavigate }: ReviewPageProps) {
   // Confirmation
   const [confirmOpen, setConfirmOpen] = useState(false);
 
+  // Resume session (read from localStorage). Bumping `resumeVersion` forces a
+  // re-read after Discard or after returning from a session that completed.
+  const [resumeVersion, setResumeVersion] = useState(0);
+  const resume: ResumeSessionRecord | null = useMemo(
+    () => loadResumeSession(),
+    [resumeVersion],
+  );
+
+  // Re-check the resume snapshot whenever the tab regains focus — after the
+  // user returns from a finished session, the storage key will be cleared.
+  useEffect(() => {
+    const onFocus = () => setResumeVersion((v) => v + 1);
+    window.addEventListener("focus", onFocus);
+    return () => window.removeEventListener("focus", onFocus);
+  }, []);
+
+  const discardResume = useCallback(() => {
+    clearResumeSession();
+    setResumeVersion((v) => v + 1);
+  }, []);
+
+  const resumeSession = useCallback(() => {
+    if (!resume) return;
+    onNavigate("review-session", {
+      config: resume.config as unknown as ReviewSessionConfig,
+      resume,
+    });
+  }, [resume, onNavigate]);
+
   // Apply default shuffle per mode if user hasn't touched it.
   const effectiveShuffle: ShuffleMode = shuffleTouched
     ? shuffleMode
@@ -111,25 +150,24 @@ export default function ReviewPage({ onNavigate }: ReviewPageProps) {
   );
 
   const filterCounts = useMemo(() => {
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
+    const reviewCards = loadReviewCards();
+    const now = new Date();
 
-    const isDue = (w: (typeof beltWords)[number]) => {
-      const iso = w.nextReviewDate ?? w.nextReview;
-      if (!iso) return false;
-      return new Date(iso).getTime() <= today.getTime();
-    };
-    const isNew = (w: (typeof beltWords)[number]) =>
-      w.masteryLevel === "new" || (!w.nextReviewDate && !w.nextReview);
-    const isWeak = (w: (typeof beltWords)[number]) =>
-      w.masteryLevel === "weak" || w.masteryLevel === "learning";
-
-    const due = beltWords.filter(isDue).length;
+    let due = 0;
+    let newDue = 0;
+    let weak = 0;
+    for (const w of beltWords) {
+      const state = reviewCards[w.id];
+      const dueNow = isCardDue(state, now);
+      const newNow = isCardNew(state);
+      if (dueNow) due += 1;
+      if (newNow || dueNow) newDue += 1;
+      if (isCardWeak(state)) weak += 1;
+    }
     const all = beltWords.length || WORDS_PER_BELT;
-    const newDue = beltWords.filter((w) => isNew(w) || isDue(w)).length;
-    const weak = beltWords.filter(isWeak).length;
     return { due, all, newDue, weak };
-  }, [beltWords]);
+    // resumeVersion bump also re-counts after a session changes review states.
+  }, [beltWords, resumeVersion]);
 
   const smartPool: number =
     smartFilter === "due"
@@ -523,17 +561,25 @@ export default function ReviewPage({ onNavigate }: ReviewPageProps) {
             </div>
           </SectionShell>
 
-          {/* Resume placeholder (kept inert in Phase 1) */}
-          <div className="rounded-2xl border border-dashed border-border bg-muted/20 p-4 flex items-center gap-3 text-sm text-muted-foreground">
-            <RotateCcw size={16} className="shrink-0" />
-            <div>
-              <span className="font-medium text-foreground">
-                Resume previous review
-              </span>{" "}
-              · No paused session yet. When you pause a session in Phase 2, it
-              will appear here.
+          {/* Resume previous review */}
+          {resume ? (
+            <ResumeCard
+              resume={resume}
+              onResume={resumeSession}
+              onDiscard={discardResume}
+            />
+          ) : (
+            <div className="rounded-2xl border border-dashed border-border bg-muted/20 p-4 flex items-center gap-3 text-sm text-muted-foreground">
+              <RotateCcw size={16} className="shrink-0" />
+              <div>
+                <span className="font-medium text-foreground">
+                  Resume previous review
+                </span>{" "}
+                · No paused session. If you leave a session mid‑way, it will
+                appear here so you can pick up where you left off.
+              </div>
             </div>
-          </div>
+          )}
         </div>
 
         {/* RIGHT SIDEBAR — REVIEW SUMMARY */}
@@ -1022,5 +1068,114 @@ function SummaryRow({
         {value}
       </span>
     </div>
+  );
+}
+
+// ─── Resume previous review ────────────────────────────────────────────────
+
+function ResumeCard({
+  resume,
+  onResume,
+  onDiscard,
+}: {
+  resume: ResumeSessionRecord;
+  onResume: () => void;
+  onDiscard: () => void;
+}) {
+  const total = resume.orderedWordIds.length;
+  const done = Math.min(resume.index, total);
+  const remaining = Math.max(0, total - done);
+  const cfg = resume.config as Record<string, unknown>;
+  const mode = (cfg.mode as ReviewMode) ?? "smart";
+  const titleMode =
+    mode === "cumulative" ? "Cumulative Review" : "Smart Review";
+
+  // Friendly scope label
+  let scope = "";
+  if (mode === "cumulative") {
+    scope = `Missions 1–${cfg.cumulativeMission ?? "?"}`;
+  } else {
+    const beltNum = (cfg.smartBelt as number) ?? 1;
+    scope = `Belt ${beltNum} · ${BELT_NAMES[beltNum - 1] ?? ""}`;
+  }
+
+  // Saved time (relative)
+  const savedAgo = (() => {
+    try {
+      const ms = Date.now() - new Date(resume.savedAt).getTime();
+      const min = Math.max(1, Math.round(ms / 60000));
+      if (min < 60) return `${min} min ago`;
+      const hr = Math.round(min / 60);
+      if (hr < 24) return `${hr} hr ago`;
+      const day = Math.round(hr / 24);
+      return `${day} day${day === 1 ? "" : "s"} ago`;
+    } catch {
+      return "recently";
+    }
+  })();
+
+  const pct = total > 0 ? Math.round((done / total) * 100) : 0;
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 6 }}
+      animate={{ opacity: 1, y: 0 }}
+      className="rounded-2xl border border-orange-300/70 dark:border-orange-500/40 bg-brand-gradient-soft shadow-sm p-4 sm:p-5"
+    >
+      <div className="flex items-start gap-3">
+        <div className="h-10 w-10 rounded-2xl bg-brand-gradient text-white flex items-center justify-center shadow-sm shrink-0">
+          <RotateCcw size={18} />
+        </div>
+        <div className="flex-1 min-w-0">
+          <div className="flex items-center gap-2 flex-wrap">
+            <div className="text-sm font-bold">Resume previous review</div>
+            <span className="text-[10px] font-bold uppercase tracking-wide px-1.5 py-0.5 rounded-md bg-card border border-border text-muted-foreground">
+              {titleMode}
+            </span>
+          </div>
+          <div className="text-xs text-muted-foreground mt-0.5 truncate">
+            {scope} · paused {savedAgo}
+          </div>
+          <div className="mt-3 flex items-center gap-2 text-xs text-muted-foreground">
+            <span>
+              <span className="font-semibold text-foreground tabular-nums">
+                {done}
+              </span>
+              /{total} done
+            </span>
+            <span className="text-muted-foreground/60">·</span>
+            <span>
+              <span className="font-semibold text-foreground tabular-nums">
+                {remaining}
+              </span>{" "}
+              left
+            </span>
+          </div>
+          <div className="mt-2 h-1.5 rounded-full bg-card border border-border overflow-hidden">
+            <div
+              className="h-full bg-brand-gradient transition-all"
+              style={{ width: `${pct}%` }}
+            />
+          </div>
+        </div>
+      </div>
+
+      <div className="mt-4 flex items-center gap-2 flex-wrap">
+        <button
+          onClick={onResume}
+          className="h-10 px-4 rounded-xl text-sm font-semibold btn-brand inline-flex items-center gap-2"
+        >
+          <Play size={14} />
+          Resume previous review
+        </button>
+        <button
+          onClick={onDiscard}
+          className="h-10 px-3 rounded-xl text-sm font-medium border border-border bg-card hover:bg-muted text-muted-foreground inline-flex items-center gap-2"
+        >
+          <Trash2 size={14} />
+          Discard saved review
+        </button>
+      </div>
+    </motion.div>
   );
 }

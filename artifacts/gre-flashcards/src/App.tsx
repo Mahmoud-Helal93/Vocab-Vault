@@ -141,6 +141,12 @@ function MainApp() {
         return (
           <ReviewSession
             config={pageParams.config as ReviewSessionConfig}
+            resume={
+              (pageParams.resume as
+                | import("@/lib/reviewSrs").ResumeSessionRecord
+                | null
+                | undefined) ?? null
+            }
             onBack={() => goBack(() => setPage("review"))}
           />
         );
