@@ -1498,65 +1498,78 @@ function FeedbackPanel(props: QuestionCardProps) {
     [q, response, pool],
   );
 
-  const headerTone = iDontKnow
-    ? "from-slate-500/10 to-slate-500/5 text-slate-700 dark:text-slate-300"
+  type BannerTone = "correct" | "incorrect" | "skipped";
+  const bannerTone: BannerTone = iDontKnow
+    ? "skipped"
     : finalCorrect
-      ? "from-emerald-500/15 to-emerald-500/5 text-emerald-800 dark:text-emerald-200"
-      : "from-rose-500/15 to-rose-500/5 text-rose-800 dark:text-rose-200";
+      ? "correct"
+      : "incorrect";
 
-  const headerIcon = iDontKnow ? (
-    <HelpCircle size={18} />
-  ) : finalCorrect ? (
-    <CheckCircle2 size={18} />
-  ) : (
-    <XCircle size={18} />
-  );
+  const bannerCls =
+    bannerTone === "correct"
+      ? "border-emerald-200 dark:border-emerald-500/40 bg-emerald-50 dark:bg-emerald-500/10 text-emerald-800 dark:text-emerald-200"
+      : bannerTone === "incorrect"
+        ? "border-rose-200 dark:border-rose-500/40 bg-rose-50 dark:bg-rose-500/10 text-rose-800 dark:text-rose-200"
+        : "border-amber-200 dark:border-amber-500/30 bg-amber-50/70 dark:bg-amber-500/10 text-amber-800 dark:text-amber-200";
 
-  const headerText = iDontKnow
-    ? "Skipped — here's the answer."
-    : correctOnRetry
-      ? "Correct on retry."
-      : finalCorrect
-        ? "Correct!"
-        : "Not quite — here's the breakdown.";
+  const bannerIcon =
+    bannerTone === "correct" ? (
+      <CheckCircle2 size={16} />
+    ) : bannerTone === "incorrect" ? (
+      <XCircle size={16} />
+    ) : (
+      <HelpCircle size={16} />
+    );
+
+  const bannerText =
+    bannerTone === "skipped"
+      ? "Skipped — here's the answer."
+      : bannerTone === "correct"
+        ? correctOnRetry
+          ? "Correct on retry."
+          : "Correct!"
+        : "Incorrect — here's the right answer.";
 
   return (
     <div>
-      {/* Status header */}
-      <div
-        className={`px-5 sm:px-6 py-3 bg-gradient-to-r ${headerTone} flex items-center gap-2 font-extrabold text-sm`}
-      >
-        {headerIcon}
-        <span>{headerText}</span>
-      </div>
-
       {/* Body */}
-      <div className="px-5 sm:px-6 py-4 space-y-3.5">
-        <CorrectAnswerLine q={q} />
+      <div className="px-5 sm:px-6 py-4 space-y-3">
+        {/* Compact result banner + correct answer row */}
+        <div
+          className={`rounded-xl border ${bannerCls} px-3.5 py-2.5 flex flex-wrap items-center justify-between gap-x-3 gap-y-1`}
+        >
+          <span className="inline-flex items-center gap-1.5 font-extrabold text-sm">
+            {bannerIcon}
+            {bannerText}
+          </span>
+          <CorrectAnswerLine q={q} tone={bannerTone} />
+        </div>
 
         {wrongRationale && (
-          <div className="rounded-xl border border-rose-200 dark:border-rose-500/40 bg-rose-50/60 dark:bg-rose-500/10 p-3.5">
-            <div className="flex items-center gap-1.5 mb-1">
-              <XCircle size={14} className="text-rose-600 dark:text-rose-400" />
-              <span className="text-[11px] font-extrabold uppercase tracking-wider text-rose-800 dark:text-rose-200">
+          <div className="rounded-xl border border-rose-200 dark:border-rose-500/40 bg-rose-50/60 dark:bg-rose-500/10 px-3.5 py-2.5">
+            <div className="flex items-center gap-1.5 mb-0.5">
+              <XCircle size={13} className="text-rose-600 dark:text-rose-400" />
+              <span className="text-[10px] font-extrabold uppercase tracking-wider text-rose-800 dark:text-rose-200">
                 Why your answer was wrong
               </span>
             </div>
-            <p className="text-sm text-rose-900 dark:text-rose-100">
+            <p className="text-[13px] leading-snug text-rose-900 dark:text-rose-100">
               {wrongRationale}
             </p>
           </div>
         )}
 
         {q.explanation && (
-          <div className="rounded-xl border border-border bg-muted/40 p-3.5">
-            <div className="flex items-center gap-1.5 mb-1">
-              <Brain size={14} className="text-muted-foreground" />
-              <span className="text-[11px] font-extrabold uppercase tracking-wider text-muted-foreground">
+          <div className="rounded-xl border border-border bg-muted/40 px-3.5 py-2.5">
+            <div className="flex items-center gap-1.5 mb-0.5">
+              <Brain size={13} className="text-muted-foreground" />
+              <span className="text-[10px] font-extrabold uppercase tracking-wider text-muted-foreground">
                 Explanation
               </span>
             </div>
-            <p className="text-sm text-foreground/90">{q.explanation}</p>
+            <p className="text-[13px] leading-snug text-foreground/90">
+              {q.explanation}
+            </p>
           </div>
         )}
 
@@ -1631,7 +1644,15 @@ function FeedbackPanel(props: QuestionCardProps) {
   );
 }
 
-function CorrectAnswerLine({ q }: { q: Question }) {
+function CorrectAnswerLine({
+  q,
+  tone = "incorrect",
+}: {
+  q: Question;
+  tone?: "correct" | "incorrect" | "skipped";
+}) {
+  let label = "Correct answer";
+  let value = "";
   if (
     q.kind === "tf-definition" ||
     q.kind === "tf-synonym" ||
@@ -1639,70 +1660,83 @@ function CorrectAnswerLine({ q }: { q: Question }) {
     q.kind === "tf-arabic"
   ) {
     const tf = q as TrueFalseQuestion;
-    return (
-      <p className="text-sm">
-        <span className="text-muted-foreground font-bold">Correct: </span>
-        <span className="font-extrabold text-foreground">
-          {tf.answer ? "True" : "False"}
-        </span>
-      </p>
-    );
+    value = tf.answer ? "True" : "False";
+  } else if (q.kind === "fill-blank") {
+    value = (q as FillBlankQuestion).answer;
+  } else if (q.kind === "synonym-pair") {
+    label = "Correct synonyms";
+    value = (q as SynonymPairQuestion).correctAnswers.join(", ");
+  } else {
+    value = (q as MCQQuestion).correct;
   }
-  if (q.kind === "fill-blank") {
-    const fb = q as FillBlankQuestion;
-    return (
-      <p className="text-sm">
-        <span className="text-muted-foreground font-bold">Correct: </span>
-        <span className="font-extrabold text-foreground">{fb.answer}</span>
-      </p>
-    );
-  }
-  if (q.kind === "synonym-pair") {
-    const sp = q as SynonymPairQuestion;
-    return (
-      <p className="text-sm">
-        <span className="text-muted-foreground font-bold">
-          Correct synonyms:{" "}
-        </span>
-        <span className="font-extrabold text-foreground">
-          {sp.correctAnswers.join(", ")}
-        </span>
-      </p>
-    );
-  }
-  const mcq = q as MCQQuestion;
+
+  const valueCls =
+    tone === "correct"
+      ? "text-emerald-900 dark:text-emerald-100"
+      : tone === "incorrect"
+        ? "text-rose-900 dark:text-rose-100"
+        : "text-amber-900 dark:text-amber-100";
+
+  const labelCls =
+    tone === "correct"
+      ? "text-emerald-700/80 dark:text-emerald-200/70"
+      : tone === "incorrect"
+        ? "text-rose-700/80 dark:text-rose-200/70"
+        : "text-amber-700/80 dark:text-amber-200/70";
+
   return (
-    <p className="text-sm">
-      <span className="text-muted-foreground font-bold">Correct: </span>
-      <span className="font-extrabold text-foreground">{mcq.correct}</span>
-    </p>
+    <span className="text-[13px] leading-tight">
+      <span className={`font-bold ${labelCls}`}>{label}:</span>{" "}
+      <span className={`font-extrabold ${valueCls}`}>{value}</span>
+    </span>
   );
 }
 
 function WordCard({ word }: { word: Word }) {
   return (
-    <div className="rounded-xl border border-border bg-card p-3.5">
-      <div className="flex items-baseline justify-between gap-3">
-        <h4 className="text-base font-extrabold text-foreground">
-          {word.word}
-        </h4>
-        <span className="text-[11px] text-muted-foreground font-bold">
-          {word.pos} · {word.arabic}
-        </span>
+    <section className="rounded-xl border border-border bg-card px-4 py-3 space-y-1.5">
+      {/* Top row: word + POS badge (left) · Arabic (right) */}
+      <div className="flex items-center justify-between gap-3">
+        <div className="flex items-center gap-2 min-w-0">
+          <h4 className="text-base font-extrabold text-foreground truncate">
+            {word.word}
+          </h4>
+          <span className="shrink-0 px-1.5 py-0.5 rounded-md bg-muted text-foreground/70 text-[10px] font-extrabold uppercase tracking-wider">
+            {word.pos}
+          </span>
+        </div>
+        {word.arabic && (
+          <span
+            className="text-sm font-bold text-muted-foreground truncate text-right"
+            dir="rtl"
+          >
+            {word.arabic}
+          </span>
+        )}
       </div>
-      <p className="text-sm text-foreground/85 mt-1">{word.definition}</p>
+
+      {/* Definition */}
+      <p className="text-[13px] leading-snug text-foreground/90">
+        {word.definition}
+      </p>
+
+      {/* Example */}
       {word.examples?.[0] && (
-        <p className="text-xs text-muted-foreground italic mt-2">
+        <p className="text-[12px] leading-snug text-muted-foreground italic">
           “{word.examples[0]}”
         </p>
       )}
+
+      {/* Synonyms footer */}
       {word.synonyms?.length > 0 && (
-        <p className="text-[11px] text-muted-foreground mt-2">
-          <span className="font-bold text-foreground/70">Synonyms:</span>{" "}
+        <p className="text-[11px] text-muted-foreground pt-0.5">
+          <span className="font-extrabold uppercase tracking-wider text-foreground/60 mr-1">
+            Synonyms
+          </span>
           {word.synonyms.join(", ")}
         </p>
       )}
-    </div>
+    </section>
   );
 }
 
