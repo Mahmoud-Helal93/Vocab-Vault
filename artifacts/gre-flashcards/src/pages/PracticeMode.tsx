@@ -1962,6 +1962,39 @@ function SessionSummary({
 
   const wrongCount = wordRows.filter((row) => !row.r.finalCorrect).length;
 
+  // ── Words to review now — derived from existing session responses ──────
+  // Pulls one entry per word, picking the most concerning reason in this order:
+  // Wrong > Skipped > Forgot (low-confidence correct) > Guessed (correct).
+  const reviewRows = useMemo(() => {
+    type Reason = "wrong" | "skipped" | "forgot" | "guessed";
+    const out: Array<{
+      word: Word;
+      q: Question;
+      r: ResponseState;
+      reason: Reason;
+    }> = [];
+    for (const row of wordRows) {
+      const { r } = row;
+      let reason: Reason | null = null;
+      if (r.finalCorrect === false && !r.iDontKnow) reason = "wrong";
+      else if (r.iDontKnow) reason = "skipped";
+      else if (r.finalCorrect === true && r.confidence === "forgot")
+        reason = "forgot";
+      else if (r.finalCorrect === true && r.confidence === "guessed")
+        reason = "guessed";
+      if (reason) out.push({ ...row, reason });
+    }
+    // Sort by reason severity so the most urgent surfaces first.
+    const order: Record<Reason, number> = {
+      wrong: 0,
+      skipped: 1,
+      forgot: 2,
+      guessed: 3,
+    };
+    out.sort((a, b) => order[a.reason] - order[b.reason]);
+    return out;
+  }, [wordRows]);
+
   // ── Performance by question type — derived from session results ─────────
   // Uses each question's kind + the existing ResponseState. A question counts
   // as "answered" when the user finalized it (finalCorrect === true/false) or
@@ -2177,26 +2210,60 @@ function SessionSummary({
         </section>
       )}
 
-      <section className="rounded-2xl border border-border bg-card shadow-sm p-5">
+      <section className="rounded-2xl border border-border bg-card shadow-sm p-4 sm:p-5">
+        <div className="flex items-center justify-between gap-3 mb-3">
+          <h3 className="text-sm font-extrabold text-foreground">
+            Words to review now
+          </h3>
+          {reviewRows.length > 0 && (
+            <span className="text-[10px] font-extrabold uppercase tracking-wider text-muted-foreground">
+              {reviewRows.length} word{reviewRows.length === 1 ? "" : "s"}
+            </span>
+          )}
+        </div>
+
+        {reviewRows.length === 0 ? (
+          <div className="flex items-center gap-2 px-3 py-3 rounded-xl bg-emerald-50 dark:bg-emerald-500/10 border border-emerald-200 dark:border-emerald-500/40 text-emerald-800 dark:text-emerald-200 text-[13px] font-bold">
+            <CheckCircle2 size={15} className="shrink-0" />
+            Great work — no urgent review words from this session.
+          </div>
+        ) : (
+          <ul className="divide-y divide-border">
+            {reviewRows.map((row) => (
+              <li
+                key={row.word.id}
+                className="py-2.5 flex items-center justify-between gap-3"
+              >
+                <div className="min-w-0">
+                  <div className="text-sm font-extrabold text-foreground truncate">
+                    {row.word.word}
+                  </div>
+                  <div className="text-[11px] text-muted-foreground truncate">
+                    <span className="italic">{row.word.pos}</span>
+                    <span className="mx-1.5">·</span>
+                    {KIND_META[row.q.kind]?.label ?? row.q.kind}
+                    <span className="mx-1.5">·</span>
+                    M{row.word.day}·S{row.word.group}
+                  </div>
+                </div>
+                <ReviewReasonChip reason={row.reason} />
+              </li>
+            ))}
+          </ul>
+        )}
+      </section>
+
+      <section className="rounded-2xl border border-border bg-card shadow-sm p-4 sm:p-5">
         <h3 className="text-sm font-extrabold text-foreground mb-3">
           Per-word recap
         </h3>
         <ul className="divide-y divide-border">
           {wordRows.map((row) => {
-            const tone = row.r.iDontKnow
-              ? "text-slate-600"
+            const status: "correct" | "incorrect" | "skipped" = row.r.iDontKnow
+              ? "skipped"
               : row.r.finalCorrect
-                ? row.r.firstCorrect
-                  ? "text-emerald-600"
-                  : "text-amber-600"
-                : "text-rose-600";
-            const label = row.r.iDontKnow
-              ? "Skipped"
-              : row.r.finalCorrect
-                ? row.r.firstCorrect
-                  ? "Correct"
-                  : "Correct on retry"
-                : "Incorrect";
+                ? "correct"
+                : "incorrect";
             return (
               <li
                 key={row.word.id}
@@ -2207,21 +2274,29 @@ function SessionSummary({
                     {row.word.word}
                   </div>
                   <div className="text-[11px] text-muted-foreground truncate">
-                    {row.word.pos} · M{row.word.day}·S{row.word.group}
+                    <span className="italic">{row.word.pos}</span>
+                    <span className="mx-1.5">·</span>
+                    M{row.word.day}·S{row.word.group}
                     {row.r.markedDifficult && (
-                      <span className="ml-2 text-rose-600 font-bold">
-                        · marked difficult
-                      </span>
+                      <>
+                        <span className="mx-1.5">·</span>
+                        <span className="text-rose-600 font-bold">
+                          marked difficult
+                        </span>
+                      </>
                     )}
                   </div>
                 </div>
-                <div className="flex items-center gap-2 text-xs font-extrabold shrink-0">
+                <div className="flex items-center gap-1.5 shrink-0">
                   {row.r.confidence && (
-                    <span className="text-[10px] text-muted-foreground font-bold">
-                      {CONFIDENCE_META[row.r.confidence].label}
-                    </span>
+                    <ConfidenceChip value={row.r.confidence} />
                   )}
-                  <span className={tone}>{label}</span>
+                  <RecapStatusChip
+                    status={status}
+                    onRetry={
+                      status === "correct" && row.r.firstCorrect === false
+                    }
+                  />
                 </div>
               </li>
             );
@@ -2229,6 +2304,108 @@ function SessionSummary({
         </ul>
       </section>
     </div>
+  );
+}
+
+function ReviewReasonChip({
+  reason,
+}: {
+  reason: "wrong" | "skipped" | "forgot" | "guessed";
+}) {
+  const META: Record<
+    typeof reason,
+    { label: string; cls: string; Icon: typeof XCircle }
+  > = {
+    wrong: {
+      label: "Wrong",
+      cls:
+        "bg-rose-50 dark:bg-rose-500/10 text-rose-700 dark:text-rose-300 border-rose-200 dark:border-rose-500/40",
+      Icon: XCircle,
+    },
+    skipped: {
+      label: "Skipped",
+      cls:
+        "bg-amber-50 dark:bg-amber-500/10 text-amber-700 dark:text-amber-300 border-amber-200 dark:border-amber-500/40",
+      Icon: HelpCircle,
+    },
+    forgot: {
+      label: "Forgot",
+      cls:
+        "bg-rose-50 dark:bg-rose-500/10 text-rose-700 dark:text-rose-300 border-rose-200 dark:border-rose-500/40",
+      Icon: RotateCcw,
+    },
+    guessed: {
+      label: "Guessed",
+      cls:
+        "bg-amber-50 dark:bg-amber-500/10 text-amber-700 dark:text-amber-300 border-amber-200 dark:border-amber-500/40",
+      Icon: Sparkles,
+    },
+  };
+  const m = META[reason];
+  const Icon = m.Icon;
+  return (
+    <span
+      className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full border text-[11px] font-extrabold shrink-0 ${m.cls}`}
+    >
+      <Icon size={11} />
+      {m.label}
+    </span>
+  );
+}
+
+function RecapStatusChip({
+  status,
+  onRetry,
+}: {
+  status: "correct" | "incorrect" | "skipped";
+  onRetry?: boolean;
+}) {
+  if (status === "correct") {
+    return (
+      <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full border text-[11px] font-extrabold bg-emerald-50 dark:bg-emerald-500/10 text-emerald-700 dark:text-emerald-300 border-emerald-200 dark:border-emerald-500/40">
+        <CheckCircle2 size={11} />
+        {onRetry ? "Correct on retry" : "Correct"}
+      </span>
+    );
+  }
+  if (status === "incorrect") {
+    return (
+      <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full border text-[11px] font-extrabold bg-rose-50 dark:bg-rose-500/10 text-rose-700 dark:text-rose-300 border-rose-200 dark:border-rose-500/40">
+        <XCircle size={11} />
+        Incorrect
+      </span>
+    );
+  }
+  return (
+    <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full border text-[11px] font-extrabold bg-amber-50 dark:bg-amber-500/10 text-amber-700 dark:text-amber-300 border-amber-200 dark:border-amber-500/40">
+      <HelpCircle size={11} />
+      Skipped
+    </span>
+  );
+}
+
+function ConfidenceChip({ value }: { value: Confidence }) {
+  const META: Record<Confidence, { label: string; cls: string }> = {
+    knew: {
+      label: "I knew it",
+      cls: "bg-emerald-50/70 dark:bg-emerald-500/10 text-emerald-700 dark:text-emerald-300 border-emerald-200/70 dark:border-emerald-500/30",
+    },
+    guessed: {
+      label: "I guessed",
+      cls: "bg-amber-50/70 dark:bg-amber-500/10 text-amber-700 dark:text-amber-300 border-amber-200/70 dark:border-amber-500/30",
+    },
+    forgot: {
+      label: "I forgot it",
+      cls: "bg-rose-50/70 dark:bg-rose-500/10 text-rose-700 dark:text-rose-300 border-rose-200/70 dark:border-rose-500/30",
+    },
+  };
+  const m = META[value];
+  return (
+    <span
+      className={`hidden sm:inline-flex items-center px-2 py-0.5 rounded-full border text-[10px] font-bold shrink-0 ${m.cls}`}
+    >
+      {m.label}
+    </span>
   );
 }
 
