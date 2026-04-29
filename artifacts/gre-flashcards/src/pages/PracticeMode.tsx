@@ -305,6 +305,10 @@ export default function PracticeMode({
   const [currentIdx, setCurrentIdx] = useState(0);
   const [responses, setResponses] = useState<Record<string, ResponseState>>({});
   const [finished, setFinished] = useState(false);
+  const [sessionStartedAt, setSessionStartedAt] = useState<number>(() =>
+    Date.now(),
+  );
+  const [sessionEndedAt, setSessionEndedAt] = useState<number | null>(null);
 
   // If the queue shrinks, clamp the cursor.
   useEffect(() => {
@@ -445,6 +449,7 @@ export default function PracticeMode({
   const goNext = useCallback(() => {
     if (currentIdx >= queue.length - 1) {
       setFinished(true);
+      setSessionEndedAt(Date.now());
     } else {
       setCurrentIdx((i) => i + 1);
     }
@@ -456,6 +461,8 @@ export default function PracticeMode({
     setFinished(false);
     setQueueOverride(null);
     setQueueSeed(uniqId());
+    setSessionStartedAt(Date.now());
+    setSessionEndedAt(null);
   }, []);
 
   /** Re-run only the questions the user got wrong / skipped. */
@@ -474,6 +481,8 @@ export default function PracticeMode({
     setResponses({});
     setCurrentIdx(0);
     setFinished(false);
+    setSessionStartedAt(Date.now());
+    setSessionEndedAt(null);
   }, [queue, responses, words]);
 
   /** Re-enter the session as a read-only review of every question. */
@@ -540,6 +549,11 @@ export default function PracticeMode({
           stats={stats}
           queue={queue}
           responses={responses}
+          elapsedMs={
+            sessionEndedAt !== null
+              ? Math.max(0, sessionEndedAt - sessionStartedAt)
+              : null
+          }
           onRestart={restart}
           onReview={reviewIncorrect}
           onRetryWrong={retryWrongOnly}
@@ -1908,6 +1922,7 @@ function SessionSummary({
   stats,
   queue,
   responses,
+  elapsedMs,
   onRestart,
   onReview,
   onRetryWrong,
@@ -1916,6 +1931,7 @@ function SessionSummary({
   stats: { answered: number; correct: number; firstTryCorrect: number; total: number };
   queue: Question[];
   responses: Record<string, ResponseState>;
+  elapsedMs: number | null;
   onRestart: () => void;
   onReview: () => void;
   onRetryWrong: () => void;
@@ -1946,65 +1962,98 @@ function SessionSummary({
 
   const wrongCount = wordRows.filter((row) => !row.r.finalCorrect).length;
 
+  const hasTime = elapsedMs !== null && elapsedMs > 0;
+  const totalSec = hasTime ? Math.max(1, Math.round(elapsedMs! / 1000)) : 0;
+  const totalTimeLabel = hasTime ? formatDuration(totalSec) : null;
+  const avgPerQuestionLabel =
+    hasTime && stats.total > 0
+      ? formatDuration(Math.max(1, Math.round(totalSec / stats.total)))
+      : null;
+
   return (
     <div className="space-y-5">
-      <section className="rounded-2xl border border-border bg-brand-gradient-soft p-6 shadow-sm text-center">
-        <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-brand-gradient mb-3 shadow-md">
-          <Trophy size={26} className="text-white" strokeWidth={2.5} />
-        </div>
-        <h2 className="text-2xl font-extrabold text-foreground">
-          Session complete
-        </h2>
-        <p className="text-sm text-muted-foreground mt-1">
-          You finished {stats.total} question{stats.total === 1 ? "" : "s"}.
-        </p>
-        <div className="grid grid-cols-3 gap-3 mt-5 max-w-md mx-auto">
-          <SummaryStat label="Accuracy" value={`${accuracy}%`} />
-          <SummaryStat label="First-try" value={`${firstTryAccuracy}%`} />
-          <SummaryStat
-            label="To review"
-            value={`${wrongCount}`}
-            tone={wrongCount > 0 ? "rose" : "emerald"}
-          />
-        </div>
+      <section className="relative overflow-hidden rounded-2xl border border-rose-200/70 dark:border-rose-500/30 bg-gradient-to-br from-rose-50 via-orange-50 to-amber-50 dark:from-rose-500/15 dark:via-orange-500/10 dark:to-amber-500/10 p-6 sm:p-7 shadow-sm">
+        <div aria-hidden className="absolute -top-16 -right-16 w-56 h-56 rounded-full bg-rose-200/40 dark:bg-rose-500/10 blur-3xl pointer-events-none" />
+        <div aria-hidden className="absolute -bottom-16 -left-16 w-56 h-56 rounded-full bg-amber-200/40 dark:bg-amber-500/10 blur-3xl pointer-events-none" />
 
-        <div className="flex flex-wrap justify-center gap-2 mt-5">
-          {wrongCount > 0 && (
-            <button
-              type="button"
-              onClick={onRetryWrong}
-              className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl text-sm font-extrabold btn-brand"
-            >
-              <RotateCcw size={14} />
-              Retry wrong only ({wrongCount})
-            </button>
-          )}
+        <div className="relative text-center">
+          <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-brand-gradient mb-3 shadow-md ring-4 ring-white/60 dark:ring-white/10">
+            <Trophy size={26} className="text-white" strokeWidth={2.5} />
+          </div>
+          <h2 className="text-2xl sm:text-3xl font-extrabold text-foreground tracking-tight">
+            Session complete
+          </h2>
+          <p className="text-sm text-muted-foreground mt-1">
+            You finished {stats.total} question{stats.total === 1 ? "" : "s"}.
+          </p>
+
+          <div className="mt-6 grid grid-cols-2 sm:grid-cols-3 gap-2.5 sm:gap-3">
+            <HeroMetric
+              label="Accuracy"
+              value={`${accuracy}%`}
+              tone={accuracy >= 80 ? "emerald" : accuracy >= 50 ? "amber" : "rose"}
+            />
+            <HeroMetric
+              label="First-try"
+              value={`${firstTryAccuracy}%`}
+              tone={firstTryAccuracy >= 80 ? "emerald" : firstTryAccuracy >= 50 ? "amber" : "rose"}
+            />
+            <HeroMetric
+              label="To review"
+              value={`${wrongCount}`}
+              tone={wrongCount > 0 ? "rose" : "emerald"}
+            />
+            {totalTimeLabel && (
+              <HeroMetric label="Total time" value={totalTimeLabel} tone="neutral" />
+            )}
+            {avgPerQuestionLabel && (
+              <HeroMetric label="Avg / question" value={avgPerQuestionLabel} tone="neutral" />
+            )}
+          </div>
+        </div>
+      </section>
+
+      <section className="rounded-2xl border border-border bg-card shadow-sm p-4 sm:p-5">
+        {wrongCount === 0 ? (
+          <div className="mb-3 flex items-center gap-2 px-3 py-2 rounded-xl bg-emerald-50 dark:bg-emerald-500/10 border border-emerald-200 dark:border-emerald-500/40 text-emerald-800 dark:text-emerald-200 text-[13px] font-bold">
+            <CheckCircle2 size={15} />
+            No wrong answers to retry. Nice work!
+          </div>
+        ) : null}
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2">
+          <button
+            type="button"
+            onClick={onRetryWrong}
+            disabled={wrongCount === 0}
+            className="inline-flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-xl text-sm font-extrabold btn-brand disabled:opacity-50 disabled:cursor-not-allowed disabled:shadow-none"
+          >
+            <RotateCcw size={14} />
+            {wrongCount > 0
+              ? `Retry wrong only (${wrongCount})`
+              : "Retry wrong only"}
+          </button>
+          <button
+            type="button"
+            onClick={onReview}
+            disabled={wrongCount === 0}
+            className="inline-flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-xl text-sm font-extrabold bg-card text-foreground border border-border hover:bg-muted/60 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+          >
+            <BookOpenText size={14} />
+            Review incorrect
+          </button>
           <button
             type="button"
             onClick={onRestart}
-            className={`inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl text-sm font-extrabold ${
-              wrongCount > 0
-                ? "bg-card text-foreground border border-border hover:bg-muted/60"
-                : "btn-brand"
-            }`}
+            className="inline-flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-xl text-sm font-extrabold bg-card text-foreground border border-border hover:bg-muted/60 transition-colors"
           >
             <RefreshCw size={14} />
             Practice again
           </button>
-          {wrongCount > 0 && (
-            <button
-              type="button"
-              onClick={onReview}
-              className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl text-sm font-extrabold bg-card text-foreground border border-border hover:bg-muted/60"
-            >
-              <BookOpenText size={14} />
-              Review incorrect
-            </button>
-          )}
           <button
             type="button"
             onClick={onExit}
-            className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl text-sm font-extrabold bg-muted text-foreground/80 hover:bg-muted/70"
+            className="inline-flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-xl text-sm font-bold text-muted-foreground hover:text-foreground hover:bg-muted/60 transition-colors"
           >
             <Flag size={14} />
             Exit
@@ -2067,31 +2116,44 @@ function SessionSummary({
   );
 }
 
-function SummaryStat({
+function HeroMetric({
   label,
   value,
-  tone,
+  tone = "neutral",
 }: {
   label: string;
   value: string;
-  tone?: "emerald" | "rose";
+  tone?: "emerald" | "rose" | "amber" | "neutral";
 }) {
   const valueClass =
     tone === "emerald"
       ? "text-emerald-600 dark:text-emerald-400"
       : tone === "rose"
         ? "text-rose-600 dark:text-rose-400"
-        : "text-foreground";
+        : tone === "amber"
+          ? "text-amber-600 dark:text-amber-400"
+          : "text-foreground";
   return (
-    <div className="rounded-xl border border-border bg-card px-3 py-2.5">
+    <div className="rounded-xl bg-white/70 dark:bg-white/5 backdrop-blur-sm border border-white/60 dark:border-white/10 px-3 py-3 shadow-sm">
       <div className="text-[10px] font-extrabold uppercase tracking-wider text-muted-foreground">
         {label}
       </div>
-      <div className={`text-xl font-extrabold mt-0.5 ${valueClass}`}>
+      <div className={`text-xl sm:text-2xl font-extrabold tabular-nums mt-0.5 ${valueClass}`}>
         {value}
       </div>
     </div>
   );
+}
+
+function formatDuration(totalSec: number): string {
+  const s = Math.max(0, Math.floor(totalSec));
+  if (s < 60) return `${s}s`;
+  const m = Math.floor(s / 60);
+  const rem = s % 60;
+  if (m < 60) return rem === 0 ? `${m}m` : `${m}m ${rem}s`;
+  const h = Math.floor(m / 60);
+  const mm = m % 60;
+  return mm === 0 ? `${h}h` : `${h}h ${mm}m`;
 }
 
 // Re-export for convenience (lock icon used elsewhere if needed)
