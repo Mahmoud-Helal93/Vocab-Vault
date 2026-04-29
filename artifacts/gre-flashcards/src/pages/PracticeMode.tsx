@@ -788,23 +788,15 @@ function QuestionCard(props: QuestionCardProps) {
 
   return (
     <article className="rounded-2xl border border-border bg-card shadow-sm overflow-hidden">
-      {/* Top: type tag + word meta */}
-      <div className="px-5 sm:px-6 pt-5 flex items-center justify-between gap-3">
-        <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-muted text-foreground/80 text-[11px] font-extrabold">
-          {KIND_META[q.kind].icon}
-          {KIND_META[q.kind].label}
-        </span>
-        <span className="text-[11px] text-muted-foreground font-bold">
-          M{q.word.day} · S{q.word.group} · {q.word.pos}
-        </span>
-      </div>
+      {/* 1. Top metadata row */}
+      <CardMetaRow q={q} />
 
-      {/* Prompt */}
+      {/* 2. Prompt area */}
       <div className="px-5 sm:px-6 pt-4">
         <PromptBlock q={q} />
       </div>
 
-      {/* Choices / input */}
+      {/* 3. Answer area (per-type UI untouched) */}
       <div className="px-5 sm:px-6 pt-5">
         <AnswerArea {...props} />
       </div>
@@ -816,16 +808,16 @@ function QuestionCard(props: QuestionCardProps) {
         </div>
       )}
 
-      {/* Action row: pre-answer */}
+      {/* 4. Action / helper row (pre-answer) */}
       {!isAnswered && (
-        <div className="px-5 sm:px-6 py-4 mt-1 border-t border-border flex flex-wrap items-center justify-between gap-2">
+        <div className="px-5 sm:px-6 py-4 mt-1 border-t border-border bg-muted/30 flex flex-wrap items-center justify-between gap-2">
           <div className="flex items-center gap-2">
             {props.showHints !== false && (
               <button
                 type="button"
                 onClick={props.onHint}
                 disabled={response.hintShown}
-                className="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-bold bg-amber-50 dark:bg-amber-500/10 text-amber-800 dark:text-amber-200 border border-amber-200 dark:border-amber-500/40 hover:bg-amber-100 dark:hover:bg-amber-500/20 disabled:opacity-50 disabled:cursor-not-allowed"
+                className="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-bold bg-amber-50 dark:bg-amber-500/10 text-amber-800 dark:text-amber-200 border border-amber-200 dark:border-amber-500/40 hover:bg-amber-100 dark:hover:bg-amber-500/20 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
               >
                 <Lightbulb size={13} />
                 {response.hintShown ? "Hint shown" : "Hint"}
@@ -834,7 +826,7 @@ function QuestionCard(props: QuestionCardProps) {
             <button
               type="button"
               onClick={props.onIDontKnow}
-              className="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-bold bg-muted text-foreground/80 border border-border hover:bg-muted/70"
+              className="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-bold bg-card text-foreground/80 border border-border hover:bg-muted/70 transition-colors"
             >
               <HelpCircle size={13} />
               I don&apos;t know
@@ -852,13 +844,40 @@ function QuestionCard(props: QuestionCardProps) {
         </div>
       )}
 
-      {/* Feedback panel */}
+      {/* 5. Feedback area (unchanged) */}
       {isAnswered && (
         <div className="border-t border-border">
           <FeedbackPanel {...props} />
         </div>
       )}
     </article>
+  );
+}
+
+// ─── Shared card meta row (type pill + source meta) ────────────────────────
+
+function CardMetaRow({ q }: { q: Question }) {
+  const meta = KIND_META[q.kind];
+  return (
+    <div className="px-5 sm:px-6 pt-5 pb-1 flex items-center justify-between gap-3">
+      <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-brand-gradient-soft text-foreground text-[11px] font-extrabold border border-border/60">
+        <span className="text-orange-600 dark:text-orange-300 flex items-center">
+          {meta.icon}
+        </span>
+        <span className="tracking-wide">{meta.label}</span>
+      </span>
+      <span className="inline-flex items-center gap-1.5 text-[11px] font-bold text-muted-foreground">
+        <span className="px-1.5 py-0.5 rounded-md bg-muted text-foreground/70 tabular-nums">
+          M{q.word.day}
+        </span>
+        <span className="opacity-50">·</span>
+        <span className="px-1.5 py-0.5 rounded-md bg-muted text-foreground/70 tabular-nums">
+          S{q.word.group}
+        </span>
+        <span className="opacity-50">·</span>
+        <span className="italic text-muted-foreground">{q.word.pos}</span>
+      </span>
+    </div>
   );
 }
 

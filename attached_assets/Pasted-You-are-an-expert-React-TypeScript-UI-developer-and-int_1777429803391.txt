@@ -1,0 +1,129 @@
+You are an expert React/TypeScript UI developer and interaction designer.
+
+I want you to improve ONLY the answer areas for each question type on the Custom Practice Question Page.
+
+Do NOT change:
+- question generation
+- correct answer logic
+- scoring
+- results page
+- setup page
+- header/progress
+- unrelated pages
+
+==================================================
+TASK 1 — MCQ ANSWER OPTIONS
+==================================================
+
+Improve MCQ option cards for:
+- Word → Definition
+- Definition → Word
+- Synonym Recognition
+- Antonym Recognition
+
+States:
+Default:
+- white background
+- soft border
+- rounded-xl
+- readable text
+
+Hover:
+- subtle background tint
+- slightly stronger border
+
+Selected before feedback:
+- soft brand tint
+- stronger border
+- optional selected/check icon
+
+Correct after feedback:
+- green border
+- light green background
+- check icon
+
+Wrong selected after feedback:
+- red border
+- light red background
+- x icon
+
+If the user chooses wrong:
+- show the wrong selected option clearly
+- show the correct option clearly
+
+Do not change the actual answer logic.
+
+==================================================
+TASK 2 — FILL IN THE BLANK
+==================================================
+
+Improve the Fill in the Blank answer area.
+
+Before answer:
+- sentence should be large and readable
+- input should be prominent
+- Submit button should sit on the same row as the input on desktop
+- stack cleanly on mobile
+
+Below input:
+- show hint only if hints are enabled
+- hint text should be subtle
+
+After answer:
+- lock the input
+- show correct answer
+- if possible, show the original sentence with the target word highlighted
+
+Do not change validation rules.
+
+==================================================
+TASK 3 — TRUE / FALSE
+==================================================
+
+Improve True/False layout.
+
+Before answer:
+- True and False should be large equal-width buttons
+- use two columns on desktop
+- stack on mobile
+
+After answer:
+- chosen answer should be visually marked
+- correct answer should be clearly shown
+- if wrong, show both:
+  - Your answer
+  - Correct answer
+
+==================================================
+TASK 4 — SELECT ALL SYNONYMS
+==================================================
+
+Improve Select All Synonyms.
+
+Before submit:
+- show instruction:
+  “Choose all that apply, then press Submit.”
+- show selected count:
+  “Selected 2 options”
+- options should be a 2-column grid on desktop
+- stack on mobile
+- selected options should have clear selected styling
+
+After submit:
+- correct synonyms should be green
+- wrong selected options should be red
+- missed correct options should be shown with subtle green outline or “missed” indicator
+
+Do not change no-partial-credit scoring logic.
+
+==================================================
+AFTER FINISHING
+==================================================
+
+Stop and summarize:
+1. Files changed
+2. MCQ UI changes
+3. Fill in the Blank UI changes
+4. True/False UI changes
+5. Select All UI changes
+6. Confirmation that answer logic was not changed
