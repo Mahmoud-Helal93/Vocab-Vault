@@ -1962,6 +1962,53 @@ function SessionSummary({
 
   const wrongCount = wordRows.filter((row) => !row.r.finalCorrect).length;
 
+  // ── Performance by question type — derived from session results ─────────
+  // Uses each question's kind + the existing ResponseState. A question counts
+  // as "answered" when the user finalized it (finalCorrect === true/false) or
+  // explicitly skipped via I-don't-know. Correct = finalCorrect === true.
+  const perKind = useMemo(() => {
+    const buckets = new Map<QuestionKind, { total: number; correct: number }>();
+    for (const q of queue) {
+      const r = responses[q.id];
+      if (!r) continue;
+      const answered = r.finalCorrect !== null || r.iDontKnow;
+      if (!answered) continue;
+      const b = buckets.get(q.kind) ?? { total: 0, correct: 0 };
+      b.total += 1;
+      if (r.finalCorrect === true) b.correct += 1;
+      buckets.set(q.kind, b);
+    }
+    const rows = Array.from(buckets.entries()).map(([kind, b]) => ({
+      kind,
+      label: KIND_META[kind]?.label ?? kind,
+      total: b.total,
+      correct: b.correct,
+      pct: b.total > 0 ? Math.round((b.correct / b.total) * 100) : 0,
+    }));
+    // Sort: highest percentage first; within ties, more questions first.
+    rows.sort((a, b) => b.pct - a.pct || b.total - a.total);
+    return rows;
+  }, [queue, responses]);
+
+  // Insight sentence: only shown when there's enough variety to be useful.
+  let insight: string | null = null;
+  if (perKind.length >= 2) {
+    const top = perKind[0];
+    const bottom = perKind[perKind.length - 1];
+    if (top.pct > bottom.pct) {
+      insight = `Your strongest area was ${top.label}. Your weakest area was ${bottom.label}.`;
+    } else if (top.pct === 100) {
+      insight = `Strong across all question types — nice consistency.`;
+    }
+  } else if (perKind.length === 1) {
+    const only = perKind[0];
+    if (only.pct === 100) {
+      insight = `Perfect score on ${only.label}.`;
+    } else if (only.pct < 50) {
+      insight = `${only.label} needs more practice.`;
+    }
+  }
+
   const hasTime = elapsedMs !== null && elapsedMs > 0;
   const totalSec = hasTime ? Math.max(1, Math.round(elapsedMs! / 1000)) : 0;
   const totalTimeLabel = hasTime ? formatDuration(totalSec) : null;
@@ -2060,6 +2107,75 @@ function SessionSummary({
           </button>
         </div>
       </section>
+
+      {perKind.length > 0 && (
+        <section className="rounded-2xl border border-border bg-card shadow-sm p-4 sm:p-5">
+          <div className="flex items-center justify-between gap-3 mb-3">
+            <h3 className="text-sm font-extrabold text-foreground">
+              Performance by question type
+            </h3>
+            <span className="text-[10px] font-extrabold uppercase tracking-wider text-muted-foreground">
+              {perKind.length} type{perKind.length === 1 ? "" : "s"}
+            </span>
+          </div>
+
+          <ul className="space-y-2.5">
+            {perKind.map((row) => {
+              const tone =
+                row.pct >= 80
+                  ? "emerald"
+                  : row.pct >= 50
+                    ? "amber"
+                    : "rose";
+              const barClass =
+                tone === "emerald"
+                  ? "bg-emerald-500"
+                  : tone === "amber"
+                    ? "bg-amber-500"
+                    : "bg-rose-500";
+              const pctClass =
+                tone === "emerald"
+                  ? "text-emerald-600 dark:text-emerald-400"
+                  : tone === "amber"
+                    ? "text-amber-600 dark:text-amber-400"
+                    : "text-rose-600 dark:text-rose-400";
+              return (
+                <li key={row.kind} className="space-y-1">
+                  <div className="flex items-baseline justify-between gap-3">
+                    <span className="text-[13px] font-extrabold text-foreground truncate">
+                      {row.label}
+                    </span>
+                    <span className="shrink-0 text-[12px] font-bold tabular-nums text-muted-foreground">
+                      {row.correct} / {row.total}
+                      <span className={`ml-2 font-extrabold ${pctClass}`}>
+                        {row.pct}%
+                      </span>
+                    </span>
+                  </div>
+                  <div
+                    className="h-1.5 w-full rounded-full bg-muted/70 overflow-hidden"
+                    role="progressbar"
+                    aria-valuenow={row.pct}
+                    aria-valuemin={0}
+                    aria-valuemax={100}
+                  >
+                    <div
+                      className={`h-full ${barClass} rounded-full transition-all duration-300 ease-out`}
+                      style={{ width: `${row.pct}%` }}
+                    />
+                  </div>
+                </li>
+              );
+            })}
+          </ul>
+
+          {insight && (
+            <p className="mt-3 text-[12px] text-muted-foreground italic">
+              {insight}
+            </p>
+          )}
+        </section>
+      )}
 
       <section className="rounded-2xl border border-border bg-card shadow-sm p-5">
         <h3 className="text-sm font-extrabold text-foreground mb-3">
