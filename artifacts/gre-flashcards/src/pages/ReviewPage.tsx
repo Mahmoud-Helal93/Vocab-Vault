@@ -23,16 +23,18 @@ import {
   AlertTriangle,
   X,
 } from "lucide-react";
+import type {
+  ReviewSessionConfig,
+  ReviewMode,
+  CardMode,
+  ShuffleMode,
+  SmartFilter,
+  SmartSize,
+} from "@/pages/ReviewSession";
 
 interface ReviewPageProps {
   onNavigate: (page: string, params?: Record<string, unknown>) => void;
 }
-
-type ReviewMode = "cumulative" | "smart";
-type CardMode = "front" | "back";
-type ShuffleMode = "within-mission" | "within-all";
-type SmartFilter = "due" | "all" | "new-due" | "weak";
-type SmartSize = "all" | "20" | "30" | "50" | "custom";
 
 const WORDS_PER_MISSION = 30;
 const WORDS_PER_BELT = MISSIONS_PER_BELT * WORDS_PER_MISSION; // 210
@@ -71,7 +73,7 @@ function smartSizeToNumber(size: SmartSize, custom: number, pool: number): numbe
 
 // ─── Component ────────────────────────────────────────────────────────────────
 
-export default function ReviewPage({ onNavigate: _onNavigate }: ReviewPageProps) {
+export default function ReviewPage({ onNavigate }: ReviewPageProps) {
   const { words } = useApp();
 
   // Mode + selections
@@ -161,17 +163,22 @@ export default function ReviewPage({ onNavigate: _onNavigate }: ReviewPageProps)
 
   const actuallyStart = () => {
     setConfirmOpen(false);
-    // Phase 1: placeholder. Full session lands in Phase 2.
-    // eslint-disable-next-line no-alert
-    alert(
-      `Review session ready (Phase 1 placeholder).\n\n` +
-        `Mode: ${reviewMode === "cumulative" ? "Cumulative Review" : "Smart Review"}\n` +
-        `Cards: ${totalWords}\n` +
-        `Card mode: ${cardMode === "front" ? "Front First" : "Back First"}\n` +
-        `Shuffle: ${effectiveShuffle === "within-mission" ? "Within each mission" : "Within all missions"}\n` +
-        `Timer: ${timerEnabled ? "On" : "Off"}\n\n` +
-        `The flashcard session will be built in Phase 2.`,
-    );
+    const config: ReviewSessionConfig = {
+      mode: reviewMode,
+      cumulativeMission:
+        reviewMode === "cumulative" ? cumulativeMission : undefined,
+      smartBelt: reviewMode === "smart" ? smartBelt : undefined,
+      smartFilter: reviewMode === "smart" ? smartFilter : undefined,
+      smartSize: reviewMode === "smart" ? smartSize : undefined,
+      smartCustomSize:
+        reviewMode === "smart" && smartSize === "custom"
+          ? smartCustomSize
+          : undefined,
+      cardMode,
+      shuffleMode: effectiveShuffle,
+      timerEnabled,
+    };
+    onNavigate("review-session", { config });
   };
 
   return (

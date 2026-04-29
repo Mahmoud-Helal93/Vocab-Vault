@@ -1,0 +1,250 @@
+Continue with Phase 5 only.
+
+You are an expert React/TypeScript developer and learning-product UI/UX designer.
+
+I want you to build the Review Result page.
+
+Do NOT change:
+- Review Center logic unless needed for navigation
+- flashcard content
+- SM-2 scheduling unless bug fix needed
+- unrelated pages
+
+The page title must be exactly:
+
+Review Result
+
+Do not call it “Review Results.”
+
+==================================================
+GOAL
+==================================================
+
+After finishing a review session, show a clean analytical result page.
+
+The Review Result page should show:
+- total reviewed
+- Again count
+- Hard count
+- Good count
+- Easy count
+- Perfect count
+- time spent
+- next review schedule
+- words rated Again/Hard
+- Review Again options
+- Start another review
+- Back to Review Center
+
+==================================================
+PAGE LAYOUT
+==================================================
+
+Use a centered wide layout:
+- max-w-[1100px] or similar
+- mx-auto
+- px-6
+- py-6
+- space-y-6
+
+Sections:
+
+1. Hero Summary
+2. Rating Breakdown
+3. Words to Review Again
+4. Next Review Schedule
+5. Per-word Recap
+6. Action Buttons
+
+Use existing design language:
+- rounded-2xl
+- border border-border
+- bg-card
+- shadow-sm
+- soft gradient hero
+- compact metric cards
+
+==================================================
+SECTION 1 — HERO SUMMARY
+==================================================
+
+Title:
+Review complete
+
+Subtitle:
+You reviewed X words.
+
+Metrics:
+- Reviewed
+- Again
+- Hard
+- Good
+- Easy
+- Perfect
+- Time spent, if timer enabled
+
+Use large readable metric cards.
+
+==================================================
+SECTION 2 — RATING BREAKDOWN
+==================================================
+
+Show rating counts with small progress bars:
+- Again
+- Hard
+- Good
+- Easy
+- Perfect
+
+Each row:
+- rating label
+- count
+- percentage
+- progress bar
+
+==================================================
+SECTION 3 — WORDS TO REVIEW AGAIN
+==================================================
+
+Show words rated:
+- Again
+- Hard
+
+Also include if available:
+- words marked weak
+- words with lapses
+
+Each row/card:
+- word
+- part of speech
+- Arabic translation if useful
+- source: Mission X · Set Y
+- rating chip: Again or Hard
+- next review date if Smart Review
+
+Do not include examples.
+Do not include antonyms.
+
+If there are no Again/Hard cards:
+Show positive empty state:
+“Great work — no urgent cards to review again.”
+
+==================================================
+SECTION 4 — REVIEW AGAIN OPTIONS
+==================================================
+
+Add buttons:
+
+1. Review Again cards
+- starts a new session with only Again cards
+
+2. Review Hard cards
+- starts a new session with only Hard cards
+
+3. Review Again + Hard cards
+- starts a new session with Again and Hard cards
+
+If a group is empty:
+- disable that button
+- show count if possible
+
+Examples:
+Review Again cards (4)
+Review Hard cards (8)
+Review Again + Hard cards (12)
+
+==================================================
+SECTION 5 — NEXT REVIEW SCHEDULE
+==================================================
+
+For Smart Review:
+Show next review schedule grouped by due date:
+
+- Tomorrow
+- In 3 days
+- In 7 days
+- Later
+
+Each group:
+- count of cards
+- optional preview words
+
+For Cumulative Review:
+If scheduling data exists, show it.
+If not relevant, show a simple message or hide the section.
+
+==================================================
+SECTION 6 — PER-WORD RECAP
+==================================================
+
+Show all reviewed words in compact rows.
+
+Each row:
+- word
+- part of speech
+- source Mission X · Set Y
+- rating
+- next review date if available
+
+No examples.
+No antonyms.
+
+Rows should be:
+- clean
+- compact
+- readable
+- mobile-friendly
+
+==================================================
+SECTION 7 — MAIN ACTION BUTTONS
+==================================================
+
+Add actions:
+- Start another review
+- Back to Review Center
+
+Button hierarchy:
+- Review Again / Hard options should be prominent if available.
+- Back to Review Center should be clear but secondary.
+
+==================================================
+NAVIGATION
+==================================================
+
+After finishing session:
+- go to Review Result
+
+From Review Result:
+- Start another review → Review Center
+- Back to Review Center → Review Center
+- Review Again cards → new session with Again cards
+- Review Hard cards → new session with Hard cards
+- Review Again + Hard cards → new session with Again + Hard cards
+
+==================================================
+MANUAL TESTING
+==================================================
+
+Test:
+1. Finish review with mixed ratings.
+2. Review Result shows correct counts.
+3. Words to Review Again includes Again and Hard only.
+4. Review Again cards starts session with Again cards.
+5. Review Hard cards starts session with Hard cards.
+6. Review Again + Hard cards starts session with both.
+7. Next Review Schedule appears for Smart Review.
+8. Back to Review Center works.
+9. No examples or antonyms appear.
+
+==================================================
+FINAL RESPONSE
+==================================================
+
+After Phase 5, stop and summarize:
+1. files changed
+2. Review Result sections added
+3. rating breakdown behavior
+4. Review Again options
+5. next schedule behavior
+6. navigation behavior
+7. how to test manually

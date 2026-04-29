@@ -1,0 +1,283 @@
+Continue with Phase 2 only.
+
+You are an expert React/TypeScript developer and flashcard-learning UX designer.
+
+I want you to build the Review flashcard session page.
+
+Do NOT change:
+- Review Center design except what is necessary to start the session
+- sidebar routing
+- Learn tab
+- Test tab
+- Custom Practice
+- unrelated pages
+
+Do NOT implement full SM-2 scheduling yet.
+Do NOT implement Review Result yet.
+Do NOT include antonyms.
+Do NOT include examples.
+
+==================================================
+GOAL
+==================================================
+
+When the user clicks Start Review in Review Center, open the flashcard page.
+
+The page title must be exactly:
+- “Cumulative Review” if Cumulative Review mode is selected
+- “Smart Review” if Smart Review mode is selected
+
+The session should use active recall:
+- show one side of the card first
+- user tries to recall the other side
+- user flips the card
+- only after flipping, rating buttons will appear in Phase 3
+
+For Phase 2, build:
+- selected word list generation
+- flashcard page layout
+- front/back card mode
+- click card to flip
+- Space key to flip
+- progress indicators
+- timer display if enabled
+- next-card flow placeholder if needed
+
+==================================================
+SESSION WORD LIST
+==================================================
+
+Build selected word list based on Review Center settings.
+
+Cumulative Review:
+- selected mission N
+- include all words where day <= N
+- Mission 1 to Mission N
+- no mission range option
+
+Smart Review:
+- selected belt B
+- belt = Math.floor((day - 1) / 7) + 1
+- include all words in selected belt for now
+- full due filtering comes later
+- apply session size option if already implemented:
+  - 20
+  - 30
+  - 50
+  - custom
+  - all available
+
+==================================================
+SESSION ORDERING
+==================================================
+
+Cumulative Review:
+
+If shuffle mode is “Within Each Mission”:
+- group words by day/mission
+- keep mission order chronological
+- shuffle words inside each mission
+
+If shuffle mode is “Within All Missions”:
+- shuffle all selected words as one group
+
+Smart Review:
+- use selected belt words
+- shuffle according to selected shuffle mode
+- if session size limit exists, limit the final cards safely
+
+Do not mutate the original words array.
+
+==================================================
+FLASHCARD PAGE HEADER
+==================================================
+
+Header should show:
+- Back to Review Center
+- page title:
+  - Cumulative Review or Smart Review
+- progress:
+  - Card 7 / 90
+- timer if enabled
+- cards left
+- Card Direction Indicator:
+  - Front First = Word → Meaning
+  - Back First = Meaning → Word
+
+For Cumulative Review, also show progress grouping:
+- Overall progress: Card 18 / 120
+- Mission group progress: Mission 2 / 4
+- Current mission progress: 12 / 30
+
+For Smart Review, show:
+- Belt number
+- selected Smart Review filter if available
+
+Progress bar:
+- full width
+- rounded
+- orange-to-pink gradient
+- smooth transition
+
+==================================================
+FLASHCARD DESIGN
+==================================================
+
+Create a large focused flashcard.
+
+Before flip:
+- show selected starting side only
+- show helper text:
+  “Try to recall the other side before flipping.”
+- show:
+  “Click the card or press Space to reveal.”
+
+After flip:
+- show the opposite side
+- rating buttons will be added in Phase 3
+
+Add subtle flip animation:
+- smooth rotate/fade from front to back
+- no heavy 3D effect
+- fast and clean
+- visual only
+- do not change behavior
+
+==================================================
+FRONT SIDE CONTENT
+==================================================
+
+Front side shows:
+- Word
+- Part of Speech
+- Arabic Translation
+- Pronunciation button
+- source metadata:
+  - Mission X · Set Y
+
+Pronunciation:
+- use existing pronunciation function if available
+- otherwise use Web Speech API
+- do not add heavy dependencies
+
+Keyboard shortcut:
+- P key triggers pronunciation only when the visible side contains the word.
+- If the definition side is visible, pressing P does nothing and must not cause an error.
+
+==================================================
+BACK SIDE CONTENT
+==================================================
+
+Back side shows only:
+- Definition
+- Synonyms
+
+Do not show:
+- examples
+- antonyms
+- example sentences
+- antonym fallback rows
+
+If synonyms are missing, show a safe empty state or hide the synonyms row.
+
+==================================================
+CARD MODE
+==================================================
+
+Front First:
+- first face = front side
+- after flip = back side
+
+Back First:
+- first face = back side
+- after flip = front side
+
+The card direction indicator must match:
+- Front First = Word → Meaning
+- Back First = Meaning → Word
+
+==================================================
+KEYBOARD SHORTCUTS FOR PHASE 2
+==================================================
+
+Implement:
+- Space = flip card
+- P = pronunciation only when the visible side contains the word
+- Esc = back/exit confirmation
+
+If user presses Esc:
+Show confirmation:
+“Leave review session? Progress for reviewed cards will be saved.”
+
+For Phase 2:
+- confirmation can return to Review Center
+- full pause/resume save logic comes later
+
+Do not implement 1–5 rating keys yet.
+They come in Phase 3.
+
+==================================================
+SESSION INTERRUPTION SAFETY
+==================================================
+
+If user leaves mid-review:
+Show confirmation:
+“Leave review session? Progress for reviewed cards will be saved.”
+
+For Phase 2:
+- implement confirmation
+- full save/resume logic can be added in Phase 4 or 5
+- do not overbuild
+
+==================================================
+RESPONSIVE DESIGN
+==================================================
+
+Desktop:
+- centered flashcard
+- max width around 900–1000px
+- clean spacing
+
+Mobile:
+- card stacks cleanly
+- text is readable
+- no clipping
+- buttons accessible
+
+==================================================
+MANUAL TESTING
+==================================================
+
+After implementation, test:
+
+1. Start Cumulative Review Mission 2:
+   - includes 60 words
+   - title says Cumulative Review
+2. Start Smart Review Belt 1:
+   - includes selected belt words
+   - title says Smart Review
+3. Front First:
+   - word side appears first
+   - flip shows definition/synonyms
+4. Back First:
+   - definition/synonyms appear first
+   - flip shows word side
+5. No examples appear.
+6. No antonyms appear.
+7. Space flips the card.
+8. P pronounces only when word side is visible.
+9. Esc shows exit confirmation.
+10. Cumulative Review progress grouping appears.
+
+==================================================
+FINAL RESPONSE
+==================================================
+
+After Phase 2, stop and summarize:
+1. files changed
+2. session page created
+3. word selection behavior
+4. flashcard front/back behavior
+5. keyboard shortcuts added
+6. confirmation behavior
+7. what is still placeholder

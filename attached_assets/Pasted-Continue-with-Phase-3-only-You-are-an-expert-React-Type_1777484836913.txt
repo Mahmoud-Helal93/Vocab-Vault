@@ -1,0 +1,179 @@
+Continue with Phase 3 only.
+
+You are an expert React/TypeScript developer and spaced-repetition UX designer.
+
+I want you to add rating buttons and rating behavior to the Review flashcard page.
+
+Do NOT change:
+- Review Center layout
+- word selection logic unless necessary
+- flashcard front/back content
+- routing
+- unrelated pages
+
+Do NOT implement full SM-2 persistence yet.
+That comes later.
+
+==================================================
+GOAL
+==================================================
+
+After the card is flipped, show rating buttons.
+
+Before the card is flipped:
+- do not show rating buttons
+
+After the card is flipped:
+- show 5 rating buttons in a horizontal row:
+  1. Again
+  2. Hard
+  3. Good
+  4. Easy
+  5. Perfect
+
+Each button should show:
+- label on top
+- next review interval below it
+
+Example:
+Again
+1 day
+
+Hard
+3 days
+
+Good
+6 days
+
+Easy
+10 days
+
+Perfect
+15 days
+
+For Phase 3, intervals can be simple placeholder calculations.
+Full SM-2 scheduling comes in Phase 4.
+
+==================================================
+RATING BUTTON DESIGN
+==================================================
+
+Rating buttons should be:
+- visible only after flip
+- horizontal row on desktop
+- wrap or stack cleanly on mobile
+- clear color coding
+- rounded-xl
+- accessible
+- easy to click
+
+Suggested colors:
+- Again: red/pink
+- Hard: amber
+- Good: blue or neutral
+- Easy: green
+- Perfect: purple/green
+
+Do not rely only on color.
+Show text labels clearly.
+
+==================================================
+RATING BEHAVIOR
+==================================================
+
+When the user rates a card:
+- store rating in current session state
+- mark current card as reviewed
+- move to the next card
+- reset flip state for next card
+- update progress
+- update rating counts
+
+For now, store session ratings in memory state.
+
+Rating object should include:
+- wordId
+- rating number 1–5
+- rating label
+- reviewedAt
+- card mode
+- review mode
+
+==================================================
+KEYBOARD SHORTCUTS
+==================================================
+
+Enable keys 1–5 only after the card is flipped:
+
+1 = Again
+2 = Hard
+3 = Good
+4 = Easy
+5 = Perfect
+
+Right arrow:
+- moves to next card only after a rating has been submitted or if current logic allows it safely
+
+Space:
+- still flips the card
+
+P:
+- still pronounces only when visible side contains word
+
+Esc:
+- still shows exit confirmation
+
+Important:
+Do not trigger rating keys before the card is flipped.
+
+==================================================
+RATING COUNTS
+==================================================
+
+Show current rating counts if useful in the header or a compact stats row:
+- Again count
+- Hard count
+- Good count
+- Easy count
+- Perfect count
+
+Keep it compact.
+Do not clutter the flashcard.
+
+==================================================
+SESSION COMPLETION
+==================================================
+
+When the last card is rated:
+- transition to Review Result page placeholder
+- if Review Result is not built yet, show a simple temporary completion state:
+  “Review complete”
+  with rating counts
+
+Full Review Result design comes in Phase 5.
+
+==================================================
+MANUAL TESTING
+==================================================
+
+Test:
+1. Rating buttons hidden before flip.
+2. Rating buttons appear after flip.
+3. 1–5 keys work only after flip.
+4. Rating advances to next card.
+5. Progress updates.
+6. Rating counts update.
+7. Last card ends session safely.
+8. Space and P still work correctly.
+
+==================================================
+FINAL RESPONSE
+==================================================
+
+After Phase 3, stop and summarize:
+1. files changed
+2. rating buttons added
+3. rating state behavior
+4. keyboard shortcuts added
+5. what is placeholder
+6. confirmation that card content still excludes examples and antonyms
