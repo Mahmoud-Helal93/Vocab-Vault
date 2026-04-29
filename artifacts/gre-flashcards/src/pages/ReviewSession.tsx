@@ -20,6 +20,7 @@ import {
 import {
   loadReviewCards,
   recordRating,
+  previewIntervalDays,
   saveResumeSession,
   clearResumeSession,
   isDue as isCardDue,
@@ -82,7 +83,6 @@ export interface RatingEntry {
 interface RatingDef {
   value: RatingValue;
   label: RatingLabel;
-  intervalDays: number;
   // Tailwind classes — full strings so the JIT picks them up.
   baseCls: string;
   hoverCls: string;
@@ -92,12 +92,10 @@ interface RatingDef {
   hotkey: string;
 }
 
-// Intervals are placeholder values for Phase 3. Phase 4 swaps in real SM‑2.
 const RATINGS: RatingDef[] = [
   {
     value: 1,
     label: "Again",
-    intervalDays: 1,
     baseCls:
       "border-rose-300 bg-rose-50 dark:border-rose-800/60 dark:bg-rose-500/10",
     hoverCls: "hover:bg-rose-100 dark:hover:bg-rose-500/20",
@@ -109,7 +107,6 @@ const RATINGS: RatingDef[] = [
   {
     value: 2,
     label: "Hard",
-    intervalDays: 3,
     baseCls:
       "border-amber-300 bg-amber-50 dark:border-amber-800/60 dark:bg-amber-500/10",
     hoverCls: "hover:bg-amber-100 dark:hover:bg-amber-500/20",
@@ -121,7 +118,6 @@ const RATINGS: RatingDef[] = [
   {
     value: 3,
     label: "Good",
-    intervalDays: 6,
     baseCls:
       "border-sky-300 bg-sky-50 dark:border-sky-800/60 dark:bg-sky-500/10",
     hoverCls: "hover:bg-sky-100 dark:hover:bg-sky-500/20",
@@ -133,7 +129,6 @@ const RATINGS: RatingDef[] = [
   {
     value: 4,
     label: "Easy",
-    intervalDays: 10,
     baseCls:
       "border-emerald-300 bg-emerald-50 dark:border-emerald-800/60 dark:bg-emerald-500/10",
     hoverCls: "hover:bg-emerald-100 dark:hover:bg-emerald-500/20",
@@ -145,7 +140,6 @@ const RATINGS: RatingDef[] = [
   {
     value: 5,
     label: "Perfect",
-    intervalDays: 15,
     baseCls:
       "border-violet-300 bg-violet-50 dark:border-violet-800/60 dark:bg-violet-500/10",
     hoverCls: "hover:bg-violet-100 dark:hover:bg-violet-500/20",
@@ -157,8 +151,14 @@ const RATINGS: RatingDef[] = [
 ];
 
 function intervalLabel(days: number): string {
+  if (days <= 0) return "today";
   if (days === 1) return "1 day";
-  return `${days} days`;
+  if (days < 7) return `${days} days`;
+  if (days < 14) return "1 week";
+  if (days < 30) return `${Math.round(days / 7)} weeks`;
+  if (days < 60) return "1 month";
+  if (days < 365) return `${Math.round(days / 30)} months`;
+  return "1 year+";
 }
 
 const SMART_FILTER_LABEL: Record<SmartFilter, string> = {
@@ -405,13 +405,14 @@ export default function ReviewSession({
       if (!current) return;
       const def = RATINGS.find((r) => r.value === value);
       if (!def) return;
-      // Persist SM-2 state for this word right away. We persist for both
-      // Cumulative and Smart Review so rating history is uniform; Smart
-      // Review is the mode that consumes due dates for filtering.
-      try {
-        recordRating(current.id, value);
-      } catch {
-        /* localStorage best-effort */
+      // Only Smart Review writes SM-2 state — Cumulative is a "free run"
+      // through the deck and must not pollute Smart Review's due dates.
+      if (config.mode === "smart") {
+        try {
+          recordRating(current.id, value);
+        } catch {
+          /* localStorage best-effort */
+        }
       }
       const entry: RatingEntry = {
         wordId: current.id,
@@ -531,6 +532,29 @@ export default function ReviewSession({
     }
   }, [index, sessionWords.length, ratings, elapsed, config, onNavigate]);
 
+  // ── Real per-card SM-2 interval previews for the rating buttons ──
+  // Re-read storage whenever the card changes (a previous rating may have
+  // updated state). This is cheap — `loadReviewCards` parses one JSON blob.
+  const ratingPreviews = useMemo<Record<RatingValue, number>>(() => {
+    if (!current) return { 1: 1, 2: 3, 3: 6, 4: 10, 5: 15 };
+    let prev;
+    try {
+      prev = loadReviewCards()[current.id];
+    } catch {
+      prev = undefined;
+    }
+    return {
+      1: previewIntervalDays(prev, 1),
+      2: previewIntervalDays(prev, 2),
+      3: previewIntervalDays(prev, 3),
+      4: previewIntervalDays(prev, 4),
+      5: previewIntervalDays(prev, 5),
+    };
+    // `index` advances after each rating, so this re-runs and reflects the
+    // freshly-saved state of the card we just left.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [current?.id, index]);
+
   // ── Cumulative grouping progress ──
   const groupingProgress = useMemo(() => {
     if (config.mode !== "cumulative" || isComplete || !current) return null;
@@ -617,23 +641,28 @@ export default function ReviewSession({
               <h1 className="text-base sm:text-lg font-bold truncate">
                 {title}
               </h1>
-              <span className="text-[11px] font-semibold uppercase tracking-wide px-2 py-0.5 rounded-md bg-muted text-muted-foreground">
+              <span className="text-[11px] font-semibold uppercase tracking-wide px-2 py-0.5 rounded-md bg-muted text-muted-foreground whitespace-nowrap">
                 {directionLabel}
               </span>
               {config.mode === "smart" && !isOverrideSession && (
                 <>
-                  <span className="text-[11px] font-semibold uppercase tracking-wide px-2 py-0.5 rounded-md bg-orange-100 text-orange-700 dark:bg-orange-500/20 dark:text-orange-300">
+                  <span className="text-[11px] font-semibold uppercase tracking-wide px-2 py-0.5 rounded-md bg-orange-100 text-orange-700 dark:bg-orange-500/20 dark:text-orange-300 whitespace-nowrap">
                     Belt {config.smartBelt} · {BELT_NAMES[(config.smartBelt ?? 1) - 1]}
                   </span>
                   {config.smartFilter && (
-                    <span className="text-[11px] font-semibold uppercase tracking-wide px-2 py-0.5 rounded-md bg-muted text-muted-foreground">
+                    <span className="text-[11px] font-semibold uppercase tracking-wide px-2 py-0.5 rounded-md bg-muted text-muted-foreground whitespace-nowrap">
                       {SMART_FILTER_LABEL[config.smartFilter]}
                     </span>
                   )}
                 </>
               )}
+              {config.mode === "cumulative" && !isOverrideSession && (
+                <span className="text-[11px] font-semibold uppercase tracking-wide px-2 py-0.5 rounded-md bg-orange-100 text-orange-700 dark:bg-orange-500/20 dark:text-orange-300 whitespace-nowrap">
+                  Missions 1–{config.cumulativeMission ?? 1}
+                </span>
+              )}
               {isOverrideSession && (
-                <span className="text-[11px] font-semibold uppercase tracking-wide px-2 py-0.5 rounded-md bg-orange-100 text-orange-700 dark:bg-orange-500/20 dark:text-orange-300">
+                <span className="text-[11px] font-semibold uppercase tracking-wide px-2 py-0.5 rounded-md bg-orange-100 text-orange-700 dark:bg-orange-500/20 dark:text-orange-300 whitespace-nowrap">
                   Focused list
                 </span>
               )}
@@ -797,27 +826,49 @@ export default function ReviewSession({
                   aria-label="Rate your recall"
                   className="grid grid-cols-2 sm:grid-cols-5 gap-2"
                 >
-                  {RATINGS.map((r) => (
-                    <button
-                      key={r.value}
-                      onClick={() => submitRating(r.value)}
-                      aria-label={`${r.label} — next review in ${intervalLabel(r.intervalDays)} (key ${r.hotkey})`}
-                      className={`relative rounded-xl border px-3 py-3 text-center transition shadow-sm focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-1 focus-visible:ring-offset-background ${r.baseCls} ${r.hoverCls} ${r.ringCls}`}
-                    >
-                      <span className="absolute top-1.5 left-2 inline-flex items-center justify-center h-4 min-w-4 px-1 rounded text-[9px] font-bold bg-card border border-border text-muted-foreground">
-                        {r.hotkey}
-                      </span>
-                      <div className="flex items-center justify-center gap-1.5">
-                        <span className={`h-2 w-2 rounded-full ${r.dotCls}`} />
-                        <span className={`text-sm font-bold ${r.textCls}`}>
-                          {r.label}
+                  {RATINGS.map((r) => {
+                    // Only Smart Review tracks SM-2 — show real interval
+                    // previews there. Cumulative shows a generic, mode-aware
+                    // helper so the buttons aren't misleading.
+                    const intervalDays = ratingPreviews[r.value];
+                    const previewText =
+                      config.mode === "smart"
+                        ? intervalLabel(intervalDays)
+                        : r.label === "Again"
+                          ? "Mark unsure"
+                          : r.label === "Hard"
+                            ? "Mark difficult"
+                            : r.label === "Good"
+                              ? "Mark recalled"
+                              : r.label === "Easy"
+                                ? "Mark easy"
+                                : "Mark perfect";
+                    return (
+                      <button
+                        key={r.value}
+                        onClick={() => submitRating(r.value)}
+                        aria-label={
+                          config.mode === "smart"
+                            ? `${r.label} — next review in ${intervalLabel(intervalDays)} (key ${r.hotkey})`
+                            : `${r.label} (key ${r.hotkey})`
+                        }
+                        className={`relative rounded-xl border px-3 py-3 text-center transition shadow-sm focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-1 focus-visible:ring-offset-background ${r.baseCls} ${r.hoverCls} ${r.ringCls}`}
+                      >
+                        <span className="absolute top-1.5 left-2 inline-flex items-center justify-center h-4 min-w-4 px-1 rounded text-[9px] font-bold bg-card border border-border text-muted-foreground">
+                          {r.hotkey}
                         </span>
-                      </div>
-                      <div className="text-[11px] text-muted-foreground mt-0.5 tabular-nums">
-                        {intervalLabel(r.intervalDays)}
-                      </div>
-                    </button>
-                  ))}
+                        <div className="flex items-center justify-center gap-1.5">
+                          <span className={`h-2 w-2 rounded-full ${r.dotCls}`} />
+                          <span className={`text-sm font-bold ${r.textCls}`}>
+                            {r.label}
+                          </span>
+                        </div>
+                        <div className="text-[11px] text-muted-foreground mt-0.5 tabular-nums truncate">
+                          {previewText}
+                        </div>
+                      </button>
+                    );
+                  })}
                 </div>
               </motion.div>
             ) : (
@@ -955,9 +1006,9 @@ function BackFace({ word }: { word: Word }) {
             Synonyms
           </div>
           <div className="flex flex-wrap gap-2">
-            {synonyms.map((s) => (
+            {synonyms.map((s, i) => (
               <span
-                key={s}
+                key={`${s}-${i}`}
                 className="px-3 py-1.5 rounded-full text-sm font-medium border border-border bg-muted/40 text-foreground"
               >
                 {s}
@@ -997,7 +1048,8 @@ function ExitConfirm({
           <div className="flex-1 min-w-0">
             <div className="font-semibold text-base">Leave review session?</div>
             <p className="text-sm text-muted-foreground mt-1">
-              Progress for reviewed cards will be saved.
+              Your progress will be saved as a paused session — resume from the
+              Review Center anytime.
             </p>
           </div>
           <button

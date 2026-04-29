@@ -53,25 +53,26 @@ const LARGE_SESSION_THRESHOLD = 300;
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 
 function estimateMinutes(cardCount: number): { lo: number; hi: number } {
-  // ~10–14 sec/card. Round to nearest 5 for tidy display.
+  // ~10–14 sec/card. We always guarantee `hi > lo` so the range is meaningful
+  // and we never collapse a 1260-card session to a 0-minute display.
   if (cardCount <= 0) return { lo: 0, hi: 0 };
   const loRaw = (cardCount * 10) / 60;
   const hiRaw = (cardCount * 14) / 60;
-  const round5 = (n: number) => Math.max(1, Math.round(n / 5) * 5);
-  // For very small counts (< 30) keep precision
-  if (cardCount < 30) {
-    return {
-      lo: Math.max(1, Math.round(loRaw)),
-      hi: Math.max(2, Math.round(hiRaw)),
-    };
+  const loExact = Math.max(1, Math.round(loRaw));
+  const hiExact = Math.max(loExact + 1, Math.round(hiRaw));
+  // Tidy big sessions to the nearest 5 minutes (without collapsing the range).
+  if (cardCount >= 100) {
+    const round5 = (n: number) => Math.max(5, Math.round(n / 5) * 5);
+    const lo = round5(loExact);
+    const hi = Math.max(lo + 5, round5(hiExact));
+    return { lo, hi };
   }
-  return { lo: round5(loRaw), hi: round5(hiRaw) };
+  return { lo: loExact, hi: hiExact };
 }
 
 function formatTimeRange(cardCount: number): string {
   if (cardCount <= 0) return "—";
   const { lo, hi } = estimateMinutes(cardCount);
-  if (lo === hi) return `~${lo} min`;
   return `${lo}–${hi} min`;
 }
 
@@ -464,11 +465,20 @@ export default function ReviewPage({ onNavigate }: ReviewPageProps) {
                         min={1}
                         max={Math.max(1, smartPool || WORDS_PER_BELT)}
                         value={smartCustomSize}
-                        onChange={(e) =>
-                          setSmartCustomSize(
-                            Math.max(1, parseInt(e.target.value || "1", 10)),
-                          )
-                        }
+                        onChange={(e) => {
+                          const raw = e.target.value;
+                          const n = parseInt(raw, 10);
+                          if (!Number.isFinite(n) || n < 1) {
+                            setSmartCustomSize(1);
+                          } else {
+                            setSmartCustomSize(
+                              Math.min(
+                                n,
+                                Math.max(1, smartPool || WORDS_PER_BELT),
+                              ),
+                            );
+                          }
+                        }}
                         className="h-9 w-24 rounded-xl border border-border bg-card px-3 text-sm font-medium shadow-sm focus:outline-none focus:ring-2 focus:ring-orange-400/40"
                       />
                     )}

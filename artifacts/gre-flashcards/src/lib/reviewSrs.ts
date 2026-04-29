@@ -251,13 +251,43 @@ export interface ResumeSessionRecord {
   ratings: ResumeRatingEntry[];
 }
 
+/** Saved sessions older than this are auto-discarded on read. */
+export const RESUME_MAX_AGE_DAYS = 14;
+
 export function loadResumeSession(): ResumeSessionRecord | null {
   try {
     const raw = localStorage.getItem(RESUME_SESSION_KEY);
     if (!raw) return null;
     const parsed = JSON.parse(raw) as ResumeSessionRecord;
-    if (!parsed || typeof parsed !== "object") return null;
-    if (!Array.isArray(parsed.orderedWordIds)) return null;
+    // Defensive shape validation — anything malformed gets wiped.
+    if (
+      !parsed ||
+      typeof parsed !== "object" ||
+      !Array.isArray(parsed.orderedWordIds) ||
+      parsed.orderedWordIds.length === 0 ||
+      typeof parsed.index !== "number" ||
+      parsed.index < 0 ||
+      !Array.isArray(parsed.ratings) ||
+      !parsed.config ||
+      typeof parsed.config !== "object"
+    ) {
+      clearResumeSession();
+      return null;
+    }
+    // A saved session that has nothing left to review is also treated as stale.
+    if (parsed.index >= parsed.orderedWordIds.length) {
+      clearResumeSession();
+      return null;
+    }
+    // Auto-discard sessions older than RESUME_MAX_AGE_DAYS.
+    const savedAtMs = new Date(parsed.savedAt).getTime();
+    if (Number.isFinite(savedAtMs)) {
+      const ageDays = (Date.now() - savedAtMs) / (24 * 60 * 60 * 1000);
+      if (ageDays > RESUME_MAX_AGE_DAYS) {
+        clearResumeSession();
+        return null;
+      }
+    }
     return parsed;
   } catch {
     return null;
