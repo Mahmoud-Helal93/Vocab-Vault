@@ -639,23 +639,24 @@ function Shell({
     <motion.div
       initial={{ opacity: 0, y: 8 }}
       animate={{ opacity: 1, y: 0 }}
-      className="max-w-[1000px] mx-auto px-6 py-6 space-y-5"
+      className="max-w-[1040px] mx-auto px-4 sm:px-6 py-6 space-y-5"
     >
-      <header className="rounded-2xl border border-border bg-brand-gradient-soft px-5 py-3 shadow-sm">
-        <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-3">
+      <header className="relative overflow-hidden rounded-2xl border border-rose-200/70 dark:border-rose-500/30 bg-gradient-to-br from-rose-50 via-orange-50 to-amber-50 dark:from-rose-500/10 dark:via-orange-500/5 dark:to-amber-500/10 px-5 sm:px-7 py-5 shadow-sm">
+        <div aria-hidden className="absolute -top-20 -right-16 w-56 h-56 rounded-full bg-rose-200/40 dark:bg-rose-500/10 blur-3xl pointer-events-none" />
+        <div className="relative flex flex-wrap items-end justify-between gap-x-6 gap-y-4">
           <div className="min-w-0">
             <button
               type="button"
               onClick={onBack}
-              className="inline-flex items-center gap-1.5 text-xs font-bold text-muted-foreground hover:text-foreground transition-colors mb-1"
+              className="inline-flex items-center gap-1.5 text-xs font-bold text-muted-foreground hover:text-foreground transition-colors mb-1.5"
             >
               <ArrowLeft size={14} />
               Back
             </button>
-            <div className="text-[10px] font-extrabold uppercase tracking-wider text-brand-gradient">
+            <div className="text-[10px] font-extrabold uppercase tracking-[0.18em] text-brand-gradient">
               Practice Mode
             </div>
-            <h1 className="text-xl sm:text-2xl font-extrabold leading-tight text-foreground mt-0.5 truncate">
+            <h1 className="text-2xl sm:text-3xl font-extrabold leading-tight tracking-tight text-foreground mt-1 truncate">
               {title}
             </h1>
           </div>
@@ -720,15 +721,17 @@ function StatChip({
 }) {
   const toneClass =
     tone === "emerald"
-      ? "bg-emerald-100 text-emerald-700 dark:bg-emerald-500/20 dark:text-emerald-300"
+      ? "bg-emerald-100/80 text-emerald-800 border-emerald-200/70 dark:bg-emerald-500/15 dark:text-emerald-300 dark:border-emerald-500/30"
       : tone === "amber"
-        ? "bg-amber-100 text-amber-700 dark:bg-amber-500/20 dark:text-amber-300"
-        : "bg-card border border-border text-foreground";
+        ? "bg-amber-100/80 text-amber-800 border-amber-200/70 dark:bg-amber-500/15 dark:text-amber-300 dark:border-amber-500/30"
+        : "bg-white/80 dark:bg-white/5 border-border text-foreground backdrop-blur-sm";
   return (
     <span
-      className={`px-2.5 py-1 rounded-full font-extrabold text-[11px] ${toneClass}`}
+      className={`inline-flex items-center px-2.5 py-1 rounded-full font-extrabold text-[11px] tabular-nums border ${toneClass}`}
     >
-      <span className="opacity-60 mr-1">{label}</span>
+      <span className="opacity-70 mr-1 uppercase tracking-wider text-[10px]">
+        {label}
+      </span>
       {value}
     </span>
   );
@@ -739,10 +742,11 @@ function ProgressBar({ current, total }: { current: number; total: number }) {
   const safeCurrent = Math.max(0, Math.min(current, safeTotal));
   // Visualise "you have completed N of M" using a 1-indexed current.
   const pct = ((safeCurrent - 1) / safeTotal) * 100;
+  const safePct = Math.max(0, Math.min(100, pct));
   return (
     <div className="space-y-2">
       <div className="flex items-center justify-between text-[11px] font-extrabold">
-        <span className="uppercase tracking-wider text-muted-foreground">
+        <span className="uppercase tracking-[0.18em] text-muted-foreground">
           Progress
         </span>
         <span className="tabular-nums text-foreground">
@@ -750,10 +754,16 @@ function ProgressBar({ current, total }: { current: number; total: number }) {
           <span className="text-muted-foreground"> / {safeTotal}</span>
         </span>
       </div>
-      <div className="h-2.5 w-full bg-muted/70 rounded-full overflow-hidden">
+      <div
+        className="h-2.5 w-full bg-muted rounded-full overflow-hidden ring-1 ring-inset ring-border/50"
+        role="progressbar"
+        aria-valuenow={safeCurrent}
+        aria-valuemin={0}
+        aria-valuemax={safeTotal}
+      >
         <div
-          className="h-full bg-brand-gradient rounded-full transition-all duration-300 ease-out"
-          style={{ width: `${Math.max(0, Math.min(100, pct))}%` }}
+          className="h-full bg-brand-gradient rounded-full transition-all duration-500 ease-out shadow-[0_0_10px_rgba(244,114,182,0.45)]"
+          style={{ width: `${safePct}%` }}
         />
       </div>
     </div>
@@ -801,37 +811,37 @@ function QuestionCard(props: QuestionCardProps) {
     !isAnswered && response.firstCorrect === false && !response.iDontKnow;
 
   return (
-    <article className="rounded-2xl border border-border bg-card shadow-sm overflow-hidden">
+    <article className="rounded-2xl sm:rounded-3xl border border-border bg-card shadow-sm overflow-hidden">
       {/* 1. Top metadata row */}
       <CardMetaRow q={q} />
 
       {/* 2. Prompt area */}
-      <div className="px-5 sm:px-6 pt-4">
+      <div className="px-5 sm:px-8 pt-5 sm:pt-6">
         <PromptBlock q={q} />
       </div>
 
       {/* 3. Answer area (per-type UI untouched) */}
-      <div className="px-5 sm:px-6 pt-5">
+      <div className="px-5 sm:px-8 pt-6 pb-2">
         <AnswerArea {...props} />
       </div>
 
       {/* Hint reveal */}
       {response.hintShown && !isAnswered && (
-        <div className="px-5 sm:px-6 pt-3">
+        <div className="px-5 sm:px-8 pt-3">
           <HintBlock q={q} />
         </div>
       )}
 
       {/* 4. Action / helper row (pre-answer) */}
       {!isAnswered && (
-        <div className="px-5 sm:px-6 py-4 mt-1 border-t border-border bg-muted/30 flex flex-wrap items-center justify-between gap-2">
+        <div className="px-5 sm:px-8 py-4 mt-3 border-t border-border bg-muted/30 flex flex-wrap items-center justify-between gap-3">
           <div className="flex items-center gap-2">
             {props.showHints !== false && (
               <button
                 type="button"
                 onClick={props.onHint}
                 disabled={response.hintShown}
-                className="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-bold bg-amber-50 dark:bg-amber-500/10 text-amber-800 dark:text-amber-200 border border-amber-200 dark:border-amber-500/40 hover:bg-amber-100 dark:hover:bg-amber-500/20 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                className="inline-flex items-center gap-1.5 px-3.5 py-2.5 rounded-xl text-xs font-extrabold bg-amber-50 dark:bg-amber-500/10 text-amber-800 dark:text-amber-200 border border-amber-200 dark:border-amber-500/40 hover:bg-amber-100 dark:hover:bg-amber-500/20 disabled:opacity-50 disabled:cursor-not-allowed transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400/60"
               >
                 <Lightbulb size={13} />
                 {response.hintShown ? "Hint shown" : "Hint"}
@@ -840,7 +850,7 @@ function QuestionCard(props: QuestionCardProps) {
             <button
               type="button"
               onClick={props.onIDontKnow}
-              className="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-bold bg-card text-foreground/80 border border-border hover:bg-muted/70 transition-colors"
+              className="inline-flex items-center gap-1.5 px-3.5 py-2.5 rounded-xl text-xs font-extrabold bg-card text-foreground/80 border border-border hover:bg-muted/70 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-border"
             >
               <HelpCircle size={13} />
               I don&apos;t know
@@ -873,23 +883,23 @@ function QuestionCard(props: QuestionCardProps) {
 function CardMetaRow({ q }: { q: Question }) {
   const meta = KIND_META[q.kind];
   return (
-    <div className="px-5 sm:px-6 pt-5 pb-1 flex items-center justify-between gap-3">
-      <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-brand-gradient-soft text-foreground text-[11px] font-extrabold border border-border/60">
+    <div className="px-5 sm:px-8 pt-5 sm:pt-6 pb-1 flex flex-wrap items-center justify-between gap-3">
+      <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-brand-gradient-soft text-foreground text-[11px] font-extrabold border border-border/60 shadow-sm">
         <span className="text-orange-600 dark:text-orange-300 flex items-center">
           {meta.icon}
         </span>
         <span className="tracking-wide">{meta.label}</span>
       </span>
       <span className="inline-flex items-center gap-1.5 text-[11px] font-bold text-muted-foreground">
-        <span className="px-1.5 py-0.5 rounded-md bg-muted text-foreground/70 tabular-nums">
+        <span className="px-2 py-0.5 rounded-md bg-muted text-foreground/70 tabular-nums">
           M{q.word.day}
         </span>
-        <span className="opacity-50">·</span>
-        <span className="px-1.5 py-0.5 rounded-md bg-muted text-foreground/70 tabular-nums">
+        <span className="px-2 py-0.5 rounded-md bg-muted text-foreground/70 tabular-nums">
           S{q.word.group}
         </span>
-        <span className="opacity-50">·</span>
-        <span className="italic text-muted-foreground">{q.word.pos}</span>
+        <span className="px-2 py-0.5 rounded-md bg-muted/60 italic text-foreground/70">
+          {q.word.pos}
+        </span>
       </span>
     </div>
   );
@@ -898,16 +908,17 @@ function CardMetaRow({ q }: { q: Question }) {
 // ─── Prompt rendering per kind ─────────────────────────────────────────────
 
 function PromptBlock({ q }: { q: Question }) {
+  const eyebrowCls =
+    "text-[11px] font-extrabold uppercase tracking-[0.16em] text-muted-foreground";
+  const headlineCls =
+    "mt-2 text-xl sm:text-2xl font-extrabold text-foreground leading-relaxed tracking-tight";
+
   if (q.kind === "fill-blank") {
     const fb = q as FillBlankQuestion;
     return (
       <>
-        <p className="text-xs font-bold uppercase tracking-wider text-muted-foreground">
-          {q.prompt}
-        </p>
-        <p className="mt-2 text-lg sm:text-xl font-bold text-foreground leading-relaxed">
-          {fb.sentence}
-        </p>
+        <p className={eyebrowCls}>{q.prompt}</p>
+        <p className={headlineCls}>{fb.sentence}</p>
       </>
     );
   }
@@ -920,12 +931,8 @@ function PromptBlock({ q }: { q: Question }) {
     const tf = q as TrueFalseQuestion;
     return (
       <>
-        <p className="text-xs font-bold uppercase tracking-wider text-muted-foreground">
-          True or False?
-        </p>
-        <p className="mt-2 text-lg sm:text-xl font-bold text-foreground leading-relaxed">
-          {tf.statement}
-        </p>
+        <p className={eyebrowCls}>True or False?</p>
+        <p className={headlineCls}>{tf.statement}</p>
       </>
     );
   }
@@ -933,12 +940,8 @@ function PromptBlock({ q }: { q: Question }) {
     const sp = q as SynonymPairQuestion;
     return (
       <>
-        <p className="text-xs font-bold uppercase tracking-wider text-muted-foreground">
-          Select all synonyms of
-        </p>
-        <p className="mt-2 text-lg sm:text-xl font-bold text-foreground leading-relaxed">
-          {sp.word.word}
-        </p>
+        <p className={eyebrowCls}>Select all synonyms of</p>
+        <p className={headlineCls}>{sp.word.word}</p>
       </>
     );
   }
@@ -946,14 +949,9 @@ function PromptBlock({ q }: { q: Question }) {
   const lines = q.prompt.split("\n");
   return (
     <>
-      <p className="text-xs font-bold uppercase tracking-wider text-muted-foreground">
-        {lines[0]}
-      </p>
+      <p className={eyebrowCls}>{lines[0]}</p>
       {lines.slice(1).map((line, i) => (
-        <p
-          key={i}
-          className="mt-2 text-lg sm:text-xl font-bold text-foreground leading-relaxed"
-        >
+        <p key={i} className={headlineCls}>
           {line.replace(/^"|"$/g, "")}
         </p>
       ))}
@@ -1112,24 +1110,24 @@ function ChoiceButton({
 }) {
   const cls =
     state === "correct"
-      ? "border-emerald-400 dark:border-emerald-500/60 bg-emerald-50 dark:bg-emerald-500/10 text-emerald-900 dark:text-emerald-100 shadow-sm shadow-emerald-100/50 dark:shadow-none"
+      ? "border-emerald-400 dark:border-emerald-500/60 bg-emerald-50 dark:bg-emerald-500/10 text-emerald-900 dark:text-emerald-100 shadow-sm shadow-emerald-100/60 dark:shadow-none"
       : state === "wrong"
-        ? "border-rose-400 dark:border-rose-500/60 bg-rose-50 dark:bg-rose-500/10 text-rose-900 dark:text-rose-100 shadow-sm shadow-rose-100/50 dark:shadow-none"
+        ? "border-rose-400 dark:border-rose-500/60 bg-rose-50 dark:bg-rose-500/10 text-rose-900 dark:text-rose-100 shadow-sm shadow-rose-100/60 dark:shadow-none"
         : state === "wrong-tried"
           ? "border-border bg-muted/60 text-muted-foreground line-through"
           : state === "selected"
             ? "border-orange-400 dark:border-orange-500/60 bg-orange-50 dark:bg-orange-500/10 text-orange-900 dark:text-orange-100 shadow-sm"
-            : "border-border bg-card text-foreground hover:border-orange-300 hover:bg-orange-50/50 dark:hover:border-orange-500/40 dark:hover:bg-orange-500/5";
+            : "border-border bg-card text-foreground hover:border-orange-300 hover:bg-orange-50/60 hover:shadow-sm dark:hover:border-orange-500/40 dark:hover:bg-orange-500/5 active:scale-[0.995]";
   const sizeCls =
     size === "lg"
-      ? "px-4 py-4 sm:py-5 text-base sm:text-lg"
-      : "px-3.5 py-3 text-sm";
+      ? "px-4 py-5 sm:py-6 text-base sm:text-lg"
+      : "px-4 py-3.5 text-[15px] sm:text-base";
   return (
     <button
       type="button"
       onClick={onClick}
       disabled={disabled}
-      className={`w-full ${multiline ? "text-left" : "text-center"} ${sizeCls} rounded-xl border-2 font-bold transition-all duration-150 disabled:cursor-not-allowed ${cls}`}
+      className={`w-full ${multiline ? "text-left" : "text-center"} ${sizeCls} rounded-xl border-2 font-bold transition-all duration-150 disabled:cursor-not-allowed focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-400/60 focus-visible:ring-offset-1 ${cls}`}
     >
       <span
         className={`flex items-center gap-2 ${multiline ? "" : "justify-center"}`}
