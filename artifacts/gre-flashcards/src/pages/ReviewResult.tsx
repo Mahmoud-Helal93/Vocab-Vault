@@ -384,7 +384,7 @@ export default function ReviewResult({
 
       {/* Body */}
       <main className="flex-1">
-        <div className="max-w-[1100px] mx-auto px-6 py-6 space-y-6">
+        <div className="max-w-[1100px] mx-auto px-6 py-6 lg:py-8 space-y-7">
           {/* SECTION 1 — HERO SUMMARY */}
           <motion.section
             initial={{ opacity: 0, y: 8 }}
@@ -465,7 +465,7 @@ export default function ReviewResult({
                 return (
                   <li
                     key={m.value}
-                    className="flex items-center gap-3 rounded-xl border border-border bg-background/50 px-3 py-2"
+                    className="flex items-center gap-3 rounded-xl border border-border bg-background/60 px-3.5 py-2.5 shadow-sm"
                   >
                     <span
                       className={`h-2.5 w-2.5 rounded-full shrink-0 ${m.dotCls}`}
@@ -475,11 +475,12 @@ export default function ReviewResult({
                         <span className={`text-sm font-bold ${m.textCls}`}>
                           {m.label}
                         </span>
-                        <span className="text-xs text-muted-foreground tabular-nums">
-                          {count} · {pct}%
+                        <span className="text-xs font-semibold text-muted-foreground tabular-nums">
+                          <span className="text-foreground">{count}</span>
+                          <span className="text-muted-foreground/70"> · {pct}%</span>
                         </span>
                       </div>
-                      <div className="mt-1.5 h-1.5 rounded-full bg-muted overflow-hidden">
+                      <div className="mt-2 h-2 rounded-full bg-muted overflow-hidden">
                         <div
                           className={`h-full ${m.dotCls} rounded-full transition-all`}
                           style={{ width: `${pct}%` }}
@@ -579,20 +580,24 @@ export default function ReviewResult({
                     return (
                       <div
                         key={bucket.key}
-                        className={`rounded-xl border p-3 transition ${
+                        className={`rounded-xl border p-4 transition ${
                           isEmpty
                             ? "border-border bg-muted/20"
                             : "border-border bg-background/60 shadow-sm"
                         }`}
                       >
-                        <div className="flex items-center gap-2 text-[11px] font-semibold uppercase tracking-wide text-muted-foreground">
+                        <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-wider text-muted-foreground">
                           <span className="text-muted-foreground/80">
                             {bucket.icon}
                           </span>
                           {bucket.label}
                         </div>
-                        <div className="mt-1.5 flex items-baseline gap-1.5">
-                          <span className="text-2xl font-extrabold tabular-nums">
+                        <div className="mt-2 flex items-baseline gap-1.5">
+                          <span
+                            className={`text-3xl font-extrabold tabular-nums leading-none ${
+                              isEmpty ? "text-muted-foreground/60" : "text-foreground"
+                            }`}
+                          >
                             {slot.count}
                           </span>
                           <span className="text-xs text-muted-foreground">
@@ -600,7 +605,7 @@ export default function ReviewResult({
                           </span>
                         </div>
                         {slot.previewWords.length > 0 && (
-                          <div className="mt-2 text-xs text-muted-foreground line-clamp-2">
+                          <div className="mt-2.5 text-xs text-muted-foreground line-clamp-2 leading-relaxed">
                             {slot.previewWords.join(" · ")}
                           </div>
                         )}
@@ -660,7 +665,7 @@ export default function ReviewResult({
           </section>
 
           {/* SECTION 6 — MAIN ACTION BUTTONS */}
-          <section className="flex flex-col sm:flex-row items-stretch sm:items-center justify-end gap-2">
+          <section className="flex flex-col sm:flex-row items-stretch sm:items-center justify-end gap-2.5 pt-1">
             <button
               onClick={handleBackToCenter}
               className="h-11 px-5 rounded-xl text-sm font-medium border border-border bg-card hover:bg-muted text-foreground inline-flex items-center justify-center gap-2"
@@ -670,9 +675,9 @@ export default function ReviewResult({
             </button>
             <button
               onClick={handleStartAnother}
-              className="h-11 px-5 rounded-xl text-sm font-semibold btn-brand inline-flex items-center justify-center gap-2"
+              className="h-12 px-6 rounded-xl text-base font-bold btn-brand shadow-sm inline-flex items-center justify-center gap-2"
             >
-              <RotateCw size={14} />
+              <RotateCw size={16} />
               Start another review
             </button>
           </section>
@@ -725,14 +730,14 @@ function MetricCard({
   icon?: React.ReactNode;
 }) {
   return (
-    <div className="rounded-xl border border-border bg-background/50 px-3 py-3 flex flex-col gap-1.5">
-      <div className="flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-wide text-muted-foreground">
+    <div className="rounded-xl border border-border bg-background/60 px-3.5 py-3 flex flex-col gap-2 shadow-sm">
+      <div className="flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-wider text-muted-foreground">
         {accentDot && <span className={`h-1.5 w-1.5 rounded-full ${accentDot}`} />}
         {icon && <span className="text-muted-foreground/80">{icon}</span>}
-        <span className="truncate">{label}</span>
+        <span>{label}</span>
       </div>
       <div
-        className={`text-lg sm:text-xl font-extrabold tabular-nums ${
+        className={`text-xl sm:text-2xl font-extrabold tabular-nums leading-none ${
           accentText ?? "text-foreground"
         }`}
       >
@@ -761,10 +766,10 @@ function ReviewAgainButton({
     <button
       onClick={onClick}
       disabled={disabled}
-      className={`h-11 px-4 rounded-xl text-sm font-semibold inline-flex items-center justify-center gap-2 transition ${baseCls} disabled:opacity-40 disabled:cursor-not-allowed`}
+      className={`h-11 px-4 rounded-xl text-sm font-semibold inline-flex items-center justify-center gap-2 transition shadow-sm ${baseCls} disabled:opacity-40 disabled:cursor-not-allowed`}
     >
       <RotateCcw size={14} />
-      <span className="truncate">{label}</span>
+      <span>{label}</span>
       <span
         className={`inline-flex items-center justify-center min-w-6 h-5 px-1.5 rounded-md text-[11px] font-bold tabular-nums ${
           primary
@@ -795,10 +800,10 @@ function WordRow({
   };
 
   return (
-    <li className="rounded-xl border border-border bg-background/50 px-3 py-2.5 flex items-center gap-3">
+    <li className="rounded-xl border border-border bg-background/60 px-4 py-3 flex items-center gap-3 shadow-sm hover:bg-background/80 transition">
       <div className="flex-1 min-w-0">
         <div className="flex items-center gap-2 flex-wrap">
-          <span className="text-sm font-bold truncate">{word.word}</span>
+          <span className="text-sm font-bold">{word.word}</span>
           <span className="text-[11px] font-semibold italic text-muted-foreground">
             {word.pos}
           </span>
@@ -806,24 +811,24 @@ function WordRow({
             onClick={onSpeak}
             aria-label={`Pronounce ${word.word}`}
             title="Pronounce"
-            className="inline-flex items-center justify-center h-6 w-6 rounded-md border border-border bg-card hover:bg-muted text-muted-foreground"
+            className="inline-flex items-center justify-center h-7 w-7 rounded-md border border-border bg-card hover:bg-muted text-muted-foreground"
           >
             <Volume2 size={12} />
           </button>
         </div>
-        <div className="text-[11px] text-muted-foreground mt-0.5 flex items-center gap-2 flex-wrap">
+        <div className="text-[11px] text-muted-foreground mt-1 flex items-center gap-2 flex-wrap">
           <span>
             Mission {word.day} · Set {word.group}
           </span>
           <span className="text-muted-foreground/60">·</span>
           <span className="inline-flex items-center gap-1">
             <ChevronRight size={10} />
-            Next: <span className="font-medium text-foreground">{dueLabel}</span>
+            Next: <span className="font-semibold text-foreground">{dueLabel}</span>
           </span>
         </div>
       </div>
       <span
-        className={`shrink-0 inline-flex items-center gap-1.5 px-2 py-1 rounded-md text-[11px] font-bold border ${meta.chipCls}`}
+        className={`shrink-0 inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-[11px] font-bold border ${meta.chipCls}`}
       >
         <span className={`h-1.5 w-1.5 rounded-full ${meta.dotCls}`} />
         {meta.label}

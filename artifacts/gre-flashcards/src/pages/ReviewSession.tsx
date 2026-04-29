@@ -765,14 +765,14 @@ export default function ReviewSession({
       <main className="flex-1 flex items-start justify-center px-4 sm:px-6 lg:px-8 py-6 sm:py-10">
         <div className="w-full max-w-[920px]">
           {/* Helper text */}
-          <div className="text-center mb-4">
-            <p className="text-sm text-muted-foreground">
+          <div className="text-center mb-5">
+            <p className="text-sm font-medium text-foreground/80">
               {flipped
                 ? "Did you recall it correctly?"
                 : "Try to recall the other side before flipping."}
             </p>
             {!flipped && (
-              <p className="text-xs text-muted-foreground/80 mt-1">
+              <p className="text-xs text-muted-foreground mt-1.5">
                 Click the card or press{" "}
                 <kbd className="px-1.5 py-0.5 rounded border border-border bg-muted text-[10px] font-semibold">
                   Space
@@ -799,7 +799,7 @@ export default function ReviewSession({
                 animate={{ opacity: 1, rotateX: 0, y: 0 }}
                 exit={{ opacity: 0, rotateX: -8, y: -6 }}
                 transition={{ duration: 0.22, ease: "easeOut" }}
-                className="rounded-3xl border border-border bg-card shadow-sm min-h-[320px] sm:min-h-[400px] p-6 sm:p-10 flex"
+                className="rounded-3xl border border-border bg-card shadow-sm min-h-[360px] sm:min-h-[440px] p-8 sm:p-12 flex"
               >
                 {wordSideVisible ? (
                   <FrontFace word={current} />
@@ -811,20 +811,20 @@ export default function ReviewSession({
           </div>
 
           {/* Rating row — only after flip */}
-          <div className="mt-6 min-h-[88px]">
+          <div className="mt-7 min-h-[96px]">
             {flipped ? (
               <motion.div
                 initial={{ opacity: 0, y: 6 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.2 }}
               >
-                <div className="text-[11px] font-semibold uppercase tracking-wide text-muted-foreground text-center mb-2">
+                <div className="text-[11px] font-bold uppercase tracking-wide text-muted-foreground text-center mb-2.5">
                   How well did you recall it?
                 </div>
                 <div
                   role="group"
                   aria-label="Rate your recall"
-                  className="grid grid-cols-2 sm:grid-cols-5 gap-2"
+                  className="grid grid-cols-2 sm:grid-cols-5 gap-2 sm:gap-2.5"
                 >
                   {RATINGS.map((r) => {
                     // Only Smart Review tracks SM-2 — show real interval
@@ -852,7 +852,7 @@ export default function ReviewSession({
                             ? `${r.label} — next review in ${intervalLabel(intervalDays)} (key ${r.hotkey})`
                             : `${r.label} (key ${r.hotkey})`
                         }
-                        className={`relative rounded-xl border px-3 py-3 text-center transition shadow-sm focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-1 focus-visible:ring-offset-background ${r.baseCls} ${r.hoverCls} ${r.ringCls}`}
+                        className={`relative rounded-xl border min-h-[72px] px-3 py-3.5 text-center transition shadow-sm hover:shadow active:scale-[0.98] focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-1 focus-visible:ring-offset-background ${r.baseCls} ${r.hoverCls} ${r.ringCls}`}
                       >
                         <span className="absolute top-1.5 left-2 inline-flex items-center justify-center h-4 min-w-4 px-1 rounded text-[9px] font-bold bg-card border border-border text-muted-foreground">
                           {r.hotkey}
@@ -863,7 +863,7 @@ export default function ReviewSession({
                             {r.label}
                           </span>
                         </div>
-                        <div className="text-[11px] text-muted-foreground mt-0.5 tabular-nums truncate">
+                        <div className="text-[11px] text-muted-foreground mt-1 tabular-nums">
                           {previewText}
                         </div>
                       </button>
@@ -885,26 +885,31 @@ export default function ReviewSession({
           </div>
 
           {/* Keyboard legend */}
-          <div className="mt-5 text-xs text-muted-foreground flex items-center justify-center gap-2 flex-wrap">
-            <kbd className="px-1.5 py-0.5 rounded border border-border bg-muted font-semibold">
-              Space
-            </kbd>
-            <span>Flip</span>
-            <span className="text-muted-foreground/60">·</span>
-            <kbd className="px-1.5 py-0.5 rounded border border-border bg-muted font-semibold">
-              1–5
-            </kbd>
-            <span>Rate (after flip)</span>
-            <span className="text-muted-foreground/60">·</span>
-            <kbd className="px-1.5 py-0.5 rounded border border-border bg-muted font-semibold">
-              P
-            </kbd>
-            <span>Pronounce (word side)</span>
-            <span className="text-muted-foreground/60">·</span>
-            <kbd className="px-1.5 py-0.5 rounded border border-border bg-muted font-semibold">
-              Esc
-            </kbd>
-            <span>Exit</span>
+          <div className="mt-6 text-[11px] text-muted-foreground flex items-center justify-center gap-x-3 gap-y-1.5 flex-wrap">
+            <span className="inline-flex items-center gap-1.5">
+              <kbd className="px-1.5 py-0.5 rounded border border-border bg-muted font-semibold text-[10px]">
+                Space
+              </kbd>
+              Flip
+            </span>
+            <span className="inline-flex items-center gap-1.5">
+              <kbd className="px-1.5 py-0.5 rounded border border-border bg-muted font-semibold text-[10px]">
+                1–5
+              </kbd>
+              Rate
+            </span>
+            <span className="inline-flex items-center gap-1.5">
+              <kbd className="px-1.5 py-0.5 rounded border border-border bg-muted font-semibold text-[10px]">
+                P
+              </kbd>
+              Pronounce
+            </span>
+            <span className="inline-flex items-center gap-1.5">
+              <kbd className="px-1.5 py-0.5 rounded border border-border bg-muted font-semibold text-[10px]">
+                Esc
+              </kbd>
+              Exit
+            </span>
           </div>
         </div>
       </main>
@@ -941,7 +946,7 @@ function FrontFace({ word }: { word: Word }) {
   };
   return (
     <div className="m-auto w-full max-w-[640px] text-center">
-      <div className="flex items-center justify-center gap-2 mb-4">
+      <div className="flex items-center justify-center gap-2 mb-5">
         <span className="text-[10px] font-bold uppercase tracking-wide px-2 py-0.5 rounded-md bg-orange-100 text-orange-700 dark:bg-orange-500/20 dark:text-orange-300">
           Mission {word.day}
         </span>
@@ -953,11 +958,11 @@ function FrontFace({ word }: { word: Word }) {
         </span>
       </div>
 
-      <h2 className="text-4xl sm:text-6xl font-extrabold tracking-tight text-brand-gradient">
+      <h2 className="text-4xl sm:text-6xl font-extrabold tracking-tight text-brand-gradient leading-[1.05]">
         {word.word}
       </h2>
 
-      <div className="mt-3 flex items-center justify-center gap-3 flex-wrap">
+      <div className="mt-4 flex items-center justify-center gap-3 flex-wrap">
         <span className="text-xs sm:text-sm font-semibold italic text-muted-foreground">
           {word.pos}
         </span>
@@ -965,7 +970,7 @@ function FrontFace({ word }: { word: Word }) {
           onClick={onSpeak}
           aria-label="Pronounce word"
           title="Pronounce (P)"
-          className="inline-flex items-center gap-1.5 h-8 px-3 rounded-full border border-border bg-card hover:bg-muted text-sm font-medium"
+          className="inline-flex items-center gap-1.5 h-8 px-3 rounded-full border border-border bg-card hover:bg-muted text-sm font-medium shadow-sm"
         >
           <Volume2 size={14} />
           Pronounce
@@ -976,7 +981,7 @@ function FrontFace({ word }: { word: Word }) {
         <div
           dir="rtl"
           lang="ar"
-          className="mt-6 text-2xl sm:text-3xl font-semibold text-foreground/90"
+          className="mt-7 text-2xl sm:text-3xl font-semibold text-foreground/90"
         >
           {word.arabic}
         </div>
@@ -993,16 +998,16 @@ function BackFace({ word }: { word: Word }) {
 
   return (
     <div className="m-auto w-full max-w-[720px]">
-      <div className="text-[10px] font-bold uppercase tracking-wide text-muted-foreground mb-2">
+      <div className="text-[10px] font-bold uppercase tracking-wide text-muted-foreground mb-2.5">
         Definition
       </div>
-      <p className="text-xl sm:text-2xl font-semibold leading-snug text-foreground">
+      <p className="text-xl sm:text-2xl font-semibold leading-relaxed text-foreground">
         {word.definition}
       </p>
 
       {synonyms.length > 0 && (
-        <div className="mt-7">
-          <div className="text-[10px] font-bold uppercase tracking-wide text-muted-foreground mb-2">
+        <div className="mt-8 pt-6 border-t border-border/60">
+          <div className="text-[10px] font-bold uppercase tracking-wide text-muted-foreground mb-2.5">
             Synonyms
           </div>
           <div className="flex flex-wrap gap-2">

@@ -243,9 +243,9 @@ export default function ReviewPage({ onNavigate }: ReviewPageProps) {
       </div>
 
       {/* Body */}
-      <div className="max-w-[1400px] mx-auto px-6 lg:px-8 py-6 grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_360px] gap-6">
+      <div className="max-w-[1400px] mx-auto px-6 lg:px-8 py-6 lg:py-8 grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_380px] gap-6 lg:gap-8">
         {/* MAIN COLUMN */}
-        <div className="space-y-6 min-w-0">
+        <div className="space-y-7 min-w-0">
           {/* SECTION 1 — REVIEW MODE */}
           <SectionShell
             title="Review Mode"
@@ -359,7 +359,7 @@ export default function ReviewPage({ onNavigate }: ReviewPageProps) {
                           onClick={() => setSmartBelt(b)}
                           className={`rounded-xl border px-3 py-2.5 text-left transition ${
                             active
-                              ? "border-orange-400 bg-orange-50 dark:bg-orange-500/10 ring-1 ring-orange-400/40"
+                              ? "border-orange-400 bg-orange-50 dark:bg-orange-500/10 ring-2 ring-orange-400/50 shadow-sm"
                               : "border-border bg-card hover:bg-muted"
                           }`}
                         >
@@ -683,30 +683,33 @@ export default function ReviewPage({ onNavigate }: ReviewPageProps) {
                 value={timerEnabled ? "On" : "Off"}
               />
 
-              <div className="border-t border-border my-2" />
-
-              <SummaryRow
-                label="Estimated time"
-                value={formatTimeRange(totalWords)}
-                strong
-              />
+              <div className="mt-1 -mx-5 px-5 pt-3 pb-2 bg-brand-gradient-soft border-t border-border">
+                <div className="flex items-center justify-between gap-3">
+                  <span className="text-[11px] font-bold uppercase tracking-wide text-muted-foreground">
+                    Estimated time
+                  </span>
+                  <span className="text-base font-extrabold text-foreground tabular-nums text-right">
+                    {formatTimeRange(totalWords)}
+                  </span>
+                </div>
+              </div>
             </div>
 
-            <div className="p-5 pt-0">
+            <div className="p-5 pt-4">
               <button
                 onClick={handleStart}
                 disabled={startDisabled}
-                className={`w-full h-11 rounded-xl font-semibold flex items-center justify-center gap-2 transition ${
+                className={`w-full h-12 rounded-xl text-base font-bold flex items-center justify-center gap-2 transition ${
                   startDisabled
                     ? "bg-muted text-muted-foreground cursor-not-allowed"
-                    : "btn-brand"
+                    : "btn-brand shadow-sm"
                 }`}
               >
-                <Play size={16} />
+                <Play size={18} />
                 Start Review
               </button>
               {totalWords >= LARGE_SESSION_THRESHOLD && !startDisabled && (
-                <p className="mt-2 text-[11px] text-muted-foreground flex items-center gap-1.5">
+                <p className="mt-2.5 text-[11px] text-muted-foreground flex items-center gap-1.5">
                   <AlertTriangle size={12} className="text-amber-500" />
                   Large session — you'll be asked to confirm.
                 </p>
@@ -826,7 +829,7 @@ function ModeCard({
       onClick={onClick}
       className={`text-left rounded-2xl border p-4 transition shadow-sm ${
         active
-          ? "border-orange-400 bg-orange-50/60 dark:bg-orange-500/10 ring-1 ring-orange-400/40"
+          ? "border-orange-400 bg-orange-50/60 dark:bg-orange-500/10 ring-2 ring-orange-400/50 shadow-sm"
           : "border-border bg-card hover:bg-muted"
       }`}
     >
@@ -876,7 +879,7 @@ function CardModeOption({
       onClick={onClick}
       className={`text-left rounded-2xl border p-4 transition shadow-sm ${
         active
-          ? "border-orange-400 bg-orange-50/60 dark:bg-orange-500/10 ring-1 ring-orange-400/40"
+          ? "border-orange-400 bg-orange-50/60 dark:bg-orange-500/10 ring-2 ring-orange-400/50 shadow-sm"
           : "border-border bg-card hover:bg-muted"
       }`}
     >
@@ -957,7 +960,7 @@ function FilterRow({
       onClick={onClick}
       className={`text-left rounded-xl border px-3 py-2.5 flex items-center justify-between gap-3 transition ${
         active
-          ? "border-orange-400 bg-orange-50/60 dark:bg-orange-500/10 ring-1 ring-orange-400/40"
+          ? "border-orange-400 bg-orange-50/60 dark:bg-orange-500/10 ring-2 ring-orange-400/50 shadow-sm"
           : "border-border bg-card hover:bg-muted"
       }`}
     >
@@ -1070,10 +1073,10 @@ function SummaryRow({
   strong?: boolean;
 }) {
   return (
-    <div className="flex items-center justify-between gap-3">
+    <div className="flex items-center justify-between gap-3 py-0.5">
       <span className="text-xs text-muted-foreground">{label}</span>
       <span
-        className={`text-sm ${strong ? "font-bold text-foreground" : "font-semibold text-foreground"} text-right truncate`}
+        className={`text-sm ${strong ? "font-bold text-foreground" : "font-semibold text-foreground"} text-right`}
       >
         {value}
       </span>
@@ -1130,10 +1133,10 @@ function ResumeCard({
     <motion.div
       initial={{ opacity: 0, y: 6 }}
       animate={{ opacity: 1, y: 0 }}
-      className="rounded-2xl border border-orange-300/70 dark:border-orange-500/40 bg-brand-gradient-soft shadow-sm p-4 sm:p-5"
+      className="rounded-2xl border border-orange-300/60 dark:border-orange-500/30 bg-brand-gradient-soft shadow-sm p-5"
     >
-      <div className="flex items-start gap-3">
-        <div className="h-10 w-10 rounded-2xl bg-brand-gradient text-white flex items-center justify-center shadow-sm shrink-0">
+      <div className="flex items-start gap-3.5">
+        <div className="h-11 w-11 rounded-2xl bg-brand-gradient text-white flex items-center justify-center shadow-sm shrink-0">
           <RotateCcw size={18} />
         </div>
         <div className="flex-1 min-w-0">
@@ -1143,25 +1146,28 @@ function ResumeCard({
               {titleMode}
             </span>
           </div>
-          <div className="text-xs text-muted-foreground mt-0.5 truncate">
+          <div className="text-xs text-muted-foreground mt-1">
             {scope} · paused {savedAgo}
           </div>
           <div className="mt-3 flex items-center gap-2 text-xs text-muted-foreground">
             <span>
-              <span className="font-semibold text-foreground tabular-nums">
+              <span className="font-bold text-foreground tabular-nums">
                 {done}
               </span>
-              /{total} done
+              <span className="text-muted-foreground">/{total}</span> done
             </span>
             <span className="text-muted-foreground/60">·</span>
             <span>
-              <span className="font-semibold text-foreground tabular-nums">
+              <span className="font-bold text-foreground tabular-nums">
                 {remaining}
               </span>{" "}
               left
             </span>
+            <span className="ml-auto text-[11px] font-bold tabular-nums text-orange-700 dark:text-orange-300">
+              {pct}%
+            </span>
           </div>
-          <div className="mt-2 h-1.5 rounded-full bg-card border border-border overflow-hidden">
+          <div className="mt-1.5 h-2 rounded-full bg-card border border-border overflow-hidden">
             <div
               className="h-full bg-brand-gradient transition-all"
               style={{ width: `${pct}%` }}
@@ -1173,7 +1179,7 @@ function ResumeCard({
       <div className="mt-4 flex items-center gap-2 flex-wrap">
         <button
           onClick={onResume}
-          className="h-10 px-4 rounded-xl text-sm font-semibold btn-brand inline-flex items-center gap-2"
+          className="h-10 px-4 rounded-xl text-sm font-bold btn-brand inline-flex items-center gap-2 shadow-sm"
         >
           <Play size={14} />
           Resume previous review
