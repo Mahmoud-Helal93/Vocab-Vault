@@ -1599,21 +1599,22 @@ function FeedbackPanel(props: QuestionCardProps) {
               />
             )}
 
-            <div className="flex flex-wrap items-center justify-between gap-3 pt-1">
+            <div className="flex flex-col-reverse sm:flex-row sm:items-center sm:justify-between gap-2 pt-1">
               <button
                 type="button"
                 onClick={onAddDifficult}
                 disabled={response.markedDifficult}
-                className={`inline-flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-bold border transition-colors ${
+                aria-pressed={response.markedDifficult}
+                className={`inline-flex items-center justify-center sm:justify-start gap-1.5 px-3 py-2.5 rounded-xl text-xs font-extrabold border transition-colors disabled:cursor-not-allowed ${
                   response.markedDifficult
                     ? "bg-rose-50 dark:bg-rose-500/10 text-rose-700 dark:text-rose-300 border-rose-200 dark:border-rose-500/40"
-                    : "bg-card text-foreground border-border hover:bg-muted/60"
+                    : "bg-card text-foreground border-border hover:bg-muted/60 hover:border-rose-200 dark:hover:border-rose-500/40"
                 }`}
               >
                 {response.markedDifficult ? (
                   <>
                     <Check size={13} />
-                    Added to difficult words
+                    Added to difficult
                   </>
                 ) : (
                   <>
@@ -1625,13 +1626,7 @@ function FeedbackPanel(props: QuestionCardProps) {
               <button
                 type="button"
                 onClick={onNext}
-                disabled={showConfidence && response.confidence === null}
-                title={
-                  showConfidence && response.confidence === null
-                    ? "Pick a confidence rating to continue"
-                    : ""
-                }
-                className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl text-sm font-extrabold btn-brand disabled:opacity-50 disabled:cursor-not-allowed disabled:shadow-none"
+                className="inline-flex items-center justify-center gap-1.5 px-5 py-2.5 rounded-xl text-sm font-extrabold btn-brand"
               >
                 {isLast ? "Finish session" : "Next question"}
                 <ChevronRight size={14} />
@@ -1747,43 +1742,68 @@ function ConfidenceRow({
   value: Confidence | null;
   onPick: (c: Confidence) => void;
 }) {
+  const OPTIONS: {
+    key: Confidence;
+    label: string;
+    subtitle: string;
+    base: string;
+    active: string;
+  }[] = [
+    {
+      key: "knew",
+      label: "I knew it",
+      subtitle: "Confident",
+      base: "border-emerald-200 dark:border-emerald-500/40 text-emerald-800 dark:text-emerald-200 hover:bg-emerald-50 dark:hover:bg-emerald-500/10",
+      active:
+        "border-emerald-400 dark:border-emerald-500/70 bg-emerald-50 dark:bg-emerald-500/15 text-emerald-900 dark:text-emerald-100 shadow-sm",
+    },
+    {
+      key: "guessed",
+      label: "I guessed",
+      subtitle: "Not sure",
+      base: "border-amber-200 dark:border-amber-500/40 text-amber-800 dark:text-amber-200 hover:bg-amber-50 dark:hover:bg-amber-500/10",
+      active:
+        "border-amber-400 dark:border-amber-500/70 bg-amber-50 dark:bg-amber-500/15 text-amber-900 dark:text-amber-100 shadow-sm",
+    },
+    {
+      key: "forgot",
+      label: "I forgot it",
+      subtitle: "Needs review",
+      base: "border-rose-200 dark:border-rose-500/40 text-rose-800 dark:text-rose-200 hover:bg-rose-50 dark:hover:bg-rose-500/10",
+      active:
+        "border-rose-400 dark:border-rose-500/70 bg-rose-50 dark:bg-rose-500/15 text-rose-900 dark:text-rose-100 shadow-sm",
+    },
+  ];
   return (
-    <div className="rounded-xl border border-border bg-muted/30 p-3.5">
-      <div className="flex items-center gap-1.5 mb-2">
-        <Trophy size={14} className="text-muted-foreground" />
-        <span className="text-[11px] font-extrabold uppercase tracking-wider text-muted-foreground">
+    <div className="rounded-xl border border-border bg-muted/30 px-3 py-2.5">
+      <div className="flex items-center justify-between gap-2 mb-2">
+        <span className="text-[10px] font-extrabold uppercase tracking-wider text-muted-foreground">
           How did that feel?
         </span>
+        <span className="text-[10px] text-muted-foreground">Optional</span>
       </div>
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
-        {(["knew", "guessed", "forgot"] as const).map((k) => {
-          const meta = CONFIDENCE_META[k];
-          const active = value === k;
+      <div className="grid grid-cols-3 gap-1.5 sm:gap-2">
+        {OPTIONS.map((o) => {
+          const active = value === o.key;
           return (
             <button
-              key={k}
+              key={o.key}
               type="button"
-              onClick={() => onPick(k)}
-              className={`text-left rounded-xl border-2 px-3 py-2.5 transition-colors ${meta.tone} ${
-                active ? "ring-2 ring-offset-1 ring-current" : ""
-              }`}
+              onClick={() => onPick(o.key)}
+              aria-pressed={active}
+              className={`rounded-xl border-2 px-2 py-2 text-center transition-all duration-150 bg-card ${active ? o.active : o.base}`}
             >
-              <div className="text-sm font-extrabold flex items-center gap-1.5">
-                {active && <CheckCircle2 size={14} />}
-                {meta.label}
+              <div className="text-[12px] sm:text-sm font-extrabold flex items-center justify-center gap-1">
+                {active && <CheckCircle2 size={13} className="shrink-0" />}
+                <span className="truncate">{o.label}</span>
               </div>
-              <div className="text-[11px] opacity-80 mt-0.5">
-                {meta.description}
+              <div className="text-[10px] opacity-80 mt-0.5 truncate">
+                {o.subtitle}
               </div>
             </button>
           );
         })}
       </div>
-      {value === null && (
-        <p className="text-[11px] text-muted-foreground mt-2">
-          Pick one — it tunes how soon this word comes back.
-        </p>
-      )}
     </div>
   );
 }
